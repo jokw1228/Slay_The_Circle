@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://bhe55ocau21ot"]
+
+[ext_resource type="Script" path="res://scenes/Player.gd" id="1_udqk7"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_wtb3g"]
+radius = 16.0
+
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("PlayerRayCast2D")]
+script = ExtResource("1_udqk7")
+PlayerRayCast2D = NodePath("PlayerRayCast2D")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_wtb3g")
+metadata/_edit_lock_ = true
+
+[node name="PlayerRayCast2D" type="RayCast2D" parent="."]
+target_position = Vector2(512, 0)
