@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://bhe55ocau21ot"]
+[gd_scene load_steps=4 format=3 uid="uid://bhe55ocau21ot"]
 
 [ext_resource type="Script" path="res://scenes/Player.gd" id="1_udqk7"]
+[ext_resource type="Script" path="res://scenes/PlayerRayCast2D.gd" id="2_wxquw"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_wtb3g"]
 radius = 16.0
@@ -13,5 +14,9 @@ PlayerRayCast2D = NodePath("PlayerRayCast2D")
 shape = SubResource("CircleShape2D_wtb3g")
 metadata/_edit_lock_ = true
 
-[node name="PlayerRayCast2D" type="RayCast2D" parent="."]
-target_position = Vector2(512, 0)
+[node name="PlayerRayCast2D" type="RayCast2D" parent="." node_paths=PackedStringArray("Player")]
+target_position = Vector2(1024, 0)
+script = ExtResource("2_wxquw")
+Player = NodePath("..")
+
+[connection signal="slay" from="." to="PlayerRayCast2D" method="_on_player_slay"]
