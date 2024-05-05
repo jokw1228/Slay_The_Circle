@@ -27,15 +27,17 @@ func _input(event):
 			
 			var h: float = circle_centor.x
 			var k: float = circle_centor.y
-			if target_position.x > position.x:
-				# const + sqrt
-				x1 = (2*(h-m*k)+sqrt(4*(h-m*k)*(h-m*k) + 4*(1+m*m)*(h*h+(b-k)*(b-k)-r*r)))/(2*(1+m*m))
+			
+			var x1_candidate1: float = (h-m*k + sqrt((h-m*k)*(h-m*k) - (1+m*m)*(h*h+(b-k)*(b-k)-r*r))) / (1+m*m)
+			var x1_candidate2: float = (h-m*k - sqrt((h-m*k)*(h-m*k) - (1+m*m)*(h*h+(b-k)*(b-k)-r*r))) / (1+m*m)
+			
+			if abs(target_position.x - x1_candidate1) < abs(target_position.x - x1_candidate2):
+				x1 = x1_candidate1
 			else:
-				# const - sqrt
-				x1 = (2*(h-m*k)+sqrt(4*(h-m*k)*(h-m*k) - 4*(1+m*m)*(h*h+(b-k)*(b-k)-r*r)))/(2*(1+m*m))
+				x1 = x1_candidate2
 			y1 = m*x1 + b
 			
-			position = Vector2(x1, y1)
+			position = Vector2(x1, y1).normalized() * r
 
 func _draw():
 	draw_arc(position, 32, 0, 2 * PI, 9, Color.WHITE, 4.0, false)
