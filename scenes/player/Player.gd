@@ -2,30 +2,30 @@ extends CharacterBody2D
 
 @export var PlayerRayCast2D: RayCast2D
 
-signal slay
+signal change_click_queue_to_movement_queue(click_position)
 
-var moving_queue: Array
+var click_queue: Array
+var movement_queue: Array
 var is_moving = false
 
 func _draw():
 	draw_arc(position, 32, 0, 2 * PI, 9, Color.WHITE, 4.0, false)
 
 func _physics_process(_delta):
-	_moving_queue_proccessing()
+	_movement_queue_proccessing()
 	move_and_slide()
 
 func _input(event):
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
-		look_at(get_global_mouse_position())
-		slay.emit()
+		click_queue.push_back(get_global_mouse_position())
 
 func _on_player_ray_cast_2d_move_player(position_to_go):
-	moving_queue.push_back(position_to_go)
+	movement_queue.push_back(position_to_go)
 
-func _moving_queue_proccessing():
-	if is_moving == false && not moving_queue.is_empty():
+func _movement_queue_proccessing():
+	if is_moving == false && not movement_queue.is_empty():
 		is_moving = true
-		var position_to_go = moving_queue.pop_front()
+		var position_to_go = movement_queue.pop_front()
 		
 		var speed: float = 2048
 		velocity = (position_to_go - position).normalized() * speed
@@ -37,3 +37,5 @@ func _moving_queue_proccessing():
 		position = position_to_go
 		
 		is_moving = false
+	if is_moving == false && not click_queue.is_empty():
+		change_click_queue_to_movement_queue.emit(click_queue.pop_front())

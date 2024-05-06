@@ -19,5 +19,5 @@ target_position = Vector2(1024, 0)
 collision_mask = 32768
 script = ExtResource("2_wxquw")
 
-[connection signal="slay" from="." to="PlayerRayCast2D" method="_on_player_slay"]
+[connection signal="change_click_queue_to_movement_queue" from="." to="PlayerRayCast2D" method="_on_player_change_click_queue_to_movement_queue"]
 [connection signal="move_player" from="PlayerRayCast2D" to="." method="_on_player_ray_cast_2d_move_player"]
