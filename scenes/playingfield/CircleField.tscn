@@ -1,0 +1,33 @@
+[gd_scene load_steps=2 format=3 uid="uid://s264e74phclm"]
+
+[ext_resource type="Script" path="res://scenes/playingfield/CircleField.gd" id="1_8qsbc"]
+
+[node name="CircleField" type="StaticBody2D"]
+collision_layer = 32768
+collision_mask = 0
+script = ExtResource("1_8qsbc")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(-256, -256, 256, -256, 256, -320, -256, -320)
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(-256, -256, -256, 256, -320, 256, -320, -256)
+
+[node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(-256, 256, 256, 256, 256, 320, -256, 320)
+
+[node name="CollisionPolygon2D4" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(256, -256, 320, -256, 320, 256, 256, 256)
+
+[node name="CollisionPolygon2D5" type="CollisionPolygon2D" parent="."]
+position = Vector2(-32, 0)
+polygon = PackedVector2Array(-224, -64, -192, -160, -128, -224, -32, -256, -224, -256)
+
+[node name="CollisionPolygon2D6" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(64, -256, 160, -224, 224, -160, 256, -64, 256, -256)
+
+[node name="CollisionPolygon2D7" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(256, 64, 224, 160, 160, 224, 64, 256, 256, 256)
+
+[node name="CollisionPolygon2D8" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(-256, 64, -224, 160, -160, 224, -64, 256, -256, 256)

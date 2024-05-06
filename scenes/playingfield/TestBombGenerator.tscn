@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://cx1j53lav5had"]
+
+[ext_resource type="Script" path="res://scenes/playingfield/TestBombGenerator.gd" id="1_mqm6x"]
+[ext_resource type="PackedScene" uid="uid://bj78l3upa26ik" path="res://scenes/bombs/NormalBomb.tscn" id="2_srx4d"]
+
+[node name="TestBombGenerator" type="Node2D"]
+script = ExtResource("1_mqm6x")
+NormalBomb_scene = ExtResource("2_srx4d")
+
+[node name="Timer" type="Timer" parent="."]
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

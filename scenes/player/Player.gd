@@ -6,9 +6,7 @@ signal slay
 
 func _input(event):
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
-		var target_position: Vector2 = get_global_mouse_position()
-		
-		PlayerRayCast2D.look_at(target_position)
+		look_at(get_global_mouse_position())
 		slay.emit()
 
 func _draw():
