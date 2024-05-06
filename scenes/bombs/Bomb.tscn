@@ -3,4 +3,5 @@
 [ext_resource type="Script" path="res://scenes/bombs/Bomb.gd" id="1_t5a2j"]
 
 [node name="Bomb" type="Area2D"]
+collision_layer = 0
 script = ExtResource("1_t5a2j")

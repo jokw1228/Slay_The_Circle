@@ -7,6 +7,7 @@
 radius = 16.0
 
 [node name="NormalBomb" type="Area2D"]
+collision_layer = 0
 script = ExtResource("1_d5v6f")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -14,4 +15,5 @@ shape = SubResource("CircleShape2D_n2uys")
 
 [node name="BombTimer" parent="." instance=ExtResource("2_yellt")]
 
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="bomb_time_out" from="BombTimer" to="." method="exploded"]
