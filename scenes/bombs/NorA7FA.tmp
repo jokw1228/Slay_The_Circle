@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://bj78l3upa26ik"]
+
+[ext_resource type="Script" path="res://scenes/bombs/NormalBomb.gd" id="1_d5v6f"]
+[ext_resource type="PackedScene" uid="uid://dq81owitrvpew" path="res://scenes/bombs/BombTimer.tscn" id="2_yellt"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_n2uys"]
+radius = 16.0
+
+[node name="NormalBomb" type="Area2D"]
+collision_layer = 0
+script = ExtResource("1_d5v6f")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_n2uys")
+
+[node name="BombTimer" parent="." instance=ExtResource("2_yellt")]
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="bomb_time_out" from="BombTimer" to="." method="exploded"]

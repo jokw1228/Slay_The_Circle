@@ -8,3 +8,7 @@ func slayed():
 func exploded():
 	# virtual method
 	pass
+
+func _on_body_entered(body):
+	if body is Player:
+		slayed()
