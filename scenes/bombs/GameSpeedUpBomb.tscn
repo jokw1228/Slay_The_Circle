@@ -13,10 +13,11 @@ script = ExtResource("1_xqi0c")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_l8raj")
 
-[node name="BombTimer" parent="." instance=ExtResource("2_iykik")]
-
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("3_ds3i7")
 
+[node name="BombTimer" parent="." instance=ExtResource("2_iykik")]
+
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="player_body_entered" from="." to="." method="slayed"]
 [connection signal="bomb_time_out" from="BombTimer" to="." method="exploded"]

@@ -1,7 +1,5 @@
 extends RayCast2D
 
-@export var Player: CharacterBody2D
-
 signal move_player(position_to_go)
 
 var on_slaying: bool = false

@@ -1,14 +1,14 @@
 extends Area2D
 class_name Bomb # virtual class
 
-func slayed():
-	# virtual method
-	pass
-
-func exploded():
-	# virtual method
-	pass
+signal player_body_entered()
 
 func _on_body_entered(body):
 	if body is Player:
-		slayed()
+		player_body_entered.emit()
+
+func slayed(): # safely defuse this bomb 
+	queue_free()
+
+func exploded(): # game over
+	queue_free()

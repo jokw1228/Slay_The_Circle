@@ -16,4 +16,5 @@ shape = SubResource("CircleShape2D_n2uys")
 [node name="BombTimer" parent="." instance=ExtResource("2_yellt")]
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="player_body_entered" from="." to="." method="slayed"]
 [connection signal="bomb_time_out" from="BombTimer" to="." method="exploded"]
