@@ -1,5 +1,5 @@
 extends Area2D
-class_name Bomb # virtual class
+class_name Bomb
 
 signal player_body_entered()
 
@@ -11,4 +11,5 @@ func slayed(): # safely defuse this bomb
 	queue_free()
 
 func exploded(): # game over
+	PlayingFieldManager.game_over()
 	queue_free()

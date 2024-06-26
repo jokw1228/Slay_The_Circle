@@ -1,11 +1,12 @@
 extends Camera2D
-class_name PlayingfieldCamera
+class_name PlayingFieldCamera
 
 var rotation_amount: float = 0
 var rotation_direction = 1.0
 
 func _ready():
-	rotation_amount = PI / 4
+	#rotation_amount = PI / 4
+	pass
 
 func _process(delta):
 	rotation += rotation_amount * rotation_direction * delta

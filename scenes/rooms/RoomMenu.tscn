@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://bdrilkeb2s5n0"]
+
+[ext_resource type="Script" path="res://scenes/rooms/RoomMenu.gd" id="1_sshbl"]
+
+[node name="RoomMenu" type="Node2D"]
+script = ExtResource("1_sshbl")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_left = -576.0
+offset_top = -328.0
+offset_right = 576.0
+offset_bottom = 328.0
+color = Color(0, 0, 0, 1)

@@ -1,11 +1,14 @@
-[gd_scene load_steps=5 format=3 uid="uid://i31oljejy0t3"]
+[gd_scene load_steps=6 format=3 uid="uid://i31oljejy0t3"]
 
+[ext_resource type="Script" path="res://scenes/playingfield/PlayingField.gd" id="1_4k3bu"]
 [ext_resource type="PackedScene" uid="uid://bhe55ocau21ot" path="res://scenes/player/Player.tscn" id="1_08iax"]
-[ext_resource type="PackedScene" uid="uid://cn7ttflmrmpth" path="res://scenes/playingfield/PlayingfieldCamera.tscn" id="1_itx83"]
+[ext_resource type="PackedScene" uid="uid://cn7ttflmrmpth" path="res://scenes/playingfield/PlayingFieldCamera.tscn" id="1_itx83"]
 [ext_resource type="PackedScene" uid="uid://s264e74phclm" path="res://scenes/playingfield/CircleField.tscn" id="2_qsuum"]
 [ext_resource type="PackedScene" uid="uid://cx1j53lav5had" path="res://scenes/playingfield/TestBombGenerator.tscn" id="3_lbb06"]
 
-[node name="RoomTest" type="Node2D"]
+[node name="RoomTest" type="Node2D" node_paths=PackedStringArray("PlayingFieldCamera_node")]
+script = ExtResource("1_4k3bu")
+PlayingFieldCamera_node = NodePath("PlayingfieldCamera")
 
 [node name="PlayingfieldCamera" parent="." instance=ExtResource("1_itx83")]
 
@@ -19,7 +22,5 @@ color = Color(0, 0, 0, 1)
 [node name="Player" parent="." instance=ExtResource("1_08iax")]
 
 [node name="CircleField" parent="." instance=ExtResource("2_qsuum")]
-
-[node name="Camera2D" type="Camera2D" parent="."]
 
 [node name="TestBombGenerator" parent="." instance=ExtResource("3_lbb06")]

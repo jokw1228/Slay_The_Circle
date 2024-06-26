@@ -2,6 +2,6 @@ extends Bomb
 class_name RotationSpeedUpBomb
 
 func slayed():
-	var camera: PlayingfieldCamera = get_tree().current_scene.get_node("PlayingfieldCamera")
-	camera.rotation_speed_up(PI / 16)
+	var PlayingField_node: PlayingField = PlayingFieldManager.get_PlayingField_node()
+	PlayingField_node.rotation_speed_up(PI / 16)
 	super()

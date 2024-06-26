@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://cux2tpymcx5ny"]
+
+[ext_resource type="Script" path="res://scenes/bombs/HazardBomb.gd" id="1_wklac"]
+[ext_resource type="PackedScene" uid="uid://dq81owitrvpew" path="res://scenes/bombs/BombTimer.tscn" id="2_xj2gr"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_1f6en"]
+radius = 16.0
+
+[node name="HazardBomb" type="Area2D"]
+script = ExtResource("1_wklac")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_1f6en")
+
+[node name="BombTimer" parent="." instance=ExtResource("2_xj2gr")]
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="player_body_entered" from="." to="." method="exploded"]
+[connection signal="bomb_time_out" from="BombTimer" to="." method="slayed"]

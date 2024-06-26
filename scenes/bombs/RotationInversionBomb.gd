@@ -2,7 +2,7 @@ extends Bomb
 class_name RotationInversionBomb
 
 func slayed():
-	var camera: PlayingfieldCamera = get_tree().current_scene.get_node("PlayingfieldCamera")
-	camera.rotation_inversion()
+	var PlayingField_node: PlayingField = PlayingFieldManager.get_PlayingField_node()
+	PlayingField_node.rotation_inversion()
 	super()
 
