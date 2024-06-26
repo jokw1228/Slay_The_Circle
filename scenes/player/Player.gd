@@ -4,6 +4,7 @@ class_name Player
 @export var PlayerRayCast2D: RayCast2D
 
 signal change_click_queue_to_movement_queue(click_position)
+#signal grounded
 
 var click_queue: Array
 var is_raycasting: bool = false

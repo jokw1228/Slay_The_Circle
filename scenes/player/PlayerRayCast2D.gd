@@ -4,11 +4,13 @@ signal move_player(position_to_go)
 
 var on_slaying: bool = false
 
+const CircleFieldRadius = 128
+
 func _physics_process(_delta):
 	if on_slaying:
 		on_slaying = false
 		
-		var position_to_go = get_collision_point().normalized() * 256
+		var position_to_go = get_collision_point().normalized() * CircleFieldRadius * 2
 		move_player.emit(position_to_go)
 
 

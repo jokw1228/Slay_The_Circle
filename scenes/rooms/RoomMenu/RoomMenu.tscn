@@ -1,0 +1,14 @@
+[gd_scene load_steps=4 format=3 uid="uid://bdrilkeb2s5n0"]
+
+[ext_resource type="Script" path="res://scenes/rooms/RoomMenu/RoomMenu.gd" id="1_sshbl"]
+[ext_resource type="PackedScene" uid="uid://ccay8yrm25adk" path="res://scenes/rooms/RoomPlayingFields/RoomPlayingFieldCircle.tscn" id="2_wyq32"]
+[ext_resource type="PackedScene" uid="uid://bmf6vxoacxub" path="res://scenes/rooms/RoomPlayingFields/RoomPlayingFieldCircler.tscn" id="3_yvois"]
+
+[node name="RoomMenu" type="Node2D"]
+script = ExtResource("1_sshbl")
+room_to_go = Array[PackedScene]([ExtResource("2_wyq32"), ExtResource("3_yvois"), null, null, null, null])
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_right = 1152.0
+offset_bottom = 656.0
+color = Color(0, 0, 0, 1)

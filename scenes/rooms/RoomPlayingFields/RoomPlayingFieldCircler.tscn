@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://bmf6vxoacxub"]
 
-[ext_resource type="Script" path="res://scenes/rooms/RoomPlayingFieldCircler.gd" id="1_t3kgt"]
+[ext_resource type="Script" path="res://scenes/rooms/RoomPlayingFields/RoomPlayingFieldCircler.gd" id="1_t3kgt"]
 [ext_resource type="PackedScene" uid="uid://cn7ttflmrmpth" path="res://scenes/playingfield/PlayingFieldCamera.tscn" id="2_f0vqg"]
 [ext_resource type="PackedScene" uid="uid://bhe55ocau21ot" path="res://scenes/player/Player.tscn" id="3_5g552"]
 [ext_resource type="PackedScene" uid="uid://s264e74phclm" path="res://scenes/playingfield/CircleField.tscn" id="4_1rn2v"]
