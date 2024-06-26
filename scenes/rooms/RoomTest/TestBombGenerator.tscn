@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://cx1j53lav5had"]
 
-[ext_resource type="Script" path="res://scenes/playingfield/TestBombGenerator.gd" id="1_mqm6x"]
+[ext_resource type="Script" path="res://scenes/rooms/RoomTest/TestBombGenerator.gd" id="1_mqm6x"]
 [ext_resource type="PackedScene" uid="uid://cux2tpymcx5ny" path="res://scenes/bombs/HazardBomb.tscn" id="6_gk3wy"]
 
 [node name="TestBombGenerator" type="Node2D"]
