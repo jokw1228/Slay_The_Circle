@@ -4,7 +4,7 @@ class_name Player
 @export var PlayerRayCast2D: RayCast2D
 
 signal change_click_queue_to_movement_queue(click_position)
-#signal grounded
+signal grounded
 
 var click_queue: Array
 var is_raycasting: bool = false
@@ -40,6 +40,7 @@ func _movement_queue_proccessing():
 		velocity = Vector2.ZERO
 		position = position_to_go
 		
+		grounded.emit()
 		is_moving = false
 	if is_moving == false && not click_queue.is_empty() && is_raycasting == false:
 		change_click_queue_to_movement_queue.emit(click_queue.pop_front())
