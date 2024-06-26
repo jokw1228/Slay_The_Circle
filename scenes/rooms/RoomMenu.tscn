@@ -1,9 +1,12 @@
-[gd_scene load_steps=2 format=3 uid="uid://bdrilkeb2s5n0"]
+[gd_scene load_steps=4 format=3 uid="uid://bdrilkeb2s5n0"]
 
 [ext_resource type="Script" path="res://scenes/rooms/RoomMenu.gd" id="1_sshbl"]
+[ext_resource type="PackedScene" uid="uid://ccay8yrm25adk" path="res://scenes/rooms/RoomPlayingFieldCircle.tscn" id="2_m3688"]
+[ext_resource type="PackedScene" uid="uid://bmf6vxoacxub" path="res://scenes/rooms/RoomPlayingFieldCircler.tscn" id="3_fcys0"]
 
 [node name="RoomMenu" type="Node2D"]
 script = ExtResource("1_sshbl")
+room_to_go = Array[PackedScene]([ExtResource("2_m3688"), ExtResource("3_fcys0"), null, null, null, null])
 
 [node name="ColorRect" type="ColorRect" parent="."]
 offset_left = -576.0

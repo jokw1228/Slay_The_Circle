@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Slay The Circle"
-run/main_scene="res://scenes/rooms/RoomTest.tscn"
+run/main_scene="res://scenes/rooms/RoomLogo.tscn"
 config/features=PackedStringArray("4.2", "Mobile")
 config/icon="res://icon.svg"
 
