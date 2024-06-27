@@ -24,7 +24,7 @@ func start_PlayingField():
 func stop_PlayingField():
 	playing = false
 	
-	Engine.time_scale = 1.0
+	PlayingFieldInterface.game_speed_reset()
 	PlayingFieldCamera_node.rotation_stop()
 	await get_tree().create_timer(0.5).timeout
 	PlayingFieldUI_node.close_Playing_and_open_Stopped()

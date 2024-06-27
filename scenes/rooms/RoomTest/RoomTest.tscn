@@ -1,6 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://i31oljejy0t3"]
+[gd_scene load_steps=6 format=3 uid="uid://i31oljejy0t3"]
 
 [ext_resource type="PackedScene" uid="uid://dntg6argh8n3n" path="res://scenes/playingfield/PlayingField.tscn" id="2_xnsv4"]
+[ext_resource type="PackedScene" uid="uid://bd65ne6jxvojv" path="res://scenes/bombs/RotationInversionBomb.tscn" id="3_lqn8x"]
+[ext_resource type="PackedScene" uid="uid://1ohs6nj2dm33" path="res://scenes/bombs/RotationSpeedUpBomb.tscn" id="4_dsi08"]
+[ext_resource type="PackedScene" uid="uid://cr4l7m2i6dxl" path="res://scenes/bombs/GameSpeedUpBomb.tscn" id="5_5e58e"]
 [ext_resource type="PackedScene" uid="uid://cx1j53lav5had" path="res://scenes/bombgenerators/TestBombGenerator.tscn" id="5_5f7bp"]
 
 [node name="RoomTest" type="Node2D"]
@@ -9,3 +12,4 @@
 BombGenerator = NodePath("../TestBombGenerator")
 
 [node name="TestBombGenerator" parent="." instance=ExtResource("5_5f7bp")]
+bombs_to_generate = Array[PackedScene]([ExtResource("3_lqn8x"), ExtResource("4_dsi08"), ExtResource("5_5e58e")])
