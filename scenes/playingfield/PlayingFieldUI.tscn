@@ -1,0 +1,59 @@
+[gd_scene load_steps=7 format=3 uid="uid://dl4bge564bur"]
+
+[ext_resource type="Script" path="res://scenes/playingfield/PlayingFieldUI.gd" id="1_4jlcl"]
+[ext_resource type="FontFile" uid="uid://bn71j2rajnbrn" path="res://fonts/bump-it-up.ttf" id="2_ul78b"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_v6pxw"]
+font = ExtResource("2_ul78b")
+font_size = 24
+
+[sub_resource type="LabelSettings" id="LabelSettings_rkghr"]
+font = ExtResource("2_ul78b")
+
+[sub_resource type="LabelSettings" id="LabelSettings_w4pgt"]
+font = ExtResource("2_ul78b")
+font_size = 64
+
+[sub_resource type="LabelSettings" id="LabelSettings_ti1d4"]
+font = ExtResource("2_ul78b")
+font_size = 24
+
+[node name="PlayingFieldUI" type="CanvasLayer" node_paths=PackedStringArray("Seconds", "Milliseconds")]
+script = ExtResource("1_4jlcl")
+Seconds = NodePath("Playing/Seconds")
+Milliseconds = NodePath("Playing/Milliseconds")
+
+[node name="Playing" type="Node2D" parent="."]
+
+[node name="TIME" type="Label" parent="Playing"]
+offset_left = 704.0
+offset_top = 32.0
+offset_right = 808.0
+offset_bottom = 62.0
+text = "TIME"
+label_settings = SubResource("LabelSettings_v6pxw")
+
+[node name="BEST" type="Label" parent="Playing"]
+offset_left = 32.0
+offset_top = 32.0
+offset_right = 116.0
+offset_bottom = 55.0
+text = "BEST: "
+label_settings = SubResource("LabelSettings_rkghr")
+
+[node name="Seconds" type="Label" parent="Playing"]
+offset_left = 896.0
+offset_top = 32.0
+offset_right = 1038.0
+offset_bottom = 112.0
+text = "0"
+label_settings = SubResource("LabelSettings_w4pgt")
+horizontal_alignment = 2
+
+[node name="Milliseconds" type="Label" parent="Playing"]
+offset_left = 1056.0
+offset_top = 64.0
+offset_right = 1127.0
+offset_bottom = 94.0
+text = ": 12"
+label_settings = SubResource("LabelSettings_ti1d4")

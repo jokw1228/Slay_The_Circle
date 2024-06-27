@@ -18,7 +18,6 @@ offset_right = 576.0
 offset_bottom = 328.0
 color = Color(0.794121, 0.794121, 0.794121, 1)
 
-[node name="Player" parent="." node_paths=PackedStringArray("PlayerRayCast2D") instance=ExtResource("3_5g552")]
-PlayerRayCast2D = NodePath("")
+[node name="Player" parent="." instance=ExtResource("3_5g552")]
 
 [node name="CircleField" parent="." instance=ExtResource("4_1rn2v")]
