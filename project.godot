@@ -17,7 +17,7 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-PlayingFieldManager="*res://scenes/playingfield/PlayingFieldManager.gd"
+PlayingFieldInterface="*res://scenes/playingfield/PlayingFieldInterface.gd"
 
 [editor]
 

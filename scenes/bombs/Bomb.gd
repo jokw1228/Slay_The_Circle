@@ -11,5 +11,5 @@ func slayed(): # safely defuse this bomb
 	queue_free()
 
 func exploded(): # game over
-	PlayingFieldManager.game_over()
+	PlayingFieldInterface.game_over()
 	queue_free()

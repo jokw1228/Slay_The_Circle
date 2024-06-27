@@ -18,10 +18,12 @@ font_size = 64
 font = ExtResource("2_ul78b")
 font_size = 24
 
-[node name="PlayingFieldUI" type="CanvasLayer" node_paths=PackedStringArray("Seconds", "Milliseconds")]
+[node name="PlayingFieldUI" type="CanvasLayer" node_paths=PackedStringArray("Playing_node", "Stopped_node", "Seconds_node", "Milliseconds_node")]
 script = ExtResource("1_4jlcl")
-Seconds = NodePath("Playing/Seconds")
-Milliseconds = NodePath("Playing/Milliseconds")
+Playing_node = NodePath("Playing")
+Stopped_node = NodePath("Stopped")
+Seconds_node = NodePath("Playing/Seconds")
+Milliseconds_node = NodePath("Playing/Milliseconds")
 
 [node name="Playing" type="Node2D" parent="."]
 
@@ -42,18 +44,20 @@ text = "BEST: "
 label_settings = SubResource("LabelSettings_rkghr")
 
 [node name="Seconds" type="Label" parent="Playing"]
-offset_left = 896.0
-offset_top = 32.0
+offset_left = 832.0
+offset_top = 24.0
 offset_right = 1038.0
-offset_bottom = 112.0
+offset_bottom = 104.0
 text = "0"
 label_settings = SubResource("LabelSettings_w4pgt")
 horizontal_alignment = 2
 
 [node name="Milliseconds" type="Label" parent="Playing"]
-offset_left = 1056.0
+offset_left = 1040.0
 offset_top = 64.0
-offset_right = 1127.0
+offset_right = 1111.0
 offset_bottom = 94.0
-text = ": 12"
+text = ":0"
 label_settings = SubResource("LabelSettings_ti1d4")
+
+[node name="Stopped" type="Node2D" parent="."]

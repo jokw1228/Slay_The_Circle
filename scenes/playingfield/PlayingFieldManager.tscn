@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://brtgixd6b5sav"]
-
-[ext_resource type="Script" path="res://scenes/playingfield/PlayingFieldManager.gd" id="1_qx1sr"]
-
-[node name="PlayingFieldManager" type="Node2D"]
-script = ExtResource("1_qx1sr")

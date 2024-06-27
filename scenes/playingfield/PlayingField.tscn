@@ -1,14 +1,21 @@
-[gd_scene load_steps=4 format=3 uid="uid://dntg6argh8n3n"]
+[gd_scene load_steps=6 format=3 uid="uid://dntg6argh8n3n"]
 
 [ext_resource type="Script" path="res://scenes/playingfield/PlayingField.gd" id="1_ed5yp"]
 [ext_resource type="PackedScene" uid="uid://cn7ttflmrmpth" path="res://scenes/playingfield/PlayingFieldCamera.tscn" id="2_xhkow"]
 [ext_resource type="PackedScene" uid="uid://dl4bge564bur" path="res://scenes/playingfield/PlayingFieldUI.tscn" id="3_7mvnn"]
+[ext_resource type="PackedScene" uid="uid://bhe55ocau21ot" path="res://scenes/player/Player.tscn" id="4_u3i3n"]
+[ext_resource type="PackedScene" uid="uid://s264e74phclm" path="res://scenes/playingfield/CircleField.tscn" id="5_1ahyj"]
 
-[node name="PlayingField" type="Node2D" node_paths=PackedStringArray("PlayingFieldCamera_node", "PlayingFieldUI_node")]
+[node name="PlayingField" type="Node2D" node_paths=PackedStringArray("PlayingFieldCamera_node", "PlayingFieldUI_node", "Player_node")]
 script = ExtResource("1_ed5yp")
 PlayingFieldCamera_node = NodePath("PlayingFieldCamera")
 PlayingFieldUI_node = NodePath("PlayingFieldUI")
+Player_node = NodePath("Player")
 
 [node name="PlayingFieldCamera" parent="." instance=ExtResource("2_xhkow")]
 
 [node name="PlayingFieldUI" parent="." instance=ExtResource("3_7mvnn")]
+
+[node name="Player" parent="." instance=ExtResource("4_u3i3n")]
+
+[node name="CircleField" parent="." instance=ExtResource("5_1ahyj")]

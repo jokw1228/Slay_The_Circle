@@ -16,3 +16,10 @@ func rotation_speed_up(up: float):
 
 func rotation_inversion():
 	rotation_direction *= -1;
+
+func rotation_stop():
+	rotation_amount = 0
+
+func rotation_reset():
+	rotation = 0
+	rotation_direction = 1

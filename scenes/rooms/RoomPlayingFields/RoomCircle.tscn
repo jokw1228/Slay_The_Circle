@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://ccay8yrm25adk"]
+
+[ext_resource type="PackedScene" uid="uid://dntg6argh8n3n" path="res://scenes/playingfield/PlayingField.tscn" id="1_ms04y"]
+[ext_resource type="PackedScene" uid="uid://cx1j53lav5had" path="res://scenes/bombgenerators/TestBombGenerator.tscn" id="2_gv11j"]
+
+[node name="RoomCircle" type="Node2D"]
+
+[node name="PlayingField" parent="." node_paths=PackedStringArray("BombGenerator") instance=ExtResource("1_ms04y")]
+BombGenerator = NodePath("../TestBombGenerator")
+
+[node name="TestBombGenerator" parent="." instance=ExtResource("2_gv11j")]
