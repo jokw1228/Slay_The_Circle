@@ -5,7 +5,5 @@
 
 [node name="RoomCircler" type="Node2D"]
 
-[node name="PlayingField" parent="." node_paths=PackedStringArray("BombGenerator") instance=ExtResource("1_i2pim")]
-BombGenerator = NodePath("../TestBombGenerator")
-
-[node name="TestBombGenerator" parent="." instance=ExtResource("2_1fxkb")]
+[node name="PlayingField" parent="." instance=ExtResource("1_i2pim")]
+BombGenerator = ExtResource("2_1fxkb")

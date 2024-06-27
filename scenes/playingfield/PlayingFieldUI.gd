@@ -7,11 +7,17 @@ class_name PlayingFieldUI
 @export var Seconds_node: Label
 @export var Milliseconds_node: Label
 
+@export var last_Seconds_node: Label
+@export var last_Milliseconds_node: Label
+
+var seconds_value: int = 0
+var milliseconds_value: int = 0
+
 func playing_time_updated(time: float):
-	var seconds_value: int = floor(time)
+	seconds_value = floor(time)
 	Seconds_node.text = str(seconds_value)
 	
-	var milliseconds_value: int = floor((time - seconds_value) * 100)
+	milliseconds_value = floor((time - seconds_value) * 100)
 	Milliseconds_node.text = ":" + str(milliseconds_value)
 
 func close_Stopped_and_open_Playing():
@@ -21,3 +27,6 @@ func close_Stopped_and_open_Playing():
 func close_Playing_and_open_Stopped():
 	Playing_node.visible = false
 	Stopped_node.visible = true
+	
+	last_Seconds_node.text = str(seconds_value)
+	last_Milliseconds_node.text = ":" + str(milliseconds_value)
