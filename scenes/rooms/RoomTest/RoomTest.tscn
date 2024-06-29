@@ -6,4 +6,4 @@
 [node name="RoomTest" type="Node2D"]
 
 [node name="PlayingField" parent="." instance=ExtResource("2_xnsv4")]
-BombGenerator = ExtResource("5_5f7bp")
+BombGenerator_scene = ExtResource("5_5f7bp")

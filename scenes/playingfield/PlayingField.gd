@@ -1,7 +1,7 @@
 extends Node2D
 class_name PlayingField
 
-@export var BombGenerator: PackedScene
+@export var BombGenerator_scene: PackedScene
 
 @export var StartBomb_scene: PackedScene
 
@@ -30,7 +30,7 @@ func start_PlayingField():
 		PlayingFieldUI_node.close_Stopped_and_open_Playing()
 		playing_time = 0
 		
-		BombGenerator_node = BombGenerator.instantiate()
+		BombGenerator_node = BombGenerator_scene.instantiate()
 		add_child(BombGenerator_node)
 
 func stop_PlayingField():

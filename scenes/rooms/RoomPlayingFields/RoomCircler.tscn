@@ -6,4 +6,4 @@
 [node name="RoomCircler" type="Node2D"]
 
 [node name="PlayingField" parent="." instance=ExtResource("1_i2pim")]
-BombGenerator = ExtResource("2_1fxkb")
+BombGenerator_scene = ExtResource("2_1fxkb")
