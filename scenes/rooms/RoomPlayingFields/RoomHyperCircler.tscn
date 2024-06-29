@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://bbuev5x2anes0"]
+
+[ext_resource type="PackedScene" uid="uid://dntg6argh8n3n" path="res://scenes/playingfield/PlayingField.tscn" id="1_56g5c"]
+[ext_resource type="PackedScene" uid="uid://cx1j53lav5had" path="res://scenes/bombgenerators/TestBombGenerator.tscn" id="2_pkxre"]
+
+[node name="RoomHyperCircler" type="Node2D"]
+
+[node name="PlayingField" parent="." instance=ExtResource("1_56g5c")]
+BombGenerator_scene = ExtResource("2_pkxre")

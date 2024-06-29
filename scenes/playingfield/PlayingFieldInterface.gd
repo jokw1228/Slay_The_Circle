@@ -1,7 +1,7 @@
 extends Node2D
 #class_name PlayingFieldInterface
 
-func get_PlayingField_node():
+func get_PlayingField_node() -> PlayingField:
 	var node: PlayingField = get_tree().current_scene.get_node("PlayingField")
 	return node
 
