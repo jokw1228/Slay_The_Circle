@@ -1,6 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://dntg6argh8n3n"]
+[gd_scene load_steps=7 format=3 uid="uid://dntg6argh8n3n"]
 
 [ext_resource type="Script" path="res://scenes/playingfield/PlayingField.gd" id="1_ed5yp"]
+[ext_resource type="PackedScene" uid="uid://crk2aniu1h5di" path="res://scenes/bombs/StartBomb.tscn" id="2_s84lx"]
 [ext_resource type="PackedScene" uid="uid://cn7ttflmrmpth" path="res://scenes/playingfield/PlayingFieldCamera.tscn" id="2_xhkow"]
 [ext_resource type="PackedScene" uid="uid://dl4bge564bur" path="res://scenes/playingfield/PlayingFieldUI.tscn" id="3_7mvnn"]
 [ext_resource type="PackedScene" uid="uid://bhe55ocau21ot" path="res://scenes/player/Player.tscn" id="4_u3i3n"]
@@ -8,6 +9,7 @@
 
 [node name="PlayingField" type="Node2D" node_paths=PackedStringArray("PlayingFieldCamera_node", "PlayingFieldUI_node", "Player_node")]
 script = ExtResource("1_ed5yp")
+StartBomb_scene = ExtResource("2_s84lx")
 PlayingFieldCamera_node = NodePath("PlayingFieldCamera")
 PlayingFieldUI_node = NodePath("PlayingFieldUI")
 Player_node = NodePath("Player")
