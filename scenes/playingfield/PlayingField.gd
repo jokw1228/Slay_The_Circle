@@ -15,6 +15,7 @@ var playing: bool = false
 var BombGenerator_node: Node2D
 
 func _ready():
+	PlayingFieldInterface.set_PlayingField_node(self)
 	start_PlayingField()
 
 func _process(delta):

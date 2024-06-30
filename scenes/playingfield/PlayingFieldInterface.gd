@@ -1,9 +1,13 @@
 extends Node2D
 #class_name PlayingFieldInterface
 
+var current_PlayingField_node: PlayingField
+
 func get_PlayingField_node() -> PlayingField:
-	var node: PlayingField = get_tree().current_scene.get_node("PlayingField")
-	return node
+	return current_PlayingField_node
+
+func set_PlayingField_node(node: PlayingField):
+	current_PlayingField_node = node
 
 func game_over():
 	get_PlayingField_node().stop_PlayingField()
