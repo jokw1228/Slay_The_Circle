@@ -52,6 +52,9 @@ func stop_PlayingField():
 		StartBomb_node.started.connect(start_PlayingField)
 		get_tree().current_scene.add_child(StartBomb_node)
 
+# Logic for BombLink
+func _on_player_grounded():
+	BombGenerator_node.get_tree().call_group("links", "on_player_grounded")
 
 ### interface
 
