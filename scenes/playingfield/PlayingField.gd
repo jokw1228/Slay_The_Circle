@@ -41,6 +41,7 @@ func stop_PlayingField():
 		PlayingFieldInterface.game_speed_reset()
 		PlayingFieldCamera_node.rotation_stop()
 		
+		BombGenerator_node.get_tree().call_group("links", "queue_free")
 		BombGenerator_node.queue_free()
 		
 		await get_tree().create_timer(1.0).timeout
@@ -54,7 +55,8 @@ func stop_PlayingField():
 
 # Logic for BombLink
 func _on_player_grounded():
-	BombGenerator_node.get_tree().call_group("links", "on_player_grounded")
+	if BombGenerator_node != null:
+		BombGenerator_node.get_tree().call_group("links", "on_player_grounded")
 
 ### interface
 

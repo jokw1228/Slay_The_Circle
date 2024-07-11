@@ -10,8 +10,8 @@ func set_child_bombs(b1: Bomb, b2: Bomb):
 	bomb2 = b2
 	add_child(bomb1)
 	add_child(bomb2)
-	bomb1.player_body_entered.connect(on_bomb_slayed())
-	bomb2.player_body_entered.connect(on_bomb_slayed())
+	bomb1.player_body_entered.connect(on_bomb_slayed)
+	bomb2.player_body_entered.connect(on_bomb_slayed)
 	set_transform_of_link()
 	
 func set_transform_of_link():
