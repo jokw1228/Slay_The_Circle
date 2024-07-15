@@ -1,4 +1,5 @@
 extends Node2D
+class_name PanelStage
 
 @export var difficulty: int
 @export var stage_name: String

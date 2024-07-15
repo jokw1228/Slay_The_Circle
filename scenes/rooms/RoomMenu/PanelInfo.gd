@@ -1,4 +1,5 @@
 extends Node2D
+class_name PanelInfo
 
 @export var info0: String
 @export var info1: String
@@ -17,4 +18,4 @@ func _ready():
 	label1.text = info1
 	shadow1.text = info1
 	label2.text = info2
-	label2.text = info2
+	shadow2.text = info2

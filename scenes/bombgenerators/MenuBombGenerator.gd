@@ -1,27 +1,15 @@
 extends Node2D
 
-
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
-
+var room_menu: RoomMenu
 
 func select_circle():
-	print("circle")
-
+	room_menu.select_circle()
 
 func select_circler():
-	print("circler")
-
+	room_menu.select_circler()
 
 func select_circlest():
-	print("circlest")
-
+	room_menu.select_circlest()
 
 func select_hyper():
-	print("hyper")
+	room_menu.select_hyper()

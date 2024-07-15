@@ -11,7 +11,11 @@ script = ExtResource("2_23n1h")
 sprite = NodePath("Sprite2D")
 texture = null
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." index="0"]
-shape = SubResource("CircleShape2D_8hgk3")
+[node name="Polygon2D" type="Polygon2D" parent="." index="0"]
+polygon = PackedVector2Array(-16, -16, 0, -24, 16, -16, 24, 0, 16, 16, 0, 24, -16, 16, -24, 0)
 
-[node name="Sprite2D" type="Sprite2D" parent="." index="1"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." index="1"]
+shape = SubResource("CircleShape2D_8hgk3")
+debug_color = Color(1.15514e-06, 0.596143, 0.721682, 0.42)
+
+[node name="Sprite2D" type="Sprite2D" parent="." index="2"]
