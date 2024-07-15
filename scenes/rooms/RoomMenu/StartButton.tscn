@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://dp0cdsfw5ylxj"]
+[gd_scene load_steps=8 format=3 uid="uid://dp0cdsfw5ylxj"]
 
 [ext_resource type="Script" path="res://scenes/rooms/RoomMenu/StartButton.gd" id="1_2wbp1"]
 [ext_resource type="FontFile" uid="uid://bn71j2rajnbrn" path="res://fonts/bump-it-up.ttf" id="1_poe1s"]
+[ext_resource type="PackedScene" uid="uid://bt6bbmwqw6ba2" path="res://scenes/rooms/RoomMenu/StartButtonEffect.tscn" id="3_p3s0g"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_c0a27"]
 bg_color = Color(1, 0.713726, 0.00392157, 1)
@@ -41,11 +42,14 @@ corner_radius_bottom_left = 3
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_umss3"]
 
-[node name="Start" type="Node2D"]
+[node name="Start" type="Node2D" node_paths=PackedStringArray("timer0", "timer1")]
 position = Vector2(192, 170)
 scale = Vector2(0.5, 0.5)
 skew = 0.261799
 script = ExtResource("1_2wbp1")
+timer0 = NodePath("Timer")
+timer1 = NodePath("Timer2")
+start_button_effect = ExtResource("3_p3s0g")
 
 [node name="Highlight" type="ColorRect" parent="."]
 anchors_preset = 15
@@ -103,4 +107,12 @@ theme_override_fonts/font = ExtResource("1_poe1s")
 theme_override_font_sizes/font_size = 66
 text = "START"
 
+[node name="Timer" type="Timer" parent="."]
+wait_time = 2.0
+
+[node name="Timer2" type="Timer" parent="."]
+wait_time = 2.0
+
 [connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="timeout" from="Timer2" to="." method="_on_timer_timeout"]

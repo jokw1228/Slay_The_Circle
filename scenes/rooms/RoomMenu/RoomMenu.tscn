@@ -35,6 +35,8 @@ zoom = Vector2(0.75, 0.75)
 visible = false
 
 [node name="UIContainer" type="CanvasLayer" parent="."]
+rotation = -0.226893
+transform = Transform2D(0.97437, -0.224951, 0.224951, 0.97437, 0, 0)
 
 [node name="UILeft" type="Control" parent="UIContainer"]
 layout_mode = 3
@@ -58,8 +60,5 @@ offset_top = -30.0
 offset_bottom = 30.0
 grow_horizontal = 0
 grow_vertical = 2
-
-[node name="Start" parent="UIContainer/UIRight" instance=ExtResource("13_yxsra")]
-position = Vector2(544, 170)
 
 [editable path="PlayingField"]
