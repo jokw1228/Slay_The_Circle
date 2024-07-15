@@ -10,7 +10,7 @@ script = ExtResource("1_8qsbc")
 CircleFieldEffect_scene = ExtResource("2_k4607")
 
 [node name="CircleFieldEffectTimer" type="Timer" parent="."]
-wait_time = 2.0
+wait_time = 0.5
 autostart = true
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]

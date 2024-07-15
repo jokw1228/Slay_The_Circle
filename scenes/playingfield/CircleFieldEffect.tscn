@@ -2,5 +2,11 @@
 
 [ext_resource type="Script" path="res://scenes/playingfield/CircleFieldEffect.gd" id="1_kt8e7"]
 
-[node name="CircleFieldEffect" type="Node2D"]
+[node name="CircleFieldEffect" type="Node2D" node_paths=PackedStringArray("Timer_node")]
 script = ExtResource("1_kt8e7")
+Timer_node = NodePath("Timer")
+
+[node name="Timer" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
