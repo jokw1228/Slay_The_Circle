@@ -31,8 +31,6 @@ func start_PlayingField():
 		playing = true
 		game_start.emit()
 		
-		#PlayingFieldCamera_node.rotation_reset()
-		#PlayingFieldUI_node.close_Stopped_and_open_Playing()
 		playing_time = 0
 		
 		BombGenerator_node = BombGenerator_scene.instantiate()
@@ -44,12 +42,8 @@ func stop_PlayingField():
 		game_over.emit()
 		
 		PlayingFieldInterface.game_speed_reset()
-		#PlayingFieldCamera_node.rotation_stop()
 		
 		BombGenerator_node.queue_free()
-		
-		#await get_tree().create_timer(1.0).timeout
-		#PlayingFieldUI_node.close_Playing_and_open_Stopped()
 		
 		# Create a StartBomb
 		await get_tree().create_timer(1.0).timeout

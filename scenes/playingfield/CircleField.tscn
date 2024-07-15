@@ -3,13 +3,14 @@
 [ext_resource type="Script" path="res://scenes/playingfield/CircleField.gd" id="1_8qsbc"]
 [ext_resource type="PackedScene" uid="uid://csd3qsksn85gu" path="res://scenes/playingfield/CircleFieldEffect.tscn" id="2_k4607"]
 
-[node name="CircleField" type="StaticBody2D"]
+[node name="CircleField" type="StaticBody2D" node_paths=PackedStringArray("ReverbEffectTimer_node")]
 collision_layer = 32768
 collision_mask = 0
 script = ExtResource("1_8qsbc")
 CircleFieldEffect_scene = ExtResource("2_k4607")
+ReverbEffectTimer_node = NodePath("ReverbEffectTimer")
 
-[node name="CircleFieldEffectTimer" type="Timer" parent="."]
+[node name="ReverbEffectTimer" type="Timer" parent="."]
 wait_time = 0.5
 autostart = true
 
@@ -38,4 +39,4 @@ polygon = PackedVector2Array(256, 64, 224, 160, 160, 224, 64, 256, 256, 256)
 [node name="CollisionPolygon2D8" type="CollisionPolygon2D" parent="."]
 polygon = PackedVector2Array(-256, 64, -224, 160, -160, 224, -64, 256, -256, 256)
 
-[connection signal="timeout" from="CircleFieldEffectTimer" to="." method="_on_circle_field_effect_timer_timeout"]
+[connection signal="timeout" from="ReverbEffectTimer" to="." method="_on_reverb_effect_timer_timeout"]
