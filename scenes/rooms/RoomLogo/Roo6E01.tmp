@@ -1,0 +1,34 @@
+[gd_scene load_steps=5 format=3 uid="uid://umsn733124ug"]
+
+[ext_resource type="Script" path="res://scenes/rooms/RoomLogo/RoomLogo.gd" id="1_pteja"]
+[ext_resource type="Texture2D" uid="uid://dwamqpd1wliun" path="res://images/sprite_korea_univ.png" id="2_2m5ra"]
+[ext_resource type="PackedScene" uid="uid://bdrilkeb2s5n0" path="res://scenes/rooms/RoomMenu/RoomMenu.tscn" id="2_y3nel"]
+[ext_resource type="Texture2D" uid="uid://cevkho0emy0yl" path="res://images/sprite_cat_and_dog.png" id="3_e3cmp"]
+
+[node name="RoomLogo" type="Node2D"]
+script = ExtResource("1_pteja")
+room_menu = ExtResource("2_y3nel")
+RoomMainMenu_room = ExtResource("2_y3nel")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_right = 1152.0
+offset_bottom = 656.0
+color = Color(0.572669, 1.02278e-06, 1.92523e-07, 1)
+
+[node name="KoreaUniv" type="Sprite2D" parent="."]
+position = Vector2(287, 331)
+scale = Vector2(0.61, 0.61)
+texture = ExtResource("2_2m5ra")
+
+[node name="CATDOG" type="Sprite2D" parent="."]
+position = Vector2(792, 306)
+scale = Vector2(0.368164, 0.368164)
+texture = ExtResource("3_e3cmp")
+
+[node name="LogoParticle" type="GPUParticles2D" parent="."]
+
+[node name="MainMenu" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
