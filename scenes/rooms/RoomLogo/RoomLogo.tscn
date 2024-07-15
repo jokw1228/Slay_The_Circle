@@ -1,38 +1,27 @@
-[gd_scene load_steps=12 format=3 uid="uid://umsn733124ug"]
+[gd_scene load_steps=9 format=3 uid="uid://umsn733124ug"]
 
 [ext_resource type="Script" path="res://scenes/rooms/RoomLogo/RoomLogo.gd" id="1_pteja"]
 [ext_resource type="Texture2D" uid="uid://dwamqpd1wliun" path="res://images/sprite_korea_univ.png" id="2_2m5ra"]
 [ext_resource type="PackedScene" uid="uid://bdrilkeb2s5n0" path="res://scenes/rooms/RoomMenu/RoomMenu.tscn" id="2_y3nel"]
 [ext_resource type="Texture2D" uid="uid://cevkho0emy0yl" path="res://images/sprite_cat_and_dog.png" id="3_e3cmp"]
-[ext_resource type="Texture2D" uid="uid://unrsoqnvtt0h" path="res://images/vfx-62.png" id="5_diukh"]
-[ext_resource type="Texture2D" uid="uid://de6tag4sevy75" path="res://images/vfx-63.png" id="6_rl4ax"]
-[ext_resource type="Texture2D" uid="uid://batxogndpwg78" path="res://images/vfx-64.png" id="7_1ylrb"]
-[ext_resource type="Texture2D" uid="uid://b6hewahqdp31s" path="res://images/vfx-65.png" id="8_ojyy1"]
-[ext_resource type="Texture2D" uid="uid://cqi6bj4p8sjby" path="res://images/vfx-66.png" id="9_n42gu"]
+[ext_resource type="AudioStream" uid="uid://bnb6tr4thqju1" path="res://scenes/rooms/RoomLogo/Hero Theme (Sting) - MK2 (edited).mp3" id="3_h4r7b"]
+[ext_resource type="FontFile" uid="uid://bn71j2rajnbrn" path="res://fonts/bump-it-up.ttf" id="5_yv10w"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_7nktx"]
+font = ExtResource("5_yv10w")
+font_size = 26
+font_color = Color(1, 0.756863, 0, 1)
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_dydrd"]
 particle_flag_disable_z = true
 gravity = Vector3(0, 0, 0)
-
-[sub_resource type="AnimatedTexture" id="AnimatedTexture_u3wt5"]
-frames = 5
-speed_scale = 10.0
-frame_0/texture = ExtResource("5_diukh")
-frame_0/duration = 1.5
-frame_1/texture = ExtResource("6_rl4ax")
-frame_1/duration = 1.5
-frame_2/texture = ExtResource("7_1ylrb")
-frame_2/duration = 1.5
-frame_3/texture = ExtResource("8_ojyy1")
-frame_3/duration = 1.5
-frame_4/texture = ExtResource("9_n42gu")
-frame_4/duration = 1.5
 
 [node name="RoomLogo" type="Node2D" node_paths=PackedStringArray("Logos_node")]
 script = ExtResource("1_pteja")
 room_menu = ExtResource("2_y3nel")
 Logos_node = NodePath("Logos")
 RoomMainMenu_room = ExtResource("2_y3nel")
+LogoSound = ExtResource("3_h4r7b")
 
 [node name="ColorRect" type="ColorRect" parent="."]
 offset_right = 1152.0
@@ -42,20 +31,27 @@ color = Color(0.572669, 1.02278e-06, 1.92523e-07, 1)
 [node name="Logos" type="Node2D" parent="."]
 
 [node name="KoreaUniv" type="Sprite2D" parent="Logos"]
-position = Vector2(287, 331)
-scale = Vector2(0.61, 0.61)
+position = Vector2(273, 300)
+scale = Vector2(0.613, 0.613)
 texture = ExtResource("2_2m5ra")
 
 [node name="CATDOG" type="Sprite2D" parent="Logos"]
-position = Vector2(792, 306)
+position = Vector2(815, 292)
 scale = Vector2(0.368164, 0.368164)
 texture = ExtResource("3_e3cmp")
 
+[node name="STC" type="Label" parent="Logos"]
+offset_left = 311.0
+offset_top = 566.0
+offset_right = 849.0
+offset_bottom = 600.0
+text = "Team. Slay The Circle"
+label_settings = SubResource("LabelSettings_7nktx")
+
 [node name="LogoParticle" type="GPUParticles2D" parent="."]
-position = Vector2(525, 341)
+position = Vector2(1055, 556)
 amount = 1
 process_material = SubResource("ParticleProcessMaterial_dydrd")
-texture = SubResource("AnimatedTexture_u3wt5")
 lifetime = 10.0
 fixed_fps = 60
 
