@@ -1,7 +1,5 @@
 extends Node2D
 
-@export var bombs_to_generate: Array[PackedScene]
-
 @export var NormalBomb_scene: PackedScene
 @export var HazardBomb_scene: PackedScene
 # @export var NumberBomb_scene: PackedScene
@@ -9,7 +7,6 @@ extends Node2D
 @export var RotationSpeedUpBomb_scene: PackedScene
 @export var GameSpeedUpBomb_scene: PackedScene
 
-# const CircleFieldRadius = 128
 
 func _on_timer_timeout():
 # test bomb generation code
