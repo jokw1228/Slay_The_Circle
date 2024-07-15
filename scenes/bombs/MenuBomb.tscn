@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://blnbiu221cwye"]
+
+[ext_resource type="PackedScene" uid="uid://dq3v4l3j35key" path="res://scenes/bombs/Bomb.tscn" id="1_ssmcn"]
+[ext_resource type="Script" path="res://scenes/bombs/MenuBomb.gd" id="2_23n1h"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_8hgk3"]
+radius = 24.0
+
+[node name="MenuBomb" node_paths=PackedStringArray("sprite") instance=ExtResource("1_ssmcn")]
+script = ExtResource("2_23n1h")
+sprite = NodePath("Sprite2D")
+texture = null
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." index="0"]
+shape = SubResource("CircleShape2D_8hgk3")
+
+[node name="Sprite2D" type="Sprite2D" parent="." index="1"]

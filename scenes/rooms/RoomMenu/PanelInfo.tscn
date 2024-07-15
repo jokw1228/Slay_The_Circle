@@ -1,0 +1,172 @@
+[gd_scene load_steps=3 format=3 uid="uid://c7vq8qehb54d1"]
+
+[ext_resource type="FontFile" uid="uid://bn71j2rajnbrn" path="res://fonts/bump-it-up.ttf" id="1_5s0ty"]
+[ext_resource type="Script" path="res://scenes/rooms/RoomMenu/PanelInfo.gd" id="1_ro6k8"]
+
+[node name="Info" type="Node2D" node_paths=PackedStringArray("label0", "shadow0", "label1", "shadow1", "label2", "shadow2")]
+position = Vector2(136, 34)
+scale = Vector2(0.5, 0.5)
+skew = 0.261799
+script = ExtResource("1_ro6k8")
+label0 = NodePath("HighScore/Value")
+shadow0 = NodePath("HighScore/ValueShadow")
+label1 = NodePath("Placeholder1/Value")
+shadow1 = NodePath("Placeholder1/ValueShadow")
+label2 = NodePath("Placeholder2/Value")
+shadow2 = NodePath("Placeholder2/ValueShadow")
+
+[node name="Highlight" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -832.0
+offset_top = -450.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.11, 0.11, 0.11, 0.490196)
+metadata/_edit_use_anchors_ = true
+
+[node name="Shadow" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -832.0
+offset_bottom = 300.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.490196)
+metadata/_edit_use_anchors_ = true
+
+[node name="HighScore" type="Node2D" parent="."]
+
+[node name="TitleShadow" type="Label" parent="HighScore"]
+offset_left = -771.627
+offset_top = -398.138
+offset_right = 3.55267
+offset_bottom = -302.138
+theme_override_colors/font_color = Color(0, 0, 0, 0.545098)
+theme_override_fonts/font = ExtResource("1_5s0ty")
+theme_override_font_sizes/font_size = 42
+text = "HIGH SCORE"
+metadata/_edit_use_anchors_ = true
+
+[node name="Title" type="Label" parent="HighScore"]
+offset_left = -779.11
+offset_top = -404.35
+offset_right = -3.92999
+offset_bottom = -308.35
+theme_override_fonts/font = ExtResource("1_5s0ty")
+theme_override_font_sizes/font_size = 42
+text = "HIGH SCORE"
+metadata/_edit_use_anchors_ = true
+
+[node name="ValueShadow" type="Label" parent="HighScore"]
+offset_left = -771.627
+offset_top = -325.638
+offset_right = 3.5528
+offset_bottom = -229.638
+theme_override_colors/font_color = Color(0, 0, 0, 0.545098)
+theme_override_fonts/font = ExtResource("1_5s0ty")
+theme_override_font_sizes/font_size = 66
+text = "12345"
+metadata/_edit_use_anchors_ = true
+
+[node name="Value" type="Label" parent="HighScore"]
+offset_left = -779.11
+offset_top = -331.85
+offset_right = -3.92999
+offset_bottom = -235.85
+theme_override_fonts/font = ExtResource("1_5s0ty")
+theme_override_font_sizes/font_size = 66
+text = "12345"
+metadata/_edit_use_anchors_ = true
+
+[node name="Placeholder1" type="Node2D" parent="."]
+position = Vector2(0, 259.71)
+
+[node name="TitleShadow" type="Label" parent="Placeholder1"]
+offset_left = -771.627
+offset_top = -398.138
+offset_right = 3.55267
+offset_bottom = -302.138
+theme_override_colors/font_color = Color(0, 0, 0, 0.545098)
+theme_override_fonts/font = ExtResource("1_5s0ty")
+theme_override_font_sizes/font_size = 42
+text = "INFO1"
+metadata/_edit_use_anchors_ = true
+
+[node name="Title" type="Label" parent="Placeholder1"]
+offset_left = -779.11
+offset_top = -404.35
+offset_right = -3.92999
+offset_bottom = -308.35
+theme_override_fonts/font = ExtResource("1_5s0ty")
+theme_override_font_sizes/font_size = 42
+text = "INFO1"
+metadata/_edit_use_anchors_ = true
+
+[node name="ValueShadow" type="Label" parent="Placeholder1"]
+offset_left = -771.627
+offset_top = -325.638
+offset_right = 3.5528
+offset_bottom = -229.638
+theme_override_colors/font_color = Color(0, 0, 0, 0.545098)
+theme_override_fonts/font = ExtResource("1_5s0ty")
+theme_override_font_sizes/font_size = 66
+text = "LOREM"
+metadata/_edit_use_anchors_ = true
+
+[node name="Value" type="Label" parent="Placeholder1"]
+offset_left = -779.11
+offset_top = -331.85
+offset_right = -3.92999
+offset_bottom = -235.85
+theme_override_fonts/font = ExtResource("1_5s0ty")
+theme_override_font_sizes/font_size = 66
+text = "LOREM"
+metadata/_edit_use_anchors_ = true
+
+[node name="Placeholder2" type="Node2D" parent="."]
+position = Vector2(0, 495.28)
+
+[node name="TitleShadow" type="Label" parent="Placeholder2"]
+offset_left = -771.627
+offset_top = -398.138
+offset_right = 3.55267
+offset_bottom = -302.138
+theme_override_colors/font_color = Color(0, 0, 0, 0.545098)
+theme_override_fonts/font = ExtResource("1_5s0ty")
+theme_override_font_sizes/font_size = 42
+text = "INFO2"
+metadata/_edit_use_anchors_ = true
+
+[node name="Title" type="Label" parent="Placeholder2"]
+offset_left = -779.11
+offset_top = -404.35
+offset_right = -3.92999
+offset_bottom = -308.35
+theme_override_fonts/font = ExtResource("1_5s0ty")
+theme_override_font_sizes/font_size = 42
+text = "INFO2"
+metadata/_edit_use_anchors_ = true
+
+[node name="ValueShadow" type="Label" parent="Placeholder2"]
+offset_left = -771.627
+offset_top = -325.638
+offset_right = 3.55267
+offset_bottom = -229.638
+theme_override_colors/font_color = Color(0, 0, 0, 0.545098)
+theme_override_fonts/font = ExtResource("1_5s0ty")
+theme_override_font_sizes/font_size = 66
+text = "IPSUM"
+metadata/_edit_use_anchors_ = true
+
+[node name="Value" type="Label" parent="Placeholder2"]
+offset_left = -779.11
+offset_top = -331.85
+offset_right = -3.92999
+offset_bottom = -235.85
+theme_override_fonts/font = ExtResource("1_5s0ty")
+theme_override_font_sizes/font_size = 66
+text = "IPSUM"
+metadata/_edit_use_anchors_ = true

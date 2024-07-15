@@ -1,0 +1,31 @@
+[gd_scene load_steps=7 format=3 uid="uid://djvtf5t5jqw8u"]
+
+[ext_resource type="Script" path="res://scenes/bombgenerators/MenuBombGenerator.gd" id="1_hpx4g"]
+[ext_resource type="PackedScene" uid="uid://blnbiu221cwye" path="res://scenes/bombs/MenuBomb.tscn" id="2_105il"]
+[ext_resource type="Texture2D" uid="uid://dgslkvvx2fvum" path="res://images/game_speed_up.png" id="3_cb50f"]
+[ext_resource type="Texture2D" uid="uid://cw5wu5qajpxdb" path="res://images/rotation_reverse.png" id="4_ur4wr"]
+[ext_resource type="Texture2D" uid="uid://cofhcmnt2gu5a" path="res://images/rotaion_speed_up.png" id="5_4ibfc"]
+[ext_resource type="Texture2D" uid="uid://ehynivw13sgw" path="res://images/progress-bar-circle.png" id="6_3chs8"]
+
+[node name="MenuBombGenerator" type="Node2D"]
+script = ExtResource("1_hpx4g")
+
+[node name="MenuBomb" parent="." instance=ExtResource("2_105il")]
+position = Vector2(128, 64)
+texture = ExtResource("3_cb50f")
+
+[node name="MenuBomb2" parent="." instance=ExtResource("2_105il")]
+position = Vector2(0, -144)
+texture = ExtResource("4_ur4wr")
+
+[node name="MenuBomb3" parent="." instance=ExtResource("2_105il")]
+position = Vector2(-128, 64)
+texture = ExtResource("5_4ibfc")
+
+[node name="MenuBomb4" parent="." instance=ExtResource("2_105il")]
+texture = ExtResource("6_3chs8")
+
+[connection signal="player_body_entered" from="MenuBomb" to="." method="select_circlest"]
+[connection signal="player_body_entered" from="MenuBomb2" to="." method="select_circle"]
+[connection signal="player_body_entered" from="MenuBomb3" to="." method="select_circler"]
+[connection signal="player_body_entered" from="MenuBomb4" to="." method="select_hyper"]
