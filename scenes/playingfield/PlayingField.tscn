@@ -21,3 +21,8 @@ Player_node = NodePath("Player")
 [node name="Player" parent="." instance=ExtResource("4_u3i3n")]
 
 [node name="CircleField" parent="." instance=ExtResource("5_1ahyj")]
+
+[connection signal="game_over" from="." to="PlayingFieldCamera" method="rotation_stop"]
+[connection signal="game_over" from="." to="PlayingFieldUI" method="close_Playing_and_open_Stopped"]
+[connection signal="game_start" from="." to="PlayingFieldCamera" method="rotation_reset"]
+[connection signal="game_start" from="." to="PlayingFieldUI" method="close_Stopped_and_open_Playing"]

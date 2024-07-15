@@ -25,6 +25,8 @@ func close_Stopped_and_open_Playing():
 	Playing_node.visible = true
 
 func close_Playing_and_open_Stopped():
+	await get_tree().create_timer(1.0).timeout
+	
 	Playing_node.visible = false
 	Stopped_node.visible = true
 	
