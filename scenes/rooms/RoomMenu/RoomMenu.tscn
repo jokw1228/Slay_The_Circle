@@ -35,8 +35,8 @@ zoom = Vector2(0.75, 0.75)
 visible = false
 
 [node name="UIContainer" type="CanvasLayer" parent="."]
-rotation = -0.226893
-transform = Transform2D(0.97437, -0.224951, 0.224951, 0.97437, 0, 0)
+scale = Vector2(1, 1)
+transform = Transform2D(1, 0, 0, 1, 0, 0)
 
 [node name="UILeft" type="Control" parent="UIContainer"]
 layout_mode = 3
