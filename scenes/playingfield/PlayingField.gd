@@ -37,7 +37,7 @@ func start_PlayingField():
 func stop_PlayingField():
 	if playing == true:
 		playing = false
-		
+		$Boom.play()
 		PlayingFieldInterface.game_speed_reset()
 		PlayingFieldCamera_node.rotation_stop()
 		
