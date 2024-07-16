@@ -1,13 +1,23 @@
-[gd_scene load_steps=3 format=3 uid="uid://cx1j53lav5had"]
+[gd_scene load_steps=7 format=3 uid="uid://cx1j53lav5had"]
 
 [ext_resource type="Script" path="res://scenes/bombgenerators/TestBombGenerator.gd" id="1_mqm6x"]
-[ext_resource type="PackedScene" uid="uid://cux2tpymcx5ny" path="res://scenes/bombs/HazardBomb.tscn" id="6_gk3wy"]
+[ext_resource type="PackedScene" uid="uid://bj78l3upa26ik" path="res://scenes/bombs/NormalBomb.tscn" id="2_6lwhd"]
+[ext_resource type="PackedScene" uid="uid://cux2tpymcx5ny" path="res://scenes/bombs/HazardBomb.tscn" id="3_86lnk"]
+[ext_resource type="PackedScene" uid="uid://bd65ne6jxvojv" path="res://scenes/bombs/RotationInversionBomb.tscn" id="4_xfmy5"]
+[ext_resource type="PackedScene" uid="uid://1ohs6nj2dm33" path="res://scenes/bombs/RotationSpeedUpBomb.tscn" id="5_qb0pv"]
+[ext_resource type="PackedScene" uid="uid://cr4l7m2i6dxl" path="res://scenes/bombs/GameSpeedUpBomb.tscn" id="6_oa7bj"]
 
 [node name="TestBombGenerator" type="Node2D"]
 script = ExtResource("1_mqm6x")
-bombs_to_generate = Array[PackedScene]([ExtResource("6_gk3wy")])
+bombs_to_generate = Array[PackedScene]([ExtResource("2_6lwhd")])
+NormalBomb_scene = ExtResource("2_6lwhd")
+HazardBomb_scene = ExtResource("3_86lnk")
+RotationInversionBomb_scene = ExtResource("4_xfmy5")
+RotationSpeedUpBomb_scene = ExtResource("5_qb0pv")
+GameSpeedUpBomb_scene = ExtResource("6_oa7bj")
 
 [node name="Timer" type="Timer" parent="."]
+wait_time = 5.0
 autostart = true
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
