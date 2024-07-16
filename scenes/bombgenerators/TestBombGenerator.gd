@@ -2,7 +2,7 @@ extends Node2D
 
 @export var NormalBomb_scene: PackedScene
 @export var HazardBomb_scene: PackedScene
-# @export var NumberBomb_scene: PackedScene
+@export var NumericBomb_scene: PackedScene
 @export var RotationInversionBomb_scene: PackedScene
 @export var RotationSpeedUpBomb_scene: PackedScene
 @export var GameSpeedUpBomb_scene: PackedScene
@@ -36,7 +36,16 @@ func create_normal_bomb(bomb_position: Vector2 = Vector2.ZERO, bomb_time: float 
 	get_tree().current_scene.add_child(inst)
 #	print("DEBUG: normal_bomb generated, time:", bomb_time)
 	
+func create_numeric_bomb(bomb_position: Vector2 = Vector2.ZERO, bomb_time: float = 0, bomb_id: int = 1):
+	var inst = NumericBomb_scene.instantiate()
+	inst.id = bomb_id
+	inst.position = bomb_position
+	var timer = inst.get_node("BombTimer")
+	timer.set_time = bomb_time
 	
+	get_tree().current_scene.add_child(inst)
+#	print("DEBUG: numeric_bomb generated, time:", bomb_time)
+
 func create_rotationinversion_bomb(bomb_position: Vector2 = Vector2.ZERO, bomb_time: float = 0):
 	var inst = RotationInversionBomb_scene.instantiate()
 	inst.position = bomb_position
