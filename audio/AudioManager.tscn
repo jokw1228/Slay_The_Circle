@@ -1,0 +1,58 @@
+[gd_scene load_steps=15 format=3 uid="uid://cdwehsdak8wkr"]
+
+[ext_resource type="Script" path="res://addons/resonate/music_manager/music_bank.gd" id="1_a063s"]
+[ext_resource type="Script" path="res://audio/AudioManager.gd" id="1_tcjt0"]
+[ext_resource type="Script" path="res://addons/resonate/sound_manager/sound_bank.gd" id="2_ns2lf"]
+[ext_resource type="Script" path="res://addons/resonate/music_manager/music_track_resource.gd" id="3_g2vvn"]
+[ext_resource type="Script" path="res://addons/resonate/music_manager/music_stem_resource.gd" id="4_mfiav"]
+[ext_resource type="AudioStream" uid="uid://dl56qa7pijbom" path="res://audio/fast_bgm.wav" id="5_5kwsu"]
+[ext_resource type="AudioStream" uid="uid://c3v8s1j06a2nn" path="res://audio/slow_bgm.wav" id="6_oy7f1"]
+[ext_resource type="Script" path="res://addons/resonate/sound_manager/sound_event_resource.gd" id="8_5bndl"]
+[ext_resource type="AudioStream" uid="uid://bo7qk0mjdfiyr" path="res://audio/sci_fi_cannon.wav" id="9_ggqwe"]
+
+[sub_resource type="Resource" id="Resource_k5u2k"]
+script = ExtResource("4_mfiav")
+name = "complete"
+enabled = true
+volume = 0.0
+stream = ExtResource("5_5kwsu")
+
+[sub_resource type="Resource" id="Resource_ju6sv"]
+script = ExtResource("3_g2vvn")
+name = "fast_bgm"
+bus = ""
+stems = Array[ExtResource("4_mfiav")]([SubResource("Resource_k5u2k")])
+
+[sub_resource type="Resource" id="Resource_70342"]
+script = ExtResource("4_mfiav")
+name = "slow_bgm"
+enabled = true
+volume = 0.0
+stream = ExtResource("6_oy7f1")
+
+[sub_resource type="Resource" id="Resource_l2r0w"]
+script = ExtResource("3_g2vvn")
+name = ""
+bus = ""
+stems = Array[ExtResource("4_mfiav")]([SubResource("Resource_70342")])
+
+[sub_resource type="Resource" id="Resource_plkds"]
+script = ExtResource("8_5bndl")
+name = "test"
+bus = ""
+volume = 0.0
+pitch = 1.0
+streams = Array[AudioStream]([ExtResource("9_ggqwe")])
+
+[node name="AudioManager" type="Node"]
+script = ExtResource("1_tcjt0")
+
+[node name="MusicBank" type="Node" parent="."]
+script = ExtResource("1_a063s")
+label = "bgm"
+tracks = Array[ExtResource("3_g2vvn")]([SubResource("Resource_ju6sv"), SubResource("Resource_l2r0w")])
+
+[node name="SoundBank" type="Node" parent="."]
+script = ExtResource("2_ns2lf")
+label = "sfx"
+events = Array[ExtResource("8_5bndl")]([SubResource("Resource_plkds")])
