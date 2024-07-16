@@ -9,9 +9,10 @@ func get_PlayingField_node() -> PlayingField:
 func set_PlayingField_node(node: PlayingField):
 	current_PlayingField_node = node
 
-func game_over():
+func game_over(x):
 	get_PlayingField_node().stop_PlayingField()
-
+	get_PlayingField_node().gameover_position(x)
+	
 func rotation_speed_up(up: float):
 	get_PlayingField_node().rotation_speed_up(up)
 
@@ -23,3 +24,4 @@ func game_speed_up(up: float):
 
 func game_speed_reset():
 	Engine.time_scale = 1.0
+

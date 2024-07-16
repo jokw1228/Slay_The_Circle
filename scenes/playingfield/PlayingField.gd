@@ -9,6 +9,9 @@ class_name PlayingField
 @export var PlayingFieldUI_node: PlayingFieldUI
 @export var Player_node: Player
 
+signal game_start
+signal game_over
+
 var playing_time: float = 0
 var playing: bool = false
 
@@ -26,9 +29,8 @@ func _process(delta):
 func start_PlayingField():
 	if playing == false:
 		playing = true
+		game_start.emit()
 		
-		PlayingFieldCamera_node.rotation_reset()
-		PlayingFieldUI_node.close_Stopped_and_open_Playing()
 		playing_time = 0
 		
 		BombGenerator_node = BombGenerator_scene.instantiate()
@@ -37,26 +39,19 @@ func start_PlayingField():
 func stop_PlayingField():
 	if playing == true:
 		playing = false
-		$Boom.play()
+		game_over.emit()
+		PlayingFieldCamera_node.zoom_transition()
 		PlayingFieldInterface.game_speed_reset()
-		PlayingFieldCamera_node.rotation_stop()
 		
-		BombGenerator_node.get_tree().call_group("links", "queue_free")
 		BombGenerator_node.queue_free()
 		
-		await get_tree().create_timer(1.0).timeout
-		PlayingFieldUI_node.close_Playing_and_open_Stopped()
-		
 		# Create a StartBomb
+		await get_tree().create_timer(1.0).timeout
 		var StartBomb_node: StartBomb = StartBomb_scene.instantiate()
 		StartBomb_node.position = Vector2.ZERO
 		StartBomb_node.started.connect(start_PlayingField)
 		get_tree().current_scene.add_child(StartBomb_node)
 
-# Logic for BombLink
-func _on_player_grounded():
-	if BombGenerator_node != null:
-		BombGenerator_node.get_tree().call_group("links", "on_player_grounded")
 
 ### interface
 
@@ -65,3 +60,6 @@ func rotation_speed_up(up: float):
 
 func rotation_inversion():
 	PlayingFieldCamera_node.rotation_inversion()
+	
+func gameover_position(x:Vector2):
+	PlayingFieldCamera_node.position_transition(x)

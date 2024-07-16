@@ -23,26 +23,31 @@ font_size = 24
 font = ExtResource("2_ul78b")
 font_size = 32
 
-[node name="PlayingFieldUI" type="CanvasLayer" node_paths=PackedStringArray("Playing_node", "Stopped_node", "Seconds_node", "Milliseconds_node", "last_Seconds_node", "last_Milliseconds_node")]
+[node name="PlayingFieldUI" type="CanvasLayer" node_paths=PackedStringArray("Playing_node", "StoppedRight_node", "StoppedLeft_node", "Seconds_node", "Milliseconds_node", "last_Seconds_node", "last_Milliseconds_node", "Gameover_node")]
 script = ExtResource("1_4jlcl")
 Playing_node = NodePath("Playing")
-Stopped_node = NodePath("Stopped")
-Seconds_node = NodePath("Playing/Seconds")
-Milliseconds_node = NodePath("Playing/Milliseconds")
-last_Seconds_node = NodePath("Stopped/Seconds")
-last_Milliseconds_node = NodePath("Stopped/Milliseconds")
+StoppedRight_node = NodePath("StoppedRight")
+StoppedLeft_node = NodePath("StoppedLeft")
+Seconds_node = NodePath("Playing/PlayingSkew/Seconds")
+Milliseconds_node = NodePath("Playing/PlayingSkew/Milliseconds")
+last_Seconds_node = NodePath("StoppedRight/StoppedRightSkew/Seconds")
+last_Milliseconds_node = NodePath("StoppedRight/StoppedRightSkew/Milliseconds")
+Gameover_node = NodePath("StoppedLeft/StoppedLeftSkew/Gameover")
 
 [node name="Playing" type="Node2D" parent="."]
 
-[node name="BEST" type="Label" parent="Playing"]
+[node name="PlayingSkew" type="Node2D" parent="Playing"]
+skew = 0.261799
+
+[node name="BEST" type="Label" parent="Playing/PlayingSkew"]
 offset_left = 32.0
 offset_top = 32.0
-offset_right = 116.0
-offset_bottom = 55.0
+offset_right = 198.0
+offset_bottom = 72.0
 text = "BEST: "
 label_settings = SubResource("LabelSettings_rkghr")
 
-[node name="TIME" type="Label" parent="Playing"]
+[node name="TIME" type="Label" parent="Playing/PlayingSkew"]
 offset_left = 672.0
 offset_top = 32.0
 offset_right = 812.0
@@ -50,7 +55,7 @@ offset_bottom = 72.0
 text = "TIME"
 label_settings = SubResource("LabelSettings_v6pxw")
 
-[node name="Seconds" type="Label" parent="Playing"]
+[node name="Seconds" type="Label" parent="Playing/PlayingSkew"]
 offset_left = 832.0
 offset_top = 24.0
 offset_right = 1038.0
@@ -59,7 +64,7 @@ text = "0"
 label_settings = SubResource("LabelSettings_w4pgt")
 horizontal_alignment = 2
 
-[node name="Milliseconds" type="Label" parent="Playing"]
+[node name="Milliseconds" type="Label" parent="Playing/PlayingSkew"]
 offset_left = 1040.0
 offset_top = 64.0
 offset_right = 1111.0
@@ -67,30 +72,78 @@ offset_bottom = 94.0
 text = ":0"
 label_settings = SubResource("LabelSettings_ti1d4")
 
-[node name="Stopped" type="Node2D" parent="."]
-visible = false
+[node name="StoppedLeft" type="Node2D" parent="."]
 
-[node name="LAST" type="Label" parent="Stopped"]
-offset_left = 544.0
-offset_top = 224.0
-offset_right = 684.0
-offset_bottom = 264.0
+[node name="StoppedLeftSkew" type="Node2D" parent="StoppedLeft"]
+skew = 0.261799
+
+[node name="GameoverRect" type="ColorRect" parent="StoppedLeft/StoppedLeftSkew"]
+offset_left = -15.1422
+offset_top = 208.091
+offset_right = 753.858
+offset_bottom = 365.091
+color = Color(0, 0, 0, 0.478431)
+
+[node name="GameoverRectShadow" type="ColorRect" parent="StoppedLeft/StoppedLeftSkew"]
+offset_left = -15.0
+offset_top = 344.0
+offset_right = 754.0
+offset_bottom = 365.0
+color = Color(0, 0, 0, 0.478431)
+
+[node name="Gameover" type="Label" parent="StoppedLeft/StoppedLeftSkew"]
+offset_left = 187.576
+offset_top = 249.502
+offset_right = 1243.58
+offset_bottom = 399.502
+theme_override_fonts/font = ExtResource("2_ul78b")
+theme_override_font_sizes/font_size = 50
+text = "Gameover
+"
+
+[node name="StoppedRight" type="Node2D" parent="."]
+
+[node name="StoppedRightSkew" type="Node2D" parent="StoppedRight"]
+skew = 0.261799
+
+[node name="LastRect" type="ColorRect" parent="StoppedRight/StoppedRightSkew"]
+offset_left = 655.541
+offset_top = 355.1
+offset_right = 1424.54
+offset_bottom = 512.1
+color = Color(0, 0, 0, 0.478431)
+
+[node name="LastRectShadow" type="ColorRect" parent="StoppedRight/StoppedRightSkew"]
+offset_left = 655.683
+offset_top = 491.009
+offset_right = 1424.68
+offset_bottom = 512.009
+color = Color(0, 0, 0, 0.478431)
+
+[node name="LAST" type="Label" parent="StoppedRight/StoppedRightSkew"]
+offset_left = 750.0
+offset_top = 396.0
+offset_right = 1018.0
+offset_bottom = 535.0
+theme_override_fonts/font = ExtResource("2_ul78b")
+theme_override_font_sizes/font_size = 70
 text = "LAST"
 label_settings = SubResource("LabelSettings_5huar")
 
-[node name="Seconds" type="Label" parent="Stopped"]
-offset_left = 704.0
-offset_top = 224.0
-offset_right = 910.0
-offset_bottom = 304.0
+[node name="Seconds" type="Label" parent="StoppedRight/StoppedRightSkew"]
+offset_left = 820.976
+offset_top = 393.0
+offset_right = 1026.98
+offset_bottom = 473.0
+theme_override_font_sizes/font_size = 320
 text = "0"
 label_settings = SubResource("LabelSettings_w4pgt")
 horizontal_alignment = 2
 
-[node name="Milliseconds" type="Label" parent="Stopped"]
-offset_left = 912.0
-offset_top = 264.0
-offset_right = 983.0
-offset_bottom = 294.0
+[node name="Milliseconds" type="Label" parent="StoppedRight/StoppedRightSkew"]
+offset_left = 1023.43
+offset_top = 434.743
+offset_right = 1094.43
+offset_bottom = 464.743
 text = ":0"
 label_settings = SubResource("LabelSettings_ti1d4")

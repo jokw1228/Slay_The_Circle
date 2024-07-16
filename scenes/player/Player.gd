@@ -10,7 +10,7 @@ var movement_queue: Array
 var is_moving: bool = false
 
 func _draw():
-	draw_arc(position, 32, 0, 2 * PI, 9, Color.WHITE, 4.0, false)
+	draw_arc(position, 32, 0, 2 * PI, 18, Color.WHITE, 4.0, true)
 
 func _physics_process(_delta):
 	_movement_queue_proccessing()

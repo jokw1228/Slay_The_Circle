@@ -35,6 +35,10 @@ AudioManager="*res://audio/AudioManager.gd"
 
 window/stretch/mode="viewport"
 
+[display]
+
+window/stretch/mode="viewport"
+
 [editor]
 
 naming/scene_name_casing=1
