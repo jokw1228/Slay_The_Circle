@@ -40,7 +40,7 @@ func stop_PlayingField():
 	if playing == true:
 		playing = false
 		game_over.emit()
-		
+		PlayingFieldCamera_node.zoom_transition()
 		PlayingFieldInterface.game_speed_reset()
 		
 		BombGenerator_node.queue_free()
@@ -60,3 +60,6 @@ func rotation_speed_up(up: float):
 
 func rotation_inversion():
 	PlayingFieldCamera_node.rotation_inversion()
+	
+func gameover_position(x:Vector2):
+	PlayingFieldCamera_node.position_transition(x)

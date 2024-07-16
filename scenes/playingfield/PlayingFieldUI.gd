@@ -2,13 +2,16 @@ extends CanvasLayer
 class_name PlayingFieldUI
 
 @export var Playing_node: Node2D
-@export var Stopped_node: Node2D
+@export var StoppedRight_node: Node2D
+@export var StoppedLeft_node: Node2D
 
 @export var Seconds_node: Label
 @export var Milliseconds_node: Label
 
 @export var last_Seconds_node: Label
 @export var last_Milliseconds_node: Label
+@export var Gameover_node: Label
+
 
 var seconds_value: int = 0
 var milliseconds_value: int = 0
@@ -21,14 +24,35 @@ func playing_time_updated(time: float):
 	Milliseconds_node.text = ":" + str(milliseconds_value)
 
 func close_Stopped_and_open_Playing():
-	Stopped_node.visible = false
+	StoppedLeft_node.visible = false
+	StoppedRight_node.visible = false
 	Playing_node.visible = true
 
 func close_Playing_and_open_Stopped():
-	await get_tree().create_timer(1.0).timeout
-	
 	Playing_node.visible = false
-	Stopped_node.visible = true
+	StoppedLeft_node.visible = true
+	StoppedRight_node.visible = true
+	StoppedLeft_node.position = Vector2(-800,0)
+	StoppedRight_node.position = Vector2(800,0)
+	await get_tree().create_timer(1.0).timeout
+	var tween1 = get_tree().create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_EXPO)
+	var tween2 = get_tree().create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_EXPO)
+	tween1.tween_property(StoppedLeft_node,"position",Vector2(0,0),0.4)
+	tween2.tween_property(StoppedRight_node,"position",Vector2(0,0),0.4)
+	await get_tree().create_timer(1.4).timeout
+	var tween3 = get_tree().create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_EXPO)
+	var tween4 = get_tree().create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_EXPO)
+	StoppedLeft_node.position = Vector2(0,0)
+	StoppedRight_node.position = Vector2(0,0)
+	tween3.tween_property(StoppedLeft_node,"position",Vector2(-800,0),0.4)
+	tween4.tween_property(StoppedRight_node,"position",Vector2(800,0),0.4)
+	await get_tree().create_timer(0.4).timeout
+
+	
+	
+
 	
 	last_Seconds_node.text = str(seconds_value)
 	last_Milliseconds_node.text = ":" + str(milliseconds_value)
+	
+
