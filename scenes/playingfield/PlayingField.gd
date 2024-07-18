@@ -45,13 +45,15 @@ func stop_PlayingField():
 		
 		BombGenerator_node.queue_free()
 		
+		await get_tree().create_timer(0.0).timeout
+		PlayingFieldCamera_node.gameover_position_transition()
+		
 		# Create a StartBomb
 		await get_tree().create_timer(1.0).timeout
 		var StartBomb_node: StartBomb = StartBomb_scene.instantiate()
 		StartBomb_node.position = Vector2.ZERO
 		StartBomb_node.started.connect(start_PlayingField)
 		get_tree().current_scene.add_child(StartBomb_node)
-
 
 ### interface
 
@@ -60,6 +62,6 @@ func rotation_speed_up(up: float):
 
 func rotation_inversion():
 	PlayingFieldCamera_node.rotation_inversion()
-	
-func gameover_position(x:Vector2):
-	PlayingFieldCamera_node.position_transition(x)
+
+func merge_transition(x):
+	PlayingFieldCamera_node.add_transition(x)

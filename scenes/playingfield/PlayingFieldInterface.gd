@@ -25,4 +25,4 @@ func game_speed_reset():
 	Engine.time_scale = 1.0
 
 func gameover_camera(x):
-	get_PlayingField_node().gameover_position(x)
+	get_PlayingField_node().merge_transition(x)

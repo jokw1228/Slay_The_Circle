@@ -23,15 +23,16 @@ font_size = 24
 font = ExtResource("2_ul78b")
 font_size = 32
 
-[node name="PlayingFieldUI" type="CanvasLayer" node_paths=PackedStringArray("Playing_node", "StoppedRight_node", "StoppedLeft_node", "Seconds_node", "Milliseconds_node", "last_Seconds_node", "last_Milliseconds_node", "Gameover_node")]
+[node name="PlayingFieldUI" type="CanvasLayer" node_paths=PackedStringArray("Playing_node", "StoppedRight_node", "StoppedLeft_node", "NewRecord_node", "Seconds_node", "Milliseconds_node", "Last_Seconds_node", "Last_Milliseconds_node", "Gameover_node")]
 script = ExtResource("1_4jlcl")
 Playing_node = NodePath("Playing")
 StoppedRight_node = NodePath("StoppedRight")
 StoppedLeft_node = NodePath("StoppedLeft")
+NewRecord_node = NodePath("NewRecord")
 Seconds_node = NodePath("Playing/PlayingSkew/Seconds")
 Milliseconds_node = NodePath("Playing/PlayingSkew/Milliseconds")
-last_Seconds_node = NodePath("StoppedRight/StoppedRightSkew/Seconds")
-last_Milliseconds_node = NodePath("StoppedRight/StoppedRightSkew/Milliseconds")
+Last_Seconds_node = NodePath("StoppedRight/StoppedRightSkew/LastSeconds")
+Last_Milliseconds_node = NodePath("StoppedRight/StoppedRightSkew/LastMilliseconds")
 Gameover_node = NodePath("StoppedLeft/StoppedLeftSkew/Gameover")
 
 [node name="Playing" type="Node2D" parent="."]
@@ -130,7 +131,7 @@ theme_override_font_sizes/font_size = 70
 text = "LAST"
 label_settings = SubResource("LabelSettings_5huar")
 
-[node name="Seconds" type="Label" parent="StoppedRight/StoppedRightSkew"]
+[node name="LastSeconds" type="Label" parent="StoppedRight/StoppedRightSkew"]
 offset_left = 820.976
 offset_top = 393.0
 offset_right = 1026.98
@@ -140,10 +141,39 @@ text = "0"
 label_settings = SubResource("LabelSettings_w4pgt")
 horizontal_alignment = 2
 
-[node name="Milliseconds" type="Label" parent="StoppedRight/StoppedRightSkew"]
+[node name="LastMilliseconds" type="Label" parent="StoppedRight/StoppedRightSkew"]
 offset_left = 1023.43
 offset_top = 434.743
 offset_right = 1094.43
 offset_bottom = 464.743
 text = ":0"
 label_settings = SubResource("LabelSettings_ti1d4")
+
+[node name="NewRecord" type="Node2D" parent="."]
+
+[node name="NewRecordSkew" type="Node2D" parent="NewRecord"]
+skew = 0.261799
+
+[node name="LastRect2" type="ColorRect" parent="NewRecord/NewRecordSkew"]
+offset_left = 847.523
+offset_top = 260.89
+offset_right = 1408.52
+offset_bottom = 367.89
+color = Color(1, 0, 0, 0.803922)
+
+[node name="LastRect3" type="ColorRect" parent="NewRecord/NewRecordSkew"]
+offset_left = 848.0
+offset_top = 348.0
+offset_right = 1409.0
+offset_bottom = 368.0
+color = Color(0.242311, 2.19597e-07, 5.41471e-08, 0.803922)
+
+[node name="NewRecordLabel" type="Label" parent="NewRecord/NewRecordSkew"]
+offset_left = 877.954
+offset_top = 285.736
+offset_right = 1242.95
+offset_bottom = 424.736
+theme_override_fonts/font = ExtResource("2_ul78b")
+theme_override_font_sizes/font_size = 70
+text = "New Record!"
+label_settings = SubResource("LabelSettings_5huar")

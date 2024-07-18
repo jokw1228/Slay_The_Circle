@@ -1,4 +1,4 @@
-[gd_scene load_steps=3 format=3 uid="uid://c7vq8qehb54d1"]
+[gd_scene load_steps=3 format=3 uid="uid://bqcuagd1a1dp5"]
 
 [ext_resource type="FontFile" uid="uid://bn71j2rajnbrn" path="res://fonts/bump-it-up.ttf" id="1_5s0ty"]
 [ext_resource type="Script" path="res://scenes/rooms/RoomMenu/PanelInfo.gd" id="1_ro6k8"]
