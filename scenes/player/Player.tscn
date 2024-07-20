@@ -10,9 +10,9 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_wtb3g"]
 radius = 16.0
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_167wn"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_2acsy"]
 atlas = ExtResource("3_lb85w")
-region = Rect2(0, 0, 192, 96)
+region = Rect2(0, 0, 96, 96)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_0u2as"]
 atlas = ExtResource("3_aiabp")
@@ -38,7 +38,7 @@ region = Rect2(288, 0, 96, 96)
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_167wn")
+"texture": SubResource("AtlasTexture_2acsy")
 }],
 "loop": true,
 "name": &"landed",
