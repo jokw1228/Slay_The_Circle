@@ -1,10 +1,74 @@
-[gd_scene load_steps=4 format=3 uid="uid://bhe55ocau21ot"]
+[gd_scene load_steps=15 format=3 uid="uid://bhe55ocau21ot"]
 
 [ext_resource type="Script" path="res://scenes/player/Player.gd" id="1_udqk7"]
 [ext_resource type="Script" path="res://scenes/player/PlayerRayCast2D.gd" id="2_wxquw"]
+[ext_resource type="Texture2D" uid="uid://egc6jevcnj0y" path="res://images/player/sprite_player_laser.png" id="3_aiabp"]
+[ext_resource type="Texture2D" uid="uid://mxfswu8da8vp" path="res://images/player/sprite_player_landed.png" id="3_lb85w"]
+[ext_resource type="Texture2D" uid="uid://bw7um6ucam7sq" path="res://images/player/sprite_player_laser_landing.png" id="4_6nvrd"]
+[ext_resource type="Script" path="res://scenes/player/PlayerSprite2D.gd" id="5_h2rh2"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_wtb3g"]
 radius = 16.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_167wn"]
+atlas = ExtResource("3_lb85w")
+region = Rect2(0, 0, 192, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0u2as"]
+atlas = ExtResource("3_aiabp")
+region = Rect2(0, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x880m"]
+atlas = ExtResource("4_6nvrd")
+region = Rect2(0, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fsujh"]
+atlas = ExtResource("4_6nvrd")
+region = Rect2(96, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3twku"]
+atlas = ExtResource("4_6nvrd")
+region = Rect2(192, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xy0pj"]
+atlas = ExtResource("4_6nvrd")
+region = Rect2(288, 0, 96, 96)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_spu1u"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_167wn")
+}],
+"loop": true,
+"name": &"landed",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0u2as")
+}],
+"loop": true,
+"name": &"laser",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_x880m")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fsujh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3twku")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xy0pj")
+}],
+"loop": false,
+"name": &"laser_landing",
+"speed": 5.0
+}]
 
 [node name="Player" type="CharacterBody2D"]
 script = ExtResource("1_udqk7")
@@ -18,5 +82,16 @@ target_position = Vector2(1024, 0)
 collision_mask = 32768
 script = ExtResource("2_wxquw")
 
+[node name="PlayerSprite2D" type="AnimatedSprite2D" parent="." node_paths=PackedStringArray("Player_node", "PlayerRayCast2D")]
+sprite_frames = SubResource("SpriteFrames_spu1u")
+animation = &"landed"
+speed_scale = 16.0
+script = ExtResource("5_h2rh2")
+Player_node = NodePath("..")
+PlayerRayCast2D = NodePath("../PlayerRayCast2D")
+
 [connection signal="change_click_queue_to_movement_queue" from="." to="PlayerRayCast2D" method="_on_player_change_click_queue_to_movement_queue"]
+[connection signal="grounded" from="." to="PlayerSprite2D" method="_on_player_grounded"]
+[connection signal="shooted" from="." to="PlayerSprite2D" method="_on_player_shooted"]
 [connection signal="move_player" from="PlayerRayCast2D" to="." method="_on_player_ray_cast_2d_move_player"]
+[connection signal="animation_finished" from="PlayerSprite2D" to="PlayerSprite2D" method="_on_animation_finished"]

@@ -3,6 +3,7 @@ class_name Player
 
 signal change_click_queue_to_movement_queue(click_position)
 signal grounded
+signal shooted
 
 var click_queue: Array
 var is_raycasting: bool = false
@@ -10,7 +11,8 @@ var movement_queue: Array
 var is_moving: bool = false
 
 func _draw():
-	draw_arc(position, 32, 0, 2 * PI, 18, Color.WHITE, 4.0, true)
+	#draw_arc(position, 32, 0, 2 * PI, 18, Color.WHITE, 4.0, true)
+	pass
 
 func _physics_process(_delta):
 	_movement_queue_proccessing()
@@ -28,6 +30,7 @@ func _movement_queue_proccessing():
 	if is_moving == false && not movement_queue.is_empty():
 		is_moving = true
 		var position_to_go = movement_queue.pop_front()
+		shooted.emit()
 		
 		var speed: float = 2048
 		velocity = (position_to_go - position).normalized() * speed
