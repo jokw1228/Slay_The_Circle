@@ -12,6 +12,7 @@ func _ready():
 	sound_player=AudioStreamPlayer.new()
 	add_child(sound_player)
 	sound_player.stream=LogoSound
+	sound_player.volume_db = -15
 	sound_player.play()
 	#로고 밝아지게 하기
 	var tween1=get_tree().create_tween()

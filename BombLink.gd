@@ -48,12 +48,12 @@ func on_player_grounded():
 		pass
 	elif num_child_bombs == 1:
 		# only one of linked bombs is slayed, game over
-		PlayingFieldInterface.game_over()
+		PlayingFieldInterface.game_over(self.position)
 		queue_free()
 	elif num_child_bombs == 0:
 		# all linked bombs are safely slayed
 		queue_free()
 	else:
 		# this is error case
-		PlayingFieldInterface.game_over()
+		PlayingFieldInterface.game_over(self.position)
 		queue_free()
