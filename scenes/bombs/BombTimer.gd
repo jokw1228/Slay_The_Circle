@@ -6,7 +6,7 @@ extends Control
 signal bomb_time_out
 
 func _ready():
-	Bar.max_value = set_time * 150
+	Bar.max_value = set_time * 100
 	Bar.value = Bar.max_value
 
 func _process(delta):
