@@ -1,11 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://5hmqv8rxk05i"]
+[gd_scene load_steps=2 format=3 uid="uid://5hmqv8rxk05i"]
 
 [ext_resource type="Script" path="res://scenes/bombs/BombLink.gd" id="1_7a02t"]
-[ext_resource type="Texture2D" uid="uid://duys3qeaq0ro" path="res://images/bomb_link.png" id="2_t8h55"]
 
 [node name="BombLink" type="Node2D" groups=["links"]]
 script = ExtResource("1_7a02t")
-
-[node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(0.4, 0.8)
-texture = ExtResource("2_t8h55")
