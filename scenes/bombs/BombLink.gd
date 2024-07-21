@@ -1,6 +1,9 @@
 extends Node2D
 class_name BombLink
 
+@export var ray_1to2: RayCast2D
+@export var ray_2to1: RayCast2D
+
 var bomb1: Bomb
 var bomb2: Bomb
 var num_child_bombs: int = 0
@@ -13,8 +16,24 @@ func set_child_bombs(b1: Bomb, b2: Bomb):
 	num_child_bombs = 2
 	bomb1.player_body_entered.connect(on_bomb_slayed)
 	bomb2.player_body_entered.connect(on_bomb_slayed)
-	queue_redraw()
+	set_ray_cast()
+
+func set_ray_cast():
+	ray_1to2.global_position = bomb1.global_position
+	ray_1to2.look_at(bomb2.global_position)
 	
+	ray_2to1.global_position = bomb2.global_position
+	ray_2to1.look_at(bomb1.global_position)
+	
+	# wait ray cast update
+	await ray_1to2.ray_cast_end
+	ray_1to2.enabled = false
+	
+	await ray_2to1.ray_cast_end
+	ray_2to1.enabled = false
+	
+	queue_redraw()
+
 # connected to player_body_entered signal
 func on_bomb_slayed():
 	num_child_bombs -= 1
@@ -39,7 +58,7 @@ func _draw():
 	
 	var bomb1_pos: Vector2 = bomb1.global_position
 	var bomb2_pos: Vector2 = bomb2.global_position
-
+	
 	var dir: Vector2 = (bomb2_pos - bomb1_pos).normalized()
 	var dist: float = (bomb2_pos - bomb1_pos).length()
 	
@@ -66,3 +85,12 @@ func _draw():
 		d += Size * 2
 		pos_1to2 += front * 2
 		pos_2to1 -= front * 2
+	
+	# display intersection point of link line and circle field
+	var ray_intersect: Vector2 = ray_1to2.get_collision_point()
+	if ray_intersect != Vector2.ZERO:
+		draw_circle(ray_intersect, 20, Color.RED)
+		
+	ray_intersect = ray_2to1.get_collision_point()
+	if ray_intersect != Vector2.ZERO:
+		draw_circle(ray_intersect, 20, Color.RED)

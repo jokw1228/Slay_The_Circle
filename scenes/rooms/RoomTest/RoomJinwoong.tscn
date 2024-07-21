@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://dntg6argh8n3n" path="res://scenes/playingfield/PlayingField.tscn" id="1_r75nn"]
 [ext_resource type="PackedScene" uid="uid://ymk5jnvo4t6" path="res://scenes/bombgenerators/JinwoongBombGenerator.tscn" id="2_sw80n"]
 
-[node name="RoomTest" type="Node2D"]
+[node name="RoomJinwoong" type="Node2D"]
 
 [node name="PlayingField" parent="." instance=ExtResource("1_r75nn")]
 BombGenerator_scene = ExtResource("2_sw80n")

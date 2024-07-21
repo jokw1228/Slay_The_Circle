@@ -1,6 +1,19 @@
-[gd_scene load_steps=2 format=3 uid="uid://5hmqv8rxk05i"]
+[gd_scene load_steps=3 format=3 uid="uid://5hmqv8rxk05i"]
 
 [ext_resource type="Script" path="res://scenes/bombs/BombLink.gd" id="1_7a02t"]
+[ext_resource type="Script" path="res://scenes/bombs/BombLinkRayCast2D.gd" id="2_cro0j"]
 
-[node name="BombLink" type="Node2D" groups=["links"]]
+[node name="BombLink" type="Node2D" node_paths=PackedStringArray("ray_1to2", "ray_2to1") groups=["links"]]
 script = ExtResource("1_7a02t")
+ray_1to2 = NodePath("BombLinkRayCast2D1")
+ray_2to1 = NodePath("BombLinkRayCast2D2")
+
+[node name="BombLinkRayCast2D1" type="RayCast2D" parent="."]
+target_position = Vector2(1024, 0)
+collision_mask = 32768
+script = ExtResource("2_cro0j")
+
+[node name="BombLinkRayCast2D2" type="RayCast2D" parent="."]
+target_position = Vector2(1024, 0)
+collision_mask = 32768
+script = ExtResource("2_cro0j")
