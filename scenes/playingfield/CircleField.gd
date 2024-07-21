@@ -1,11 +1,17 @@
 extends StaticBody2D
 
 const CircleFieldRadius = 256
-var PlayingFieldColor = Color.WHITE
+var PlayingFieldColor = Color.YELLOW
 
 @export var CircleFieldEffect_scene: PackedScene
 
 @export var ReverbEffectTimer_node: Timer
+
+@export var GlowEffect_node: WorldEnvironment
+@export var BackgroundEffect_node: CanvasLayer
+
+func _ready():
+	BackgroundEffect_node.get_node("ColorRect").material.set_shader_parameter("size", 0)
 
 func _draw():
 	draw_arc(position, CircleFieldRadius, 0, 2 * PI, 50, PlayingFieldColor, 8.0, true)
@@ -33,23 +39,35 @@ func _on_reverb_effect_timer_timeout():
 	
 	add_child(inst)
 
-func create_game_over_effect():
-	const time_to_scale = 0.3
+	
+
+func create_game_over_effect(bomb_position: Vector2):
+	const time_to_zoom_in = 2.3
+	
+	const time_to_scale = 0.5
 	const number_of_blinks = 3
 	const blink_delay = 0.15
 	const faded_delay = 1
 	
 	var inst = CircleFieldEffect_scene.instantiate()
 	
+	await get_tree().create_timer(time_to_zoom_in).timeout
+	
+	var animation_player = BackgroundEffect_node.get_node("WaveAnimation")
+	var color_rect = BackgroundEffect_node.get_node("ColorRect")
+	
+	color_rect.material.set_shader_parameter("center", bomb_position)
+	animation_player.play("MoveWaveOut")
+	
 	inst.survival_time = time_to_scale + blink_delay * 2 * number_of_blinks + faded_delay
-	
 	inst.width_to_draw = 16.0
-	
 	inst.color_to_draw = Color.RED
-	
 	inst.radius_to_draw = 0
-	var tween_radius = get_tree().create_tween()
+	inst.origin_to_draw = bomb_position
+	
+	var tween_radius = get_tree().create_tween().set_parallel(true)
 	tween_radius.tween_property(inst, "radius_to_draw", CircleFieldRadius, time_to_scale)
+	tween_radius.tween_property(inst, "origin_to_draw", Vector2(0, 0), time_to_scale)
 	
 	add_child(inst)
 	
@@ -63,4 +81,30 @@ func create_game_over_effect():
 	
 	var tween_alpha = get_tree().create_tween()
 	tween_alpha.tween_property(inst, "color_to_draw", Color.TRANSPARENT, faded_delay)
+
+
+func create_game_ready_effect():
+	const time_to_scale = 0.5
+	
+	var inst = CircleFieldEffect_scene.instantiate()
+	
+	var animation_player = BackgroundEffect_node.get_node("WaveAnimation")
+	var color_rect = BackgroundEffect_node.get_node("ColorRect")
+	
+	color_rect.material.set_shader_parameter("center", Vector2(0.5, 0.5))
+	animation_player.play("MoveWaveIn")
+	
+	await get_tree().create_timer(0.55).timeout
+	
+	inst.survival_time = time_to_scale
+	inst.width_to_draw = 16.0
+	inst.color_to_draw = Color.BLUE
+	inst.radius_to_draw = CircleFieldRadius
+	inst.origin_to_draw = Vector2(0, 0)
+	
+	var tween_radius = get_tree().create_tween()
+	tween_radius.tween_property(inst, "radius_to_draw", 0, time_to_scale)
+	
+	add_child(inst)
+	
 	
