@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://bdrilkeb2s5n0"]
+[gd_scene load_steps=22 format=3 uid="uid://bdrilkeb2s5n0"]
 
 [ext_resource type="Script" path="res://scenes/rooms/RoomMenu/RoomMenu.gd" id="1_sshbl"]
 [ext_resource type="PackedScene" uid="uid://ccay8yrm25adk" path="res://scenes/rooms/RoomPlayingFields/RoomCircle.tscn" id="2_2e64d"]
@@ -13,6 +13,35 @@
 [ext_resource type="PackedScene" uid="uid://cim7x10xeo4n5" path="res://scenes/rooms/RoomMenu/PanelHyper.tscn" id="11_cx8um"]
 [ext_resource type="PackedScene" uid="uid://c7vq8qehb54d1" path="res://scenes/rooms/RoomMenu/PanelInfo.tscn" id="12_w1m2y"]
 [ext_resource type="PackedScene" uid="uid://dp0cdsfw5ylxj" path="res://scenes/rooms/RoomMenu/StartButton.tscn" id="13_yxsra"]
+[ext_resource type="Script" path="res://addons/resonate/sound_manager/sound_bank.gd" id="14_oop3p"]
+[ext_resource type="Script" path="res://addons/resonate/sound_manager/sound_event_resource.gd" id="15_rr3yb"]
+[ext_resource type="AudioStream" uid="uid://crh63lch80r4l" path="res://audio/sfx/select.wav" id="16_tc0o1"]
+[ext_resource type="AudioStream" uid="uid://conahpikkrpng" path="res://audio/sfx/slice_2.wav" id="17_nkn8y"]
+[ext_resource type="AudioStream" uid="uid://4s45v1x286p0" path="res://audio/sfx/start_3.wav" id="18_f5hei"]
+
+[sub_resource type="Resource" id="Resource_u5uqr"]
+script = ExtResource("15_rr3yb")
+name = "select"
+bus = ""
+volume = 0.0
+pitch = 1.0
+streams = Array[AudioStream]([ExtResource("16_tc0o1")])
+
+[sub_resource type="Resource" id="Resource_45hgn"]
+script = ExtResource("15_rr3yb")
+name = "h_select"
+bus = ""
+volume = 0.0
+pitch = 1.0
+streams = Array[AudioStream]([ExtResource("17_nkn8y")])
+
+[sub_resource type="Resource" id="Resource_bq31y"]
+script = ExtResource("15_rr3yb")
+name = "start"
+bus = ""
+volume = 0.0
+pitch = 1.0
+streams = Array[AudioStream]([ExtResource("18_f5hei")])
 
 [node name="RoomMenu" type="Node2D" node_paths=PackedStringArray("playing_field", "ui_container_left", "ui_container_right")]
 script = ExtResource("1_sshbl")
@@ -35,8 +64,6 @@ zoom = Vector2(0.75, 0.75)
 visible = false
 
 [node name="UIContainer" type="CanvasLayer" parent="."]
-scale = Vector2(1, 1)
-transform = Transform2D(1, 0, 0, 1, 0, 0)
 
 [node name="UILeft" type="Control" parent="UIContainer"]
 layout_mode = 3
@@ -60,5 +87,10 @@ offset_top = -30.0
 offset_bottom = 30.0
 grow_horizontal = 0
 grow_vertical = 2
+
+[node name="SoundBank" type="Node" parent="."]
+script = ExtResource("14_oop3p")
+label = "sfx_menu"
+events = Array[ExtResource("15_rr3yb")]([SubResource("Resource_u5uqr"), SubResource("Resource_45hgn"), SubResource("Resource_bq31y")])
 
 [editable path="PlayingField"]

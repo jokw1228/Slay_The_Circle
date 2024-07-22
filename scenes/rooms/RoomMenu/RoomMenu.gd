@@ -68,6 +68,9 @@ func select_stage(difficulty: int, stage_name: String):
 	
 	tween = get_tween()
 	tween.tween_property(info, "position", Vector2(136, 34), 0.4)
+	
+	# 선택 사운드
+	SoundManager.play("sfx_menu","select")
 
 func select_circle():
 	stage_index = 0
@@ -103,3 +106,6 @@ func select_hyper():
 	
 	tween = get_tween()
 	tween.tween_property(info, "position", Vector2(136, 34), 0.4)
+	
+	#하이퍼 선택 사운드
+	SoundManager.play("sfx_menu","h_select")

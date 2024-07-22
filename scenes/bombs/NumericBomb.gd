@@ -14,6 +14,8 @@ func slayed():
 				#i.queue_free()
 		PlayingFieldInterface.game_over()
 	super()
+	
+	SoundManager.play("sfx_Num_bomb","slay")
 
 func has_smaller_id_numeric_bomb():
 	for bomb in get_parent().get_children():

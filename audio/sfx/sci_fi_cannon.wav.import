@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://bo7qk0mjdfiyr"
-path="res://.godot/imported/sci_fi_cannon.wav-e62f8f2318db0713080700178eb41e5f.sample"
+path="res://.godot/imported/sci_fi_cannon.wav-0886680b6cbc05a8ecaac6255bedad37.sample"
 
 [deps]
 
-source_file="res://audio/sci_fi_cannon.wav"
-dest_files=["res://.godot/imported/sci_fi_cannon.wav-e62f8f2318db0713080700178eb41e5f.sample"]
+source_file="res://audio/sfx/sci_fi_cannon.wav"
+dest_files=["res://.godot/imported/sci_fi_cannon.wav-0886680b6cbc05a8ecaac6255bedad37.sample"]
 
 [params]
 

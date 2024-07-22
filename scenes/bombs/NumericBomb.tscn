@@ -1,10 +1,21 @@
-[gd_scene load_steps=4 format=3 uid="uid://dug1fwwbjaopa"]
+[gd_scene load_steps=8 format=3 uid="uid://dug1fwwbjaopa"]
 
 [ext_resource type="Script" path="res://scenes/bombs/NumericBomb.gd" id="1_lkrkc"]
 [ext_resource type="FontFile" uid="uid://bn71j2rajnbrn" path="res://fonts/bump-it-up.ttf" id="2_mftcv"]
+[ext_resource type="Script" path="res://addons/resonate/sound_manager/sound_bank.gd" id="3_awam2"]
+[ext_resource type="Script" path="res://addons/resonate/sound_manager/sound_event_resource.gd" id="4_pmjfd"]
+[ext_resource type="AudioStream" uid="uid://c352772ve0yuk" path="res://audio/sfx/slice_3.wav" id="5_7r5w0"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_51k8f"]
 radius = 16.0
+
+[sub_resource type="Resource" id="Resource_ue2f5"]
+script = ExtResource("4_pmjfd")
+name = "slay"
+bus = ""
+volume = 0.0
+pitch = 1.0
+streams = Array[AudioStream]([ExtResource("5_7r5w0")])
 
 [node name="NumericBomb" type="Area2D"]
 script = ExtResource("1_lkrkc")
@@ -19,6 +30,11 @@ offset_right = 10.0
 offset_bottom = 10.0
 theme_override_fonts/font = ExtResource("2_mftcv")
 text = "0"
+
+[node name="SoundBank" type="Node" parent="."]
+script = ExtResource("3_awam2")
+label = "sfx_Num_bomb"
+events = Array[ExtResource("4_pmjfd")]([SubResource("Resource_ue2f5")])
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="player_body_entered" from="." to="." method="slayed"]

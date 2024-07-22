@@ -45,6 +45,8 @@ func stop_PlayingField():
 		
 		BombGenerator_node.queue_free()
 		
+		SoundManager.play("sfx_PF","explosion")
+		
 		# Create a StartBomb
 		await get_tree().create_timer(1.0).timeout
 		var StartBomb_node: StartBomb = StartBomb_scene.instantiate()
