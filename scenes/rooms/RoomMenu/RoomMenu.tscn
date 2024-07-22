@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://bdrilkeb2s5n0"]
+[gd_scene load_steps=15 format=3 uid="uid://bdrilkeb2s5n0"]
 
 [ext_resource type="Script" path="res://scenes/rooms/RoomMenu/RoomMenu.gd" id="1_sshbl"]
 [ext_resource type="PackedScene" uid="uid://ccay8yrm25adk" path="res://scenes/rooms/RoomPlayingFields/RoomCircle.tscn" id="2_2e64d"]
@@ -13,15 +13,19 @@
 [ext_resource type="PackedScene" uid="uid://cim7x10xeo4n5" path="res://scenes/rooms/RoomMenu/PanelHyper.tscn" id="11_cx8um"]
 [ext_resource type="PackedScene" uid="uid://c7vq8qehb54d1" path="res://scenes/rooms/RoomMenu/PanelInfo.tscn" id="12_w1m2y"]
 [ext_resource type="PackedScene" uid="uid://dp0cdsfw5ylxj" path="res://scenes/rooms/RoomMenu/StartButton.tscn" id="13_yxsra"]
+[ext_resource type="FontFile" uid="uid://bn71j2rajnbrn" path="res://fonts/bump-it-up.ttf" id="14_5xl3y"]
 
-[node name="RoomMenu" type="Node2D" node_paths=PackedStringArray("playing_field", "ui_container_left", "ui_container_right", "camera", "reverb_effect_timer")]
+[node name="RoomMenu" type="Node2D" node_paths=PackedStringArray("playing_field", "ui_container_left", "ui_container_right", "ui_container_ready", "camera", "reverb_effect_timer", "ui_ready_title", "ui_ready_title_shadow")]
 script = ExtResource("1_sshbl")
 room_to_go = Array[PackedScene]([ExtResource("2_2e64d"), ExtResource("3_yvois"), ExtResource("4_2514v"), ExtResource("5_ysv52"), ExtResource("6_0nfbl"), ExtResource("7_3e2ok")])
 playing_field = NodePath("PlayingField")
 ui_container_left = NodePath("UIContainer/UILeft")
 ui_container_right = NodePath("UIContainer/UIRight")
+ui_container_ready = NodePath("UIContainer/UIReady")
 camera = NodePath("PlayingField/PlayingFieldCamera")
 reverb_effect_timer = NodePath("PlayingField/CircleField/ReverbEffectTimer")
+ui_ready_title = NodePath("UIContainer/UIReady/Text/Title")
+ui_ready_title_shadow = NodePath("UIContainer/UIReady/Text/TitleShadow")
 scene_stage = ExtResource("10_a51qt")
 scene_hyper = ExtResource("11_cx8um")
 scene_info = ExtResource("12_w1m2y")
@@ -60,6 +64,80 @@ offset_top = -30.0
 offset_bottom = 30.0
 grow_horizontal = 0
 grow_vertical = 2
+
+[node name="UIReady" type="Node2D" parent="UIContainer"]
+position = Vector2(-900, 258)
+scale = Vector2(0.75, 0.75)
+skew = 0.261799
+
+[node name="Highlight" type="ColorRect" parent="UIContainer/UIReady"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 1200.0
+offset_bottom = 150.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.11, 0.11, 0.11, 0.490196)
+metadata/_edit_use_anchors_ = true
+
+[node name="Shadow" type="ColorRect" parent="UIContainer/UIReady"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 150.0
+offset_right = 1200.0
+offset_bottom = 250.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.490196)
+metadata/_edit_use_anchors_ = true
+
+[node name="Text" type="Node2D" parent="UIContainer/UIReady"]
+position = Vector2(285.671, 51.68)
+
+[node name="TitleShadow" type="Label" parent="UIContainer/UIReady/Text"]
+offset_left = 8.09395
+offset_top = 6.2121
+offset_right = 783.274
+offset_bottom = 102.212
+theme_override_colors/font_color = Color(0, 0, 0, 0.545098)
+theme_override_fonts/font = ExtResource("14_5xl3y")
+theme_override_font_sizes/font_size = 36
+text = "HYPER CIRCLEST
+"
+metadata/_edit_use_anchors_ = true
+
+[node name="Title" type="Label" parent="UIContainer/UIReady/Text"]
+offset_left = 0.610977
+offset_top = 9.37058e-05
+offset_right = 775.791
+offset_bottom = 96.0001
+theme_override_fonts/font = ExtResource("14_5xl3y")
+theme_override_font_sizes/font_size = 36
+text = "HYPER CIRCLEST"
+metadata/_edit_use_anchors_ = true
+
+[node name="ReadyShadow" type="Label" parent="UIContainer/UIReady/Text"]
+offset_left = 8.09395
+offset_top = 63.24
+offset_right = 783.274
+offset_bottom = 159.24
+theme_override_colors/font_color = Color(0, 0, 0, 0.545098)
+theme_override_fonts/font = ExtResource("14_5xl3y")
+theme_override_font_sizes/font_size = 66
+text = "GET READY.."
+metadata/_edit_use_anchors_ = true
+
+[node name="Ready" type="Label" parent="UIContainer/UIReady/Text"]
+offset_left = 0.610977
+offset_top = 63.24
+offset_right = 775.791
+offset_bottom = 159.24
+theme_override_fonts/font = ExtResource("14_5xl3y")
+theme_override_font_sizes/font_size = 66
+text = "GET READY.."
+metadata/_edit_use_anchors_ = true
 
 [editable path="PlayingField"]
 [editable path="PlayingField/CircleField"]

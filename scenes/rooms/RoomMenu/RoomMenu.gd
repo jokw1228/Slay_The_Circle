@@ -6,13 +6,18 @@ class_name RoomMenu
 @export var playing_field: PlayingField
 @export var ui_container_left: Control
 @export var ui_container_right: Control
+@export var ui_container_ready: Node2D
 @export var camera: Camera2D
 @export var reverb_effect_timer: Timer
+
+@export var ui_ready_title: Label
+@export var ui_ready_title_shadow: Label
 
 @export var scene_stage: PackedScene
 @export var scene_hyper: PackedScene
 @export var scene_info: PackedScene
 @export var scene_start: PackedScene
+
 
 # The index of the stage currently selected in the menu window
 # -1: not selected any stage
@@ -31,9 +36,30 @@ func _ready():
 
 func start_stage(): # A signal is connected by the select button.
 	var x: Vector2 = Vector2(0, 0)
-	if stage_index % 3 == 0: x = Vector2(0, -144) # Circle / HyperCircle
-	if stage_index % 3 == 1: x = Vector2(-128, 64) # Circler / HyperCircler
-	if stage_index % 3 == 2: x = Vector2(128, 64) # Circlest / HyperCirclest
+	if stage_index == 0: 
+		ui_ready_title.text = "CIRCLE"
+		ui_ready_title_shadow.text = "CIRCLE"
+		x = Vector2(0, -144)
+	if stage_index == 3: 
+		ui_ready_title.text = "HYPER CIRCLE"
+		ui_ready_title_shadow.text = "HYPER CIRCLE"
+		x = Vector2(0, -144)
+	if stage_index == 1:
+		ui_ready_title.text = "CIRCLER"
+		ui_ready_title_shadow.text = "CIRCLER"
+		x = Vector2(-128, 64)
+	if stage_index == 4:
+		ui_ready_title.text = "HYPER CIRCLER"
+		ui_ready_title_shadow.text = "HYPER CIRCLER"
+		x = Vector2(-128, 64)
+	if stage_index == 2: 
+		ui_ready_title.text = "CIRCLEST"
+		ui_ready_title_shadow.text = "CIRCLEST"
+		x = Vector2(128, 64)
+	if stage_index == 5: 
+		ui_ready_title.text = "HYPER CIRCLEST"
+		ui_ready_title_shadow.text = "HYPER CIRCLEST"
+		x = Vector2(128, 64)
 	
 	reverb_effect_timer.stop()
 	
@@ -47,13 +73,17 @@ func start_stage(): # A signal is connected by the select button.
 	# zoom in
 	var tween_playing_field: Tween = get_tween().set_trans(Tween.TRANS_CIRC)
 	tween_playing_field.tween_property(camera, "zoom", Vector2(1.15, 1.15), 1.25)
-	var tween_camera: Tween = get_tween().set_parallel()
+	var tween_ready: Tween = get_tween()
+	tween_ready.tween_property(ui_container_ready, "position", Vector2(150, 258), 1)
+	#var tween_camera: Tween = get_tween().set_parallel()
 	#tween_camera.tween_property(camera, "position", x, 0.4)
 	
 	# zoom out
 	await tween_playing_field.finished
 	var tween_playing_field1: Tween = get_tween().set_ease(Tween.EASE_IN)
 	tween_playing_field1.tween_property(camera, "zoom", Vector2(1, 1), 0.3)
+	var tween_ready1: Tween = get_tween().set_ease(Tween.EASE_IN)
+	tween_ready1.tween_property(ui_container_ready, "position", Vector2(1200, 258), 0.3)
 	var tween_camera1: Tween = get_tween().set_ease(Tween.EASE_IN)
 	tween_camera1.tween_property(camera, "position", Vector2(0, 0), 0.3)
 	

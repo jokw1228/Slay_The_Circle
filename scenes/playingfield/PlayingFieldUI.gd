@@ -30,7 +30,7 @@ func close_Stopped_and_open_Playing():
 	# 게임 시작 시 화면 위쪽 끝에서 점수 창 내려오는 효과 
 	# 일관성을 위해 close_Playing_and_open_Stopped에도 사라지는 애니메이션 추가 가능.
 	# BEST랑 TIME 간 내려 오는 시간에 약간의 차이 두어 좀 더 디테일하게 만들고 싶었으나
-	# conflict가 두려워 다음 기회에..
+	# merge 복잡할 것 같아 일단 보류.
 	Playing_node.visible = false # 이미 visible일 경우 애니메이션 전에 보이는 것 방지
 	await get_tree().create_timer(0.7).timeout
 	Playing_node.visible = true
