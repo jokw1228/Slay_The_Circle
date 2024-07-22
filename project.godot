@@ -29,7 +29,6 @@ manager/music/bus="Music"
 PlayingFieldInterface="*res://scenes/playingfield/PlayingFieldInterface.gd"
 SoundManager="*res://addons/resonate/sound_manager/sound_manager.gd"
 MusicManager="*res://addons/resonate/music_manager/music_manager.gd"
-AudioManager="*res://audio/AudioManager.gd"
 
 [display]
 
