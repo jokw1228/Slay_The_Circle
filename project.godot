@@ -46,3 +46,4 @@ enabled=PackedStringArray("res://addons/resonate/plugin.cfg")
 [rendering]
 
 renderer/rendering_method="mobile"
+viewport/hdr_2d=true

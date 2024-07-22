@@ -13,6 +13,5 @@ func slayed(): # safely defuse this bomb
 
 func exploded(): # game over
 	var current_position = self.position
-	PlayingFieldInterface.game_over()
-	PlayingFieldInterface.gameover_camera(current_position)
+	PlayingFieldInterface.game_over(current_position)
 	queue_free()
