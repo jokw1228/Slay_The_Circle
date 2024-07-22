@@ -26,6 +26,8 @@ const stage_index_maximum = 6
 func _ready():
 	# BombGenerator는 런타임에 생성되므로 get_node()를 통해 가져온다.
 	get_node("PlayingField/MenuBombGenerator").room_menu = self
+	
+	MusicManager.play("bgm_PF","test_fast",0,1)
 
 func start_stage(): # A signal is connected by the select button.
 	get_tree().change_scene_to_packed(room_to_go[stage_index])
