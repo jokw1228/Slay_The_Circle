@@ -26,3 +26,6 @@ func game_speed_reset():
 
 func gameover_camera(x):
 	get_PlayingField_node().gameover_position(x)
+	
+func get_player_position()->Vector2:
+	return get_PlayingField_node().Player_node.now_position()
