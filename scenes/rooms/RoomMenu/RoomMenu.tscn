@@ -14,12 +14,14 @@
 [ext_resource type="PackedScene" uid="uid://c7vq8qehb54d1" path="res://scenes/rooms/RoomMenu/PanelInfo.tscn" id="12_w1m2y"]
 [ext_resource type="PackedScene" uid="uid://dp0cdsfw5ylxj" path="res://scenes/rooms/RoomMenu/StartButton.tscn" id="13_yxsra"]
 
-[node name="RoomMenu" type="Node2D" node_paths=PackedStringArray("playing_field", "ui_container_left", "ui_container_right")]
+[node name="RoomMenu" type="Node2D" node_paths=PackedStringArray("playing_field", "ui_container_left", "ui_container_right", "camera", "reverb_effect_timer")]
 script = ExtResource("1_sshbl")
 room_to_go = Array[PackedScene]([ExtResource("2_2e64d"), ExtResource("3_yvois"), ExtResource("4_2514v"), ExtResource("5_ysv52"), ExtResource("6_0nfbl"), ExtResource("7_3e2ok")])
 playing_field = NodePath("PlayingField")
 ui_container_left = NodePath("UIContainer/UILeft")
 ui_container_right = NodePath("UIContainer/UIRight")
+camera = NodePath("PlayingField/PlayingFieldCamera")
+reverb_effect_timer = NodePath("PlayingField/CircleField/ReverbEffectTimer")
 scene_stage = ExtResource("10_a51qt")
 scene_hyper = ExtResource("11_cx8um")
 scene_info = ExtResource("12_w1m2y")
@@ -35,8 +37,6 @@ zoom = Vector2(0.75, 0.75)
 visible = false
 
 [node name="UIContainer" type="CanvasLayer" parent="."]
-scale = Vector2(1, 1)
-transform = Transform2D(1, 0, 0, 1, 0, 0)
 
 [node name="UILeft" type="Control" parent="UIContainer"]
 layout_mode = 3
@@ -62,3 +62,4 @@ grow_horizontal = 0
 grow_vertical = 2
 
 [editable path="PlayingField"]
+[editable path="PlayingField/CircleField"]
