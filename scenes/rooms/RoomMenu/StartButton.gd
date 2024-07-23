@@ -19,7 +19,9 @@ func _process(delta):
 
 
 func _on_button_pressed():
+	SoundManager.play("sfx_menu","start")
 	start.emit()
+
 
 
 func _on_timer_timeout():

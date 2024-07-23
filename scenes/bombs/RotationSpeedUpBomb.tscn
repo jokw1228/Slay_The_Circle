@@ -1,11 +1,22 @@
-[gd_scene load_steps=5 format=3 uid="uid://1ohs6nj2dm33"]
+[gd_scene load_steps=9 format=3 uid="uid://1ohs6nj2dm33"]
 
 [ext_resource type="Script" path="res://scenes/bombs/RotationSpeedUpBomb.gd" id="1_07mff"]
 [ext_resource type="Texture2D" uid="uid://cofhcmnt2gu5a" path="res://images/rotaion_speed_up.png" id="2_qaepo"]
 [ext_resource type="PackedScene" uid="uid://dq81owitrvpew" path="res://scenes/bombs/BombTimer.tscn" id="3_g3ujk"]
+[ext_resource type="Script" path="res://addons/resonate/sound_manager/sound_bank.gd" id="4_vtf52"]
+[ext_resource type="Script" path="res://addons/resonate/sound_manager/sound_event_resource.gd" id="5_jwm7d"]
+[ext_resource type="AudioStream" uid="uid://c352772ve0yuk" path="res://audio/sfx/slice_3.wav" id="6_op5bq"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_unecs"]
 radius = 16.0
+
+[sub_resource type="Resource" id="Resource_purij"]
+script = ExtResource("5_jwm7d")
+name = "slay"
+bus = ""
+volume = 0.0
+pitch = 1.0
+streams = Array[AudioStream]([ExtResource("6_op5bq")])
 
 [node name="RotationSpeedUpBomb" type="Area2D"]
 script = ExtResource("1_07mff")
@@ -17,6 +28,11 @@ shape = SubResource("CircleShape2D_unecs")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("2_qaepo")
+
+[node name="SoundBank" type="Node" parent="."]
+script = ExtResource("4_vtf52")
+label = "sfx_RSU_bomb"
+events = Array[ExtResource("5_jwm7d")]([SubResource("Resource_purij")])
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="player_body_entered" from="." to="." method="slayed"]

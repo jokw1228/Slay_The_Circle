@@ -6,9 +6,8 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_1f6en"]
 radius = 16.0
 
-[node name="HazardBomb" type="Area2D" node_paths=PackedStringArray("sound")]
+[node name="HazardBomb" type="Area2D"]
 script = ExtResource("1_wklac")
-sound = NodePath("")
 metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

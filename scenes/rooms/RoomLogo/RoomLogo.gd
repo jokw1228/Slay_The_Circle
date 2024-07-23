@@ -4,15 +4,16 @@ class_name RoomLogo
 @export var room_menu: PackedScene
 @export var Logos_node: Node2D
 @export var RoomMainMenu_room: PackedScene
-@export var LogoSound: AudioStream
-var sound_player: AudioStreamPlayer
+#@export var LogoSound: AudioStream
+#var sound_player: AudioStreamPlayer
 
 func _ready():
-	#playsound
-	sound_player=AudioStreamPlayer.new()
-	add_child(sound_player)
-	sound_player.stream=LogoSound
-	sound_player.play()
+	# playsound
+	#sound_player=AudioStreamPlayer.new()
+	#add_child(sound_player)
+	#sound_player.stream=LogoSound
+	#sound_player.play()
+	SoundManager.loaded.connect(on_sound_manager_loaded)
 	#로고 밝아지게 하기
 	var tween1=get_tree().create_tween()
 	tween1.tween_property(Logos_node, "modulate", Color(1,1,1,0), 0.0)
@@ -28,5 +29,6 @@ func _ready():
 	#룸 메뉴로 이동
 	get_tree().change_scene_to_packed(room_menu)
 	
-
+func on_sound_manager_loaded() -> void:
+	SoundManager.play("sfx_logo","fade_in")
 	
