@@ -1,7 +1,8 @@
-[gd_scene load_steps=8 format=3 uid="uid://dl4bge564bur"]
+[gd_scene load_steps=10 format=3 uid="uid://dl4bge564bur"]
 
 [ext_resource type="Script" path="res://scenes/playingfield/PlayingFieldUI.gd" id="1_4jlcl"]
 [ext_resource type="FontFile" uid="uid://bn71j2rajnbrn" path="res://fonts/bump-it-up.ttf" id="2_ul78b"]
+[ext_resource type="Script" path="res://scenes/playingfield/BackgroundColor.gd" id="3_uwvvl"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_rkghr"]
 font = ExtResource("2_ul78b")
@@ -22,6 +23,8 @@ font_size = 24
 [sub_resource type="LabelSettings" id="LabelSettings_5huar"]
 font = ExtResource("2_ul78b")
 font_size = 32
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_bswu6"]
 
 [node name="PlayingFieldUI" type="CanvasLayer" node_paths=PackedStringArray("Playing_node", "StoppedRight_node", "StoppedLeft_node", "Seconds_node", "Milliseconds_node", "last_Seconds_node", "last_Milliseconds_node", "Gameover_node")]
 script = ExtResource("1_4jlcl")
@@ -147,3 +150,10 @@ offset_right = 1094.43
 offset_bottom = 464.743
 text = ":0"
 label_settings = SubResource("LabelSettings_ti1d4")
+
+[node name="BackgroundColor" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(569.5, 274.5)
+scale = Vector2(1711, 1087)
+texture = SubResource("CanvasTexture_bswu6")
+script = ExtResource("3_uwvvl")

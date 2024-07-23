@@ -1,12 +1,14 @@
-[gd_scene load_steps=3 format=3 uid="uid://crk2aniu1h5di"]
+[gd_scene load_steps=4 format=3 uid="uid://crk2aniu1h5di"]
 
 [ext_resource type="Script" path="res://scenes/bombs/StartBomb.gd" id="1_0384a"]
+[ext_resource type="PackedScene" uid="uid://cs2ukp0c0vi80" path="res://Hongseokhee/Flame.tscn" id="2_18288"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_v3tcq"]
 radius = 16.0
 
 [node name="StartBomb" type="Area2D"]
 script = ExtResource("1_0384a")
+Particle = ExtResource("2_18288")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_v3tcq")

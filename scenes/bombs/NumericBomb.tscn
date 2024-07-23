@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://dug1fwwbjaopa"]
+[gd_scene load_steps=5 format=3 uid="uid://dug1fwwbjaopa"]
 
 [ext_resource type="Script" path="res://scenes/bombs/NumericBomb.gd" id="1_lkrkc"]
+[ext_resource type="PackedScene" uid="uid://cs2ukp0c0vi80" path="res://Hongseokhee/Flame.tscn" id="2_3rw5a"]
 [ext_resource type="FontFile" uid="uid://bn71j2rajnbrn" path="res://fonts/bump-it-up.ttf" id="2_mftcv"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_51k8f"]
@@ -8,6 +9,7 @@ radius = 16.0
 
 [node name="NumericBomb" type="Area2D"]
 script = ExtResource("1_lkrkc")
+Particle = ExtResource("2_3rw5a")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_51k8f")

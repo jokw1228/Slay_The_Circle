@@ -1,7 +1,7 @@
 extends StaticBody2D
 
 const CircleFieldRadius = 256
-var PlayingFieldColor = Color.WHITE
+var PlayingFieldColor = PlayingFieldInterface.color
 
 @export var CircleFieldEffect_scene: PackedScene
 

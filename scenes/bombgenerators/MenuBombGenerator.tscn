@@ -1,13 +1,15 @@
-[gd_scene load_steps=6 format=3 uid="uid://djvtf5t5jqw8u"]
+[gd_scene load_steps=7 format=3 uid="uid://djvtf5t5jqw8u"]
 
 [ext_resource type="Script" path="res://scenes/bombgenerators/MenuBombGenerator.gd" id="1_hpx4g"]
 [ext_resource type="PackedScene" uid="uid://blnbiu221cwye" path="res://scenes/bombs/MenuBomb.tscn" id="2_105il"]
 [ext_resource type="Texture2D" uid="uid://dgslkvvx2fvum" path="res://images/game_speed_up.png" id="3_cb50f"]
 [ext_resource type="Texture2D" uid="uid://cw5wu5qajpxdb" path="res://images/rotation_reverse.png" id="4_ur4wr"]
 [ext_resource type="Texture2D" uid="uid://cofhcmnt2gu5a" path="res://images/rotaion_speed_up.png" id="5_4ibfc"]
+[ext_resource type="PackedScene" uid="uid://cn5fsevyjrrr0" path="res://Hongseokhee/Themecolor.tscn" id="6_8cdld"]
 
 [node name="MenuBombGenerator" type="Node2D"]
 script = ExtResource("1_hpx4g")
+themecolor = ExtResource("6_8cdld")
 
 [node name="MenuBomb" parent="." instance=ExtResource("2_105il")]
 position = Vector2(128, 64)
@@ -25,6 +27,12 @@ texture = ExtResource("5_4ibfc")
 scale = Vector2(2.655, 2.655)
 texture = ExtResource("5_4ibfc")
 
+[node name="Themecolor" parent="." instance=ExtResource("6_8cdld")]
+
+[connection signal="circle" from="." to="Themecolor" method="_on_menu_bomb_generator_circle"]
+[connection signal="circler" from="." to="Themecolor" method="_on_menu_bomb_generator_circler"]
+[connection signal="circlest" from="." to="Themecolor" method="_on_menu_bomb_generator_circlest"]
+[connection signal="hyper" from="." to="Themecolor" method="_on_menu_bomb_generator_hyper"]
 [connection signal="player_body_entered" from="MenuBomb" to="." method="select_circlest"]
 [connection signal="player_body_entered" from="MenuBomb2" to="." method="select_circle"]
 [connection signal="player_body_entered" from="MenuBomb3" to="." method="select_circler"]

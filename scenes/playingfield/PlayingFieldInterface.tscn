@@ -1,6 +1,9 @@
-[gd_scene load_steps=2 format=3 uid="uid://brtgixd6b5sav"]
+[gd_scene load_steps=3 format=3 uid="uid://brtgixd6b5sav"]
 
 [ext_resource type="Script" path="res://scenes/playingfield/PlayingFieldInterface.gd" id="1_gs80k"]
+[ext_resource type="PackedScene" uid="uid://cn5fsevyjrrr0" path="res://Hongseokhee/Themecolor.tscn" id="2_c8emy"]
 
 [node name="PlayingFieldInterface" type="Node2D"]
 script = ExtResource("1_gs80k")
+
+[node name="Themecolor" parent="." instance=ExtResource("2_c8emy")]

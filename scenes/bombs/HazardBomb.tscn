@@ -1,15 +1,18 @@
-[gd_scene load_steps=4 format=3 uid="uid://cux2tpymcx5ny"]
+[gd_scene load_steps=6 format=3 uid="uid://cux2tpymcx5ny"]
 
 [ext_resource type="Script" path="res://scenes/bombs/HazardBomb.gd" id="1_wklac"]
+[ext_resource type="PackedScene" uid="uid://cs2ukp0c0vi80" path="res://Hongseokhee/Flame.tscn" id="2_5314t"]
+[ext_resource type="FontFile" uid="uid://bn71j2rajnbrn" path="res://fonts/bump-it-up.ttf" id="2_nfen8"]
 [ext_resource type="PackedScene" uid="uid://dq81owitrvpew" path="res://scenes/bombs/BombTimer.tscn" id="2_xj2gr"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_1f6en"]
 radius = 16.0
 
-[node name="HazardBomb" type="Area2D" node_paths=PackedStringArray("sound")]
+[node name="HazardBomb" type="Area2D"]
+position = Vector2(417, 248)
 script = ExtResource("1_wklac")
-sound = NodePath("")
-metadata/_edit_group_ = true
+font = ExtResource("2_nfen8")
+Particle = ExtResource("2_5314t")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_1f6en")
