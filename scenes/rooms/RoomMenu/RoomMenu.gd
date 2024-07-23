@@ -6,11 +6,18 @@ class_name RoomMenu
 @export var playing_field: PlayingField
 @export var ui_container_left: Control
 @export var ui_container_right: Control
+@export var ui_container_ready: Node2D
+@export var camera: Camera2D
+@export var reverb_effect_timer: Timer
+
+@export var ui_ready_title: Label
+@export var ui_ready_title_shadow: Label
 
 @export var scene_stage: PackedScene
 @export var scene_hyper: PackedScene
 @export var scene_info: PackedScene
 @export var scene_start: PackedScene
+
 
 # The index of the stage currently selected in the menu window
 # -1: not selected any stage
@@ -30,6 +37,60 @@ func _ready():
 	MusicManager.play("bgm_PF","test_fast",0,1)
 
 func start_stage(): # A signal is connected by the select button.
+	var x: Vector2 = Vector2(0, 0)
+	if stage_index == 0: 
+		ui_ready_title.text = "CIRCLE"
+		ui_ready_title_shadow.text = "CIRCLE"
+		x = Vector2(0, -144)
+	if stage_index == 3: 
+		ui_ready_title.text = "HYPER CIRCLE"
+		ui_ready_title_shadow.text = "HYPER CIRCLE"
+		x = Vector2(0, -144)
+	if stage_index == 1:
+		ui_ready_title.text = "CIRCLER"
+		ui_ready_title_shadow.text = "CIRCLER"
+		x = Vector2(-128, 64)
+	if stage_index == 4:
+		ui_ready_title.text = "HYPER CIRCLER"
+		ui_ready_title_shadow.text = "HYPER CIRCLER"
+		x = Vector2(-128, 64)
+	if stage_index == 2: 
+		ui_ready_title.text = "CIRCLEST"
+		ui_ready_title_shadow.text = "CIRCLEST"
+		x = Vector2(128, 64)
+	if stage_index == 5: 
+		ui_ready_title.text = "HYPER CIRCLEST"
+		ui_ready_title_shadow.text = "HYPER CIRCLEST"
+		x = Vector2(128, 64)
+	
+	reverb_effect_timer.stop()
+	
+	# hides panel
+	var tween_panel: Tween = get_tween().set_parallel()
+	tween_panel.tween_property(start, "position", Vector2(600, 170), 0.4)
+	tween_panel.tween_property(stage, "position", Vector2(-370, 0), 0.4)
+	tween_panel.tween_property(info, "position", Vector2(528, 34), 0.4)
+	if is_instance_valid(hyper): tween_panel.tween_property(hyper, "position", Vector2(-30, -84), 0.4)
+	
+	# zoom in
+	var tween_playing_field: Tween = get_tween().set_trans(Tween.TRANS_CIRC)
+	tween_playing_field.tween_property(camera, "zoom", Vector2(1.15, 1.15), 1.25)
+	var tween_ready: Tween = get_tween()
+	tween_ready.tween_property(ui_container_ready, "position", Vector2(150, 258), 1)
+	#var tween_camera: Tween = get_tween().set_parallel()
+	#tween_camera.tween_property(camera, "position", x, 0.4)
+	
+	# zoom out
+	await tween_playing_field.finished
+	var tween_playing_field1: Tween = get_tween().set_ease(Tween.EASE_IN)
+	tween_playing_field1.tween_property(camera, "zoom", Vector2(1, 1), 0.3)
+	var tween_ready1: Tween = get_tween().set_ease(Tween.EASE_IN)
+	tween_ready1.tween_property(ui_container_ready, "position", Vector2(1200, 258), 0.3)
+	var tween_camera1: Tween = get_tween().set_ease(Tween.EASE_IN)
+	tween_camera1.tween_property(camera, "position", Vector2(0, 0), 0.3)
+	
+	# animation done
+	await tween_playing_field1.finished
 	get_tree().change_scene_to_packed(room_to_go[stage_index])
 
 func get_tween():
@@ -42,7 +103,7 @@ func select_stage(difficulty: int, stage_name: String):
 		hyper.queue_free()
 	if is_instance_valid(info):
 		info.queue_free()
-	if not start:
+	if not start: # 시작 버튼 없을 경우 (처음 스테이지 선택한 경우)
 		start = scene_start.instantiate()
 		start.position = Vector2(544, 170)
 		start.start.connect(start_stage)
@@ -51,6 +112,7 @@ func select_stage(difficulty: int, stage_name: String):
 		var tween: Tween = get_tween()
 		tween.tween_property(start, "position", Vector2(192, 170), 0.4)
 	
+	# 스테이지 패널.
 	stage = scene_stage.instantiate()
 	stage.position = Vector2(-370, 0)
 	stage.difficulty = difficulty
@@ -60,6 +122,7 @@ func select_stage(difficulty: int, stage_name: String):
 	var tween: Tween = get_tween()
 	tween.tween_property(stage, "position", Vector2(0, 0), 0.4)
 	
+	# 인포 패널.
 	info = scene_info.instantiate()
 	info.position = Vector2(528, 34)
 	# 테스트 용 텍스트. 별 의미 없음. 실제로 표시할 만한 정보들이 생기면 채워 넣기
