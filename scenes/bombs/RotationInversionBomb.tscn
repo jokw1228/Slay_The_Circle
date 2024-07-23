@@ -9,7 +9,7 @@
 [ext_resource type="AudioStream" uid="uid://c352772ve0yuk" path="res://audio/sfx/slice_3.wav" id="6_8mxx5"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_kp1xn"]
-radius = 16.0
+radius = 32.0
 
 [sub_resource type="Resource" id="Resource_x4jvg"]
 script = ExtResource("5_uvwg5")

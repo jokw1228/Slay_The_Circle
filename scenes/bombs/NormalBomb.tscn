@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://bj78l3upa26ik"]
+[gd_scene load_steps=9 format=3 uid="uid://bj78l3upa26ik"]
 
 [ext_resource type="Script" path="res://scenes/bombs/NormalBomb.gd" id="1_d5v6f"]
 [ext_resource type="PackedScene" uid="uid://cs2ukp0c0vi80" path="res://Hongseokhee/Flame.tscn" id="2_qs57d"]
@@ -8,7 +8,7 @@
 [ext_resource type="AudioStream" uid="uid://c352772ve0yuk" path="res://audio/sfx/slice_3.wav" id="5_1ui6s"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_n2uys"]
-radius = 16.0
+radius = 32.0
 
 [sub_resource type="Resource" id="Resource_kd5wo"]
 script = ExtResource("4_d5lvo")

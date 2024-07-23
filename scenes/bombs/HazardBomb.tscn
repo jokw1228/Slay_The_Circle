@@ -6,7 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://dq81owitrvpew" path="res://scenes/bombs/BombTimer.tscn" id="2_xj2gr"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_1f6en"]
-radius = 16.0
+radius = 32.0
 
 [node name="HazardBomb" type="Area2D"]
 position = Vector2(417, 248)
