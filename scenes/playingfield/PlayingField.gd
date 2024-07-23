@@ -41,6 +41,11 @@ func stop_PlayingField(bomb_position: Vector2):
 	if playing == true:
 		playing = false
 		emit_signal("game_over", bomb_position)
+		#Lefted bombs are slayed
+		for node in get_tree().current_scene.get_children():
+			if node is Bomb:
+				node.queue_free()
+		
 		PlayingFieldCamera_node.zoom_transition()
 		PlayingFieldInterface.game_speed_reset()
 		
