@@ -1,0 +1,25 @@
+[gd_scene load_steps=9 format=3 uid="uid://b5rwbf5uwi83d"]
+
+[ext_resource type="Script" path="res://scenes/bombgenerators/KangwooBombGenerator.gd" id="1_5kbfa"]
+[ext_resource type="PackedScene" uid="uid://bj78l3upa26ik" path="res://scenes/bombs/NormalBomb.tscn" id="2_8kw26"]
+[ext_resource type="PackedScene" uid="uid://cux2tpymcx5ny" path="res://scenes/bombs/HazardBomb.tscn" id="3_i8f24"]
+[ext_resource type="PackedScene" uid="uid://dug1fwwbjaopa" path="res://scenes/bombs/NumericBomb.tscn" id="4_8sic3"]
+[ext_resource type="PackedScene" uid="uid://bd65ne6jxvojv" path="res://scenes/bombs/RotationInversionBomb.tscn" id="5_llmox"]
+[ext_resource type="PackedScene" uid="uid://1ohs6nj2dm33" path="res://scenes/bombs/RotationSpeedUpBomb.tscn" id="6_f2smw"]
+[ext_resource type="PackedScene" uid="uid://cr4l7m2i6dxl" path="res://scenes/bombs/GameSpeedUpBomb.tscn" id="7_gcqt4"]
+[ext_resource type="PackedScene" uid="uid://b88otl67w25a2" path="res://scenes/warnings/NormalBombWarning.tscn" id="8_eafys"]
+
+[node name="KangwooBombGenerator" type="Node2D"]
+script = ExtResource("1_5kbfa")
+NormalBomb_scene = ExtResource("2_8kw26")
+HazardBomb_scene = ExtResource("3_i8f24")
+NumericBomb_scene = ExtResource("4_8sic3")
+RotationInversionBomb_scene = ExtResource("5_llmox")
+RotationSpeedUpBomb_scene = ExtResource("6_f2smw")
+GameSpeedUpBomb_scene = ExtResource("7_gcqt4")
+Normalbomb_warning_scene = ExtResource("8_eafys")
+HazardBomb_warning_scene = ExtResource("8_eafys")
+NumericBomb_warning_scene = ExtResource("8_eafys")
+RotationInversionBomb_warning_scene = ExtResource("8_eafys")
+RotationSpeedUpBomb_warning_scene = ExtResource("8_eafys")
+GameSpeedUpBomb_warning_scene = ExtResource("8_eafys")
