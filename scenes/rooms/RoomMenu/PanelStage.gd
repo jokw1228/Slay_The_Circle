@@ -16,8 +16,3 @@ func _ready():
 	shadow.text = stage_name
 	if difficulty < 2: star2.visible = false
 	if difficulty < 1: star1.visible = false
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
