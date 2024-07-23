@@ -2,11 +2,10 @@
 
 [ext_resource type="Script" path="res://scenes/playingfield/PlayingField.gd" id="1_ed5yp"]
 [ext_resource type="PackedScene" uid="uid://crk2aniu1h5di" path="res://scenes/bombs/StartBomb.tscn" id="2_s84lx"]
-[ext_resource type="PackedScene" uid="uid://cn7ttflmrmpth" path="res://scenes/playingfield/PlayingfieldCamera.tscn" id="2_xhkow"]
+[ext_resource type="PackedScene" uid="uid://cn7ttflmrmpth" path="res://scenes/playingfield/PlayingFieldCamera.tscn" id="2_xhkow"]
 [ext_resource type="PackedScene" uid="uid://dl4bge564bur" path="res://scenes/playingfield/PlayingFieldUI.tscn" id="3_7mvnn"]
 [ext_resource type="PackedScene" uid="uid://bhe55ocau21ot" path="res://scenes/player/Player.tscn" id="4_u3i3n"]
 [ext_resource type="PackedScene" uid="uid://s264e74phclm" path="res://scenes/playingfield/CircleField.tscn" id="5_1ahyj"]
-
 [ext_resource type="Script" path="res://addons/resonate/sound_manager/sound_bank.gd" id="7_lhgfl"]
 [ext_resource type="Script" path="res://addons/resonate/sound_manager/sound_event_resource.gd" id="8_g3bnd"]
 [ext_resource type="AudioStream" uid="uid://cdk204qcjn0hb" path="res://audio/sfx/explosion_5.wav" id="9_46fsi"]
@@ -100,8 +99,8 @@ flip_h = true
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_4lowe")
 
-[connection signal="game_over" from="." to="PlayingFieldCamera" method="_on_playing_field_game_over"]
 [connection signal="game_over" from="." to="PlayingFieldCamera" method="rotation_stop"]
+[connection signal="game_over" from="." to="PlayingFieldCamera" method="_on_playing_field_game_over"]
 [connection signal="game_over" from="." to="PlayingFieldUI" method="close_Playing_and_open_Stopped"]
 [connection signal="game_over" from="." to="CircleField" method="stop_reverb_effect"]
 [connection signal="game_over" from="." to="CircleField" method="create_game_over_effect"]
