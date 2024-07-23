@@ -2,6 +2,7 @@ extends Node2D
 #class_name PlayingFieldInterface
 
 var current_PlayingField_node: PlayingField
+var color = Color(1,1,1,1)
 
 func get_PlayingField_node() -> PlayingField:
 	return current_PlayingField_node

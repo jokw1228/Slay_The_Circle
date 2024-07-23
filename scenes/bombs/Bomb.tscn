@@ -1,9 +1,11 @@
-[gd_scene load_steps=2 format=3 uid="uid://dq3v4l3j35key"]
+[gd_scene load_steps=3 format=3 uid="uid://dq3v4l3j35key"]
 
 [ext_resource type="Script" path="res://scenes/bombs/Bomb.gd" id="1_t5a2j"]
+[ext_resource type="PackedScene" uid="uid://cs2ukp0c0vi80" path="res://Hongseokhee/Flame.tscn" id="2_vbnq2"]
 
 [node name="Bomb" type="Area2D"]
 collision_layer = 0
 script = ExtResource("1_t5a2j")
+Particle = ExtResource("2_vbnq2")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

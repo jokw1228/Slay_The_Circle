@@ -1,4 +1,6 @@
-[gd_scene load_steps=8 format=3 uid="uid://cs2ukp0c0vi80"]
+[gd_scene load_steps=9 format=3 uid="uid://cs2ukp0c0vi80"]
+
+[ext_resource type="Script" path="res://Hongseokhee/Flame.gd" id="1_akrqw"]
 
 [sub_resource type="Gradient" id="Gradient_o24kv"]
 colors = PackedColorArray(0.117438, 0.117438, 0.117438, 1, 1, 1, 1, 1)
@@ -29,7 +31,8 @@ spread = 90.0
 initial_velocity_min = 150.0
 initial_velocity_max = 200.0
 gravity = Vector3(0, 200, 0)
-scale_max = 10.0
+scale_min = 2.0
+scale_max = 20.0
 scale_curve = SubResource("CurveTexture_q6kk3")
 color_ramp = SubResource("GradientTexture1D_05fx7")
 color_initial_ramp = SubResource("GradientTexture1D_mu0ha")
@@ -39,11 +42,14 @@ collision_bounce = 0.43
 sub_emitter_mode = 3
 sub_emitter_amount_at_collision = 1
 
-[node name="Node2D" type="Node2D"]
-position = Vector2(575, 325)
+[node name="Flame" type="Node2D"]
 rotation = -1.5708
+script = ExtResource("1_akrqw")
 
-[node name="Flame" type="GPUParticles2D" parent="."]
+[node name="flame" type="GPUParticles2D" parent="."]
+rotation = 3.14159
+emitting = false
 amount = 50
 process_material = SubResource("ParticleProcessMaterial_homa5")
+one_shot = true
 randomness = 0.18
