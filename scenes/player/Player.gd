@@ -9,6 +9,7 @@ var click_queue: Array
 var is_raycasting: bool = false
 var movement_queue: Array
 var is_moving: bool = false
+var current_position = null
 
 func _draw():
 	#draw_arc(position, 32, 0, 2 * PI, 18, Color.WHITE, 4.0, true)
@@ -31,6 +32,7 @@ func _movement_queue_proccessing():
 		is_moving = true
 		var position_to_go = movement_queue.pop_front()
 		shooted.emit()
+		current_position=position_to_go # 이동 중에는 가야 하는 위치 저장하기
 		
 		var speed: float = 2048
 		velocity = (position_to_go - position).normalized() * speed
@@ -46,3 +48,8 @@ func _movement_queue_proccessing():
 	if is_moving == false && not click_queue.is_empty() && is_raycasting == false:
 		change_click_queue_to_movement_queue.emit(click_queue.pop_front())
 		is_raycasting = true
+
+func now_position()->Vector2:
+	if is_moving==false and click_queue.is_empty(): # 플레이어가 가만히 있는 경우
+		return get_global_transform().origin
+	else: return current_position # 플레이어가 움직이는 중인 경우
