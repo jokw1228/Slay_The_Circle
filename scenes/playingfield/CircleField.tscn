@@ -1,14 +1,100 @@
-[gd_scene load_steps=3 format=3 uid="uid://s264e74phclm"]
+[gd_scene load_steps=9 format=3 uid="uid://s264e74phclm"]
 
 [ext_resource type="Script" path="res://scenes/playingfield/CircleField.gd" id="1_8qsbc"]
 [ext_resource type="PackedScene" uid="uid://csd3qsksn85gu" path="res://scenes/playingfield/CircleFieldEffect.tscn" id="2_k4607"]
+[ext_resource type="Shader" path="res://scenes/playingfield/WaveEffect.gdshader" id="3_52ji7"]
 
-[node name="CircleField" type="StaticBody2D" node_paths=PackedStringArray("ReverbEffectTimer_node")]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5l36b"]
+shader = ExtResource("3_52ji7")
+shader_parameter/center = Vector2(0.5, 0.5)
+shader_parameter/force = 0.025
+shader_parameter/size = 0.95
+shader_parameter/thickness = 0.085
+shader_parameter/offset = 0.003
+
+[sub_resource type="Animation" id="Animation_gw28w"]
+resource_name = "MoveWaveIn"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ColorRect:material:shader_parameter/size")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 8.87656),
+"update": 0,
+"values": [1.2, 0.0]
+}
+
+[sub_resource type="Animation" id="Animation_0l118"]
+resource_name = "MoveWaveOut"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ColorRect:material:shader_parameter/size")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 1.2]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ColorRect:material:shader_parameter/center")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.6),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0.5, 0.5), Vector2(0.5, 0.5)]
+}
+
+[sub_resource type="Animation" id="Animation_nemvi"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ColorRect:material:shader_parameter/size")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.95]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ColorRect:material:shader_parameter/center")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0.5, 0.5)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ao2c5"]
+_data = {
+"MoveWaveIn": SubResource("Animation_gw28w"),
+"MoveWaveOut": SubResource("Animation_0l118"),
+"RESET": SubResource("Animation_nemvi")
+}
+
+[node name="CircleField" type="StaticBody2D" node_paths=PackedStringArray("ReverbEffectTimer_node", "BackgroundEffect_node")]
 collision_layer = 32768
 collision_mask = 0
 script = ExtResource("1_8qsbc")
 CircleFieldEffect_scene = ExtResource("2_k4607")
 ReverbEffectTimer_node = NodePath("ReverbEffectTimer")
+BackgroundEffect_node = NodePath("BackGroundEffect")
 
 [node name="ReverbEffectTimer" type="Timer" parent="."]
 wait_time = 0.5
@@ -38,5 +124,21 @@ polygon = PackedVector2Array(256, 64, 224, 160, 160, 224, 64, 256, 256, 256)
 
 [node name="CollisionPolygon2D8" type="CollisionPolygon2D" parent="."]
 polygon = PackedVector2Array(-256, 64, -224, 160, -160, 224, -64, 256, -256, 256)
+
+[node name="BackGroundEffect" type="CanvasLayer" parent="."]
+
+[node name="ColorRect" type="ColorRect" parent="BackGroundEffect"]
+material = SubResource("ShaderMaterial_5l36b")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="WaveAnimation" type="AnimationPlayer" parent="BackGroundEffect"]
+libraries = {
+"": SubResource("AnimationLibrary_ao2c5")
+}
 
 [connection signal="timeout" from="ReverbEffectTimer" to="." method="_on_reverb_effect_timer_timeout"]

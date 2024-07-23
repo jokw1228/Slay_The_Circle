@@ -10,7 +10,8 @@ class_name PlayingField
 @export var Player_node: Player
 
 signal game_start
-signal game_over
+signal game_over(bomb_position: Vector2)
+signal game_ready
 
 var playing_time: float = 0
 var playing: bool = false
@@ -29,17 +30,17 @@ func _process(delta):
 func start_PlayingField():
 	if playing == false:
 		playing = true
-		game_start.emit()
+		emit_signal("game_start")
 		
 		playing_time = 0
 		
 		BombGenerator_node = BombGenerator_scene.instantiate()
 		add_child(BombGenerator_node)
 
-func stop_PlayingField():
+func stop_PlayingField(bomb_position: Vector2):
 	if playing == true:
 		playing = false
-		game_over.emit()
+		emit_signal("game_over", bomb_position)
 		PlayingFieldCamera_node.zoom_transition()
 		PlayingFieldInterface.game_speed_reset()
 		
@@ -50,6 +51,8 @@ func stop_PlayingField():
 		MusicManager.play("bgm_PF","test_slow",0,1)
 		
 		# Create a StartBomb
+		await get_tree().create_timer(5.0).timeout
+		emit_signal("game_ready")
 		await get_tree().create_timer(1.0).timeout
 		var StartBomb_node: StartBomb = StartBomb_scene.instantiate()
 		StartBomb_node.position = Vector2.ZERO
@@ -70,5 +73,5 @@ func rotation_speed_up(up: float):
 func rotation_inversion():
 	PlayingFieldCamera_node.rotation_inversion()
 	
-func gameover_position(x:Vector2):
-	PlayingFieldCamera_node.position_transition(x)
+func merge_transition(x):
+	PlayingFieldCamera_node.add_transition(x)

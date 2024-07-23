@@ -36,7 +36,7 @@ func rotation_reset():
 func zoom_transition():	
 	var tween1 = get_tree().create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_EXPO)
 	tween1.tween_property(self,"zoom",Vector2(2,2),0.5)
-	await get_tree().create_timer(2.0).timeout
+	await get_tree().create_timer(2.5).timeout
 	var tween2 = get_tree().create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_EXPO)
 	tween2.tween_property(self,"zoom",Vector2(1,1),0.5)
 

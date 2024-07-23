@@ -9,8 +9,9 @@ func get_PlayingField_node() -> PlayingField:
 func set_PlayingField_node(node: PlayingField):
 	current_PlayingField_node = node
 
-func game_over():
-	get_PlayingField_node().stop_PlayingField()
+func game_over(x):
+	get_PlayingField_node().gameover_position(x)
+	get_PlayingField_node().stop_PlayingField(x)
 	
 func rotation_speed_up(up: float):
 	get_PlayingField_node().rotation_speed_up(up)
