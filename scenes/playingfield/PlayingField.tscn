@@ -1,7 +1,6 @@
-[gd_scene load_steps=8 format=3 uid="uid://dntg6argh8n3n"]
+[gd_scene load_steps=7 format=3 uid="uid://dntg6argh8n3n"]
 
 [ext_resource type="Script" path="res://scenes/playingfield/PlayingField.gd" id="1_ed5yp"]
-[ext_resource type="PackedScene" uid="uid://cx1j53lav5had" path="res://scenes/bombgenerators/TestBombGenerator.tscn" id="2_kjd7q"]
 [ext_resource type="PackedScene" uid="uid://crk2aniu1h5di" path="res://scenes/bombs/StartBomb.tscn" id="2_s84lx"]
 [ext_resource type="PackedScene" uid="uid://cn7ttflmrmpth" path="res://scenes/playingfield/PlayingFieldCamera.tscn" id="2_xhkow"]
 [ext_resource type="PackedScene" uid="uid://dl4bge564bur" path="res://scenes/playingfield/PlayingFieldUI.tscn" id="3_7mvnn"]
@@ -10,7 +9,6 @@
 
 [node name="PlayingField" type="Node2D" node_paths=PackedStringArray("PlayingFieldCamera_node", "PlayingFieldUI_node", "Player_node")]
 script = ExtResource("1_ed5yp")
-BombGenerator_scene = ExtResource("2_kjd7q")
 StartBomb_scene = ExtResource("2_s84lx")
 PlayingFieldCamera_node = NodePath("PlayingFieldCamera")
 PlayingFieldUI_node = NodePath("PlayingFieldUI")
@@ -25,5 +23,11 @@ Player_node = NodePath("Player")
 [node name="CircleField" parent="." instance=ExtResource("5_1ahyj")]
 
 [connection signal="game_over" from="." to="PlayingFieldCamera" method="rotation_stop"]
+[connection signal="game_over" from="." to="PlayingFieldCamera" method="_on_playing_field_game_over"]
 [connection signal="game_over" from="." to="PlayingFieldUI" method="close_Playing_and_open_Stopped"]
+[connection signal="game_over" from="." to="CircleField" method="stop_reverb_effect"]
+[connection signal="game_over" from="." to="CircleField" method="create_game_over_effect"]
+[connection signal="game_start" from="." to="PlayingFieldCamera" method="rotation_reset"]
 [connection signal="game_start" from="." to="PlayingFieldUI" method="close_Stopped_and_open_Playing"]
+[connection signal="game_start" from="." to="CircleField" method="start_reverb_effect"]
+[connection signal="grounded" from="Player" to="." method="_on_player_grounded"]

@@ -43,10 +43,8 @@ func stop_PlayingField():
 		PlayingFieldCamera_node.zoom_transition()
 		PlayingFieldInterface.game_speed_reset()
 		
+		BombGenerator_node.get_tree().call_group("links", "queue_free")
 		BombGenerator_node.queue_free()
-		
-		await get_tree().create_timer(0.0).timeout
-		PlayingFieldCamera_node.gameover_position_transition()
 		
 		# Create a StartBomb
 		await get_tree().create_timer(1.0).timeout
@@ -55,6 +53,12 @@ func stop_PlayingField():
 		StartBomb_node.started.connect(start_PlayingField)
 		get_tree().current_scene.add_child(StartBomb_node)
 
+# Logic for BombLink
+func _on_player_grounded():
+	if BombGenerator_node != null:
+		BombGenerator_node.get_tree().call_group("links", "on_player_grounded")
+
+
 ### interface
 
 func rotation_speed_up(up: float):
@@ -62,6 +66,6 @@ func rotation_speed_up(up: float):
 
 func rotation_inversion():
 	PlayingFieldCamera_node.rotation_inversion()
-
-func merge_transition(x):
-	PlayingFieldCamera_node.add_transition(x)
+	
+func gameover_position(x:Vector2):
+	PlayingFieldCamera_node.position_transition(x)
