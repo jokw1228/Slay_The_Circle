@@ -11,8 +11,6 @@ var num_child_bombs: int = 0
 func set_child_bombs(b1: Bomb, b2: Bomb):
 	bomb1 = b1
 	bomb2 = b2
-	add_child(bomb1)
-	add_child(bomb2)
 	num_child_bombs = 2
 	bomb1.player_body_entered.connect(on_bomb_slayed)
 	bomb2.player_body_entered.connect(on_bomb_slayed)

@@ -8,5 +8,6 @@ func _ready():
 
 
 func pattern1():
-	create_normal_bomb(Vector2(-100, 100), 2, 3)
-	# add pattern
+	var bomb1 = create_normal_bomb(Vector2(-100, 100), 2, 3)
+	var bomb2 = create_normal_bomb(Vector2(100, 100), 2, 3)
+	create_bomb_link(bomb1, bomb2)
