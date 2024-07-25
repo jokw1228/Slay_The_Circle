@@ -1,0 +1,43 @@
+[gd_scene load_steps=15 format=3 uid="uid://c526d17vtu1yj"]
+
+[ext_resource type="Script" path="res://scenes/bombgenerators/SeonghyeonBombGenerator.gd" id="1_cgx8p"]
+[ext_resource type="PackedScene" uid="uid://bj78l3upa26ik" path="res://scenes/bombs/NormalBomb.tscn" id="2_w8qs6"]
+[ext_resource type="PackedScene" uid="uid://cux2tpymcx5ny" path="res://scenes/bombs/HazardBomb.tscn" id="3_5gsin"]
+[ext_resource type="PackedScene" uid="uid://dug1fwwbjaopa" path="res://scenes/bombs/NumericBomb.tscn" id="4_67qny"]
+[ext_resource type="PackedScene" uid="uid://bd65ne6jxvojv" path="res://scenes/bombs/RotationInversionBomb.tscn" id="5_bmmnp"]
+[ext_resource type="PackedScene" uid="uid://1ohs6nj2dm33" path="res://scenes/bombs/RotationSpeedUpBomb.tscn" id="6_cctb3"]
+[ext_resource type="PackedScene" uid="uid://cr4l7m2i6dxl" path="res://scenes/bombs/GameSpeedUpBomb.tscn" id="7_ij0i8"]
+[ext_resource type="PackedScene" uid="uid://b88otl67w25a2" path="res://scenes/warnings/NormalBombWarning.tscn" id="8_cy2kq"]
+[ext_resource type="PackedScene" uid="uid://fdhauxo6f7gq" path="res://scenes/warnings/HazardBombWarning.tscn" id="9_5g8fx"]
+[ext_resource type="PackedScene" uid="uid://dn8hj3t4klarb" path="res://scenes/warnings/NumericBombWarning.tscn" id="10_e77kk"]
+[ext_resource type="PackedScene" uid="uid://4wbytvc753ff" path="res://scenes/warnings/RotationInversionBombWarning.tscn" id="11_3416w"]
+[ext_resource type="PackedScene" uid="uid://cg0il84hq0n8m" path="res://scenes/warnings/RotationSpeedUpBombWarning.tscn" id="12_lyne3"]
+[ext_resource type="PackedScene" uid="uid://dod3xtkvnfwuq" path="res://scenes/warnings/GameSpeedUpBombWarning.tscn" id="13_i5ohi"]
+[ext_resource type="PackedScene" uid="uid://5hmqv8rxk05i" path="res://scenes/bombs/BombLink.tscn" id="14_7qrle"]
+
+[node name="SeonghyeonBombGenerator" type="Node2D" node_paths=PackedStringArray("rotation_field", "test1", "test2")]
+script = ExtResource("1_cgx8p")
+rotation_field = NodePath("RotationField")
+test1 = NodePath("RotationField/Marker2D")
+test2 = NodePath("RotationField/Marker2D2")
+NormalBomb_scene = ExtResource("2_w8qs6")
+HazardBomb_scene = ExtResource("3_5gsin")
+NumericBomb_scene = ExtResource("4_67qny")
+RotationInversionBomb_scene = ExtResource("5_bmmnp")
+RotationSpeedUpBomb_scene = ExtResource("6_cctb3")
+GameSpeedUpBomb_scene = ExtResource("7_ij0i8")
+Normalbomb_warning_scene = ExtResource("8_cy2kq")
+HazardBomb_warning_scene = ExtResource("9_5g8fx")
+NumericBomb_warning_scene = ExtResource("10_e77kk")
+RotationInversionBomb_warning_scene = ExtResource("11_3416w")
+RotationSpeedUpBomb_warning_scene = ExtResource("12_lyne3")
+GameSpeedUpBomb_warning_scene = ExtResource("13_i5ohi")
+bomb_link = ExtResource("14_7qrle")
+
+[node name="RotationField" type="Node2D" parent="."]
+
+[node name="Marker2D" type="Marker2D" parent="RotationField"]
+position = Vector2(-40, -29)
+
+[node name="Marker2D2" type="Marker2D" parent="RotationField"]
+position = Vector2(164, -57)
