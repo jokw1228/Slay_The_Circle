@@ -1,9 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://dug1fwwbjaopa"]
+[gd_scene load_steps=10 format=3 uid="uid://dug1fwwbjaopa"]
 
 [ext_resource type="Script" path="res://scenes/bombs/NumericBomb.gd" id="1_lkrkc"]
 [ext_resource type="PackedScene" uid="uid://cs2ukp0c0vi80" path="res://Hongseokhee/Flame.tscn" id="2_3rw5a"]
 [ext_resource type="FontFile" uid="uid://bn71j2rajnbrn" path="res://fonts/bump-it-up.ttf" id="2_mftcv"]
 [ext_resource type="Script" path="res://addons/resonate/sound_manager/sound_bank.gd" id="3_awam2"]
+[ext_resource type="PackedScene" uid="uid://dq81owitrvpew" path="res://scenes/bombs/BombTimer.tscn" id="4_3o5o2"]
 [ext_resource type="Script" path="res://addons/resonate/sound_manager/sound_event_resource.gd" id="4_pmjfd"]
 [ext_resource type="AudioStream" uid="uid://c352772ve0yuk" path="res://audio/sfx/slice_3.wav" id="5_7r5w0"]
 
@@ -33,6 +34,8 @@ offset_bottom = 10.0
 theme_override_fonts/font = ExtResource("2_mftcv")
 text = "0"
 
+[node name="BombTimer" parent="." instance=ExtResource("4_3o5o2")]
+
 [node name="SoundBank" type="Node" parent="."]
 script = ExtResource("3_awam2")
 label = "sfx_Num_bomb"
@@ -40,3 +43,4 @@ events = Array[ExtResource("4_pmjfd")]([SubResource("Resource_ue2f5")])
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="player_body_entered" from="." to="." method="slayed"]
+[connection signal="bomb_time_out" from="BombTimer" to="." method="exploded"]
