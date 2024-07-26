@@ -27,6 +27,18 @@ func playing_time_updated(time: float):
 
 
 func close_Stopped_and_open_Playing():
+	#스타트 범브 터지면 gameover UI 들어가게
+	var tween3 = get_tree().create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_EXPO)
+	var tween4 = get_tree().create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_EXPO)
+	StoppedLeft_node.position = Vector2(0,0)
+	StoppedRight_node.position = Vector2(0,0)
+	tween3.tween_property(StoppedLeft_node,"position",Vector2(-800,0),0.4)
+	tween4.tween_property(StoppedRight_node,"position",Vector2(800,0),0.4)
+	await get_tree().create_timer(0.4).timeout
+	
+	
+	
+	NewRecord_node.visible = false
 	StoppedLeft_node.visible = false
 	StoppedRight_node.visible = false
 	
@@ -34,6 +46,7 @@ func close_Stopped_and_open_Playing():
 	# 일관성을 위해 close_Playing_and_open_Stopped에도 사라지는 애니메이션 추가 가능.
 	# BEST랑 TIME 간 내려 오는 시간에 약간의 차이 두어 좀 더 디테일하게 만들고 싶었으나
 	# merge 복잡할 것 같아 일단 보류.
+
 	Playing_node.visible = false # 이미 visible일 경우 애니메이션 전에 보이는 것 방지
 	await get_tree().create_timer(0.7).timeout
 	Playing_node.visible = true
@@ -60,13 +73,7 @@ func close_Playing_and_open_Stopped():
 	tween1.tween_property(StoppedLeft_node,"position",Vector2(0,0),0.4)
 	tween2.tween_property(StoppedRight_node,"position",Vector2(0,0),0.4)
 	await get_tree().create_timer(1.4).timeout
-	var tween3 = get_tree().create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_EXPO)
-	var tween4 = get_tree().create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_EXPO)
-	StoppedLeft_node.position = Vector2(0,0)
-	StoppedRight_node.position = Vector2(0,0)
-	tween3.tween_property(StoppedLeft_node,"position",Vector2(-800,0),0.4)
-	tween4.tween_property(StoppedRight_node,"position",Vector2(800,0),0.4)
-	await get_tree().create_timer(0.4).timeout
+
 	
 
 	
