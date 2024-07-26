@@ -53,8 +53,10 @@ func create_game_over_effect(bomb_position: Vector2):
 	
 	await get_tree().create_timer(time_to_zoom_in).timeout
 	
+	#var bomb_screen_position: Vector2 = bomb_position
 	var animation_player = BackgroundEffect_node.get_node("WaveAnimation")
 	var color_rect = BackgroundEffect_node.get_node("ColorRect")
+	
 	
 	color_rect.material.set_shader_parameter("center", bomb_position)
 	animation_player.play("MoveWaveOut")

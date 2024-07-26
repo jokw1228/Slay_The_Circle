@@ -43,11 +43,9 @@ sub_emitter_mode = 3
 sub_emitter_amount_at_collision = 1
 
 [node name="Flame" type="Node2D"]
-rotation = -1.5708
 script = ExtResource("1_akrqw")
 
 [node name="flame" type="GPUParticles2D" parent="."]
-rotation = 3.14159
 emitting = false
 amount = 50
 process_material = SubResource("ParticleProcessMaterial_homa5")
