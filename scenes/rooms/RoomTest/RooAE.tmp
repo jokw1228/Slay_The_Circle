@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://bk0knt0gwm1ls"]
+
+[ext_resource type="PackedScene" uid="uid://dntg6argh8n3n" path="res://scenes/playingfield/PlayingField.tscn" id="1_ny0yt"]
+[ext_resource type="PackedScene" uid="uid://bc6ds37qs7xs6" path="res://scenes/bombgenerators/JaeyongBombGenerator.tscn" id="2_l33p8"]
+
+[node name="RoomJaeyong" type="Node2D"]
+
+[node name="PlayingField" parent="." instance=ExtResource("1_ny0yt")]
+BombGenerator_scene = ExtResource("2_l33p8")
