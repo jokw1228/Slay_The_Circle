@@ -1,4 +1,5 @@
 extends StaticBody2D
+class_name CircleField
 
 const CircleFieldRadius = 256
 var PlayingFieldColor = PlayingFieldInterface.color
@@ -13,7 +14,28 @@ var PlayingFieldColor = PlayingFieldInterface.color
 var bomb_position = Vector2(0, 0)
 
 func _ready():
+	# make a CollisionPolygon2D in a circle shape
+	make_collision_polygon()
+	
 	BackgroundEffect_node.get_node("ColorRect").material.set_shader_parameter("size", 0)
+
+func make_collision_polygon():
+	for i: float in range(0, 2*PI, PI/2):
+		make_partial_collision_polygon(i)
+
+func make_partial_collision_polygon(radian: float):
+	var inst: CollisionPolygon2D = CollisionPolygon2D.new()
+	var list: PackedVector2Array = []
+	# make a circle shape
+	const number_of_points = 256
+	const inner_offset = 4
+	for i in range(number_of_points):
+		list.append(Vector2((CircleFieldRadius+inner_offset) * cos((i*(PI/2)/number_of_points) + radian), (CircleFieldRadius+inner_offset) * -sin((i*(PI/2)/number_of_points) + radian)))
+	# make outer edges
+	for i in range(number_of_points - 1, -1, -1):
+		list.append(Vector2((CircleFieldRadius+32) * cos((i*(PI/2)/number_of_points) + radian), (CircleFieldRadius+32) * -sin((i*(PI/2)/number_of_points) + radian)))
+	inst.polygon = list
+	add_child(inst)
 
 func _draw():
 	draw_arc(position, CircleFieldRadius, 0, 2 * PI, 50, PlayingFieldColor, 8.0, true)

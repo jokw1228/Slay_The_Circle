@@ -9,7 +9,7 @@ class_name PlayingField
 @export var PlayingFieldUI_node: PlayingFieldUI
 @export var Player_node: Player
 
-@export var CircleField_node: StaticBody2D
+@export var CircleField_node: CircleField
 
 signal game_start
 signal game_over
