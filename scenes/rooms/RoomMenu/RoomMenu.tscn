@@ -11,7 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://djvtf5t5jqw8u" path="res://scenes/bombgenerators/MenuBombGenerator.tscn" id="9_xjnco"]
 [ext_resource type="PackedScene" uid="uid://dj3cit57hf5m" path="res://scenes/rooms/RoomMenu/PanelStage.tscn" id="10_a51qt"]
 [ext_resource type="PackedScene" uid="uid://cim7x10xeo4n5" path="res://scenes/rooms/RoomMenu/PanelHyper.tscn" id="11_cx8um"]
-[ext_resource type="PackedScene" uid="uid://c7vq8qehb54d1" path="res://scenes/rooms/RoomMenu/PanelInfo.tscn" id="12_w1m2y"]
+[ext_resource type="PackedScene" uid="uid://bqcuagd1a1dp5" path="res://scenes/rooms/RoomMenu/PanelInfo.tscn" id="12_w1m2y"]
 [ext_resource type="PackedScene" uid="uid://dp0cdsfw5ylxj" path="res://scenes/rooms/RoomMenu/StartButton.tscn" id="13_yxsra"]
 [ext_resource type="Script" path="res://addons/resonate/sound_manager/sound_bank.gd" id="14_oop3p"]
 [ext_resource type="Script" path="res://addons/resonate/sound_manager/sound_event_resource.gd" id="15_rr3yb"]
@@ -94,11 +94,6 @@ offset_bottom = 30.0
 grow_horizontal = 0
 grow_vertical = 2
 
-[node name="SoundBank" type="Node" parent="."]
-script = ExtResource("14_oop3p")
-label = "sfx_menu"
-events = Array[ExtResource("15_rr3yb")]([SubResource("Resource_u5uqr"), SubResource("Resource_45hgn"), SubResource("Resource_bq31y")])
-
 [node name="UIReady" type="Node2D" parent="UIContainer"]
 position = Vector2(-900, 258)
 scale = Vector2(0.75, 0.75)
@@ -172,6 +167,11 @@ theme_override_fonts/font = ExtResource("19_5xl3y")
 theme_override_font_sizes/font_size = 66
 text = "GET READY.."
 metadata/_edit_use_anchors_ = true
+
+[node name="SoundBank" type="Node" parent="."]
+script = ExtResource("14_oop3p")
+label = "sfx_menu"
+events = Array[ExtResource("15_rr3yb")]([SubResource("Resource_u5uqr"), SubResource("Resource_45hgn"), SubResource("Resource_bq31y")])
 
 [editable path="PlayingField"]
 [editable path="PlayingField/CircleField"]
