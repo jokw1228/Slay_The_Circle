@@ -15,12 +15,20 @@
 [ext_resource type="PackedScene" uid="uid://dod3xtkvnfwuq" path="res://scenes/warnings/GameSpeedUpBombWarning.tscn" id="13_i5ohi"]
 [ext_resource type="PackedScene" uid="uid://5hmqv8rxk05i" path="res://scenes/bombs/BombLink.tscn" id="14_7qrle"]
 
-[node name="SeonghyeonBombGenerator" type="Node2D" node_paths=PackedStringArray("pattern1_rotation_marker", "pattern1_bomb_marker", "pattern1_rotation_locations", "pattern1_bomb_locations")]
+[node name="SeonghyeonBombGenerator" type="Node2D" node_paths=PackedStringArray("pattern1_rotation_marker", "pattern1_bomb_marker", "pattern1_rotation_locations", "pattern1_bomb_locations", "pattern2_bomb_locations", "pattern3_rigidbody", "pattern5_positions", "pattern6_positions")]
 script = ExtResource("1_cgx8p")
 pattern1_rotation_marker = NodePath("Pattern1/RotationMarker")
 pattern1_bomb_marker = NodePath("Pattern1/BombMarker")
 pattern1_rotation_locations = [NodePath("Pattern1/RotationMarker/Marker2D"), NodePath("Pattern1/RotationMarker/Marker2D2"), NodePath("Pattern1/RotationMarker/Marker2D3"), NodePath("Pattern1/RotationMarker/Marker2D4"), NodePath("Pattern1/RotationMarker/Marker2D5"), NodePath("Pattern1/RotationMarker/Marker2D6")]
 pattern1_bomb_locations = [NodePath("Pattern1/BombMarker/Marker2D7"), NodePath("Pattern1/BombMarker/Marker2D8"), NodePath("Pattern1/BombMarker/Marker2D9"), NodePath("Pattern1/BombMarker/Marker2D10")]
+pattern2_bomb_locations = [NodePath("Pattern2/BombMarker/Marker2D7"), NodePath("Pattern2/BombMarker/Marker2D8"), NodePath("Pattern2/BombMarker/Marker2D9")]
+pattern2_off_duration = 1.0
+pattern2_on_duration = 2.0
+pattern2_count = 3
+pattern2_speedup_amount = 0.3
+pattern3_rigidbody = NodePath("Pattern3/RigidBody2D")
+pattern5_positions = [NodePath("Pattern5/RotationMarker/Marker2D"), NodePath("Pattern5/RotationMarker/Marker2D2"), NodePath("Pattern5/RotationMarker/Marker2D3"), NodePath("Pattern5/RotationMarker/Marker2D4"), NodePath("Pattern5/RotationMarker/Marker2D5")]
+pattern6_positions = [NodePath("Pattern6/RotationMarker/Marker2D3"), NodePath("Pattern6/RotationMarker/Marker2D"), NodePath("Pattern6/RotationMarker/Marker2D5"), NodePath("Pattern6/RotationMarker/Marker2D6"), NodePath("Pattern6/RotationMarker/Marker2D7"), NodePath("Pattern6/RotationMarker/Marker2D2"), NodePath("Pattern6/RotationMarker/Marker2D4")]
 NormalBomb_scene = ExtResource("2_w8qs6")
 HazardBomb_scene = ExtResource("3_5gsin")
 NumericBomb_scene = ExtResource("4_67qny")
@@ -36,6 +44,7 @@ GameSpeedUpBomb_warning_scene = ExtResource("13_i5ohi")
 bomb_link = ExtResource("14_7qrle")
 
 [node name="Pattern1" type="Node2D" parent="."]
+visible = false
 
 [node name="RotationMarker" type="Node2D" parent="Pattern1"]
 
@@ -79,4 +88,91 @@ gizmo_extents = 32.0
 
 [node name="Marker2D10" type="Marker2D" parent="Pattern1/BombMarker"]
 position = Vector2(131, 26)
+gizmo_extents = 32.0
+
+[node name="Pattern5" type="Node2D" parent="."]
+visible = false
+
+[node name="RotationMarker" type="Node2D" parent="Pattern5"]
+
+[node name="Marker2D" type="Marker2D" parent="Pattern5/RotationMarker"]
+position = Vector2(-170, 0)
+gizmo_extents = 32.0
+
+[node name="Marker2D2" type="Marker2D" parent="Pattern5/RotationMarker"]
+position = Vector2(-85, 0)
+gizmo_extents = 32.0
+
+[node name="Marker2D3" type="Marker2D" parent="Pattern5/RotationMarker"]
+gizmo_extents = 32.0
+
+[node name="Marker2D4" type="Marker2D" parent="Pattern5/RotationMarker"]
+position = Vector2(85, 0)
+gizmo_extents = 32.0
+
+[node name="Marker2D5" type="Marker2D" parent="Pattern5/RotationMarker"]
+position = Vector2(170, 0)
+gizmo_extents = 32.0
+
+[node name="Pattern6" type="Node2D" parent="."]
+
+[node name="RotationMarker" type="Node2D" parent="Pattern6"]
+
+[node name="Marker2D" type="Marker2D" parent="Pattern6/RotationMarker"]
+position = Vector2(-37.6, -62)
+gizmo_extents = 32.0
+
+[node name="Marker2D2" type="Marker2D" parent="Pattern6/RotationMarker"]
+position = Vector2(-85, 0)
+gizmo_extents = 32.0
+
+[node name="Marker2D3" type="Marker2D" parent="Pattern6/RotationMarker"]
+gizmo_extents = 32.0
+
+[node name="Marker2D4" type="Marker2D" parent="Pattern6/RotationMarker"]
+position = Vector2(85, 0)
+gizmo_extents = 32.0
+
+[node name="Marker2D5" type="Marker2D" parent="Pattern6/RotationMarker"]
+position = Vector2(37.5, -62)
+gizmo_extents = 32.0
+
+[node name="Marker2D6" type="Marker2D" parent="Pattern6/RotationMarker"]
+position = Vector2(-37.6, 62)
+gizmo_extents = 32.0
+
+[node name="Marker2D7" type="Marker2D" parent="Pattern6/RotationMarker"]
+position = Vector2(37.5, 62)
+gizmo_extents = 32.0
+
+[node name="Pattern2" type="Node2D" parent="."]
+visible = false
+
+[node name="BombMarker" type="Node2D" parent="Pattern2"]
+
+[node name="Marker2D7" type="Marker2D" parent="Pattern2/BombMarker"]
+position = Vector2(134, 71)
+gizmo_extents = 32.0
+
+[node name="Marker2D8" type="Marker2D" parent="Pattern2/BombMarker"]
+position = Vector2(-134, 71)
+gizmo_extents = 32.0
+
+[node name="Marker2D9" type="Marker2D" parent="Pattern2/BombMarker"]
+position = Vector2(0, -122)
+gizmo_extents = 32.0
+
+[node name="Pattern3" type="Node2D" parent="."]
+visible = false
+
+[node name="RigidBody2D" type="RigidBody2D" parent="Pattern3"]
+position = Vector2(570, 281)
+scale = Vector2(1, 1.00223)
+gravity_scale = 1.5
+
+[node name="Pattern4" type="Node2D" parent="."]
+visible = false
+
+[node name="Marker2D9" type="Marker2D" parent="Pattern4"]
+position = Vector2(0, 256)
 gizmo_extents = 32.0
