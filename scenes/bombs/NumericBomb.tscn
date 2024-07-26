@@ -1,9 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://dug1fwwbjaopa"]
+[gd_scene load_steps=10 format=3 uid="uid://dug1fwwbjaopa"]
 
 [ext_resource type="Script" path="res://scenes/bombs/NumericBomb.gd" id="1_lkrkc"]
 [ext_resource type="PackedScene" uid="uid://cs2ukp0c0vi80" path="res://Hongseokhee/Flame.tscn" id="2_3rw5a"]
 [ext_resource type="FontFile" uid="uid://bn71j2rajnbrn" path="res://fonts/bump-it-up.ttf" id="2_mftcv"]
 [ext_resource type="Script" path="res://addons/resonate/sound_manager/sound_bank.gd" id="3_awam2"]
+[ext_resource type="PackedScene" uid="uid://dq81owitrvpew" path="res://scenes/bombs/BombTimer.tscn" id="4_c11ax"]
 [ext_resource type="Script" path="res://addons/resonate/sound_manager/sound_event_resource.gd" id="4_pmjfd"]
 [ext_resource type="AudioStream" uid="uid://c352772ve0yuk" path="res://audio/sfx/slice_3.wav" id="5_7r5w0"]
 
@@ -26,12 +27,18 @@ Particle = ExtResource("2_3rw5a")
 shape = SubResource("CircleShape2D_51k8f")
 
 [node name="BombId" type="Label" parent="."]
-offset_left = -8.0
-offset_top = -10.0
-offset_right = 10.0
-offset_bottom = 10.0
+offset_left = -16.0
+offset_top = -20.0
+offset_right = 19.0
+offset_bottom = 20.0
+theme_override_colors/font_color = Color(0.958874, 0.725718, 0.350041, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 7
 theme_override_fonts/font = ExtResource("2_mftcv")
+theme_override_font_sizes/font_size = 32
 text = "0"
+
+[node name="BombTimer" parent="." instance=ExtResource("4_c11ax")]
 
 [node name="SoundBank" type="Node" parent="."]
 script = ExtResource("3_awam2")
@@ -40,3 +47,4 @@ events = Array[ExtResource("4_pmjfd")]([SubResource("Resource_ue2f5")])
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="player_body_entered" from="." to="." method="slayed"]
+[connection signal="bomb_time_out" from="BombTimer" to="." method="exploded"]
