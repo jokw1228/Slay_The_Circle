@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://umsn733124ug"]
+[gd_scene load_steps=13 format=3 uid="uid://umsn733124ug"]
 
 [ext_resource type="Script" path="res://scenes/rooms/RoomLogo/RoomLogo.gd" id="1_pteja"]
 [ext_resource type="Texture2D" uid="uid://dwamqpd1wliun" path="res://images/sprite_korea_univ.png" id="2_2m5ra"]
@@ -15,10 +15,6 @@
 font = ExtResource("5_yv10w")
 font_size = 26
 font_color = Color(1, 0.756863, 0, 1)
-
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_dydrd"]
-particle_flag_disable_z = true
-gravity = Vector3(0, 0, 0)
 
 [sub_resource type="Resource" id="Resource_15f70"]
 script = ExtResource("7_qxc88")
@@ -59,13 +55,6 @@ offset_right = 849.0
 offset_bottom = 600.0
 text = "Team. Slay The Circle"
 label_settings = SubResource("LabelSettings_7nktx")
-
-[node name="LogoParticle" type="GPUParticles2D" parent="."]
-position = Vector2(1055, 556)
-amount = 1
-process_material = SubResource("ParticleProcessMaterial_dydrd")
-lifetime = 10.0
-fixed_fps = 60
 
 [node name="MainMenu" type="Control" parent="."]
 layout_mode = 3

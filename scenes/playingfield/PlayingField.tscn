@@ -69,6 +69,7 @@ CircleField_node = NodePath("CircleField")
 [node name="PlayingFieldUI" parent="." instance=ExtResource("3_7mvnn")]
 
 [node name="Player" parent="." instance=ExtResource("4_u3i3n")]
+position = Vector2(0, 256)
 
 [node name="CircleField" parent="." instance=ExtResource("5_1ahyj")]
 

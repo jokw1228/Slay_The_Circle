@@ -1,7 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://cn7ttflmrmpth"]
-
-[ext_resource type="Script" path="res://scenes/playingfield/PlayingfieldCamera.gd" id="1_7d4w7"]
-
-[node name="PlayingFieldCamera" type="Camera2D"]
-ignore_rotation = false
-script = ExtResource("1_7d4w7")
