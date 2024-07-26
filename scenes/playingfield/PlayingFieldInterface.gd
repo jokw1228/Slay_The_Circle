@@ -4,6 +4,12 @@ extends Node2D
 var current_PlayingField_node: PlayingField
 var color = Color(1,1,1,1)
 
+func set_theme_color(themecolor : Color):
+	PlayingFieldInterface.color = themecolor
+
+func get_theme_color() -> Color:
+	return PlayingFieldInterface.color
+
 func get_PlayingField_node() -> PlayingField:
 	return current_PlayingField_node
 
