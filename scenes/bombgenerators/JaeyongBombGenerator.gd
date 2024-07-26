@@ -88,7 +88,7 @@ func _ready():
 	create_hazard_bomb(Vector2(-150, -150), 3, 6)
 	pass
 
-	#5번 패턴.<오류> 짜증나라고 만든 패턴. 순서를 잘 고려해야한다. <오류>
+	#5번 패턴.<오류> 짜증나라고 만든 패턴. 순서를 잘 고려해야한다.
 	create_numeric_bomb(Vector2(-150, 0), 3, 6 ,1)
 	create_numeric_bomb(Vector2(75, 0), 3, 6, 2)
 	create_numeric_bomb(Vector2(-75, 0), 3, 6, 3)
@@ -100,7 +100,8 @@ func _ready():
 	for i in (5):
 		create_normal_bomb(Vector2(cos(((2 * PI)/5 * i) + (1 * PI)/10), sin(((2 * PI)/5 * i) + (1 * PI)/10)) * 120, 3, 6)
 		create_normal_bomb(Vector2(cos(((2 * PI)/5 * i) + (1 * PI)/10), sin(((2 * PI)/5 * i) + (1 * PI)/10)) * -200, 3, 6)
-
+	pass
+	
 	#6번 패턴. 대각선 틈새로 이동하게 해 긴장감을 주는 패턴.
 	create_normal_bomb(Vector2(100, 100), 3, 6)
 	create_hazard_bomb(Vector2(100, 0), 3, 6)
@@ -114,7 +115,8 @@ func _ready():
 	create_hazard_bomb(Vector2(-100, 0), 3, 6)
 	create_normal_bomb(Vector2(-100, -100), 3, 6)
 
-	'''
 	pass
+
+	'''
 
 	
