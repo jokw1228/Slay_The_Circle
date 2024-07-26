@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://scenes/playingfield/PlayingField.gd" id="1_ed5yp"]
 [ext_resource type="PackedScene" uid="uid://crk2aniu1h5di" path="res://scenes/bombs/StartBomb.tscn" id="2_s84lx"]
-[ext_resource type="PackedScene" uid="uid://cn7ttflmrmpth" path="res://scenes/playingfield/PlayingfieldCamera.tscn" id="2_xhkow"]
+[ext_resource type="PackedScene" uid="uid://cn7ttflmrmpth" path="res://scenes/playingfield/PlayingFieldCamera.tscn" id="2_xhkow"]
 [ext_resource type="PackedScene" uid="uid://dl4bge564bur" path="res://scenes/playingfield/PlayingFieldUI.tscn" id="3_7mvnn"]
 [ext_resource type="PackedScene" uid="uid://bhe55ocau21ot" path="res://scenes/player/Player.tscn" id="4_u3i3n"]
 [ext_resource type="PackedScene" uid="uid://s264e74phclm" path="res://scenes/playingfield/CircleField.tscn" id="5_1ahyj"]
@@ -68,6 +68,7 @@ Player_node = NodePath("Player")
 [node name="PlayingFieldUI" parent="." instance=ExtResource("3_7mvnn")]
 
 [node name="Player" parent="." instance=ExtResource("4_u3i3n")]
+position = Vector2(0, 256)
 
 [node name="CircleField" parent="." instance=ExtResource("5_1ahyj")]
 

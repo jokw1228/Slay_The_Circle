@@ -9,8 +9,3 @@ func _ready():
 	var tween1 = get_tree().create_tween()
 	tween1.tween_property($".", "modulate", color, 1)
 	
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass

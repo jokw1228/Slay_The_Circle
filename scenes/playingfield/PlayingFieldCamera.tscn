@@ -1,12 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://cn7ttflmrmpth"]
+[gd_scene load_steps=5 format=3 uid="uid://cn7ttflmrmpth"]
 
 [ext_resource type="Script" path="res://scenes/playingfield/PlayingFieldCamera.gd" id="1_7d4w7"]
-[ext_resource type="Script" path="res://scenes/playingfield/GlitchEffect.gd" id="2_5g8x8"]
-[ext_resource type="Texture2D" uid="uid://ehynivw13sgw" path="res://images/progress-bar-circle.png" id="2_mfs2p"]
-[ext_resource type="Shader" path="res://glitch-effect.gdshader" id="3_v8fti"]
+[ext_resource type="Texture2D" uid="uid://ehynivw13sgw" path="res://images/sprite_timer_progress.png" id="2_mfs2p"]
+[ext_resource type="Shader" path="res://scenes/playingfield/glitch-effect.gdshader" id="3_71uu8"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_vbtli"]
-shader = ExtResource("3_v8fti")
+shader = ExtResource("3_71uu8")
 shader_parameter/shake_power = 0.01
 shader_parameter/shake_rate = 1.0
 shader_parameter/shake_speed = 7.0
@@ -19,7 +18,6 @@ script = ExtResource("1_7d4w7")
 GlitchEffect_node = NodePath("GlitchEffect")
 
 [node name="GlitchEffect" type="Node2D" parent="."]
-script = ExtResource("2_5g8x8")
 
 [node name="Sprite2D" type="Sprite2D" parent="GlitchEffect"]
 texture = ExtResource("2_mfs2p")
