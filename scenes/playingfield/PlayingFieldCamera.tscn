@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://scenes/playingfield/PlayingFieldCamera.gd" id="1_7d4w7"]
 [ext_resource type="Script" path="res://scenes/playingfield/GlitchEffect.gd" id="2_5g8x8"]
-[ext_resource type="Texture2D" uid="uid://ehynivw13sgw" path="res://images/progress-bar-circle.png" id="2_mfs2p"]
+[ext_resource type="Texture2D" uid="uid://ehynivw13sgw" path="res://images/sprite_timer_progress.png" id="2_mfs2p"]
 [ext_resource type="Shader" path="res://glitch-effect.gdshader" id="3_v8fti"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_vbtli"]

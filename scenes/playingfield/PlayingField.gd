@@ -9,8 +9,10 @@ class_name PlayingField
 @export var PlayingFieldUI_node: PlayingFieldUI
 @export var Player_node: Player
 
+@export var CircleField_node: StaticBody2D
+
 signal game_start
-signal game_over(bomb_position: Vector2)
+signal game_over
 signal game_ready
 
 var playing_time: float = 0
@@ -40,7 +42,8 @@ func start_PlayingField():
 func stop_PlayingField(bomb_position: Vector2):
 	if playing == true:
 		playing = false
-		emit_signal("game_over", bomb_position)
+		CircleField_node.set_bomb_position(bomb_position)
+		emit_signal("game_over")
 		#Lefted bombs are slayed
 		for node in get_tree().current_scene.get_children():
 			if node is Bomb:

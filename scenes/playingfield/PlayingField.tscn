@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://scenes/playingfield/PlayingField.gd" id="1_ed5yp"]
 [ext_resource type="PackedScene" uid="uid://crk2aniu1h5di" path="res://scenes/bombs/StartBomb.tscn" id="2_s84lx"]
-[ext_resource type="PackedScene" uid="uid://cn7ttflmrmpth" path="res://scenes/playingfield/PlayingfieldCamera.tscn" id="2_xhkow"]
+[ext_resource type="PackedScene" uid="uid://cn7ttflmrmpth" path="res://scenes/playingfield/PlayingFieldCamera.tscn" id="2_xhkow"]
 [ext_resource type="PackedScene" uid="uid://dl4bge564bur" path="res://scenes/playingfield/PlayingFieldUI.tscn" id="3_7mvnn"]
 [ext_resource type="PackedScene" uid="uid://bhe55ocau21ot" path="res://scenes/player/Player.tscn" id="4_u3i3n"]
 [ext_resource type="PackedScene" uid="uid://s264e74phclm" path="res://scenes/playingfield/CircleField.tscn" id="5_1ahyj"]
@@ -56,12 +56,13 @@ glow_strength = 0.9
 glow_bloom = 0.2
 glow_blend_mode = 1
 
-[node name="PlayingField" type="Node2D" node_paths=PackedStringArray("PlayingFieldCamera_node", "PlayingFieldUI_node", "Player_node")]
+[node name="PlayingField" type="Node2D" node_paths=PackedStringArray("PlayingFieldCamera_node", "PlayingFieldUI_node", "Player_node", "CircleField_node")]
 script = ExtResource("1_ed5yp")
 StartBomb_scene = ExtResource("2_s84lx")
 PlayingFieldCamera_node = NodePath("PlayingFieldCamera")
 PlayingFieldUI_node = NodePath("PlayingFieldUI")
 Player_node = NodePath("Player")
+CircleField_node = NodePath("CircleField")
 
 [node name="PlayingFieldCamera" parent="." instance=ExtResource("2_xhkow")]
 
@@ -99,10 +100,9 @@ flip_h = true
 environment = SubResource("Environment_4lowe")
 
 [connection signal="game_over" from="." to="PlayingFieldCamera" method="rotation_stop"]
-[connection signal="game_over" from="." to="PlayingFieldCamera" method="_on_playing_field_game_over"]
 [connection signal="game_over" from="." to="PlayingFieldUI" method="close_Playing_and_open_Stopped"]
-[connection signal="game_over" from="." to="CircleField" method="create_game_over_effect"]
 [connection signal="game_over" from="." to="CircleField" method="stop_reverb_effect"]
+[connection signal="game_over" from="." to="CircleField" method="create_game_over_effect"]
 [connection signal="game_ready" from="." to="CircleField" method="create_game_ready_effect"]
 [connection signal="game_start" from="." to="PlayingFieldCamera" method="rotation_reset"]
 [connection signal="game_start" from="." to="PlayingFieldUI" method="close_Stopped_and_open_Playing"]
