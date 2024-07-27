@@ -85,21 +85,20 @@ theme_override_styles/pressed = SubResource("StyleBoxFlat_wufa1")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_cgdqr")
 
 [node name="ValueShadow" type="Label" parent="."]
-offset_left = 61.765
-offset_top = 55.9
-offset_right = 836.945
-offset_bottom = 151.9
+offset_left = 107.583
+offset_top = 56.1633
+offset_right = 882.763
+offset_bottom = 152.163
 theme_override_colors/font_color = Color(0, 0, 0, 0.545098)
 theme_override_fonts/font = ExtResource("3_j4uj7")
 theme_override_font_sizes/font_size = 66
 text = "BACK"
-metadata/_edit_use_anchors_ = true
 
 [node name="Value" type="Label" parent="."]
-offset_left = 55.89
-offset_top = 49.43
-offset_right = 831.07
-offset_bottom = 145.43
+offset_left = 101.708
+offset_top = 49.6933
+offset_right = 876.888
+offset_bottom = 145.693
 theme_override_fonts/font = ExtResource("3_j4uj7")
 theme_override_font_sizes/font_size = 66
 text = "BACK"

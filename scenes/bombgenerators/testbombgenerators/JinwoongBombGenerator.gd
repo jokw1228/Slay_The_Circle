@@ -157,7 +157,7 @@ func pattern5():
 	# pattern 5s
 	var player_position: Vector2 = PlayingFieldInterface.get_player_position()
 	var time_offset: float = 1.0 / 6.0
-	var pattern5_time: float = pattern5_time - 2.0
+	#var pattern5_time: float = pattern5_time - 2.0
 	create_hazard_bomb(player_position.rotated(PI), pattern5_time, time_offset)
 	for i in range(1, 6):
 		await get_tree().create_timer(time_offset).timeout

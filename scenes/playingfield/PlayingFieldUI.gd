@@ -6,6 +6,7 @@ class_name PlayingFieldUI
 @export var StoppedLeft_node: Node2D
 @export var NewRecord_node: Node2D
 @export var StoppedUp_node: Node2D
+@export var BackToMenu_node: Node2D
 
 @export var Seconds_node: Label
 @export var Milliseconds_node: Label
@@ -13,6 +14,8 @@ class_name PlayingFieldUI
 @export var Last_Seconds_node: Label
 @export var Last_Milliseconds_node: Label
 @export var Gameover_node: Label
+
+var RoomMenu_room = "res://scenes/rooms/RoomMenu/RoomMenu.tscn"
 
 const SAVE_PATH = "res://best_record.dat"
 
@@ -40,12 +43,10 @@ func close_Stopped_and_open_Playing():
 	tween_close_up.tween_property(StoppedUp_node,"position",Vector2(0,-400),0.4)
 	await get_tree().create_timer(0.4).timeout
 	
-	
-	
 	NewRecord_node.visible = false
 	StoppedLeft_node.visible = false
 	StoppedRight_node.visible = false
-	StoppedUp_node.visible = true
+	StoppedUp_node.visible = false
 	
 	# 게임 시작 시 화면 위쪽 끝에서 점수 창 내려오는 효과 
 	# 일관성을 위해 close_Playing_and_open_Stopped에도 사라지는 애니메이션 추가 가능.
@@ -116,3 +117,25 @@ func new_record_transition():
 	tween2.tween_property(NewRecord_node,"position",Vector2(800,0),0.4)
 
 
+func _on_back_button_back():
+	#백 버튼 클릭시 UI 정리 <- "스타트 범브 터지면 gameover UI 들어가게" 와 같은 상황
+	var tween_close_left = get_tree().create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_EXPO)
+	var tween_close_right = get_tree().create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_EXPO)
+	var tween_close_up = get_tree().create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_EXPO)
+	StoppedLeft_node.position = Vector2(0,0)
+	StoppedRight_node.position = Vector2(0,0)
+	StoppedUp_node.position = Vector2(0,0)
+	tween_close_left.tween_property(StoppedLeft_node,"position",Vector2(-800,0),0.4)
+	tween_close_right.tween_property(StoppedRight_node,"position",Vector2(800,0),0.4)
+	tween_close_up.tween_property(StoppedUp_node,"position",Vector2(0,-400),0.4)
+	
+	var tween_back_in: Tween = get_tree().create_tween().set_trans(Tween.TRANS_EXPO)
+	tween_back_in.tween_property(BackToMenu_node, "position", Vector2(96, 249), 1.25)
+	await tween_back_in.finished
+	
+	var tween_back_out: Tween = get_tree().create_tween().set_trans(Tween.TRANS_EXPO)
+	tween_back_out.tween_property(BackToMenu_node, "position", Vector2(96, -166), 1.25)
+	await tween_back_out.finished
+	
+	get_tree().change_scene_to_file(RoomMenu_room)
+	

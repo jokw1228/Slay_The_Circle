@@ -24,13 +24,14 @@ font_size = 24
 font = ExtResource("2_ul78b")
 font_size = 32
 
-[node name="PlayingFieldUI" type="CanvasLayer" node_paths=PackedStringArray("Playing_node", "StoppedRight_node", "StoppedLeft_node", "NewRecord_node", "StoppedUp_node", "Seconds_node", "Milliseconds_node", "Last_Seconds_node", "Last_Milliseconds_node", "Gameover_node")]
+[node name="PlayingFieldUI" type="CanvasLayer" node_paths=PackedStringArray("Playing_node", "StoppedRight_node", "StoppedLeft_node", "NewRecord_node", "StoppedUp_node", "BackToMenu_node", "Seconds_node", "Milliseconds_node", "Last_Seconds_node", "Last_Milliseconds_node", "Gameover_node")]
 script = ExtResource("1_4jlcl")
 Playing_node = NodePath("Playing")
 StoppedRight_node = NodePath("StoppedRight")
 StoppedLeft_node = NodePath("StoppedLeft")
 NewRecord_node = NodePath("NewRecord")
 StoppedUp_node = NodePath("StoppedUp")
+BackToMenu_node = NodePath("BackToMenu")
 Seconds_node = NodePath("Playing/PlayingSkew/Seconds")
 Milliseconds_node = NodePath("Playing/PlayingSkew/Milliseconds")
 Last_Seconds_node = NodePath("StoppedRight/StoppedRightSkew/LastSeconds")
@@ -184,3 +185,53 @@ label_settings = SubResource("LabelSettings_5huar")
 
 [node name="BackButton" parent="StoppedUp" instance=ExtResource("3_x2rh8")]
 position = Vector2(892, 12)
+
+[node name="BackToMenu" type="Node2D" parent="."]
+position = Vector2(96, 704)
+skew = 0.261799
+
+[node name="Highlight" type="ColorRect" parent="BackToMenu"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 1000.0
+offset_bottom = 100.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.11, 0.11, 0.11, 0.490196)
+metadata/_edit_use_anchors_ = true
+
+[node name="Shadow" type="ColorRect" parent="BackToMenu"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 100.0
+offset_right = 1000.0
+offset_bottom = 150.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.490196)
+metadata/_edit_use_anchors_ = true
+
+[node name="Text" type="Node2D" parent="BackToMenu"]
+position = Vector2(104.574, 33.1288)
+
+[node name="BackShadow" type="Label" parent="BackToMenu/Text"]
+offset_left = 7.483
+offset_right = 845.483
+offset_bottom = 96.0
+theme_override_colors/font_color = Color(0, 0, 0, 0.545098)
+theme_override_fonts/font = ExtResource("2_ul78b")
+theme_override_font_sizes/font_size = 66
+text = "BACK TO MENU.."
+metadata/_edit_use_anchors_ = true
+
+[node name="Back" type="Label" parent="BackToMenu/Text"]
+offset_right = 838.0
+offset_bottom = 96.0
+theme_override_fonts/font = ExtResource("2_ul78b")
+theme_override_font_sizes/font_size = 66
+text = "BACK TO MENU.."
+metadata/_edit_use_anchors_ = true
+
+[connection signal="back" from="StoppedUp/BackButton" to="." method="_on_back_button_back"]
