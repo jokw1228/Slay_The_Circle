@@ -1,7 +1,7 @@
 [gd_scene load_steps=10 format=3 uid="uid://dug1fwwbjaopa"]
 
 [ext_resource type="Script" path="res://scenes/bombs/NumericBomb.gd" id="1_lkrkc"]
-[ext_resource type="PackedScene" uid="uid://cs2ukp0c0vi80" path="res://scenes/Hongseokhee/Flame.tscn" id="2_3rw5a"]
+[ext_resource type="PackedScene" uid="uid://cs2ukp0c0vi80" path="res://scenes/bombs/bombeffects/Flame.tscn" id="2_3rw5a"]
 [ext_resource type="FontFile" uid="uid://bn71j2rajnbrn" path="res://fonts/bump-it-up.ttf" id="2_mftcv"]
 [ext_resource type="Script" path="res://addons/resonate/sound_manager/sound_bank.gd" id="3_awam2"]
 [ext_resource type="PackedScene" uid="uid://dq81owitrvpew" path="res://scenes/bombs/BombTimer.tscn" id="4_c11ax"]

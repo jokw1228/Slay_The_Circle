@@ -2,7 +2,7 @@ extends StaticBody2D
 class_name CircleField
 
 const CircleFieldRadius = 256
-var PlayingFieldColor = PlayingFieldInterface.color
+var PlayingFieldColor = PlayingFieldInterface.get_theme_color()
 
 @export var CircleFieldEffect_scene: PackedScene
 

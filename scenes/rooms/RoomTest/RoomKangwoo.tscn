@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://v1wjx6bw7cwa"]
 
 [ext_resource type="PackedScene" uid="uid://dntg6argh8n3n" path="res://scenes/playingfield/PlayingField.tscn" id="1_wyaah"]
-[ext_resource type="PackedScene" uid="uid://b5rwbf5uwi83d" path="res://scenes/bombgenerators/KangwooBombGenerator.tscn" id="2_qdx28"]
+[ext_resource type="PackedScene" uid="uid://b5rwbf5uwi83d" path="res://scenes/bombgenerators/testbombgenerators/KangwooBombGenerator.tscn" id="2_qdx28"]
 
 [node name="RoomKangwoo" type="Node2D"]
 

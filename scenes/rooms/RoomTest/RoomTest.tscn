@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://i31oljejy0t3"]
 
-[ext_resource type="PackedScene" uid="uid://d0ee8kj7eehrb" path="res://scenes/bombgenerators/KiyongBombGenerator.tscn" id="2_saqrn"]
+[ext_resource type="PackedScene" uid="uid://d0ee8kj7eehrb" path="res://scenes/bombgenerators/testbombgenerators/KiyongBombGenerator.tscn" id="2_saqrn"]
 [ext_resource type="PackedScene" uid="uid://dntg6argh8n3n" path="res://scenes/playingfield/PlayingField.tscn" id="2_xnsv4"]
 
 [node name="RoomTest" type="Node2D"]

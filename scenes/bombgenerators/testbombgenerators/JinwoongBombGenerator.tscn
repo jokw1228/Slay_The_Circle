@@ -1,6 +1,6 @@
 [gd_scene load_steps=15 format=3 uid="uid://ymk5jnvo4t6"]
 
-[ext_resource type="Script" path="res://scenes/bombgenerators/JinwoongBombGenerator.gd" id="1_oy8hx"]
+[ext_resource type="Script" path="res://scenes/bombgenerators/testbombgenerators/JinwoongBombGenerator.gd" id="1_oy8hx"]
 [ext_resource type="PackedScene" uid="uid://5hmqv8rxk05i" path="res://scenes/bombs/BombLink.tscn" id="2_hosbj"]
 [ext_resource type="PackedScene" uid="uid://bj78l3upa26ik" path="res://scenes/bombs/NormalBomb.tscn" id="2_np14a"]
 [ext_resource type="PackedScene" uid="uid://cux2tpymcx5ny" path="res://scenes/bombs/HazardBomb.tscn" id="3_jv6f8"]

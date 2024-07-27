@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://c1aj7ofqpgtbg"]
 
 [ext_resource type="PackedScene" uid="uid://dntg6argh8n3n" path="res://scenes/playingfield/PlayingField.tscn" id="1_augx5"]
-[ext_resource type="PackedScene" uid="uid://c526d17vtu1yj" path="res://scenes/bombgenerators/SeonghyeonBombGenerator.tscn" id="2_7un2a"]
+[ext_resource type="PackedScene" uid="uid://c526d17vtu1yj" path="res://scenes/bombgenerators/testbombgenerators/SeonghyeonBombGenerator.tscn" id="2_7un2a"]
 
 [node name="RoomSeonghyeon" type="Node2D"]
 

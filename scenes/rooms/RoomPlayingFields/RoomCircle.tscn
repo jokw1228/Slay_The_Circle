@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://ccay8yrm25adk"]
 
 [ext_resource type="PackedScene" uid="uid://dntg6argh8n3n" path="res://scenes/playingfield/PlayingField.tscn" id="1_ms04y"]
-[ext_resource type="PackedScene" uid="uid://ymk5jnvo4t6" path="res://scenes/bombgenerators/JinwoongBombGenerator.tscn" id="2_j7thq"]
+[ext_resource type="PackedScene" uid="uid://ymk5jnvo4t6" path="res://scenes/bombgenerators/testbombgenerators/JinwoongBombGenerator.tscn" id="2_j7thq"]
 
 [node name="RoomCircle" type="Node2D"]
 

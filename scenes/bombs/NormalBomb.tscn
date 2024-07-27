@@ -1,7 +1,7 @@
 [gd_scene load_steps=9 format=3 uid="uid://bj78l3upa26ik"]
 
 [ext_resource type="Script" path="res://scenes/bombs/NormalBomb.gd" id="1_d5v6f"]
-[ext_resource type="PackedScene" uid="uid://cs2ukp0c0vi80" path="res://scenes/Hongseokhee/Flame.tscn" id="2_qs57d"]
+[ext_resource type="PackedScene" uid="uid://cs2ukp0c0vi80" path="res://scenes/bombs/bombeffects/Flame.tscn" id="2_qs57d"]
 [ext_resource type="PackedScene" uid="uid://dq81owitrvpew" path="res://scenes/bombs/BombTimer.tscn" id="2_yellt"]
 [ext_resource type="Script" path="res://addons/resonate/sound_manager/sound_bank.gd" id="3_8xxje"]
 [ext_resource type="Script" path="res://addons/resonate/sound_manager/sound_event_resource.gd" id="4_d5lvo"]
