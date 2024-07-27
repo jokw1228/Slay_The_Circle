@@ -1,9 +1,9 @@
 [gd_scene load_steps=3 format=3 uid="uid://bbuev5x2anes0"]
 
 [ext_resource type="PackedScene" uid="uid://dntg6argh8n3n" path="res://scenes/playingfield/PlayingField.tscn" id="1_56g5c"]
-[ext_resource type="PackedScene" uid="uid://ymk5jnvo4t6" path="res://scenes/bombgenerators/testbombgenerators/JinwoongBombGenerator.tscn" id="2_1g7tc"]
+[ext_resource type="PackedScene" uid="uid://bc6ds37qs7xs6" path="res://scenes/bombgenerators/testbombgenerators/JaeyongBombGenerator.tscn" id="2_s7bia"]
 
 [node name="RoomHyperCircler" type="Node2D"]
 
 [node name="PlayingField" parent="." instance=ExtResource("1_56g5c")]
-BombGenerator_scene = ExtResource("2_1g7tc")
+BombGenerator_scene = ExtResource("2_s7bia")
