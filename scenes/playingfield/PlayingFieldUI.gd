@@ -5,6 +5,7 @@ class_name PlayingFieldUI
 @export var StoppedRight_node: Node2D
 @export var StoppedLeft_node: Node2D
 @export var NewRecord_node: Node2D
+@export var StoppedUp_node: Node2D
 
 @export var Seconds_node: Label
 @export var Milliseconds_node: Label
@@ -28,12 +29,15 @@ func playing_time_updated(time: float):
 
 func close_Stopped_and_open_Playing():
 	#스타트 범브 터지면 gameover UI 들어가게
-	var tween3 = get_tree().create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_EXPO)
-	var tween4 = get_tree().create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_EXPO)
+	var tween_close_left = get_tree().create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_EXPO)
+	var tween_close_right = get_tree().create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_EXPO)
+	var tween_close_up = get_tree().create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_EXPO)
 	StoppedLeft_node.position = Vector2(0,0)
 	StoppedRight_node.position = Vector2(0,0)
-	tween3.tween_property(StoppedLeft_node,"position",Vector2(-800,0),0.4)
-	tween4.tween_property(StoppedRight_node,"position",Vector2(800,0),0.4)
+	StoppedUp_node.position = Vector2(0,0)
+	tween_close_left.tween_property(StoppedLeft_node,"position",Vector2(-800,0),0.4)
+	tween_close_right.tween_property(StoppedRight_node,"position",Vector2(800,0),0.4)
+	tween_close_up.tween_property(StoppedUp_node,"position",Vector2(0,-400),0.4)
 	await get_tree().create_timer(0.4).timeout
 	
 	
@@ -41,6 +45,7 @@ func close_Stopped_and_open_Playing():
 	NewRecord_node.visible = false
 	StoppedLeft_node.visible = false
 	StoppedRight_node.visible = false
+	StoppedUp_node.visible = true
 	
 	# 게임 시작 시 화면 위쪽 끝에서 점수 창 내려오는 효과 
 	# 일관성을 위해 close_Playing_and_open_Stopped에도 사라지는 애니메이션 추가 가능.
@@ -58,6 +63,7 @@ func close_Playing_and_open_Stopped():
 	Playing_node.visible = false
 	StoppedLeft_node.visible = true
 	StoppedRight_node.visible = true
+	StoppedUp_node.visible = true
 	
 	Last_Seconds_node.text = str(seconds_value)
 	Last_Milliseconds_node.text = ":" + str(milliseconds_value)
@@ -67,11 +73,14 @@ func close_Playing_and_open_Stopped():
 	#game over UI transition
 	StoppedLeft_node.position = Vector2(-800,0)
 	StoppedRight_node.position = Vector2(800,0)
+	StoppedUp_node.position = Vector2(0,-400)
 	await get_tree().create_timer(1.0).timeout
-	var tween1 = get_tree().create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_EXPO)
-	var tween2 = get_tree().create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_EXPO)
-	tween1.tween_property(StoppedLeft_node,"position",Vector2(0,0),0.4)
-	tween2.tween_property(StoppedRight_node,"position",Vector2(0,0),0.4)
+	var tween_open_left = get_tree().create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_EXPO)
+	var tween_open_right = get_tree().create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_EXPO)
+	var tween_open_up = get_tree().create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_EXPO)
+	tween_open_left.tween_property(StoppedLeft_node,"position",Vector2(0,0),0.4)
+	tween_open_right.tween_property(StoppedRight_node,"position",Vector2(0,0),0.4)
+	tween_open_up.tween_property(StoppedUp_node,"position",Vector2(0,0),0.4)
 	await get_tree().create_timer(1.4).timeout
 
 	

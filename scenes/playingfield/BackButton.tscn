@@ -1,0 +1,115 @@
+[gd_scene load_steps=8 format=3 uid="uid://bk6056kfjvjk4"]
+
+[ext_resource type="Script" path="res://scenes/playingfield/BackButton.gd" id="1_7tr4d"]
+[ext_resource type="PackedScene" uid="uid://cf7w2swwnan3b" path="res://scenes/playingfield/BackButtonEffect.tscn" id="2_87x0q"]
+[ext_resource type="FontFile" uid="uid://bn71j2rajnbrn" path="res://fonts/bump-it-up.ttf" id="3_j4uj7"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4pbo8"]
+bg_color = Color(1, 0.713726, 0.00392157, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_w3fpv"]
+bg_color = Color(1, 0.779, 0.22, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.986752, 0.986752, 0.986752, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wufa1"]
+bg_color = Color(0.87, 0.6235, 0, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.964742, 0.964742, 0.964742, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_cgdqr"]
+
+[node name="BackButton" type="Node2D" node_paths=PackedStringArray("timer0", "timer1")]
+scale = Vector2(0.5, 0.5)
+skew = 0.261799
+script = ExtResource("1_7tr4d")
+timer0 = NodePath("Timer")
+timer1 = NodePath("Timer2")
+back_button_effect = ExtResource("2_87x0q")
+
+[node name="Highlight" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -24.0
+offset_top = 17.0
+offset_right = 503.0
+offset_bottom = 199.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.54063, 0.378898, 0, 1)
+
+[node name="Shadow" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 3.0
+offset_top = -16.0
+offset_right = 497.0
+offset_bottom = 186.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.72549, 0.513726, 0, 0.784314)
+
+[node name="Button" type="Button" parent="."]
+offset_right = 486.0
+offset_bottom = 182.0
+theme_override_colors/font_color = Color(1, 0.713726, 0.00392157, 1)
+theme_override_colors/icon_normal_color = Color(1, 0.713726, 0.00392157, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_4pbo8")
+theme_override_styles/hover = SubResource("StyleBoxFlat_w3fpv")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_wufa1")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_cgdqr")
+
+[node name="ValueShadow" type="Label" parent="."]
+offset_left = 61.765
+offset_top = 55.9
+offset_right = 836.945
+offset_bottom = 151.9
+theme_override_colors/font_color = Color(0, 0, 0, 0.545098)
+theme_override_fonts/font = ExtResource("3_j4uj7")
+theme_override_font_sizes/font_size = 66
+text = "BACK"
+metadata/_edit_use_anchors_ = true
+
+[node name="Value" type="Label" parent="."]
+offset_left = 55.89
+offset_top = 49.43
+offset_right = 831.07
+offset_bottom = 145.43
+theme_override_fonts/font = ExtResource("3_j4uj7")
+theme_override_font_sizes/font_size = 66
+text = "BACK"
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 2.0
+
+[node name="Timer2" type="Timer" parent="."]
+wait_time = 2.0
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="timeout" from="Timer2" to="." method="_on_timer_timeout"]

@@ -1,7 +1,8 @@
-[gd_scene load_steps=8 format=3 uid="uid://dl4bge564bur"]
+[gd_scene load_steps=9 format=3 uid="uid://dl4bge564bur"]
 
 [ext_resource type="Script" path="res://scenes/playingfield/PlayingFieldUI.gd" id="1_4jlcl"]
 [ext_resource type="FontFile" uid="uid://bn71j2rajnbrn" path="res://fonts/bump-it-up.ttf" id="2_ul78b"]
+[ext_resource type="PackedScene" uid="uid://bk6056kfjvjk4" path="res://scenes/playingfield/BackButton.tscn" id="3_x2rh8"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_rkghr"]
 font = ExtResource("2_ul78b")
@@ -23,12 +24,13 @@ font_size = 24
 font = ExtResource("2_ul78b")
 font_size = 32
 
-[node name="PlayingFieldUI" type="CanvasLayer" node_paths=PackedStringArray("Playing_node", "StoppedRight_node", "StoppedLeft_node", "NewRecord_node", "Seconds_node", "Milliseconds_node", "Last_Seconds_node", "Last_Milliseconds_node", "Gameover_node")]
+[node name="PlayingFieldUI" type="CanvasLayer" node_paths=PackedStringArray("Playing_node", "StoppedRight_node", "StoppedLeft_node", "NewRecord_node", "StoppedUp_node", "Seconds_node", "Milliseconds_node", "Last_Seconds_node", "Last_Milliseconds_node", "Gameover_node")]
 script = ExtResource("1_4jlcl")
 Playing_node = NodePath("Playing")
 StoppedRight_node = NodePath("StoppedRight")
 StoppedLeft_node = NodePath("StoppedLeft")
 NewRecord_node = NodePath("NewRecord")
+StoppedUp_node = NodePath("StoppedUp")
 Seconds_node = NodePath("Playing/PlayingSkew/Seconds")
 Milliseconds_node = NodePath("Playing/PlayingSkew/Milliseconds")
 Last_Seconds_node = NodePath("StoppedRight/StoppedRightSkew/LastSeconds")
@@ -177,3 +179,7 @@ theme_override_fonts/font = ExtResource("2_ul78b")
 theme_override_font_sizes/font_size = 70
 text = "New Record!"
 label_settings = SubResource("LabelSettings_5huar")
+
+[node name="StoppedUp" type="Node2D" parent="."]
+
+[node name="BackButton" parent="StoppedUp" instance=ExtResource("3_x2rh8")]

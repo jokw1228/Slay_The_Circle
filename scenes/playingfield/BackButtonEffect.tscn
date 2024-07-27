@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://cf7w2swwnan3b"]
+
+[ext_resource type="Script" path="res://scenes/playingfield/BackButtonEffect.gd" id="1_0xwqu"]
+
+[node name="BackButtonEffect" type="Line2D"]
+points = PackedVector2Array(-240, -88, 240, -88, 240, 88, -240, 88)
+closed = true
+width = 3.0
+script = ExtResource("1_0xwqu")
