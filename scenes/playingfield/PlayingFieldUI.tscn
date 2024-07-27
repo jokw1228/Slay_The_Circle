@@ -183,3 +183,4 @@ label_settings = SubResource("LabelSettings_5huar")
 [node name="StoppedUp" type="Node2D" parent="."]
 
 [node name="BackButton" parent="StoppedUp" instance=ExtResource("3_x2rh8")]
+position = Vector2(892, 12)
