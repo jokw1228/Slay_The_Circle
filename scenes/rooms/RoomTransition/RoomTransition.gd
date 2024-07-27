@@ -1,7 +1,6 @@
 extends Control
 class_name RoomTransition
 
-@onready var room_transition_node = get_parent().get_node("RoomLogo")
 @onready var animation_tex : TextureRect = $TextureRect
 @onready var animation_player : AnimationPlayer = $AnimationPlayer
 

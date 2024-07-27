@@ -37,31 +37,31 @@ func _ready():
 	MusicManager.play("bgm_PF","test_fast",0,1)
 
 func start_stage(): # A signal is connected by the select button.
-	var x: Vector2 = Vector2(0, 0)
+	#var x: Vector2 = Vector2(0, 0)
 	if stage_index == 0: 
 		ui_ready_title.text = "CIRCLE"
 		ui_ready_title_shadow.text = "CIRCLE"
-		x = Vector2(0, -144)
+		#x = Vector2(0, -144)
 	if stage_index == 3: 
 		ui_ready_title.text = "HYPER CIRCLE"
 		ui_ready_title_shadow.text = "HYPER CIRCLE"
-		x = Vector2(0, -144)
+		#x = Vector2(0, -144)
 	if stage_index == 1:
 		ui_ready_title.text = "CIRCLER"
 		ui_ready_title_shadow.text = "CIRCLER"
-		x = Vector2(-128, 64)
+		#x = Vector2(-128, 64)
 	if stage_index == 4:
 		ui_ready_title.text = "HYPER CIRCLER"
 		ui_ready_title_shadow.text = "HYPER CIRCLER"
-		x = Vector2(-128, 64)
+		#x = Vector2(-128, 64)
 	if stage_index == 2: 
 		ui_ready_title.text = "CIRCLEST"
 		ui_ready_title_shadow.text = "CIRCLEST"
-		x = Vector2(128, 64)
+		#x = Vector2(128, 64)
 	if stage_index == 5: 
 		ui_ready_title.text = "HYPER CIRCLEST"
 		ui_ready_title_shadow.text = "HYPER CIRCLEST"
-		x = Vector2(128, 64)
+		#x = Vector2(128, 64)
 	
 	reverb_effect_timer.stop()
 	
@@ -109,8 +109,8 @@ func select_stage(difficulty: int, stage_name: String):
 		start.start.connect(start_stage)
 		ui_container_right.add_child(start)
 		
-		var tween: Tween = get_tween()
-		tween.tween_property(start, "position", Vector2(192, 170), 0.4)
+		var tween_start: Tween = get_tween()
+		tween_start.tween_property(start, "position", Vector2(192, 170), 0.4)
 	
 	# 스테이지 패널.
 	stage = scene_stage.instantiate()

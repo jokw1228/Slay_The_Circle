@@ -6,7 +6,6 @@ signal room_color_change
 
 @export var room_menu: PackedScene
 @export var Logos_node: Node2D
-@export var RoomMainMenu_room: PackedScene
 #@export var LogoSound: AudioStream
 #var sound_player: AudioStreamPlayer
 var room_transition_scene: PackedScene = load("res://scenes/rooms/RoomTransition/RoomTransition.tscn")
@@ -39,7 +38,7 @@ func _ready():
 	await get_tree().create_timer(1.0).timeout
 
 	get_tree().change_scene_to_packed(room_menu)
-		
+
 func on_sound_manager_loaded() -> void:
 	SoundManager.play("sfx_logo","fade_in")
 	
