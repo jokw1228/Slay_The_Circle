@@ -19,13 +19,23 @@ func _ready():
 	# create_rotationspeedup_bomb(Vector2.ZERO, 0, 1, 1)
 	await get_tree().create_timer(1.0).timeout
 	
-	# pattern1_ready()
-	# pattern2_ready()
-	pattern5_ready()
+	# 비활성화 이유: 맵이 회전할 수 있으므로 기존 폭탄이 터질 때 같은 위치에 폭탄 생성하기 위해서는
+	# 폭탄이 터지는 순간 global_position을 받아와야 함. 그런데 폭탄 터질 때 시그널도 존재하지 않고
+	# bomb_time 또한 정확한 1초가 아니어서 정확히 터질 타이밍에 position 가져올 수가 없음 
+	# -> 이미 터진 후 global_position 참조하여 간헐적으로 에러가 발생하여 그냥 비활성화함. 
+	#pattern5_ready()
+	#await timer(10).timeout
+	pattern6_ready()
+	await timer(5).timeout
+	pattern1_ready()
+	await timer(5).timeout
+	pattern3_ready()
+	await timer(6).timeout
+	pattern2_ready()
 	
 func _process(delta):
 	pass
-	# pattern1_process(delta)
+	pattern1_process(delta)
 
 func _physics_process(delta):
 	pass
@@ -122,25 +132,25 @@ func pattern3_ready():
 @export var pattern5_positions: Array[Node2D]
 func pattern5_ready():
 	var b1 = create_hazard_bomb(pattern5_positions[0].global_position, 0.5, 1)
-	var b2 = create_hazard_bomb(pattern5_positions[1].global_position, 0.5, 2)
-	var b3 = create_hazard_bomb(pattern5_positions[2].global_position, 0.5, 3)
-	var b4 = create_hazard_bomb(pattern5_positions[3].global_position, 0.5, 4)
-	var b5 = create_hazard_bomb(pattern5_positions[4].global_position, 0.5, 5)
+	var b2 = create_hazard_bomb(pattern5_positions[1].global_position, 0.5, 1.5)
+	var b3 = create_hazard_bomb(pattern5_positions[2].global_position, 0.5, 2)
+	var b4 = create_hazard_bomb(pattern5_positions[3].global_position, 0.5, 2.5)
+	var b5 = create_hazard_bomb(pattern5_positions[4].global_position, 0.5, 3)
 
-	await timer(1.5).timeout
-	var b6 = create_normal_bomb(b1.global_position, 0, 1.2)
+	await timer(1.8).timeout
+	var b6 = create_normal_bomb(b1.global_position, 0, 1)
 	# var b11 = create_hazard_bomb(b6.global_position, 1, 5) # warningtime의 1초와 bombtime의 1초가 다른 버그?
-	await timer(1).timeout
-	var b7 = create_normal_bomb(b2.global_position, 0, 1.2)
+	await timer(0.7).timeout
+	var b7 = create_normal_bomb(b2.global_position, 0, 1)
 	# var b12 = create_hazard_bomb(b7.global_position, 1, 5)
-	await timer(1).timeout
-	var b8 = create_normal_bomb(b3.global_position, 0, 1.2)
+	await timer(0.7).timeout
+	var b8 = create_normal_bomb(b3.global_position, 0, 1)
 	# var b13 = create_hazard_bomb(b8.global_position, 1, 5)
-	await timer(1).timeout
-	var b9 = create_normal_bomb(b4.global_position, 0, 1.2)
+	await timer(0.7).timeout
+	var b9 = create_normal_bomb(b4.global_position, 0, 1)
 	# var b14 = create_hazard_bomb(b9.global_position, 1, 5)
-	await timer(1).timeout
-	var b10 = create_normal_bomb(b5.global_position, 0, 1.2)
+	await timer(1.3).timeout
+	var b10 = create_normal_bomb(b5.global_position, 0, 1.3)
 	# var b15 = create_hazard_bomb(b10.global_position, 1, 5)
 
 
