@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://dntg6argh8n3n"]
+[gd_scene load_steps=21 format=3 uid="uid://dntg6argh8n3n"]
 
 [ext_resource type="Script" path="res://scenes/playingfield/PlayingField.gd" id="1_ed5yp"]
 [ext_resource type="PackedScene" uid="uid://crk2aniu1h5di" path="res://scenes/bombs/StartBomb.tscn" id="2_s84lx"]
@@ -50,12 +50,6 @@ name = "test_fast"
 bus = ""
 stems = Array[ExtResource("12_nuc5t")]([SubResource("Resource_qal6j")])
 
-[sub_resource type="Environment" id="Environment_4lowe"]
-background_mode = 3
-glow_strength = 0.9
-glow_bloom = 0.2
-glow_blend_mode = 1
-
 [node name="PlayingField" type="Node2D" node_paths=PackedStringArray("PlayingFieldCamera_node", "PlayingFieldUI_node", "Player_node", "CircleField_node")]
 script = ExtResource("1_ed5yp")
 StartBomb_scene = ExtResource("2_s84lx")
@@ -96,13 +90,10 @@ grow_vertical = 2
 texture = ExtResource("15_o6xhg")
 flip_h = true
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_4lowe")
-
 [connection signal="game_over" from="." to="PlayingFieldCamera" method="rotation_stop"]
 [connection signal="game_over" from="." to="PlayingFieldUI" method="close_Playing_and_open_Stopped"]
-[connection signal="game_over" from="." to="CircleField" method="stop_reverb_effect"]
 [connection signal="game_over" from="." to="CircleField" method="create_game_over_effect"]
+[connection signal="game_over" from="." to="CircleField" method="stop_reverb_effect"]
 [connection signal="game_ready" from="." to="CircleField" method="create_game_ready_effect"]
 [connection signal="game_start" from="." to="PlayingFieldCamera" method="rotation_reset"]
 [connection signal="game_start" from="." to="PlayingFieldUI" method="close_Stopped_and_open_Playing"]
