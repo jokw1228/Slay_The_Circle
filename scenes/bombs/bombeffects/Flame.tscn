@@ -7,8 +7,7 @@ colors = PackedColorArray(0.117438, 0.117438, 0.117438, 1, 1, 1, 1, 1)
 gradient = SubResource("Gradient_o24kv")
 
 [sub_resource type="Gradient" id="Gradient_kcox8"]
-offsets = PackedFloat32Array(0, 0, 1)
-colors = PackedColorArray(0, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 1)
+colors = PackedColorArray(0, 1, 1, 1, 1, 1, 1, 1)
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_05fx7"]
 gradient = SubResource("Gradient_kcox8")
@@ -44,7 +43,9 @@ sub_emitter_amount_at_collision = 1
 
 [node name="flame" type="GPUParticles2D" parent="."]
 emitting = false
-amount = 50
+amount = 30
 process_material = SubResource("ParticleProcessMaterial_homa5")
+lifetime = 0.5
 one_shot = true
+explosiveness = 0.5
 randomness = 0.18
