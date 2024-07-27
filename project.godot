@@ -46,4 +46,5 @@ enabled=PackedStringArray("res://addons/resonate/plugin.cfg")
 [rendering]
 
 renderer/rendering_method="mobile"
+textures/vram_compression/import_etc2_astc=true
 viewport/hdr_2d=true

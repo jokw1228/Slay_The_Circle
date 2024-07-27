@@ -1,7 +1,7 @@
 [gd_scene load_steps=10 format=3 uid="uid://bd65ne6jxvojv"]
 
 [ext_resource type="Script" path="res://scenes/bombs/RotationInversionBomb.gd" id="1_u7xat"]
-[ext_resource type="PackedScene" uid="uid://cs2ukp0c0vi80" path="res://Hongseokhee/Flame.tscn" id="2_7qklp"]
+[ext_resource type="PackedScene" uid="uid://cs2ukp0c0vi80" path="res://scenes/Hongseokhee/Flame.tscn" id="2_7qklp"]
 [ext_resource type="PackedScene" uid="uid://dq81owitrvpew" path="res://scenes/bombs/BombTimer.tscn" id="2_ix5n8"]
 [ext_resource type="Texture2D" uid="uid://cw5wu5qajpxdb" path="res://images/rotation_reverse.png" id="3_qnysg"]
 [ext_resource type="Script" path="res://addons/resonate/sound_manager/sound_bank.gd" id="4_0dp2e"]

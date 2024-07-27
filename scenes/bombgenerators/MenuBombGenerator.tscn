@@ -5,7 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://dgslkvvx2fvum" path="res://images/game_speed_up.png" id="3_cb50f"]
 [ext_resource type="Texture2D" uid="uid://cw5wu5qajpxdb" path="res://images/rotation_reverse.png" id="4_ur4wr"]
 [ext_resource type="Texture2D" uid="uid://cofhcmnt2gu5a" path="res://images/rotaion_speed_up.png" id="5_4ibfc"]
-[ext_resource type="PackedScene" uid="uid://cn5fsevyjrrr0" path="res://Hongseokhee/Themecolor.tscn" id="6_8cdld"]
+[ext_resource type="PackedScene" uid="uid://cn5fsevyjrrr0" path="res://scenes/Hongseokhee/Themecolor.tscn" id="6_8cdld"]
 
 [node name="MenuBombGenerator" type="Node2D"]
 script = ExtResource("1_hpx4g")

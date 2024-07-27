@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://scenes/bombs/GameSpeedUpBomb.gd" id="1_xqi0c"]
 [ext_resource type="PackedScene" uid="uid://dq81owitrvpew" path="res://scenes/bombs/BombTimer.tscn" id="2_iykik"]
-[ext_resource type="PackedScene" uid="uid://cs2ukp0c0vi80" path="res://Hongseokhee/Flame.tscn" id="2_ru3xd"]
+[ext_resource type="PackedScene" uid="uid://cs2ukp0c0vi80" path="res://scenes/Hongseokhee/Flame.tscn" id="2_ru3xd"]
 [ext_resource type="Texture2D" uid="uid://dgslkvvx2fvum" path="res://images/game_speed_up.png" id="3_ds3i7"]
 [ext_resource type="Script" path="res://addons/resonate/sound_manager/sound_bank.gd" id="4_nc41i"]
 [ext_resource type="Script" path="res://addons/resonate/sound_manager/sound_event_resource.gd" id="5_2780o"]
