@@ -38,6 +38,7 @@ func create_normal_bomb(bomb_position: Vector2, warning_time: float, bomb_time: 
 	timer.set_time = bomb_time
 	
 	get_tree().current_scene.add_child(inst2)
+	Utils.attach_node(inst, inst2)
 	add_bomb(inst, warning_time)
 	return inst
 
@@ -52,6 +53,7 @@ func create_hazard_bomb(bomb_position: Vector2, warning_time: float, bomb_time: 
 	timer.set_time = bomb_time
 	
 	get_tree().current_scene.add_child(inst2)
+	Utils.attach_node(inst, inst2)
 	add_bomb(inst, warning_time)
 	return inst
 	# 이건 link가 필요 없지 않나요? ㅋㅋㅋ 
@@ -68,6 +70,7 @@ func create_numeric_bomb(bomb_position: Vector2, warning_time: float, bomb_time:
 	inst.id = bomb_id
 	
 	get_tree().current_scene.add_child(inst2)
+	Utils.attach_node(inst, inst2)
 	add_bomb(inst, warning_time)
 	return inst
 	
@@ -82,6 +85,7 @@ func create_rotationinversion_bomb(bomb_position: Vector2, warning_time: float, 
 	timer.set_time = bomb_time
 	
 	get_tree().current_scene.add_child(inst2)
+	Utils.attach_node(inst, inst2)
 	add_bomb(inst, warning_time)
 	return inst
 	
@@ -97,6 +101,7 @@ func create_rotationspeedup_bomb(bomb_position: Vector2, warning_time: float, bo
 	inst.rotation_speed_up_value = speed_up_value
 	
 	get_tree().current_scene.add_child(inst2)
+	Utils.attach_node(inst, inst2)
 	add_bomb(inst, warning_time)
 	return inst
 	
@@ -112,6 +117,7 @@ func create_gamespeedup_bomb(bomb_position: Vector2, warning_time: float, bomb_t
 	inst.game_speed_up_value = speed_up_value
 	
 	get_tree().current_scene.add_child(inst2)
+	Utils.attach_node(inst, inst2)
 	add_bomb(inst, warning_time)
 	return inst
 
