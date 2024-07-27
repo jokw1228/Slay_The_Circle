@@ -63,9 +63,6 @@ scene_start = ExtResource("13_yxsra")
 [node name="PlayingField" parent="." instance=ExtResource("8_x2ttg")]
 BombGenerator_scene = ExtResource("9_xjnco")
 
-[node name="PlayingFieldCamera" parent="PlayingField" index="0"]
-zoom = Vector2(0.75, 0.75)
-
 [node name="PlayingFieldUI" parent="PlayingField" index="1"]
 visible = false
 

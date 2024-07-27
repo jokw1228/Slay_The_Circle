@@ -35,6 +35,9 @@ func _ready():
 	get_node("PlayingField/MenuBombGenerator").room_menu = self
 	
 	MusicManager.play("bgm_PF","test_fast",0,1)
+	
+	var tween_camera_zoom_out: Tween = get_tween()
+	tween_camera_zoom_out.tween_property(playing_field.PlayingFieldCamera_node, "zoom", Vector2(0.75, 0.75), 0.5)
 
 func start_stage(): # A signal is connected by the select button.
 	#var x: Vector2 = Vector2(0, 0)
