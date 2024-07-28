@@ -37,6 +37,7 @@ func _ready():
 	MusicManager.play("bgm_PF","test_fast",0,1)
 	
 	var tween_camera_zoom_out: Tween = get_tween()
+	tween_camera_zoom_out.set_ease(Tween.EASE_IN)
 	tween_camera_zoom_out.tween_property(playing_field.PlayingFieldCamera_node, "zoom", Vector2(0.75, 0.75), 0.5)
 
 func start_stage(): # A signal is connected by the select button.
