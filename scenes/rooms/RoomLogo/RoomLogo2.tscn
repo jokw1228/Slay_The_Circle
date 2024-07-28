@@ -1,0 +1,37 @@
+[gd_scene load_steps=8 format=3 uid="uid://urb806lifej2"]
+
+[ext_resource type="Script" path="res://scenes/rooms/RoomLogo/RoomLogo2.gd" id="1_84w0l"]
+[ext_resource type="Shader" path="res://scenes/rooms/RoomLogo/KoreaUnivShader.gdshader" id="2_01f0g"]
+[ext_resource type="Texture2D" uid="uid://dwamqpd1wliun" path="res://images/sprite_korea_univ.png" id="2_fa3al"]
+[ext_resource type="Texture2D" uid="uid://cevkho0emy0yl" path="res://images/sprite_cat_and_dog.png" id="3_q2osc"]
+[ext_resource type="Shader" path="res://scenes/rooms/RoomLogo/CatdogShader.gdshader" id="4_omaa6"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1u3u5"]
+shader = ExtResource("2_01f0g")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_c8qsl"]
+shader = ExtResource("4_omaa6")
+
+[node name="RoomLogo2" type="Node2D"]
+script = ExtResource("1_84w0l")
+
+[node name="BackGround" type="ColorRect" parent="."]
+offset_right = 1152.0
+offset_bottom = 648.0
+color = Color(0, 0, 0, 1)
+
+[node name="KoreaUniv" type="Sprite2D" parent="."]
+show_behind_parent = true
+z_index = 1
+material = SubResource("ShaderMaterial_1u3u5")
+position = Vector2(864, 324)
+scale = Vector2(0.9, 0.9)
+texture = ExtResource("2_fa3al")
+
+[node name="Catdog" type="Sprite2D" parent="."]
+show_behind_parent = true
+z_index = 1
+material = SubResource("ShaderMaterial_c8qsl")
+position = Vector2(288, 324)
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("3_q2osc")
