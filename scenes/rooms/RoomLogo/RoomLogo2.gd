@@ -2,10 +2,15 @@ extends Node2D
 
 var RoomMenu_room = "res://scenes/rooms/RoomMenu/RoomMenu.tscn"
 
-@onready var KoreaUniv_node: Sprite2D = $KoreaUniv
-@onready var Catdog_node: Sprite2D = $Catdog
+@onready var KoreaUniv_node: Sprite2D = $CanvasLayer/KoreaUniv
+@onready var Catdog_node: Sprite2D = $CanvasLayer/Catdog
+@onready var BackGroundBlack_node: ColorRect = $CanvasLayer/BackGroundBlack
+@onready var CircleField_node: CircleField = $CircleField
+@onready var Camera2D_node: Camera2D = $Camera2D
 
 func _ready():
+	CircleField_node.stop_reverb_effect()
+	
 	await get_tree().create_timer(0.5).timeout
 	
 	var tween_korea_univ_on: Tween = get_tree().create_tween()
@@ -34,4 +39,16 @@ func _ready():
 	await tween_korea_univ_off.finished
 	await get_tree().create_timer(0.5).timeout
 	
+	var tween_white: Tween = get_tree().create_tween()
+	tween_white.set_ease(Tween.EASE_IN_OUT)
+	tween_white.set_trans(Tween.TRANS_SINE)
+	tween_white.tween_property(BackGroundBlack_node, "modulate", Color.TRANSPARENT, 1)
+
+	var tween_camera: Tween = get_tree().create_tween()
+	tween_camera.set_ease(Tween.EASE_IN_OUT)
+	tween_camera.set_trans(Tween.TRANS_SINE)
+	tween_camera.tween_property(Camera2D_node, "zoom", Vector2(1, 1), 1.5)
+	
+	await tween_camera.finished
+	await get_tree().create_timer(1.0).timeout
 	get_tree().change_scene_to_file(RoomMenu_room)
