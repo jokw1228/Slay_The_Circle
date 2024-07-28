@@ -39,7 +39,7 @@ position = Vector2(288, 324)
 scale = Vector2(0.3, 0.3)
 texture = ExtResource("3_q2osc")
 
-[node name="BackGroundWhite" type="ColorRect" parent="."]
+[node name="BackGroundGray" type="ColorRect" parent="."]
 offset_left = -584.0
 offset_top = -328.0
 offset_right = 584.0
