@@ -15,9 +15,11 @@
 [ext_resource type="PackedScene" uid="uid://dod3xtkvnfwuq" path="res://scenes/warnings/GameSpeedUpBombWarning.tscn" id="13_frej1"]
 [ext_resource type="PackedScene" uid="uid://5hmqv8rxk05i" path="res://scenes/bombs/BombLink.tscn" id="14_j4x11"]
 
-[node name="KiyongBombGenerator" type="Node2D" node_paths=PackedStringArray("pattern2_bomb")]
+[node name="KiyongBombGenerator" type="Node2D" node_paths=PackedStringArray("pattern2_bomb", "pattern4_bomb", "pattern4_real_bomb")]
 script = ExtResource("1_7ccpm")
 pattern2_bomb = [NodePath("Pattern2/Marker2D"), NodePath("Pattern2/Marker2D2")]
+pattern4_bomb = [NodePath("Pattern4/Marker2D3"), NodePath("Pattern4/Marker2D4"), NodePath("Pattern4/Marker2D5"), NodePath("Pattern4/Marker2D6")]
+pattern4_real_bomb = NodePath("Pattern4/Marker2D7")
 NormalBomb_scene = ExtResource("2_46cl6")
 HazardBomb_scene = ExtResource("3_3m7v5")
 NumericBomb_scene = ExtResource("4_q3pbh")
@@ -39,3 +41,19 @@ position = Vector2(0, 40)
 
 [node name="Marker2D2" type="Marker2D" parent="Pattern2"]
 position = Vector2(0, -40)
+
+[node name="Pattern4" type="Node" parent="."]
+
+[node name="Marker2D3" type="Marker2D" parent="Pattern4"]
+position = Vector2(-141, -141)
+
+[node name="Marker2D4" type="Marker2D" parent="Pattern4"]
+position = Vector2(141, -141)
+
+[node name="Marker2D5" type="Marker2D" parent="Pattern4"]
+position = Vector2(-141, 141)
+
+[node name="Marker2D6" type="Marker2D" parent="Pattern4"]
+position = Vector2(141, 141)
+
+[node name="Marker2D7" type="Marker2D" parent="Pattern4"]
