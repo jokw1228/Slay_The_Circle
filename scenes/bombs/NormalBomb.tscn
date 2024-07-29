@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://bj78l3upa26ik"]
+[gd_scene load_steps=10 format=3 uid="uid://bj78l3upa26ik"]
 
 [ext_resource type="Script" path="res://scenes/bombs/NormalBomb.gd" id="1_d5v6f"]
 [ext_resource type="PackedScene" uid="uid://cs2ukp0c0vi80" path="res://scenes/bombs/bombeffects/Flame.tscn" id="2_qs57d"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" path="res://addons/resonate/sound_manager/sound_bank.gd" id="3_8xxje"]
 [ext_resource type="Script" path="res://addons/resonate/sound_manager/sound_event_resource.gd" id="4_d5lvo"]
 [ext_resource type="AudioStream" uid="uid://c352772ve0yuk" path="res://audio/sfx/slice_3.wav" id="5_1ui6s"]
+[ext_resource type="Texture2D" uid="uid://cgn8ysntgw1a2" path="res://images/bomb/sprite_normal.svg" id="7_kse0o"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_n2uys"]
 radius = 32.0
@@ -32,6 +33,9 @@ shape = SubResource("CircleShape2D_n2uys")
 script = ExtResource("3_8xxje")
 label = "sfx_Nor_bomb"
 events = Array[ExtResource("4_d5lvo")]([SubResource("Resource_kd5wo")])
+
+[node name="NormalSprite" type="Sprite2D" parent="."]
+texture = ExtResource("7_kse0o")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="player_body_entered" from="." to="." method="slayed"]
