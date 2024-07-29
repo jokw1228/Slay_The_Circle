@@ -92,8 +92,8 @@ flip_h = true
 
 [connection signal="game_over" from="." to="PlayingFieldCamera" method="rotation_stop"]
 [connection signal="game_over" from="." to="PlayingFieldUI" method="close_Playing_and_open_Stopped"]
-[connection signal="game_over" from="." to="CircleField" method="create_game_over_effect"]
 [connection signal="game_over" from="." to="CircleField" method="stop_reverb_effect"]
+[connection signal="game_over" from="." to="CircleField" method="create_game_over_effect"]
 [connection signal="game_ready" from="." to="CircleField" method="create_game_ready_effect"]
 [connection signal="game_start" from="." to="PlayingFieldCamera" method="rotation_reset"]
 [connection signal="game_start" from="." to="PlayingFieldUI" method="close_Stopped_and_open_Playing"]

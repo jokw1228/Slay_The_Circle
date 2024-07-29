@@ -1,12 +1,15 @@
-[gd_scene load_steps=3 format=3 uid="uid://5hmqv8rxk05i"]
+[gd_scene load_steps=4 format=3 uid="uid://5hmqv8rxk05i"]
 
 [ext_resource type="Script" path="res://scenes/bombs/BombLink.gd" id="1_7a02t"]
 [ext_resource type="Script" path="res://scenes/bombs/BombLinkRayCast2D.gd" id="2_cro0j"]
+[ext_resource type="Texture2D" uid="uid://br514524tfbp1" path="res://images/bomb/sprite_linked_mark.svg" id="3_fdjm7"]
 
-[node name="BombLink" type="Node2D" node_paths=PackedStringArray("ray_1to2", "ray_2to1") groups=["links"]]
+[node name="BombLink" type="Node2D" node_paths=PackedStringArray("ray_1to2", "ray_2to1", "LinkedMark1_node", "LinkedMark2_node") groups=["links"]]
 script = ExtResource("1_7a02t")
 ray_1to2 = NodePath("BombLinkRayCast2D1")
 ray_2to1 = NodePath("BombLinkRayCast2D2")
+LinkedMark1_node = NodePath("LinkedMark1")
+LinkedMark2_node = NodePath("LinkedMark2")
 
 [node name="BombLinkRayCast2D1" type="RayCast2D" parent="."]
 target_position = Vector2(1024, 0)
@@ -17,3 +20,9 @@ script = ExtResource("2_cro0j")
 target_position = Vector2(1024, 0)
 collision_mask = 32768
 script = ExtResource("2_cro0j")
+
+[node name="LinkedMark1" type="Sprite2D" parent="."]
+texture = ExtResource("3_fdjm7")
+
+[node name="LinkedMark2" type="Sprite2D" parent="."]
+texture = ExtResource("3_fdjm7")

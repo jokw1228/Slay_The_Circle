@@ -4,6 +4,9 @@ class_name BombLink
 @export var ray_1to2: RayCast2D
 @export var ray_2to1: RayCast2D
 
+@export var LinkedMark1_node: Sprite2D
+@export var LinkedMark2_node: Sprite2D
+
 var bomb1: Bomb
 var bomb2: Bomb
 var num_child_bombs: int = 0
@@ -15,6 +18,9 @@ func set_child_bombs(b1: Bomb, b2: Bomb):
 	bomb1.player_body_entered.connect(on_bomb_slayed)
 	bomb2.player_body_entered.connect(on_bomb_slayed)
 	set_ray_cast()
+	
+	LinkedMark1_node.position = bomb1.position
+	LinkedMark2_node.position = bomb2.position
 
 func set_ray_cast():
 	ray_1to2.global_position = bomb1.global_position
@@ -92,3 +98,7 @@ func _draw():
 	ray_intersect = ray_2to1.get_collision_point()
 	if ray_intersect != Vector2.ZERO:
 		draw_circle(ray_intersect, 20, Color.RED)
+
+func _process(delta):
+	LinkedMark1_node.rotate(delta * PI / 6)
+	LinkedMark2_node.rotate(delta * PI / 6)
