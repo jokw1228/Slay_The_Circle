@@ -38,5 +38,7 @@ events = Array[ExtResource("5_uvwg5")]([SubResource("Resource_x4jvg")])
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="player_body_entered" from="." to="." method="slayed"]
+[connection signal="player_body_entered" from="." to="." method="queue_free"]
 [connection signal="bomb_timeout" from="BombTimer" to="." method="game_over"]
 [connection signal="bomb_timeout" from="BombTimer" to="." method="exploded"]
+[connection signal="bomb_timeout" from="BombTimer" to="." method="queue_free"]

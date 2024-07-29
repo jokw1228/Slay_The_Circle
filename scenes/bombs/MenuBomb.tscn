@@ -19,3 +19,5 @@ shape = SubResource("CircleShape2D_8hgk3")
 debug_color = Color(1.15514e-06, 0.596143, 0.721682, 0.42)
 
 [node name="Sprite2D" type="Sprite2D" parent="." index="2"]
+
+[connection signal="player_body_entered" from="." to="." method="slayed"]
