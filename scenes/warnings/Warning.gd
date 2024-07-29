@@ -17,7 +17,7 @@ func _process(delta):
 	if timer:
 		elapsed_time += delta
 		
-	if elapsed_time < 1.0:
+	if warningtime - elapsed_time > 1.0:
 		if int(elapsed_time * 10) % 2 == 1:
 			warning_visible()
 		else:
