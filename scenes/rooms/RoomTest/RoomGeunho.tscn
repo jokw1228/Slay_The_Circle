@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://b0r4nphwou5l0"]
+
+[ext_resource type="PackedScene" uid="uid://dntg6argh8n3n" path="res://scenes/playingfield/PlayingField.tscn" id="1_scj0l"]
+[ext_resource type="PackedScene" uid="uid://ynma7duow4l7" path="res://scenes/bombgenerators/testbombgenerators/GeunhoBombGenerator.tscn" id="2_d5b3p"]
+
+[node name="RoomGeunho" type="Node2D"]
+
+[node name="PlayingField" parent="." instance=ExtResource("1_scj0l")]
+BombGenerator_scene = ExtResource("2_d5b3p")
