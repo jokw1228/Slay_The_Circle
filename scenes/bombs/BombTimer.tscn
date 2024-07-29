@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://dq81owitrvpew"]
 
 [ext_resource type="Script" path="res://scenes/bombs/BombTimer.gd" id="1_rwfvo"]
-[ext_resource type="Texture2D" uid="uid://ehynivw13sgw" path="res://images/sprite_timer_progress.png" id="2_ajol7"]
+[ext_resource type="Texture2D" uid="uid://kebkn50jstgd" path="res://images/bomb/sprite_timer_progress_bar.svg" id="2_oq6j5"]
 
 [node name="BombTimer" type="Control" node_paths=PackedStringArray("Bar")]
 layout_mode = 3
@@ -13,12 +13,12 @@ Bar = NodePath("TextureProgressBar")
 
 [node name="TextureProgressBar" type="TextureProgressBar" parent="."]
 layout_mode = 0
-offset_left = -64.0
-offset_top = -64.0
-offset_right = 64.0
-offset_bottom = 64.0
+offset_left = -48.0
+offset_top = -48.0
+offset_right = 48.0
+offset_bottom = 48.0
 value = 100.0
 fill_mode = 5
-texture_progress = ExtResource("2_ajol7")
+texture_progress = ExtResource("2_oq6j5")
 tint_under = Color(1, 1, 1, 0)
 tint_over = Color(1, 1, 1, 0)

@@ -1,9 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://cux2tpymcx5ny"]
+[gd_scene load_steps=7 format=3 uid="uid://cux2tpymcx5ny"]
 
 [ext_resource type="Script" path="res://scenes/bombs/HazardBomb.gd" id="1_wklac"]
 [ext_resource type="PackedScene" uid="uid://cs2ukp0c0vi80" path="res://scenes/bombs/bombeffects/Flame.tscn" id="2_5314t"]
-[ext_resource type="FontFile" uid="uid://bn71j2rajnbrn" path="res://fonts/bump-it-up.ttf" id="2_nfen8"]
 [ext_resource type="PackedScene" uid="uid://dq81owitrvpew" path="res://scenes/bombs/BombTimer.tscn" id="2_xj2gr"]
+[ext_resource type="Texture2D" uid="uid://b3xqa1yf5olkc" path="res://images/bomb/sprite_hazard.svg" id="5_3ijwn"]
+[ext_resource type="Texture2D" uid="uid://1esd5uit6qlp" path="res://images/bomb/sprite_hazard_outline.svg" id="5_qnof4"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_1f6en"]
 radius = 32.0
@@ -11,13 +12,18 @@ radius = 32.0
 [node name="HazardBomb" type="Area2D"]
 position = Vector2(417, 248)
 script = ExtResource("1_wklac")
-font = ExtResource("2_nfen8")
 Particle = ExtResource("2_5314t")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_1f6en")
 
 [node name="BombTimer" parent="." instance=ExtResource("2_xj2gr")]
+
+[node name="HazardSprite" type="Sprite2D" parent="."]
+texture = ExtResource("5_3ijwn")
+
+[node name="HazardOutlineSprite" type="Sprite2D" parent="."]
+texture = ExtResource("5_qnof4")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="player_body_entered" from="." to="." method="game_over"]

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="64"
+   height="64"
+   viewBox="0 0 16.933333 16.933333"
+   version="1.1"
+   id="svg1"
+   inkscape:version="1.3.2 (091e20e, 2023-11-25, custom)"
+   sodipodi:docname="sprite_hazard_outline.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="px"
+     inkscape:zoom="8.4381594"
+     inkscape:cx="34.367685"
+     inkscape:cy="31.404953"
+     inkscape:window-width="1440"
+     inkscape:window-height="830"
+     inkscape:window-x="-6"
+     inkscape:window-y="-6"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs1" />
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <path
+       id="path1"
+       style="fill:#d40000;stroke-width:0.324246"
+       d="M 8.4666665 0 A 8.4666662 8.4666662 0 0 0 0 8.4666665 A 8.4666662 8.4666662 0 0 0 8.4666665 16.933333 A 8.4666662 8.4666662 0 0 0 16.933333 8.4666665 A 8.4666662 8.4666662 0 0 0 8.4666665 0 z M 8.4666665 2.1166666 A 6.3499999 6.3499999 0 0 1 14.816666 8.4666665 A 6.3499999 6.3499999 0 0 1 8.4666665 14.816666 A 6.3499999 6.3499999 0 0 1 2.1166666 8.4666665 A 6.3499999 6.3499999 0 0 1 8.4666665 2.1166666 z " />
+  </g>
+</svg>
