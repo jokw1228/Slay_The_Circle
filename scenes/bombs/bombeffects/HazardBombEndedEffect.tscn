@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3 uid="uid://3njnae72fiai"]
+
+[ext_resource type="Texture2D" uid="uid://b3xqa1yf5olkc" path="res://images/bomb/sprite_hazard.svg" id="1_milxa"]
+[ext_resource type="Script" path="res://scenes/bombs/bombeffects/HazardBombEndedEffect.gd" id="2_qmpxp"]
+
+[node name="HazardBombEndedEffect" type="Sprite2D"]
+texture = ExtResource("1_milxa")
+script = ExtResource("2_qmpxp")
