@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://duys3qeaq0ro"
-path="res://.godot/imported/bomb_link.png-b9a4dcca55bf85b69878eff13ce11f09.ctex"
+uid="uid://b4swb2ny53fhr"
+path="res://.godot/imported/sprite_bomb_slayed.svg-3fe737a3c857f8c3580108e931e0dbc4.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://images/bomb_link.png"
-dest_files=["res://.godot/imported/bomb_link.png-b9a4dcca55bf85b69878eff13ce11f09.ctex"]
+source_file="res://images/bomb/sprite_bomb_slayed.svg"
+dest_files=["res://.godot/imported/sprite_bomb_slayed.svg-3fe737a3c857f8c3580108e931e0dbc4.ctex"]
 
 [params]
 
@@ -32,3 +32,6 @@ process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
 detect_3d/compress_to=1
+svg/scale=1.0
+editor/scale_with_editor_scale=false
+editor/convert_colors_with_editor_theme=false

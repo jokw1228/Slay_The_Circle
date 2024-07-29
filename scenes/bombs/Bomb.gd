@@ -4,17 +4,27 @@ class_name Bomb
 signal player_body_entered()
 
 @export var Particle: PackedScene
+var BombSlayedEffect_scene: Resource = preload("res://scenes/bombs/bombeffects/BombSlayedEffect.tscn")
+
+var slayed_direction: Vector2 = Vector2.ZERO
 
 func _on_body_entered(body):
 	if body is Player:
+		slayed_direction = body.velocity
 		player_body_entered.emit()
 
-func slayed(): # safely defuse this bomb 
+func slayed(): # bomb slayed
+	var BombSlayedEffect_inst: BombSlayedEffect = BombSlayedEffect_scene.instantiate()
+	BombSlayedEffect_inst.position = position
+	BombSlayedEffect_inst.direction = slayed_direction
+	get_tree().current_scene.add_child(BombSlayedEffect_inst)
+	
 	var Particle_instance = Particle.instantiate()
 	get_tree().current_scene.add_child(Particle_instance)
 	var particles = Particle_instance.get_node("flame")
-	particles.position = position # 포지션 구현 미완
+	particles.position = position
 	particles.emitting = true
+	
 	queue_free()
 	
 func exploded(): # bomb explosion
