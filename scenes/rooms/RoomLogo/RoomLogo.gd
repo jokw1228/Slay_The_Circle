@@ -24,26 +24,7 @@ func _ready():
 	tween_catdog_on.tween_property(Catdog_node, "position", Vector2(864, 324), 1)
 	
 	await tween_korea_univ_on.finished
-	await tween_catdog_on.finished
-	await get_tree().create_timer(0.7).timeout
-	
-	
-	
-	for i in 4:
-		var tween_korea_univ_twinkle: Tween = get_tree().create_tween()
-		var tween_catdog_twinkle: Tween = get_tree().create_tween()
-		if i%2==0:
-			tween_korea_univ_twinkle.tween_property(KoreaUniv_node, "modulate", Color(0, 0, 0, 1), 0.032)
-			tween_catdog_twinkle.tween_property(Catdog_node, "modulate", Color(0, 0, 0, 1), 0.032)	
-		else:
-			tween_korea_univ_twinkle.tween_property(KoreaUniv_node, "modulate", Color(1, 1, 1, 1), 0.032)
-			tween_catdog_twinkle.tween_property(Catdog_node, "modulate", Color(1, 1, 1, 1), 0.032)
-		await tween_korea_univ_twinkle.finished
-		await tween_catdog_twinkle.finished
-		await get_tree().create_timer(0.025).timeout
-		
-	
-	await get_tree().create_timer(1.25).timeout
+	await get_tree().create_timer(1).timeout
 	
 	var tween_korea_univ_off: Tween = get_tree().create_tween()
 	tween_korea_univ_off.set_ease(Tween.EASE_IN)
