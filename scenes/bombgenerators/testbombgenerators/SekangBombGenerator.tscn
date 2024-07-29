@@ -1,0 +1,38 @@
+[gd_scene load_steps=15 format=3 uid="uid://ba4gslxaaycwv"]
+
+[ext_resource type="Script" path="res://scenes/bombgenerators/testbombgenerators/SekangBombGenerator.gd" id="1_xsui1"]
+[ext_resource type="PackedScene" uid="uid://bj78l3upa26ik" path="res://scenes/bombs/NormalBomb.tscn" id="2_htmak"]
+[ext_resource type="PackedScene" uid="uid://cux2tpymcx5ny" path="res://scenes/bombs/HazardBomb.tscn" id="3_4m83o"]
+[ext_resource type="PackedScene" uid="uid://dug1fwwbjaopa" path="res://scenes/bombs/NumericBomb.tscn" id="4_jlv7s"]
+[ext_resource type="PackedScene" uid="uid://bd65ne6jxvojv" path="res://scenes/bombs/RotationInversionBomb.tscn" id="5_dwkhj"]
+[ext_resource type="PackedScene" uid="uid://1ohs6nj2dm33" path="res://scenes/bombs/RotationSpeedUpBomb.tscn" id="6_vl4pv"]
+[ext_resource type="PackedScene" uid="uid://cr4l7m2i6dxl" path="res://scenes/bombs/GameSpeedUpBomb.tscn" id="7_8ceue"]
+[ext_resource type="PackedScene" uid="uid://b88otl67w25a2" path="res://scenes/warnings/NormalBombWarning.tscn" id="8_8urfe"]
+[ext_resource type="PackedScene" uid="uid://fdhauxo6f7gq" path="res://scenes/warnings/HazardBombWarning.tscn" id="9_5h4s0"]
+[ext_resource type="PackedScene" uid="uid://dn8hj3t4klarb" path="res://scenes/warnings/NumericBombWarning.tscn" id="10_a2y00"]
+[ext_resource type="PackedScene" uid="uid://4wbytvc753ff" path="res://scenes/warnings/RotationInversionBombWarning.tscn" id="11_fhgjt"]
+[ext_resource type="PackedScene" uid="uid://cg0il84hq0n8m" path="res://scenes/warnings/RotationSpeedUpBombWarning.tscn" id="12_1lffc"]
+[ext_resource type="PackedScene" uid="uid://dod3xtkvnfwuq" path="res://scenes/warnings/GameSpeedUpBombWarning.tscn" id="13_tkeds"]
+[ext_resource type="PackedScene" uid="uid://5hmqv8rxk05i" path="res://scenes/bombs/BombLink.tscn" id="14_jxsj5"]
+
+[node name="SekangBombGenerator" type="Node2D"]
+script = ExtResource("1_xsui1")
+NormalBomb_scene = ExtResource("2_htmak")
+HazardBomb_scene = ExtResource("3_4m83o")
+NumericBomb_scene = ExtResource("4_jlv7s")
+RotationInversionBomb_scene = ExtResource("5_dwkhj")
+RotationSpeedUpBomb_scene = ExtResource("6_vl4pv")
+GameSpeedUpBomb_scene = ExtResource("7_8ceue")
+Normalbomb_warning_scene = ExtResource("8_8urfe")
+HazardBomb_warning_scene = ExtResource("9_5h4s0")
+NumericBomb_warning_scene = ExtResource("10_a2y00")
+RotationInversionBomb_warning_scene = ExtResource("11_fhgjt")
+RotationSpeedUpBomb_warning_scene = ExtResource("12_1lffc")
+GameSpeedUpBomb_warning_scene = ExtResource("13_tkeds")
+bomb_link = ExtResource("14_jxsj5")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 1.5
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
