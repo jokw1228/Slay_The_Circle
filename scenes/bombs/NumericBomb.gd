@@ -16,7 +16,7 @@ func slayed():
 		#for i in get_parent().get_children():
 			#if i is NumericBomb:
 				#i.queue_free()
-		PlayingFieldInterface.game_over(self.position)
+		game_over()
 	super()
 	
 	SoundManager.play("sfx_Num_bomb","slay")

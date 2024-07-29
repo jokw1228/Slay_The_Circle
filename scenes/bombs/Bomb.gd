@@ -17,7 +17,8 @@ func slayed(): # safely defuse this bomb
 	particles.emitting = true
 	queue_free()
 	
-func exploded(): # game over
-	var current_position = self.position
-	PlayingFieldInterface.game_over(current_position)
+func exploded(): # bomb explosion
 	queue_free()
+
+func game_over():
+	PlayingFieldInterface.game_over(position)
