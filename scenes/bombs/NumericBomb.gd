@@ -4,11 +4,7 @@ class_name NumericBomb
 var id = 0
 
 func _ready():
-	$BombId.text = str(id)
-
-func _draw():
-	draw_circle(Vector2(0,0), 30, Color(1,0,1))
-	draw_circle(Vector2(0,0), 20, PlayingFieldInterface.color)
+	$BombID.text = str(id)
 
 func slayed():
 	if has_smaller_id_numeric_bomb():

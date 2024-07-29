@@ -26,17 +26,18 @@ Particle = ExtResource("2_3rw5a")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_51k8f")
 
-[node name="BombId" type="Label" parent="."]
-offset_left = -16.0
-offset_top = -20.0
-offset_right = 19.0
-offset_bottom = 20.0
-theme_override_colors/font_color = Color(0.958874, 0.725718, 0.350041, 1)
+[node name="BombID" type="Label" parent="."]
+offset_left = -12.0
+offset_top = -16.0
+offset_right = 14.0
+offset_bottom = 14.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 7
 theme_override_fonts/font = ExtResource("2_mftcv")
-theme_override_font_sizes/font_size = 32
+theme_override_font_sizes/font_size = 24
 text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="BombTimer" parent="." instance=ExtResource("4_c11ax")]
 
@@ -44,6 +45,8 @@ text = "0"
 script = ExtResource("3_awam2")
 label = "sfx_Num_bomb"
 events = Array[ExtResource("4_pmjfd")]([SubResource("Resource_ue2f5")])
+
+[node name="NumericSprite" type="Sprite2D" parent="."]
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="player_body_entered" from="." to="." method="slayed"]
