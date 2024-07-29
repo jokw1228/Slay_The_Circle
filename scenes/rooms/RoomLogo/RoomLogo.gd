@@ -1,6 +1,7 @@
 extends Node2D
 
 var RoomMenu_room = "res://scenes/rooms/RoomMenu/RoomMenu.tscn"
+var RoomTutorial_room = "res://scenes/rooms/RoomTutorial/RoomTutorial.tscn"
 
 @onready var KoreaUniv_node: Sprite2D = $CanvasLayer/KoreaUniv
 @onready var Catdog_node: Sprite2D = $CanvasLayer/Catdog
@@ -50,5 +51,6 @@ func _ready():
 	tween_camera.tween_property(Camera2D_node, "zoom", Vector2(1, 1), 1.5)
 	
 	await tween_camera.finished
-	await get_tree().create_timer(1.0).timeout
-	get_tree().change_scene_to_file(RoomMenu_room)
+	await get_tree().create_timer(0.3).timeout
+	get_tree().change_scene_to_file(RoomTutorial_room)
+	#get_tree().change_scene_to_file(RoomMenu_room)
