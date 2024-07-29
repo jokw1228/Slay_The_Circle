@@ -1,7 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://crk2aniu1h5di"]
+[gd_scene load_steps=6 format=3 uid="uid://crk2aniu1h5di"]
 
 [ext_resource type="Script" path="res://scenes/bombs/StartBomb.gd" id="1_0384a"]
 [ext_resource type="PackedScene" uid="uid://cs2ukp0c0vi80" path="res://scenes/bombs/bombeffects/Flame.tscn" id="2_18288"]
+[ext_resource type="Texture2D" uid="uid://cgn8ysntgw1a2" path="res://images/bomb/sprite_normal.svg" id="3_i43v8"]
+[ext_resource type="Texture2D" uid="uid://idkeqjx3wkpe" path="res://images/bomb/sprite_restart.svg" id="4_ryl6g"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_v3tcq"]
 radius = 32.0
@@ -12,6 +14,12 @@ Particle = ExtResource("2_18288")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_v3tcq")
+
+[node name="NormalSprite" type="Sprite2D" parent="."]
+texture = ExtResource("3_i43v8")
+
+[node name="RestartSprite" type="Sprite2D" parent="."]
+texture = ExtResource("4_ryl6g")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="player_body_entered" from="." to="." method="slayed"]
