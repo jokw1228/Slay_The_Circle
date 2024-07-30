@@ -26,6 +26,9 @@ func rotation_speed_up(up: float):
 func rotation_inversion():
 	get_PlayingField_node().rotation_inversion()
 
+func rotation_stop():
+	get_PlayingField_node().rotation_stop()
+
 func game_speed_up(up: float):
 	Engine.time_scale += up
 

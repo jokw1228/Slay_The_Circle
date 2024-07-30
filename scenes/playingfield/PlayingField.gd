@@ -9,7 +9,7 @@ class_name PlayingField
 @export var PlayingFieldUI_node: PlayingFieldUI
 @export var Player_node: Player
 
-@export var CircleField_node: CircleField
+@export var CircleField_node: StaticBody2D
 
 signal game_start
 signal game_over
@@ -82,6 +82,9 @@ func rotation_speed_up(up: float):
 
 func rotation_inversion():
 	PlayingFieldCamera_node.rotation_inversion()
-	
+
+func rotation_stop():
+	PlayingFieldCamera_node.rotation_stop()
+
 func merge_transition(x):
 	PlayingFieldCamera_node.add_transition(x)

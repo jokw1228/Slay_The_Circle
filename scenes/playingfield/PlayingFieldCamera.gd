@@ -24,10 +24,10 @@ func rotation_inversion():
 
 func rotation_stop():
 	rotation_amount = 0
-	await get_tree().create_timer(2.0).timeout
-	rotation_transition()
-	await get_tree().create_timer(0.4).timeout
-	rotation_reset()
+	#await get_tree().create_timer(2.0).timeout
+	#rotation_transition()
+	#await get_tree().create_timer(0.4).timeout
+	#rotation_reset()
 
 func rotation_reset():
 	rotation = 0
