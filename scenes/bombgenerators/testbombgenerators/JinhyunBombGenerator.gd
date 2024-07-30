@@ -8,15 +8,18 @@ func _ready():
 	#
 	#pattern_angry_face()
 	#await get_tree().create_timer(5.5).timeout
-	#
-	#pattern_numeric(12)
-	#await get_tree().create_timer(5.5).timeout
-	#
-	#pattern_spiral()
-	#await get_tree().create_timer(5.5).timeout
-	#
-	#pattern_blocking()
-	#await get_tree().create_timer(5.5).timeout
+	
+	pattern_numeric(12)
+	await get_tree().create_timer(5.5).timeout
+	
+	pattern_spiral()
+	await get_tree().create_timer(6).timeout
+	
+	pattern_blocking()
+	await get_tree().create_timer(5.5).timeout
+	
+	pattern_blocking()
+	await get_tree().create_timer(5.5).timeout
 	
 	pattern_rotation()
 	await  get_tree().create_timer(5.5).timeout
@@ -95,5 +98,8 @@ func pattern_rotation():
 	await  get_tree().create_timer(0.2).timeout
 	PlayingFieldInterface.rotation_stop()
 	for i in range(10):
-		create_normal_bomb(player_position.rotated(PI/2) * 0.6, 0.5, 1.5)
-		await  get_tree().create_timer(1).timeout
+		bomb1 = create_rotationspeedup_bomb(Vector2(0, 0), 0.5, 1, 4*PI)
+		await bomb1.tree_exited
+		
+		await  get_tree().create_timer(0.2).timeout
+		PlayingFieldInterface.rotation_stop()
