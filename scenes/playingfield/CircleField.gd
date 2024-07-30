@@ -27,7 +27,7 @@ func make_partial_collision_polygon(radian: float):
 	var list: PackedVector2Array = []
 	# make a circle shape
 	const number_of_points = 256
-	const inner_offset = 4
+	const inner_offset = 0
 	for i in range(number_of_points):
 		list.append(Vector2((CircleFieldRadius+inner_offset) * cos((i*(PI/2)/number_of_points) + radian), (CircleFieldRadius+inner_offset) * -sin((i*(PI/2)/number_of_points) + radian)))
 	# make outer edges
