@@ -10,14 +10,39 @@ extends BombGenerator
 @export var pattern4_real_bomb: Node2D
 @export var pattern4_moving = false
 
+@export var pattern6_bomb: Array[Node2D]
+@export var pattern6_moving = false
+
 func _ready():
 	timer = true
-	await get_tree().create_timer(1.0).timeout
+	while 1:	
+		await get_tree().create_timer(1.0).timeout
 	
-	pattern4()
-	await get_tree().create_timer(12.0).timeout
+		pattern1()
+		await get_tree().create_timer(12.0).timeout
 	
-	pattern2()
+		pattern2()
+		await get_tree().create_timer(3.5).timeout
+		pattern2()
+		await get_tree().create_timer(3.5).timeout
+	
+		pattern3()
+		await get_tree().create_timer(4.5).timeout
+	
+		pattern4()
+		await get_tree().create_timer(7).timeout
+	
+		pattern5()
+		await get_tree().create_timer(13).timeout
+	
+		pattern6()
+		await get_tree().create_timer(3.5).timeout
+		pattern6()
+		await get_tree().create_timer(3.5).timeout
+	
+		create_gamespeedup_bomb(Vector2(0,0), 1, 1, 0.1)
+		await get_tree().create_timer(2.5).timeout
+
 
 
 func _process(delta):
@@ -25,9 +50,10 @@ func _process(delta):
 		elapsed_time += delta
 	pattern2_process(delta)
 	pattern4_process(delta)
+	pattern6_process(delta)
 
 
-func pattern1():
+func pattern1(): # 10s
 	pattern1_outer(elapsed_time)
 	for i in range(0,5):
 		var rotation_value = randf_range(0,2*PI)
@@ -46,7 +72,7 @@ func pattern1_outer(time: float):
 		await get_tree().create_timer(0.07).timeout
 
 
-func pattern2():
+func pattern2(): # 3s
 	create_hazard_bomb(Vector2(180, 60), 1, 3)
 	create_hazard_bomb(Vector2(-180, 60), 1, 3)
 	create_hazard_bomb(Vector2(180, -60), 1, 3)
@@ -73,7 +99,7 @@ func pattern2_process(delta):
 			bomb_dir_changed[i] = false
 
 
-func pattern3():
+func pattern3(): # 4s
 	var vector = [Vector2(100, 100), Vector2(-100, 100), Vector2(100, -100), Vector2(-100, -100)]
 	vector.shuffle()
 	var bombs = []
@@ -87,7 +113,7 @@ var rand = [0, 0, 0, 1]
 const const_position = [Vector2(-pos, -pos), Vector2(pos, -pos), Vector2(-pos, pos), Vector2(pos, pos)]
 var bomb_pos = [1, 2, 3, 4] # 각 폭탄의 현재 위치
 	
-func pattern4():
+func pattern4(): # 6.2s
 	var bombs = []
 	bomb_pos = [1, 2, 3, 4]
 	rand.shuffle()
@@ -98,12 +124,12 @@ func pattern4():
 	for i in range(4):
 		if rand[i]:
 			bombs.append(create_hazard_bomb(const_position[i], 6, 0))
-			pattern4_real_bomb.position = const_position[i] + Vector2(10,0)
-			real_bomb = create_normal_bomb(const_position[i], 6, 0.5)
+			pattern4_real_bomb.position = const_position[i] + Vector2(10,0) # 경고 표시 수정되면 없애기
+			real_bomb = create_normal_bomb(const_position[i], 6, 0.2)
 			Utils.attach_node(pattern4_real_bomb, real_bomb)
 			real_bomb_position = i
 		else:
-			bombs.append(create_hazard_bomb(const_position[i], 6, 0.5))
+			bombs.append(create_hazard_bomb(const_position[i], 6, 0.2))
 		Utils.attach_node(pattern4_bomb[i], bombs[i])
 		
 	await get_tree().create_timer(0.5).timeout
@@ -159,5 +185,79 @@ func pattern4_process(delta):
 			else:
 				pattern4_bomb[i].position = const_position[pattern4_moveseed[bomb_pos[i] - 1]- 1]
 
-func pattern5():
-	create_normal_bomb(Vector2(0, 0), 10, 5)
+func pattern5(): # 12s
+	var prev_value
+	for i in range(12):
+		create_normal_bomb(Vector2(0,0), 0, 1)
+		var rand_result = randi_range(0,5)
+		while rand_result == prev_value:
+			rand_result = randi_range(0,5)
+		prev_value = rand_result
+		pattern5_random(rand_result)
+		await get_tree().create_timer(1).timeout
+
+
+func pattern5_random(pattern: int):
+	match pattern:
+		0: # cross
+			var x = [0,0,0,0,0,100,200,-100,-200]
+			var y = [0,100,200,-100,-200,0,0,0,0]
+			for i in range(9):
+				create_hazard_bomb(Vector2(x[i],y[i]), 1, 0.1)
+		1: # outer circle
+			var rotation_value = 0
+			for i in range(16):
+				create_hazard_bomb(Vector2(220*sin(rotation_value), 220*cos(rotation_value)), 1, 0.05)
+				rotation_value += PI / 8
+		2: # x
+			var x = [0,75,75,150,150,-75,-75,-150,-150]
+			var y = [0,75,-75,150,-150,75,-75,150,-150]
+			for i in range(9):
+				create_hazard_bomb(Vector2(x[i],y[i]), 1, 0.1)
+		3: # *
+			pattern5_random(0)
+			pattern5_random(2)
+		4: # diamond
+			var x = [150,75,75,0,0,-75,-75,-150]
+			var y = [0,75,-75,150,-150,75,-75,0]
+			for i in range(8):
+				create_hazard_bomb(Vector2(x[i],y[i]), 1, 0.1)
+		5: # star
+			var rotation_value = 0
+			for i in range(5):
+				create_hazard_bomb(Vector2(220*sin(rotation_value), 220*cos(rotation_value)), 1, 0.1)
+				rotation_value += PI / 2.5
+			rotation_value = PI / 5
+			for i in range(5):
+				create_hazard_bomb(Vector2(90*sin(rotation_value), 90*cos(rotation_value)), 1, 0.1)
+				rotation_value += PI / 2.5
+
+
+func pattern6(): # 3s
+	create_normal_bomb(Vector2(0,0), 1, 2)
+	pattern6_moving = true
+	pattern6_random = randi_range(0,1)
+	if pattern6_random == 0:
+		pattern6_random = -1
+		
+	var bombs = []
+	for i in range(6):
+		bombs.append(create_hazard_bomb(Vector2(0,0), 1, 2))
+		Utils.attach_node(pattern6_bomb[i], bombs[i])
+		pattern6_bomb[i].position = pattern6_position[i]
+
+
+var pattern6_position = [Vector2(p6sp, p6sp), Vector2(p6sp, 0), Vector2(p6sp, -p6sp), Vector2(-p6sp, p6sp), Vector2(-p6sp, 0), Vector2(-p6sp, -p6sp)]
+const p6sp = 80
+var pattern6_direction = [0,0,0,0,0,0]
+const pattern6_rotation_speed = 160
+const pattern6_speed = [pattern6_rotation_speed*sqrt(2), pattern6_rotation_speed, pattern6_rotation_speed*sqrt(2), pattern6_rotation_speed*sqrt(2), pattern6_rotation_speed, pattern6_rotation_speed*sqrt(2)]
+var pattern6_random
+
+func pattern6_process(delta):
+	if pattern6_moving == true:
+		for i in range(6):
+			var x = pattern6_bomb[i].position.x
+			var y = pattern6_bomb[i].position.y
+			pattern6_direction[i] = Vector2(y * pattern6_random, -x * pattern6_random).normalized()
+			pattern6_bomb[i].position += pattern6_direction[i] * pattern6_speed[i] * delta
