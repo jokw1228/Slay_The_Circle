@@ -1,13 +1,13 @@
 extends StaticBody2D
 class_name CircleField
 
-const CircleFieldRadius = 256
+const CIRCLE_FIELD_RADIUS = 256
 var PlayingFieldColor = PlayingFieldInterface.get_theme_color()
 
+@export var CircleFieldReverbEffect_scene: PackedScene
 @export var CircleFieldEffect_scene: PackedScene
 
 @export var ReverbEffectTimer_node: Timer
-
 @export var BackgroundEffect_node: CanvasLayer
 
 var bomb_position = Vector2(0, 0)
@@ -26,18 +26,22 @@ func make_partial_collision_polygon(radian: float):
 	var inst: CollisionPolygon2D = CollisionPolygon2D.new()
 	var list: PackedVector2Array = []
 	# make a circle shape
-	const number_of_points = 256
-	const inner_offset = 0
-	for i in range(number_of_points):
-		list.append(Vector2((CircleFieldRadius+inner_offset) * cos((i*(PI/2)/number_of_points) + radian), (CircleFieldRadius+inner_offset) * -sin((i*(PI/2)/number_of_points) + radian)))
+	const NUMBER_OF_POINTS = 256
+	const INNER_OFFSET = 0
+	const OUTER_OFFSET = 32
+	for i in range(NUMBER_OF_POINTS):
+		list.append(Vector2((CIRCLE_FIELD_RADIUS+INNER_OFFSET) * cos((i*(PI/2)/NUMBER_OF_POINTS) + radian), (CIRCLE_FIELD_RADIUS+INNER_OFFSET) * -sin((i*(PI/2)/NUMBER_OF_POINTS) + radian)))
 	# make outer edges
-	for i in range(number_of_points - 1, -1, -1):
-		list.append(Vector2((CircleFieldRadius+32) * cos((i*(PI/2)/number_of_points) + radian), (CircleFieldRadius+32) * -sin((i*(PI/2)/number_of_points) + radian)))
+	for i in range(NUMBER_OF_POINTS - 1, -1, -1):
+		list.append(Vector2((CIRCLE_FIELD_RADIUS+OUTER_OFFSET) * cos((i*(PI/2)/NUMBER_OF_POINTS) + radian), (CIRCLE_FIELD_RADIUS+OUTER_OFFSET) * -sin((i*(PI/2)/NUMBER_OF_POINTS) + radian)))
 	inst.polygon = list
 	add_child(inst)
 
+func _process(_delta):
+	PlayingFieldColor = PlayingFieldInterface.get_theme_color()
+
 func _draw():
-	draw_arc(position, CircleFieldRadius, 0, 2 * PI, 50, PlayingFieldColor, 8.0, true)
+	draw_arc(position, CIRCLE_FIELD_RADIUS, 0, 2 * PI, 1024, PlayingFieldColor, 8.0, true)
 
 func start_reverb_effect():
 	ReverbEffectTimer_node.start()
@@ -46,6 +50,7 @@ func stop_reverb_effect():
 	ReverbEffectTimer_node.stop()
 
 func _on_reverb_effect_timer_timeout():
+	'''
 	var inst = CircleFieldEffect_scene.instantiate()
 	
 	const delay = 1.2
@@ -58,11 +63,12 @@ func _on_reverb_effect_timer_timeout():
 	tween_alpha.tween_property(inst, "color_to_draw", Color(PlayingFieldColor.r, PlayingFieldColor.g, PlayingFieldColor.b, 0.0), delay)
 	
 	var tween_radius = get_tree().create_tween()
-	tween_radius.tween_property(inst, "radius_to_draw", CircleFieldRadius + 32, delay)
+	tween_radius.tween_property(inst, "radius_to_draw", CIRCLE_FIELD_RADIUS + 32, delay)
 	
 	add_child(inst)
-
-	
+	'''
+	var inst: CircleFieldReverbEffect = CircleFieldReverbEffect_scene.instantiate()
+	add_child(inst)
 
 func create_game_over_effect():
 	const time_to_zoom_in = 2.3
@@ -92,7 +98,7 @@ func create_game_over_effect():
 	inst.origin_to_draw = bomb_position
 	
 	var tween_radius = get_tree().create_tween().set_parallel(true)
-	tween_radius.tween_property(inst, "radius_to_draw", CircleFieldRadius, time_to_scale)
+	tween_radius.tween_property(inst, "radius_to_draw", CIRCLE_FIELD_RADIUS, time_to_scale)
 	tween_radius.tween_property(inst, "origin_to_draw", Vector2(0, 0), time_to_scale)
 	
 	add_child(inst)
@@ -125,7 +131,7 @@ func create_game_ready_effect():
 	inst.survival_time = time_to_scale
 	inst.width_to_draw = 16.0
 	inst.color_to_draw = Color.BLUE
-	inst.radius_to_draw = CircleFieldRadius
+	inst.radius_to_draw = CIRCLE_FIELD_RADIUS
 	inst.origin_to_draw = Vector2(0, 0)
 	
 	var tween_radius = get_tree().create_tween()

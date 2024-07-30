@@ -5,6 +5,7 @@ signal player_body_entered()
 
 var Particle_scene: Resource = preload("res://scenes/bombs/bombeffects/Flame.tscn")
 var BombSlayedEffect_scene: Resource = preload("res://scenes/bombs/bombeffects/BombSlayedEffect.tscn")
+var BombExplodedEffect_scene: Resource = preload("res://scenes/bombs/bombeffects/BombExplodedEffect.tscn")
 
 var slayed_direction: Vector2 = Vector2.ZERO
 
@@ -26,7 +27,9 @@ func slayed(): # bomb slayed effect
 	particles.emitting = true
 	
 func exploded(): # bomb explosion effect
-	pass
+	var BombExplodedEffect_inst: BombExplodedEffect = BombExplodedEffect_scene.instantiate()
+	BombExplodedEffect_inst.position = position
+	get_tree().current_scene.add_child(BombExplodedEffect_inst)
 
 func game_over():
 	PlayingFieldInterface.game_over(position)

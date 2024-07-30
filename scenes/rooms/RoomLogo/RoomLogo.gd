@@ -3,11 +3,11 @@ extends Node2D
 var RoomMenu_room = "res://scenes/rooms/RoomMenu/RoomMenu.tscn"
 var RoomTutorial_room = "res://scenes/rooms/RoomTutorial/RoomTutorial.tscn"
 
-@onready var KoreaUniv_node: Sprite2D = $CanvasLayer/KoreaUniv
-@onready var Catdog_node: Sprite2D = $CanvasLayer/Catdog
-@onready var BackGroundBlack_node: ColorRect = $CanvasLayer/BackGroundBlack
-@onready var CircleField_node: CircleField = $CircleField
-@onready var Camera2D_node: Camera2D = $Camera2D
+@export var KoreaUniv_node: Sprite2D
+@export var Catdog_node: Sprite2D
+@export var BackGroundBlack_node: ColorRect
+@export var CircleField_node: CircleField
+@export var Camera2D_node: Camera2D
 
 func _ready():
 	CircleField_node.stop_reverb_effect()
