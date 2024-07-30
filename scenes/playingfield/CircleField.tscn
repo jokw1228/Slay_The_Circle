@@ -7,10 +7,10 @@
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_5l36b"]
 shader = ExtResource("3_52ji7")
 shader_parameter/center = Vector2(0.5, 0.5)
-shader_parameter/force = 0.025
+shader_parameter/force = 0.03
 shader_parameter/size = 0.95
-shader_parameter/thickness = 0.085
-shader_parameter/offset = 0.003
+shader_parameter/thickness = 0.09
+shader_parameter/offset = 0.004
 
 [sub_resource type="Animation" id="Animation_gw28w"]
 resource_name = "MoveWaveIn"
@@ -48,10 +48,10 @@ tracks/1/path = NodePath("ColorRect:material:shader_parameter/center")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.6),
-"transitions": PackedFloat32Array(1, 1),
+"times": PackedFloat32Array(0.6),
+"transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(0.5, 0.5), Vector2(0.5, 0.5)]
+"values": [Vector2(0.5, 0.5)]
 }
 
 [sub_resource type="Animation" id="Animation_nemvi"]

@@ -8,7 +8,6 @@ var PlayingFieldColor = PlayingFieldInterface.get_theme_color()
 
 @export var ReverbEffectTimer_node: Timer
 
-@export var GlowEffect_node: WorldEnvironment
 @export var BackgroundEffect_node: CanvasLayer
 
 var bomb_position = Vector2(0, 0)
@@ -77,12 +76,13 @@ func create_game_over_effect():
 	
 	await get_tree().create_timer(time_to_zoom_in).timeout
 	
-	var bomb_screen_position: Vector2 = Vector2(bomb_position.x + 576 / get_viewport_rect().size.x, bomb_position.y + 324 / get_viewport_rect().size.y)
+	var bomb_screen_position: Vector2 = Vector2((bomb_position.x + 576) / get_viewport_rect().size.x, (bomb_position.y + 324) / get_viewport_rect().size.y)
 	var animation_player = BackgroundEffect_node.get_node("WaveAnimation")
 	var color_rect = BackgroundEffect_node.get_node("ColorRect")
 	
-	print(get_viewport_rect().size, bomb_screen_position)
+	print(get_viewport_rect().size, bomb_position, bomb_screen_position)
 	color_rect.material.set_shader_parameter("center", bomb_screen_position)
+	print(color_rect.material.get_shader_parameter("center"))
 	animation_player.play("MoveWaveOut")
 	
 	inst.survival_time = time_to_scale + blink_delay * 2 * number_of_blinks + faded_delay

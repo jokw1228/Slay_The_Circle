@@ -25,7 +25,7 @@ func _ready():
 	
 func add_bomb(bomb_instance: Bomb, waiting_time: float):
 	await get_tree().create_timer(waiting_time).timeout
-	get_tree().current_scene.add_child(bomb_instance)
+	get_tree().current_scene.call_deferred("add_child", bomb_instance)
 
 
 func create_normal_bomb(bomb_position: Vector2, warning_time: float, bomb_time: float):
@@ -37,7 +37,7 @@ func create_normal_bomb(bomb_position: Vector2, warning_time: float, bomb_time: 
 	var timer = inst.get_node("BombTimer")
 	timer.set_time = bomb_time
 	
-	get_tree().current_scene.add_child(inst2)
+	get_tree().current_scene.call_deferred("add_child", inst2)
 	Utils.attach_node(inst, inst2)
 	add_bomb(inst, warning_time)
 	return inst
@@ -52,7 +52,7 @@ func create_hazard_bomb(bomb_position: Vector2, warning_time: float, bomb_time: 
 	var timer = inst.get_node("BombTimer")
 	timer.set_time = bomb_time
 	
-	get_tree().current_scene.add_child(inst2)
+	get_tree().current_scene.call_deferred("add_child", inst2)
 	Utils.attach_node(inst, inst2)
 	add_bomb(inst, warning_time)
 	return inst
@@ -68,7 +68,7 @@ func create_numeric_bomb(bomb_position: Vector2, warning_time: float, bomb_time:
 	timer.set_time = bomb_time
 	inst.id = bomb_id
 	
-	get_tree().current_scene.add_child(inst2)
+	get_tree().current_scene.call_deferred("add_child", inst2)
 	Utils.attach_node(inst, inst2)
 	add_bomb(inst, warning_time)
 	return inst
@@ -83,7 +83,7 @@ func create_rotationinversion_bomb(bomb_position: Vector2, warning_time: float, 
 	var timer = inst.get_node("BombTimer")
 	timer.set_time = bomb_time
 	
-	get_tree().current_scene.add_child(inst2)
+	get_tree().current_scene.call_deferred("add_child", inst2)
 	Utils.attach_node(inst, inst2)
 	add_bomb(inst, warning_time)
 	return inst
@@ -99,7 +99,7 @@ func create_rotationspeedup_bomb(bomb_position: Vector2, warning_time: float, bo
 	timer.set_time = bomb_time
 	inst.rotation_speed_up_value = speed_up_value
 	
-	get_tree().current_scene.add_child(inst2)
+	get_tree().current_scene.call_deferred("add_child", inst2)
 	Utils.attach_node(inst, inst2)
 	add_bomb(inst, warning_time)
 	return inst
@@ -115,7 +115,7 @@ func create_gamespeedup_bomb(bomb_position: Vector2, warning_time: float, bomb_t
 	timer.set_time = bomb_time
 	inst.game_speed_up_value = speed_up_value
 	
-	get_tree().current_scene.add_child(inst2)
+	get_tree().current_scene.call_deferred("add_child", inst2)
 	Utils.attach_node(inst, inst2)
 	add_bomb(inst, warning_time)
 	return inst
@@ -124,4 +124,4 @@ func create_gamespeedup_bomb(bomb_position: Vector2, warning_time: float, bomb_t
 func create_bomb_link(bomb1: Bomb, bomb2: Bomb):
 	var link = bomb_link.instantiate()
 	link.set_child_bombs(bomb1, bomb2)
-	get_tree().current_scene.add_child(link)
+	get_tree().current_scene.call_deferred("add_child", link)
