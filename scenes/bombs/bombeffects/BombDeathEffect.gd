@@ -1,9 +1,9 @@
 extends Sprite2D
 class_name BombDeathEffect
 
+const end_time = 0.6
 const max_radius = 64
 const max_angle = PI
-const end_time = 1.0
 
 var elapsed_time: float = 0.0
 var angle_offset: float = 0.0
@@ -17,7 +17,7 @@ func _ready():
 	'''
 	
 	var tween_scale: Tween = get_tree().create_tween()
-	tween_scale.tween_property(self, "scale", Vector2.ZERO, end_time)
+	tween_scale.tween_property(self, "scale", Vector2(0, 0), end_time)
 	
 
 
