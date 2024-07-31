@@ -123,11 +123,11 @@ func pattern4(): # 6.2s
 		if rand[i]:
 			bombs.append(create_hazard_bomb(const_position[i], 6, 0))
 			pattern4_real_bomb.position = const_position[i]
-			real_bomb = create_normal_bomb(const_position[i], 6, 1)
+			real_bomb = create_normal_bomb(const_position[i], 6, 0.15)
 			Utils.attach_node(pattern4_real_bomb, real_bomb)
 			real_bomb_position = i
 		else:
-			bombs.append(create_hazard_bomb(const_position[i], 6, 1))
+			bombs.append(create_hazard_bomb(const_position[i], 6, 0.15))
 		Utils.attach_node(pattern4_bomb[i], bombs[i])
 		pattern4_bomb[i].position = const_position[i]
 		
