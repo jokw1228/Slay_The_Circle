@@ -44,7 +44,6 @@ func _ready():
 		await get_tree().create_timer(2.5).timeout
 
 
-
 func _process(delta):
 	if timer:
 		elapsed_time += delta
@@ -61,7 +60,6 @@ func pattern1(): # 10s
 		create_normal_bomb(Vector2(dist*cos(rotation_value), dist*sin(rotation_value)), 0.5, 2)
 		await get_tree().create_timer(2).timeout
 		
-
 
 func pattern1_outer(time: float):
 	var start_time = time
@@ -87,7 +85,6 @@ const pattern2_speed = 500
 var bomb_direction = [1, -1]
 var bomb_dir_changed = [false, false]
 
-
 func pattern2_process(delta):
 	pattern2_bomb[0].position.x += pattern2_speed * bomb_direction[0] * delta
 	pattern2_bomb[1].position.x += pattern2_speed * bomb_direction[1] * delta
@@ -108,6 +105,7 @@ func pattern3(): # 4s
 	create_bomb_link(bombs[0], bombs[1])
 	create_bomb_link(bombs[2], bombs[3])
 
+
 const pos = 144
 var rand = [0, 0, 0, 1]
 const const_position = [Vector2(-pos, -pos), Vector2(pos, -pos), Vector2(-pos, pos), Vector2(pos, pos)]
@@ -124,42 +122,41 @@ func pattern4(): # 6.2s
 	for i in range(4):
 		if rand[i]:
 			bombs.append(create_hazard_bomb(const_position[i], 6, 0))
-			pattern4_real_bomb.position = const_position[i] + Vector2(10,0) # 경고 표시 수정되면 없애기
-			real_bomb = create_normal_bomb(const_position[i], 6, 0.2)
+			pattern4_real_bomb.position = const_position[i]
+			real_bomb = create_normal_bomb(const_position[i], 6, 1)
 			Utils.attach_node(pattern4_real_bomb, real_bomb)
 			real_bomb_position = i
 		else:
-			bombs.append(create_hazard_bomb(const_position[i], 6, 0.2))
+			bombs.append(create_hazard_bomb(const_position[i], 6, 1))
 		Utils.attach_node(pattern4_bomb[i], bombs[i])
+		pattern4_bomb[i].position = const_position[i]
 		
 	await get_tree().create_timer(0.5).timeout
 	pattern4_real_bomb.position = Vector2(1000, 1000)
-	
 	
 	for i in range(10):
 		var rand_result = randi_range(0,4)
 		while rand_result == prev_value:
 			rand_result = randi_range(0,4)
 		prev_value = rand_result
-		pattern4_random(rand_result)
-		await get_tree().create_timer(0.4).timeout
+		await pattern4_random(rand_result)
+		await get_tree().create_timer(0.06).timeout
 		
 	await get_tree().create_timer(1.49).timeout
 	pattern4_real_bomb.position = pattern4_bomb[real_bomb_position].position
 
-	
 func pattern4_random(pattern: int):
 	match pattern:
 		0:
-			pattern4_move([2, 4, 1, 3]) # Clockwise
+			await pattern4_move([2, 4, 1, 3]) # Clockwise
 		1:
-			pattern4_move([3, 1, 4, 2]) # Counterclockwise
+			await pattern4_move([3, 1, 4, 2]) # Counterclockwise
 		2:
-			pattern4_move([3, 4, 1, 2]) # Swap vertically
+			await pattern4_move([3, 4, 1, 2]) # Swap vertically
 		3:
-			pattern4_move([2, 1, 4, 3]) # Swap horizontally
+			await pattern4_move([2, 1, 4, 3]) # Swap horizontally
 		4:
-			pattern4_move([4, 3, 2, 1]) # Swap diagonally
+			await pattern4_move([4, 3, 2, 1]) # Swap diagonally
 
 var pattern4_direction = [0,0,0,0]
 var pattern4_distance = [0,0,0,0]
@@ -169,10 +166,17 @@ var pattern4_speed = [0,0,0,0]
 func pattern4_move(setseed: Array):
 	for i in range(4):
 		pattern4_moveseed[i] = setseed[i]
-		pattern4_speed[i] = (const_position[pattern4_moveseed[bomb_pos[i] - 1]- 1] - pattern4_bomb[i].position).length() * 3
+	for i in range(4):
+		pattern4_speed[i] = (const_position[pattern4_moveseed[bomb_pos[i] - 1]- 1] - pattern4_bomb[i].position).length() * 4
+		# print(pattern4_speed[i])
+	# print(------)
 	pattern4_moving = true
 	await get_tree().create_timer(0.334).timeout
 	pattern4_moving = false
+	# for i in range(4):
+		# pattern4_bomb[i].position = const_position[pattern4_moveseed[bomb_pos[i] - 1]- 1]
+	for i in range(4):
+		bomb_pos[i] = pattern4_moveseed[bomb_pos[i] - 1]
 
 func pattern4_process(delta):
 	if pattern4_moving == true:
@@ -180,10 +184,11 @@ func pattern4_process(delta):
 			pattern4_direction[i] = (const_position[pattern4_moveseed[bomb_pos[i] - 1]- 1] - pattern4_bomb[i].position).normalized()
 			pattern4_distance[i] = (const_position[pattern4_moveseed[bomb_pos[i] - 1]- 1] - pattern4_bomb[i].position).length()
 			
-			if pattern4_distance[i] > 0.1:
+			if pattern4_distance[i] > 3:
 				pattern4_bomb[i].position += pattern4_direction[i] * pattern4_speed[i] * delta
 			else:
 				pattern4_bomb[i].position = const_position[pattern4_moveseed[bomb_pos[i] - 1]- 1]
+
 
 func pattern5(): # 12s
 	var prev_value
@@ -195,7 +200,6 @@ func pattern5(): # 12s
 		prev_value = rand_result
 		pattern5_random(rand_result)
 		await get_tree().create_timer(1).timeout
-
 
 func pattern5_random(pattern: int):
 	match pattern:
@@ -245,7 +249,6 @@ func pattern6(): # 3s
 		bombs.append(create_hazard_bomb(Vector2(0,0), 1, 2))
 		Utils.attach_node(pattern6_bomb[i], bombs[i])
 		pattern6_bomb[i].position = pattern6_position[i]
-
 
 var pattern6_position = [Vector2(p6sp, p6sp), Vector2(p6sp, 0), Vector2(p6sp, -p6sp), Vector2(-p6sp, p6sp), Vector2(-p6sp, 0), Vector2(-p6sp, -p6sp)]
 const p6sp = 80
