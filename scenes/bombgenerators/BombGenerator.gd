@@ -1,21 +1,21 @@
 extends Node2D
 class_name BombGenerator
 
-@export var NormalBomb_scene: PackedScene
-@export var HazardBomb_scene: PackedScene
-@export var NumericBomb_scene: PackedScene
-@export var RotationInversionBomb_scene: PackedScene
-@export var RotationSpeedUpBomb_scene: PackedScene
-@export var GameSpeedUpBomb_scene: PackedScene
+var NormalBomb_scene = preload("res://scenes/bombs/NormalBomb.tscn")
+var HazardBomb_scene = preload("res://scenes/bombs/HazardBomb.tscn")
+var NumericBomb_scene = preload("res://scenes/bombs/NumericBomb.tscn")
+var RotationInversionBomb_scene = preload("res://scenes/bombs/RotationInversionBomb.tscn")
+var RotationSpeedUpBomb_scene = preload("res://scenes/bombs/RotationSpeedUpBomb.tscn")
+var GameSpeedUpBomb_scene = preload("res://scenes/bombs/GameSpeedUpBomb.tscn")
 
-@export var Normalbomb_warning_scene: PackedScene
-@export var HazardBomb_warning_scene: PackedScene
-@export var NumericBomb_warning_scene: PackedScene
-@export var RotationInversionBomb_warning_scene: PackedScene
-@export var RotationSpeedUpBomb_warning_scene: PackedScene
-@export var GameSpeedUpBomb_warning_scene: PackedScene
+var Normalbomb_warning_scene = preload("res://scenes/warnings/NormalBombWarning.tscn")
+var HazardBomb_warning_scene = preload("res://scenes/warnings/HazardBombWarning.tscn")
+var NumericBomb_warning_scene = preload("res://scenes/warnings/NumericBombWarning.tscn")
+var RotationInversionBomb_warning_scene = preload("res://scenes/warnings/RotationInversionBombWarning.tscn")
+var RotationSpeedUpBomb_warning_scene = preload("res://scenes/warnings/RotationSpeedUpBombWarning.tscn")
+var GameSpeedUpBomb_warning_scene = preload("res://scenes/warnings/GameSpeedUpBombWarning.tscn")
 
-@export var bomb_link: PackedScene
+var bomb_link = preload("res://scenes/bombs/BombLink.tscn")
 
 
 func _ready():
