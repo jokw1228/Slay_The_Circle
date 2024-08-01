@@ -86,6 +86,7 @@ offset_left = -15.1422
 offset_top = 208.091
 offset_right = 753.858
 offset_bottom = 365.091
+mouse_filter = 2
 color = Color(0, 0, 0, 0.478431)
 
 [node name="GameoverRectShadow" type="ColorRect" parent="StoppedLeft/StoppedLeftSkew"]
@@ -93,6 +94,7 @@ offset_left = -15.0
 offset_top = 344.0
 offset_right = 754.0
 offset_bottom = 365.0
+mouse_filter = 2
 color = Color(0, 0, 0, 0.478431)
 
 [node name="Gameover" type="Label" parent="StoppedLeft/StoppedLeftSkew"]
@@ -115,6 +117,7 @@ offset_left = 655.541
 offset_top = 355.1
 offset_right = 1424.54
 offset_bottom = 512.1
+mouse_filter = 2
 color = Color(0, 0, 0, 0.478431)
 
 [node name="LastRectShadow" type="ColorRect" parent="StoppedRight/StoppedRightSkew"]
@@ -122,6 +125,7 @@ offset_left = 655.683
 offset_top = 491.009
 offset_right = 1424.68
 offset_bottom = 512.009
+mouse_filter = 2
 color = Color(0, 0, 0, 0.478431)
 
 [node name="LAST" type="Label" parent="StoppedRight/StoppedRightSkew"]
@@ -162,6 +166,7 @@ offset_left = 847.523
 offset_top = 260.89
 offset_right = 1408.52
 offset_bottom = 367.89
+mouse_filter = 2
 color = Color(1, 0, 0, 0.803922)
 
 [node name="LastRect3" type="ColorRect" parent="NewRecord/NewRecordSkew"]
@@ -169,6 +174,7 @@ offset_left = 848.0
 offset_top = 348.0
 offset_right = 1409.0
 offset_bottom = 368.0
+mouse_filter = 2
 color = Color(0.242311, 2.19597e-07, 5.41471e-08, 0.803922)
 
 [node name="NewRecordLabel" type="Label" parent="NewRecord/NewRecordSkew"]

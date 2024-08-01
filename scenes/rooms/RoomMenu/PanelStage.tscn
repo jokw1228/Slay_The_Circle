@@ -26,6 +26,7 @@ offset_left = -832.0
 offset_top = -240.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 color = Color(0.11, 0.11, 0.11, 0.490196)
 
 [node name="Shadow" type="ColorRect" parent="StageSkewed"]
@@ -36,6 +37,7 @@ offset_left = -832.0
 offset_bottom = 192.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 color = Color(0, 0, 0, 0.490196)
 
 [node name="TextShadow" type="Label" parent="StageSkewed"]

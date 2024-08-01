@@ -15,6 +15,7 @@ offset_left = -832.0
 offset_top = -128.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 color = Color(0, 0.964706, 0.964706, 1)
 metadata/_edit_use_anchors_ = true
 
@@ -26,6 +27,7 @@ offset_left = -832.0
 offset_bottom = 96.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 color = Color(0, 0.733333, 0.733333, 1)
 metadata/_edit_use_anchors_ = true
 
