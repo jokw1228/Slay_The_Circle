@@ -52,6 +52,8 @@ func stop_PlayingField(bomb_position: Vector2):
 		BombGenerator_node.get_tree().call_group("links", "queue_free")
 		BombGenerator_node.queue_free()
 		
+		PlayingFieldInterface.game_speed_reset()
+		
 		SoundManager.play("sfx_PF","explosion")
 		MusicManager.play("bgm_PF","test_slow",0,1)
 		
