@@ -10,6 +10,7 @@ var RoomTutorial_room = "res://scenes/rooms/RoomTutorial/RoomTutorial.tscn"
 @onready var Camera2D_node: Camera2D = $Camera2D
 
 func _ready():
+	SaveFileManager.load_game()
 	CircleField_node.stop_reverb_effect()
 	
 	await get_tree().create_timer(0.5).timeout
@@ -52,5 +53,8 @@ func _ready():
 	
 	await tween_camera.finished
 	await get_tree().create_timer(0.3).timeout
-	get_tree().change_scene_to_file(RoomTutorial_room)
+	if(!SaveFileManager.is_tutorial_cleared):
+		get_tree().change_scene_to_file(RoomTutorial_room)
+	else:
+		get_tree().change_scene_to_file(RoomMenu_room)
 	#get_tree().change_scene_to_file(RoomMenu_room)
