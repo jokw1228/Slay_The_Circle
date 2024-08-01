@@ -22,9 +22,10 @@ func slayed(): # bomb slayed effect
 	
 	var Particle_instance = Particle_scene.instantiate()
 	get_tree().current_scene.add_child(Particle_instance)
-	var particles = Particle_instance.get_node("flame")
-	particles.position = position
-	particles.emitting = true
+	Particle_instance.position = position
+	#var particles = Particle_instance.get_node("Flame")
+	#particles.position = position
+	Particle_instance.emitting = true
 	
 func exploded(): # bomb explosion effect
 	var BombExplodedEffect_inst: BombExplodedEffect = BombExplodedEffect_scene.instantiate()
