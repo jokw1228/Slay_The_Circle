@@ -10,6 +10,7 @@ signal pattern_3_fail_signal
 
 var pattern_1_count_value: int
 var pattern_2_count_value: int
+var pattern_3_count_value: bool
 
 func _ready():
 	
@@ -99,6 +100,8 @@ func pattern_2_clear():
 # pattern_3 : numeric bomb tutorial
 
 func pattern_3_start():
+	pattern_3_count_value = true
+	
 	const radius = 128
 	var inst1: NumericBomb = create_numeric_bomb(Vector2(radius * cos(PI/2), radius * -sin(PI/2)), 1.0, 5.0, 1)
 	var inst2: NumericBomb = create_numeric_bomb(Vector2(radius * cos(7*PI/6), radius * -sin(7*PI/6)), 1.0, 5.0, 2)
@@ -128,9 +131,11 @@ func pattern_3_start():
 	inst3.connect("no_lower_value_bomb_exists", Callable(self, "pattern_3_clear"))
 
 func pattern_3_fail():
-	pattern_3_fail_signal.emit()
-	await get_tree().create_timer(1.0).timeout
-	pattern_3_start()
+	if pattern_3_count_value == true:
+		pattern_3_count_value = false
+		pattern_3_fail_signal.emit()
+		await get_tree().create_timer(1.0).timeout
+		pattern_3_start()
 
 func pattern_3_clear():
 	await get_tree().create_timer(1.0).timeout
