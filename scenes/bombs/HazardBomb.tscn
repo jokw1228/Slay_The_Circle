@@ -27,11 +27,11 @@ texture_progress = ExtResource("5_qnof4")
 texture = ExtResource("5_3ijwn")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
-[connection signal="player_body_entered" from="." to="." method="queue_free"]
 [connection signal="player_body_entered" from="." to="." method="game_over"]
 [connection signal="player_body_entered" from="." to="." method="slayed"]
 [connection signal="player_body_entered" from="." to="." method="exploded"]
-[connection signal="bomb_timeout" from="BombTimer" to="." method="queue_free"]
+[connection signal="player_body_entered" from="." to="." method="queue_free"]
 [connection signal="bomb_timeout" from="BombTimer" to="." method="hazard_bomb_ended_effect"]
+[connection signal="bomb_timeout" from="BombTimer" to="." method="queue_free"]
 
 [editable path="BombTimer"]

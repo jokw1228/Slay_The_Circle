@@ -1,24 +1,27 @@
 extends Bomb
 class_name NumericBomb
 
+signal lower_value_bomb_exists
+signal no_lower_value_bomb_exists
+
 var id = 0
 
 func _ready():
 	$BombID.text = str(id)
 
 func slayed():
-	if has_smaller_id_numeric_bomb():
-		#queue free test
-		#for i in get_parent().get_children():
-			#if i is NumericBomb:
-				#i.queue_free()
-		game_over()
 	super()
 	
 	SoundManager.play("sfx_Num_bomb","slay")
 
+func check_for_lower_value_bomb():
+	if has_smaller_id_numeric_bomb():
+		lower_value_bomb_exists.emit()
+	else:
+		no_lower_value_bomb_exists.emit()
+
 func has_smaller_id_numeric_bomb():
-	for bomb in get_parent().get_children():
+	for bomb in get_tree().current_scene.get_children():
 		if bomb is NumericBomb and bomb.id < id:
 			return true
 	return false
