@@ -19,7 +19,7 @@ func _ready():
 	Timer_node.start()
 
 func _draw():
-	draw_arc(origin_to_draw, radius_to_draw, 0, 2 * PI, 50, color_to_draw, width_to_draw, true)
+	draw_arc(origin_to_draw, radius_to_draw, 0, 2 * PI, 1024, color_to_draw, width_to_draw, true)
 
 func _process(_delta):
 	queue_redraw()

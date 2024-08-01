@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://brlqmxr8es2ba"]
+
+[ext_resource type="Script" path="res://scenes/playingfield/CircleFieldReverbEffect.gd" id="1_pfeds"]
+
+[node name="CircleFieldReverbEffect" type="Node2D"]
+script = ExtResource("1_pfeds")

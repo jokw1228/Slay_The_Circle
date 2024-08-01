@@ -7,6 +7,9 @@ class_name BombLink
 @export var LinkedMark1_node: Sprite2D
 @export var LinkedMark2_node: Sprite2D
 
+signal both_bombs_removed
+signal single_bomb_removed
+
 var bomb1: Bomb
 var bomb2: Bomb
 var num_child_bombs: int = 0
@@ -43,14 +46,16 @@ func on_bomb_slayed():
 	num_child_bombs -= 1
 	if num_child_bombs == 0:
 		# all linked bombs are safely slayed
-		queue_free()
+		both_bombs_removed.emit()
 
 # signal by Player to PlayingField to BombLink
 func on_player_grounded():
 	if num_child_bombs == 1:
 		# only one of linked bombs is slayed, game over
-		PlayingFieldInterface.game_over(self.position)
-		queue_free()
+		single_bomb_removed.emit()
+
+func game_over():
+	PlayingFieldInterface.game_over(position)
 
 func _draw():
 	if num_child_bombs == 0:

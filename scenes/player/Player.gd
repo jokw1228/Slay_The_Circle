@@ -11,10 +11,6 @@ var movement_queue: Array
 var is_moving: bool = false
 var current_position = null
 
-func _draw():
-	#draw_arc(position, 32, 0, 2 * PI, 18, Color.WHITE, 4.0, true)
-	pass
-
 func _physics_process(_delta):
 	_movement_queue_proccessing()
 	move_and_slide()
@@ -42,6 +38,10 @@ func _movement_queue_proccessing():
 		await timer.timeout
 		velocity = Vector2.ZERO
 		position = position_to_go
+		#ground offset
+		const GROUND_OFFSET = 16
+		const CIRCLE_FIELD_RADIUS = 256
+		position = position.normalized() * (CIRCLE_FIELD_RADIUS - GROUND_OFFSET)
 		
 		grounded.emit()
 		is_moving = false

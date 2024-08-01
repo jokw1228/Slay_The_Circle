@@ -13,8 +13,13 @@ shader = ExtResource("2_01f0g")
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_c8qsl"]
 shader = ExtResource("4_omaa6")
 
-[node name="RoomLogo" type="Node2D"]
+[node name="RoomLogo" type="Node2D" node_paths=PackedStringArray("KoreaUniv_node", "Catdog_node", "BackGroundBlack_node", "CircleField_node", "Camera2D_node")]
 script = ExtResource("1_84w0l")
+KoreaUniv_node = NodePath("CanvasLayer/KoreaUniv")
+Catdog_node = NodePath("CanvasLayer/Catdog")
+BackGroundBlack_node = NodePath("CanvasLayer/BackGroundBlack")
+CircleField_node = NodePath("CircleField")
+Camera2D_node = NodePath("Camera2D")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
