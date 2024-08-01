@@ -1,6 +1,8 @@
 extends BombGenerator
 class_name TutorialBombGenerator
 
+@export var Player_node: Player
+
 signal tutorial_end
 
 signal pattern_2_fail_signal
@@ -8,9 +10,12 @@ signal pattern_2_clear_signal
 
 signal pattern_3_fail_signal
 
+signal pattern_4_fail_signal
+
 var pattern_1_count_value: int
 var pattern_2_count_value: int
 var pattern_3_count_value: bool
+var pattern_4_count_value: bool
 
 func _ready():
 	
@@ -145,10 +150,35 @@ func pattern_3_clear():
 # pattern_4 : bomb link tutorial
 
 func pattern_4_start():
-	'''
+	pattern_4_count_value = true
+	
 	var inst1: NormalBomb = create_normal_bomb(Vector2(-128, 0), 1.0, 5.0)
 	var inst2: NormalBomb = create_normal_bomb(Vector2(128, 0), 1.0, 5.0)
-	create_bomb_link(inst1, inst2)
-	'''
-	pass
+	var link = create_bomb_link(inst1, inst2)
+	Player_node.connect("grounded", Callable(link, "on_player_grounded"))
+	
+	inst1.get_node("BombTimer").disconnect("bomb_timeout", Callable(inst1, "game_over"))
+	inst2.get_node("BombTimer").disconnect("bomb_timeout", Callable(inst2, "game_over"))
+	link.disconnect("single_bomb_removed", Callable(link, "game_over"))
+	
+	inst1.get_node("BombTimer").connect("bomb_timeout", Callable(self, "pattern_4_fail"))
+	inst2.get_node("BombTimer").connect("bomb_timeout", Callable(self, "pattern_4_fail"))
+	link.connect("single_bomb_removed", Callable(self, "pattern_4_fail"))
+	
+	connect("pattern_4_fail_signal", Callable(inst1, "queue_free"))
+	connect("pattern_4_fail_signal", Callable(inst1, "exploded"))
+	connect("pattern_4_fail_signal", Callable(inst2, "queue_free"))
+	connect("pattern_4_fail_signal", Callable(inst2, "exploded"))
+	connect("pattern_4_fail_signal", Callable(link, "queue_free"))
+
+	link.connect("both_bombs_removed", Callable(self, "pattern_4_clear"))
+
+func pattern_4_fail():
+	if pattern_4_count_value == true:
+		pattern_4_count_value = false
+		pattern_4_fail_signal.emit()
+		await get_tree().create_timer(1.0).timeout
+		pattern_4_start()
+
+func pattern_4_clear():
 	tutorial_end.emit()
