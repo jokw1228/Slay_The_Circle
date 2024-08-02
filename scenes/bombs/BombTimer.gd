@@ -5,11 +5,7 @@ extends TextureProgressBar
 signal bomb_timeout
 
 func _ready():
-	max_value = set_time * 100
-	value = max_value
-
-func _process(delta):
-	value -= 100 * delta
-	if value <= 0:
-		value = max_value
-		bomb_timeout.emit()
+	var tween_time: Tween = get_tree().create_tween()
+	tween_time.tween_property(self, "value", 0.0, set_time)
+	await tween_time.finished
+	bomb_timeout.emit()
