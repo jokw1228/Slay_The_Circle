@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://csx6yjkvpfqcy"]
+
+[ext_resource type="Script" path="res://scenes/background/BackGroundDeSterrennacht.gd" id="1_cfddy"]
+[ext_resource type="PackedScene" uid="uid://o8ply4dd0xxg" path="res://scenes/background/BackGroundArcDrawer.tscn" id="2_s77qa"]
+
+[node name="BackGroundDeSterrennacht" type="Node2D"]
+z_index = -30
+script = ExtResource("1_cfddy")
+BackGroundArcDrawer_scene = ExtResource("2_s77qa")
+
+[node name="BackGroundGray" type="ColorRect" parent="."]
+offset_left = -584.0
+offset_top = -328.0
+offset_right = 584.0
+offset_bottom = 336.0
+color = Color(0.142256, 0.142256, 0.142256, 1)
