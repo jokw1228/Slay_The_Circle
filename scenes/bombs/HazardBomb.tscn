@@ -18,8 +18,6 @@ HazardBombEndedEffect_scene = ExtResource("2_fng6q")
 shape = SubResource("CircleShape2D_1f6en")
 
 [node name="BombTimer" parent="." instance=ExtResource("2_xj2gr")]
-
-[node name="TextureProgressBar" parent="BombTimer" index="0"]
 texture_under = ExtResource("5_qnof4")
 texture_progress = ExtResource("5_qnof4")
 
@@ -27,10 +25,10 @@ texture_progress = ExtResource("5_qnof4")
 texture = ExtResource("5_3ijwn")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="player_body_entered" from="." to="." method="queue_free"]
 [connection signal="player_body_entered" from="." to="." method="game_over"]
 [connection signal="player_body_entered" from="." to="." method="slayed"]
 [connection signal="player_body_entered" from="." to="." method="exploded"]
-[connection signal="player_body_entered" from="." to="." method="queue_free"]
 [connection signal="bomb_timeout" from="BombTimer" to="." method="hazard_bomb_ended_effect"]
 [connection signal="bomb_timeout" from="BombTimer" to="." method="queue_free"]
 

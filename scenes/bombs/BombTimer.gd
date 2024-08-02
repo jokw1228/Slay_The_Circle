@@ -1,16 +1,15 @@
-extends Control
+extends TextureProgressBar
 
-@export var Bar: TextureProgressBar
 @export var set_time: float = 1
 
 signal bomb_timeout
 
 func _ready():
-	Bar.max_value = set_time * 100
-	Bar.value = Bar.max_value
+	max_value = set_time * 100
+	value = max_value
 
 func _process(delta):
-	Bar.value -= 100 * delta
-	if Bar.value <= 0:
-		Bar.value = Bar.max_value
+	value -= 100 * delta
+	if value <= 0:
+		value = max_value
 		bomb_timeout.emit()
