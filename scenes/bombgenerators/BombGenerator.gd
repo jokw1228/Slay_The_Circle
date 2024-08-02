@@ -1,21 +1,21 @@
 extends Node2D
 class_name BombGenerator
 
-@export var NormalBomb_scene: PackedScene
-@export var HazardBomb_scene: PackedScene
-@export var NumericBomb_scene: PackedScene
-@export var RotationInversionBomb_scene: PackedScene
-@export var RotationSpeedUpBomb_scene: PackedScene
-@export var GameSpeedUpBomb_scene: PackedScene
+var NormalBomb_scene = preload("res://scenes/bombs/NormalBomb.tscn")
+var HazardBomb_scene = preload("res://scenes/bombs/HazardBomb.tscn")
+var NumericBomb_scene = preload("res://scenes/bombs/NumericBomb.tscn")
+var RotationInversionBomb_scene = preload("res://scenes/bombs/RotationInversionBomb.tscn")
+var RotationSpeedUpBomb_scene = preload("res://scenes/bombs/RotationSpeedUpBomb.tscn")
+var GameSpeedUpBomb_scene = preload("res://scenes/bombs/GameSpeedUpBomb.tscn")
 
-@export var Normalbomb_warning_scene: PackedScene
-@export var HazardBomb_warning_scene: PackedScene
-@export var NumericBomb_warning_scene: PackedScene
-@export var RotationInversionBomb_warning_scene: PackedScene
-@export var RotationSpeedUpBomb_warning_scene: PackedScene
-@export var GameSpeedUpBomb_warning_scene: PackedScene
+var Normalbomb_warning_scene = preload("res://scenes/warnings/NormalBombWarning.tscn")
+var HazardBomb_warning_scene = preload("res://scenes/warnings/HazardBombWarning.tscn")
+var NumericBomb_warning_scene = preload("res://scenes/warnings/NumericBombWarning.tscn")
+var RotationInversionBomb_warning_scene = preload("res://scenes/warnings/RotationInversionBombWarning.tscn")
+var RotationSpeedUpBomb_warning_scene = preload("res://scenes/warnings/RotationSpeedUpBombWarning.tscn")
+var GameSpeedUpBomb_warning_scene = preload("res://scenes/warnings/GameSpeedUpBombWarning.tscn")
 
-@export var bomb_link: PackedScene
+var bomb_link = preload("res://scenes/bombs/BombLink.tscn")
 
 
 func _ready():
@@ -36,6 +36,8 @@ func create_normal_bomb(bomb_position: Vector2, warning_time: float, bomb_time: 
 	inst2.warningtime = warning_time
 	var timer = inst.get_node("BombTimer")
 	timer.set_time = bomb_time
+	var timer2 = inst2.get_node("WarningTimer")
+	timer2.set_time = warning_time
 	
 	get_tree().current_scene.call_deferred("add_child", inst2)
 	Utils.attach_node(inst, inst2)
@@ -51,6 +53,8 @@ func create_hazard_bomb(bomb_position: Vector2, warning_time: float, bomb_time: 
 	inst2.warningtime = warning_time
 	var timer = inst.get_node("BombTimer")
 	timer.set_time = bomb_time
+	var timer2 = inst2.get_node("WarningTimer")
+	timer2.set_time = warning_time
 	
 	get_tree().current_scene.call_deferred("add_child", inst2)
 	Utils.attach_node(inst, inst2)
@@ -66,6 +70,8 @@ func create_numeric_bomb(bomb_position: Vector2, warning_time: float, bomb_time:
 	inst2.warningtime = warning_time
 	var timer = inst.get_node("BombTimer")
 	timer.set_time = bomb_time
+	var timer2 = inst2.get_node("WarningTimer")
+	timer2.set_time = warning_time
 	inst.id = bomb_id
 	
 	get_tree().current_scene.call_deferred("add_child", inst2)
@@ -82,6 +88,8 @@ func create_rotationinversion_bomb(bomb_position: Vector2, warning_time: float, 
 	inst2.warningtime = warning_time
 	var timer = inst.get_node("BombTimer")
 	timer.set_time = bomb_time
+	var timer2 = inst2.get_node("WarningTimer")
+	timer2.set_time = warning_time
 	
 	get_tree().current_scene.call_deferred("add_child", inst2)
 	Utils.attach_node(inst, inst2)
@@ -97,6 +105,8 @@ func create_rotationspeedup_bomb(bomb_position: Vector2, warning_time: float, bo
 	inst2.warningtime = warning_time
 	var timer = inst.get_node("BombTimer")
 	timer.set_time = bomb_time
+	var timer2 = inst2.get_node("WarningTimer")
+	timer2.set_time = warning_time
 	inst.rotation_speed_up_value = speed_up_value
 	
 	get_tree().current_scene.call_deferred("add_child", inst2)
@@ -113,6 +123,8 @@ func create_gamespeedup_bomb(bomb_position: Vector2, warning_time: float, bomb_t
 	inst2.warningtime = warning_time
 	var timer = inst.get_node("BombTimer")
 	timer.set_time = bomb_time
+	var timer2 = inst2.get_node("WarningTimer")
+	timer2.set_time = warning_time
 	inst.game_speed_up_value = speed_up_value
 	
 	get_tree().current_scene.call_deferred("add_child", inst2)

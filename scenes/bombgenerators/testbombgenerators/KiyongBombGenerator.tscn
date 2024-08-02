@@ -1,19 +1,6 @@
-[gd_scene load_steps=15 format=3 uid="uid://d0ee8kj7eehrb"]
+[gd_scene load_steps=2 format=3 uid="uid://d0ee8kj7eehrb"]
 
 [ext_resource type="Script" path="res://scenes/bombgenerators/testbombgenerators/KiyongBombGenerator.gd" id="1_7ccpm"]
-[ext_resource type="PackedScene" uid="uid://bj78l3upa26ik" path="res://scenes/bombs/NormalBomb.tscn" id="2_46cl6"]
-[ext_resource type="PackedScene" uid="uid://cux2tpymcx5ny" path="res://scenes/bombs/HazardBomb.tscn" id="3_3m7v5"]
-[ext_resource type="PackedScene" uid="uid://dug1fwwbjaopa" path="res://scenes/bombs/NumericBomb.tscn" id="4_q3pbh"]
-[ext_resource type="PackedScene" uid="uid://bd65ne6jxvojv" path="res://scenes/bombs/RotationInversionBomb.tscn" id="5_eww50"]
-[ext_resource type="PackedScene" uid="uid://1ohs6nj2dm33" path="res://scenes/bombs/RotationSpeedUpBomb.tscn" id="6_2cv3v"]
-[ext_resource type="PackedScene" uid="uid://cr4l7m2i6dxl" path="res://scenes/bombs/GameSpeedUpBomb.tscn" id="7_bnyfl"]
-[ext_resource type="PackedScene" uid="uid://b88otl67w25a2" path="res://scenes/warnings/NormalBombWarning.tscn" id="8_5qnel"]
-[ext_resource type="PackedScene" uid="uid://fdhauxo6f7gq" path="res://scenes/warnings/HazardBombWarning.tscn" id="9_t8t0k"]
-[ext_resource type="PackedScene" uid="uid://dn8hj3t4klarb" path="res://scenes/warnings/NumericBombWarning.tscn" id="10_h6iny"]
-[ext_resource type="PackedScene" uid="uid://4wbytvc753ff" path="res://scenes/warnings/RotationInversionBombWarning.tscn" id="11_0lvod"]
-[ext_resource type="PackedScene" uid="uid://cg0il84hq0n8m" path="res://scenes/warnings/RotationSpeedUpBombWarning.tscn" id="12_ogliy"]
-[ext_resource type="PackedScene" uid="uid://dod3xtkvnfwuq" path="res://scenes/warnings/GameSpeedUpBombWarning.tscn" id="13_frej1"]
-[ext_resource type="PackedScene" uid="uid://5hmqv8rxk05i" path="res://scenes/bombs/BombLink.tscn" id="14_j4x11"]
 
 [node name="KiyongBombGenerator" type="Node2D" node_paths=PackedStringArray("pattern2_bomb", "pattern4_bomb", "pattern4_real_bomb", "pattern6_bomb")]
 script = ExtResource("1_7ccpm")
@@ -21,19 +8,6 @@ pattern2_bomb = [NodePath("Pattern2/Marker2D"), NodePath("Pattern2/Marker2D2")]
 pattern4_bomb = [NodePath("Pattern4/Marker2D3"), NodePath("Pattern4/Marker2D4"), NodePath("Pattern4/Marker2D5"), NodePath("Pattern4/Marker2D6")]
 pattern4_real_bomb = NodePath("Pattern4/Marker2D7")
 pattern6_bomb = [NodePath("Pattern6/Marker2D8"), NodePath("Pattern6/Marker2D9"), NodePath("Pattern6/Marker2D10"), NodePath("Pattern6/Marker2D11"), NodePath("Pattern6/Marker2D12"), NodePath("Pattern6/Marker2D13")]
-NormalBomb_scene = ExtResource("2_46cl6")
-HazardBomb_scene = ExtResource("3_3m7v5")
-NumericBomb_scene = ExtResource("4_q3pbh")
-RotationInversionBomb_scene = ExtResource("5_eww50")
-RotationSpeedUpBomb_scene = ExtResource("6_2cv3v")
-GameSpeedUpBomb_scene = ExtResource("7_bnyfl")
-Normalbomb_warning_scene = ExtResource("8_5qnel")
-HazardBomb_warning_scene = ExtResource("9_t8t0k")
-NumericBomb_warning_scene = ExtResource("10_h6iny")
-RotationInversionBomb_warning_scene = ExtResource("11_0lvod")
-RotationSpeedUpBomb_warning_scene = ExtResource("12_ogliy")
-GameSpeedUpBomb_warning_scene = ExtResource("13_frej1")
-bomb_link = ExtResource("14_j4x11")
 
 [node name="Pattern2" type="Node2D" parent="."]
 
