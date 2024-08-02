@@ -5,7 +5,7 @@ var circler_record: float = 0.0
 var circlest_record: float = 0.0
 var hypercircle_record: float = 0.0
 var hypercircler_record: float = 0.0
-var hypercirclest_record:float = 0.0
+var hypercirclest_record: float = 0.0
 
 var sound_volume: float
 
