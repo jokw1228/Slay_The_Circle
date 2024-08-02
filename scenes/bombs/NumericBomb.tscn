@@ -29,6 +29,7 @@ offset_left = -12.0
 offset_top = -16.0
 offset_right = 14.0
 offset_bottom = 14.0
+theme_type_variation = &"NoShadow"
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("2_mftcv")
@@ -47,12 +48,12 @@ events = Array[ExtResource("4_pmjfd")]([SubResource("Resource_ue2f5")])
 [node name="NumericSprite" type="Sprite2D" parent="."]
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="lower_value_bomb_exists" from="." to="." method="queue_free"]
 [connection signal="lower_value_bomb_exists" from="." to="." method="game_over"]
 [connection signal="lower_value_bomb_exists" from="." to="." method="exploded"]
-[connection signal="lower_value_bomb_exists" from="." to="." method="queue_free"]
 [connection signal="no_lower_value_bomb_exists" from="." to="." method="queue_free"]
 [connection signal="player_body_entered" from="." to="." method="slayed"]
 [connection signal="player_body_entered" from="." to="." method="check_for_lower_value_bomb"]
+[connection signal="bomb_timeout" from="BombTimer" to="." method="queue_free"]
 [connection signal="bomb_timeout" from="BombTimer" to="." method="game_over"]
 [connection signal="bomb_timeout" from="BombTimer" to="." method="exploded"]
-[connection signal="bomb_timeout" from="BombTimer" to="." method="queue_free"]

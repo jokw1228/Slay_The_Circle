@@ -19,18 +19,29 @@ func timer(time: float):
 	return get_tree().create_timer(time).timeout
 
 # UI 애니메이션 구현할 때 사용
-# offset이 날아가는 거리, direction은 날아갈 방향
+# length가 날아가는 거리, direction은 날아갈 방향
 var original_position: Dictionary
 var previous_tween: Dictionary
-func slide(node: Control, offset: float, direction: Vector2, duration: float):
+func slide_in(node: Control, length: float, direction: Vector2, duration: float):
+	node.visible = true
 	if not original_position.has(node):
 		original_position[node] = node.position
 	if previous_tween.has(node):
 		previous_tween[node].kill()
 		previous_tween.erase(node)
-	node.position = original_position[node] - offset * direction
+	node.position = original_position[node] - length * direction
 	previous_tween[node] = tween()
-	previous_tween[node].tween_property(node, "position", node.position + offset * direction, duration)
+	previous_tween[node].tween_property(node, "position", node.position + length * direction, duration)
+
+func slide_out(node: Control, length: float, direction: Vector2, duration: float):
+	if not original_position.has(node):
+		original_position[node] = node.position
+	if previous_tween.has(node):
+		previous_tween[node].kill()
+		previous_tween.erase(node)
+	node.position = original_position[node]
+	previous_tween[node] = tween()
+	previous_tween[node].tween_property(node, "position", node.position + length * direction, duration)
 
 func tween():
 	return get_tree().create_tween().set_trans(Tween.TRANS_EXPO).set_ease(Tween.EASE_OUT)

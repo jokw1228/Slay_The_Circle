@@ -9,9 +9,11 @@ base_font = ExtResource("2_b24ac")
 [resource]
 default_font = SubResource("FontVariation_snl58")
 default_font_size = 32
-Label/colors/font_shadow_color = Color(0, 0, 0, 1)
+Label/colors/font_shadow_color = Color(0, 0, 0, 0.819608)
 Label/constants/shadow_offset_x = 3
-Label/constants/shadow_offset_y = 5
+Label/constants/shadow_offset_y = 4
 Label/font_sizes/font_size = 32
+NoShadow/base_type = &"Label"
+NoShadow/colors/font_shadow_color = Color(0, 0, 0, 0)
 Panel/styles/panel = ExtResource("1_oonhq")
 PanelContainer/styles/panel = ExtResource("1_oonhq")

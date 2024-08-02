@@ -71,15 +71,15 @@ func select_stage(difficulty: int):
 	%StageStar1.visible = true
 	%StageStar2.visible = true if difficulty >= 1 else false
 	%StageStar3.visible = true if difficulty >= 2 else false
-	Utils.slide(%Stage, 400, Vector2.RIGHT, 0.4)
+	Utils.slide_in(%Stage, 400, Vector2.RIGHT, 0.4)
 	
 	%Info.visible = true
 	%InfoLabel1.text = str(stage_index) # 테스트용 텍스트.
-	Utils.slide(%Info, 400, Vector2.LEFT, 0.4)
+	Utils.slide_in(%Info, 400, Vector2.LEFT, 0.4)
 	
 	if %Start.visible == false: # 시작 버튼 없을 경우 (처음 스테이지 선택한 경우)
 		%Start.visible = true
-		Utils.slide(%Start, 400, Vector2.LEFT, 0.4)
+		Utils.slide_in(%Start, 400, Vector2.LEFT, 0.4)
 
 	# 선택 사운드
 	SoundManager.play("sfx_menu","select")
@@ -89,11 +89,11 @@ func select_hyper():
 	stage_index += 3
 	
 	%HyperStage.visible = true
-	Utils.slide(%HyperStage, 400, Vector2.RIGHT, 0.4)
+	Utils.slide_in(%HyperStage, 400, Vector2.RIGHT, 0.4)
 	
 	%Info.visible = true
 	%InfoLabel1.text = str(stage_index) # 테스트용 텍스트.
-	Utils.slide(%Info, 400, Vector2.LEFT, 0.4)
+	Utils.slide_in(%Info, 400, Vector2.LEFT, 0.4)
 	
 	#하이퍼 선택 사운드
 	SoundManager.play("sfx_menu","h_select")
