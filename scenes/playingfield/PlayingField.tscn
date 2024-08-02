@@ -60,11 +60,11 @@ CircleField_node = NodePath("CircleField")
 
 [node name="PlayingFieldCamera" parent="." instance=ExtResource("2_xhkow")]
 
-[node name="PlayingFieldUI" parent="." instance=ExtResource("3_7mvnn")]
-
 [node name="Player" parent="." instance=ExtResource("4_u3i3n")]
 
 [node name="CircleField" parent="." instance=ExtResource("5_1ahyj")]
+
+[node name="PlayingFieldUI" parent="." instance=ExtResource("3_7mvnn")]
 
 [node name="SoundBank" type="Node" parent="."]
 script = ExtResource("7_lhgfl")
@@ -94,8 +94,8 @@ flip_h = true
 [connection signal="game_over" from="." to="PlayingFieldCamera" method="gameover_position_transition"]
 [connection signal="game_over" from="." to="PlayingFieldCamera" method="zoom_transition"]
 [connection signal="game_over" from="." to="PlayingFieldUI" method="close_Playing_and_open_Stopped"]
-[connection signal="game_over" from="." to="CircleField" method="stop_reverb_effect"]
 [connection signal="game_over" from="." to="CircleField" method="create_game_over_effect"]
+[connection signal="game_over" from="." to="CircleField" method="stop_reverb_effect"]
 [connection signal="game_ready" from="." to="CircleField" method="create_game_ready_effect"]
 [connection signal="game_start" from="." to="PlayingFieldCamera" method="rotation_reset"]
 [connection signal="game_start" from="." to="PlayingFieldUI" method="close_Stopped_and_open_Playing"]
