@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://bdrilkeb2s5n0"]
+[gd_scene load_steps=22 format=3 uid="uid://bdrilkeb2s5n0"]
 
 [ext_resource type="Script" path="res://scenes/rooms/RoomMenu/RoomMenu.gd" id="1_sshbl"]
 [ext_resource type="PackedScene" uid="uid://ccay8yrm25adk" path="res://scenes/rooms/RoomPlayingFields/RoomCircle.tscn" id="2_2e64d"]
@@ -9,16 +9,14 @@
 [ext_resource type="PackedScene" uid="uid://cpa7olvdr7242" path="res://scenes/rooms/RoomPlayingFields/RoomHyperCirclest.tscn" id="7_3e2ok"]
 [ext_resource type="PackedScene" uid="uid://dntg6argh8n3n" path="res://scenes/playingfield/PlayingField.tscn" id="8_x2ttg"]
 [ext_resource type="PackedScene" uid="uid://djvtf5t5jqw8u" path="res://scenes/bombgenerators/MenuBombGenerator.tscn" id="9_xjnco"]
-[ext_resource type="PackedScene" uid="uid://dj3cit57hf5m" path="res://scenes/rooms/RoomMenu/PanelStage.tscn" id="10_a51qt"]
-[ext_resource type="PackedScene" uid="uid://cim7x10xeo4n5" path="res://scenes/rooms/RoomMenu/PanelHyper.tscn" id="11_cx8um"]
-[ext_resource type="PackedScene" uid="uid://bqcuagd1a1dp5" path="res://scenes/rooms/RoomMenu/PanelInfo.tscn" id="12_w1m2y"]
-[ext_resource type="PackedScene" uid="uid://dp0cdsfw5ylxj" path="res://scenes/rooms/RoomMenu/StartButton.tscn" id="13_yxsra"]
+[ext_resource type="PackedScene" uid="uid://dp0cdsfw5ylxj" path="res://scenes/ui/FancyButton.tscn" id="13_yxsra"]
 [ext_resource type="Script" path="res://addons/resonate/sound_manager/sound_bank.gd" id="14_oop3p"]
 [ext_resource type="Script" path="res://addons/resonate/sound_manager/sound_event_resource.gd" id="15_rr3yb"]
 [ext_resource type="AudioStream" uid="uid://crh63lch80r4l" path="res://audio/sfx/select.wav" id="16_tc0o1"]
 [ext_resource type="AudioStream" uid="uid://conahpikkrpng" path="res://audio/sfx/slice_2.wav" id="17_nkn8y"]
 [ext_resource type="AudioStream" uid="uid://4s45v1x286p0" path="res://audio/sfx/start_3.wav" id="18_f5hei"]
-[ext_resource type="FontFile" uid="uid://bn71j2rajnbrn" path="res://fonts/bump-it-up.ttf" id="19_5xl3y"]
+[ext_resource type="Texture2D" uid="uid://51htjdg3re4g" path="res://images/star.svg" id="21_4bwp4"]
+[ext_resource type="Texture2D" uid="uid://b812gsdmi0oco" path="res://scenes/rooms/RoomMenu/HyperPanelTexture.svg" id="22_aomol"]
 
 [sub_resource type="Resource" id="Resource_u5uqr"]
 script = ExtResource("15_rr3yb")
@@ -44,21 +42,16 @@ volume = 0.0
 pitch = 1.0
 streams = Array[AudioStream]([ExtResource("18_f5hei")])
 
-[node name="RoomMenu" type="Node2D" node_paths=PackedStringArray("playing_field", "ui_container_left", "ui_container_right", "ui_container_ready", "camera", "reverb_effect_timer", "ui_ready_title", "ui_ready_title_shadow")]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_sqgio"]
+texture = ExtResource("22_aomol")
+
+[node name="RoomMenu" type="Node2D" node_paths=PackedStringArray("playing_field", "ui_container_ready", "camera", "reverb_effect_timer")]
 script = ExtResource("1_sshbl")
 room_to_go = Array[PackedScene]([ExtResource("2_2e64d"), ExtResource("3_yvois"), ExtResource("4_2514v"), ExtResource("5_ysv52"), ExtResource("6_0nfbl"), ExtResource("7_3e2ok")])
 playing_field = NodePath("PlayingField")
-ui_container_left = NodePath("UIContainer/UILeft")
-ui_container_right = NodePath("UIContainer/UIRight")
-ui_container_ready = NodePath("UIContainer/UIReady")
+ui_container_ready = NodePath("UIContainerSkewed/Ready")
 camera = NodePath("PlayingField/PlayingFieldCamera")
 reverb_effect_timer = NodePath("PlayingField/CircleField/ReverbEffectTimer")
-ui_ready_title = NodePath("UIContainer/UIReady/Text/Title")
-ui_ready_title_shadow = NodePath("UIContainer/UIReady/Text/TitleShadow")
-scene_stage = ExtResource("10_a51qt")
-scene_hyper = ExtResource("11_cx8um")
-scene_info = ExtResource("12_w1m2y")
-scene_start = ExtResource("13_yxsra")
 
 [node name="PlayingField" parent="." instance=ExtResource("8_x2ttg")]
 BombGenerator_scene = ExtResource("9_xjnco")
@@ -66,109 +59,223 @@ BombGenerator_scene = ExtResource("9_xjnco")
 [node name="PlayingFieldUI" parent="PlayingField" index="1"]
 visible = false
 
-[node name="UIContainer" type="CanvasLayer" parent="."]
-
-[node name="UILeft" type="Control" parent="UIContainer"]
-layout_mode = 3
-anchors_preset = 4
-anchor_top = 0.5
-anchor_bottom = 0.5
-offset_top = -30.0
-offset_right = 64.0
-offset_bottom = 30.0
-grow_vertical = 2
-
-[node name="UIRight" type="Control" parent="UIContainer"]
-layout_mode = 3
-anchors_preset = 6
-anchor_left = 1.0
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-offset_left = -64.0
-offset_top = -30.0
-offset_bottom = 30.0
-grow_horizontal = 0
-grow_vertical = 2
-
-[node name="UIReady" type="Node2D" parent="UIContainer"]
-position = Vector2(-900, 258)
-scale = Vector2(0.75, 0.75)
-skew = 0.261799
-
-[node name="Highlight" type="ColorRect" parent="UIContainer/UIReady"]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_right = 1200.0
-offset_bottom = 150.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(0.11, 0.11, 0.11, 0.490196)
-metadata/_edit_use_anchors_ = true
-
-[node name="Shadow" type="ColorRect" parent="UIContainer/UIReady"]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = 150.0
-offset_right = 1200.0
-offset_bottom = 250.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(0, 0, 0, 0.490196)
-metadata/_edit_use_anchors_ = true
-
-[node name="Text" type="Node2D" parent="UIContainer/UIReady"]
-position = Vector2(285.671, 51.68)
-
-[node name="TitleShadow" type="Label" parent="UIContainer/UIReady/Text"]
-offset_left = 8.09395
-offset_top = 6.2121
-offset_right = 783.274
-offset_bottom = 102.212
-theme_override_colors/font_color = Color(0, 0, 0, 0.545098)
-theme_override_fonts/font = ExtResource("19_5xl3y")
-theme_override_font_sizes/font_size = 36
-text = "HYPER CIRCLEST
-"
-metadata/_edit_use_anchors_ = true
-
-[node name="Title" type="Label" parent="UIContainer/UIReady/Text"]
-offset_left = 0.610977
-offset_top = 9.37058e-05
-offset_right = 775.791
-offset_bottom = 96.0001
-theme_override_fonts/font = ExtResource("19_5xl3y")
-theme_override_font_sizes/font_size = 36
-text = "HYPER CIRCLEST"
-metadata/_edit_use_anchors_ = true
-
-[node name="ReadyShadow" type="Label" parent="UIContainer/UIReady/Text"]
-offset_left = 8.09395
-offset_top = 63.24
-offset_right = 783.274
-offset_bottom = 159.24
-theme_override_colors/font_color = Color(0, 0, 0, 0.545098)
-theme_override_fonts/font = ExtResource("19_5xl3y")
-theme_override_font_sizes/font_size = 66
-text = "GET READY.."
-metadata/_edit_use_anchors_ = true
-
-[node name="Ready" type="Label" parent="UIContainer/UIReady/Text"]
-offset_left = 0.610977
-offset_top = 63.24
-offset_right = 775.791
-offset_bottom = 159.24
-theme_override_fonts/font = ExtResource("19_5xl3y")
-theme_override_font_sizes/font_size = 66
-text = "GET READY.."
-metadata/_edit_use_anchors_ = true
-
 [node name="SoundBank" type="Node" parent="."]
 script = ExtResource("14_oop3p")
 label = "sfx_menu"
 events = Array[ExtResource("15_rr3yb")]([SubResource("Resource_u5uqr"), SubResource("Resource_45hgn"), SubResource("Resource_bq31y")])
 
+[node name="UIContainerSkewed" type="CanvasLayer" parent="."]
+scale = Vector2(1, 1.03078)
+transform = Transform2D(1, 0, -0.25, 1, 0, 0)
+
+[node name="Stage" type="Panel" parent="UIContainerSkewed"]
+unique_name_in_owner = true
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -100.0
+offset_right = 420.0
+offset_bottom = 100.0
+grow_vertical = 2
+size_flags_horizontal = 0
+
+[node name="StageLabel" type="Label" parent="UIContainerSkewed/Stage"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -310.0
+offset_top = -20.0
+offset_right = -30.0
+offset_bottom = 20.0
+grow_horizontal = 0
+grow_vertical = 2
+text = "CIRCLEST"
+horizontal_alignment = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UIContainerSkewed/Stage"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -124.0
+offset_top = 37.405
+offset_right = -50.0
+offset_bottom = 58.405
+grow_horizontal = 0
+grow_vertical = 2
+alignment = 2
+
+[node name="StageStar3" type="TextureRect" parent="UIContainerSkewed/Stage/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+texture = ExtResource("21_4bwp4")
+expand_mode = 3
+
+[node name="StageStar2" type="TextureRect" parent="UIContainerSkewed/Stage/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+texture = ExtResource("21_4bwp4")
+expand_mode = 3
+
+[node name="StageStar1" type="TextureRect" parent="UIContainerSkewed/Stage/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+texture = ExtResource("21_4bwp4")
+expand_mode = 3
+
+[node name="Info" type="Panel" parent="UIContainerSkewed"]
+unique_name_in_owner = true
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -266.93
+offset_top = -211.005
+offset_right = 153.07
+offset_bottom = 148.055
+grow_horizontal = 0
+grow_vertical = 2
+size_flags_horizontal = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UIContainerSkewed/Info"]
+layout_mode = 0
+offset_left = 30.0
+offset_top = 30.0
+offset_right = 380.0
+offset_bottom = 350.0
+
+[node name="Label" type="Label" parent="UIContainerSkewed/Info/VBoxContainer"]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "HIGH SCORE"
+
+[node name="InfoLabel1" type="Label" parent="UIContainerSkewed/Info/VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 70)
+layout_mode = 2
+text = "123"
+
+[node name="Label3" type="Label" parent="UIContainerSkewed/Info/VBoxContainer"]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "TEST1"
+
+[node name="InfoLabel2" type="Label" parent="UIContainerSkewed/Info/VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 70)
+layout_mode = 2
+text = "SAMPLE"
+
+[node name="Label5" type="Label" parent="UIContainerSkewed/Info/VBoxContainer"]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "TEST2"
+
+[node name="InfoLabel3" type="Label" parent="UIContainerSkewed/Info/VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 70)
+layout_mode = 2
+text = "SAMPLE"
+
+[node name="HyperStage" type="Panel" parent="UIContainerSkewed"]
+unique_name_in_owner = true
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -161.0
+offset_right = 354.0
+offset_bottom = -48.0
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_sqgio")
+
+[node name="Label" type="Label" parent="UIContainerSkewed/HyperStage"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -175.0
+offset_top = -20.0
+offset_right = -30.0
+offset_bottom = 20.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_colors/font_shadow_color = Color(0, 0.466667, 0.466667, 1)
+theme_override_colors/font_outline_color = Color(0, 0.931, 0.98, 1)
+theme_override_constants/outline_size = 8
+text = "HYPER"
+
+[node name="Ready" type="Panel" parent="UIContainerSkewed"]
+unique_name_in_owner = true
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -1417.63
+offset_top = -90.5
+offset_right = -520.625
+offset_bottom = 90.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ReadyStage" type="Label" parent="UIContainerSkewed/Ready"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -210.125
+offset_top = -54.5
+offset_right = 192.875
+offset_bottom = -14.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 27
+text = "HYPER CIRCLEST"
+horizontal_alignment = 1
+
+[node name="Label" type="Label" parent="UIContainerSkewed/Ready"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -234.875
+offset_top = -7.5
+offset_right = 246.125
+offset_bottom = 52.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 48
+text = "GET READY.."
+
+[node name="Start" parent="UIContainerSkewed" instance=ExtResource("13_yxsra")]
+unique_name_in_owner = true
+offset_left = 933.0
+offset_top = 517.0
+offset_right = 1222.0
+offset_bottom = 607.0
+
+[node name="Value" parent="UIContainerSkewed/Start" index="3"]
+text = "START"
+
+[connection signal="pressed" from="UIContainerSkewed/Start" to="." method="start_stage"]
+
 [editable path="PlayingField"]
 [editable path="PlayingField/CircleField"]
+[editable path="UIContainerSkewed/Start"]

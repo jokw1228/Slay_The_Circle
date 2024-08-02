@@ -1,0 +1,163 @@
+[gd_scene load_steps=9 format=3 uid="uid://dp0cdsfw5ylxj"]
+
+[ext_resource type="Script" path="res://scenes/ui/FancyButton.gd" id="1_2wbp1"]
+
+[sub_resource type="GDScript" id="GDScript_5r2jj"]
+script/source = "extends Line2D
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	var tween = get_tree().create_tween().set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_QUAD)
+	tween.tween_property(self, \"default_color\", Color(255, 255, 255, 0), 0.5)
+
+	tween = get_tree().create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_SINE)
+	tween.tween_property(self, \"scale\", Vector2(1.3, 1.3), 0.5)
+"
+
+[sub_resource type="PackedScene" id="PackedScene_l4cna"]
+_bundled = {
+"conn_count": 0,
+"conns": PackedInt32Array(),
+"editable_instances": [],
+"names": PackedStringArray("StartButtonEffect", "points", "closed", "width", "script", "Line2D"),
+"node_count": 1,
+"node_paths": [],
+"nodes": PackedInt32Array(-1, -1, 5, 0, -1, 4, 1, 0, 2, 1, 3, 2, 4, 3, 0),
+"variants": [PackedVector2Array(-240, -88, 240, -88, 240, 88, -240, 88), true, 3.0, SubResource("GDScript_5r2jj")],
+"version": 3
+}
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_c0a27"]
+bg_color = Color(1, 0.713726, 0.00392157, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_r7nac"]
+bg_color = Color(1, 0.779, 0.22, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.986752, 0.986752, 0.986752, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xj3eo"]
+bg_color = Color(0.87, 0.6235, 0, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.964742, 0.964742, 0.964742, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_umss3"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7ih4k"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(1, 1, 1, 1)
+
+[node name="FancyButton" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 300.0
+offset_bottom = 90.0
+script = ExtResource("1_2wbp1")
+start_button_effect = SubResource("PackedScene_l4cna")
+
+[node name="Highlight" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -21.0
+offset_top = -1.0
+offset_right = 4.0
+offset_bottom = 10.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.54063, 0.378898, 0, 1)
+
+[node name="Shadow" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 15.0
+offset_top = -8.0
+offset_right = 15.0
+offset_bottom = 5.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.72549, 0.513726, 0, 0.784314)
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 0.713726, 0.00392157, 1)
+theme_override_colors/icon_normal_color = Color(1, 0.713726, 0.00392157, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_c0a27")
+theme_override_styles/hover = SubResource("StyleBoxFlat_r7nac")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_xj3eo")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_umss3")
+
+[node name="Value" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -105.0
+offset_top = -20.0
+offset_right = 105.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "SAMPLE"
+horizontal_alignment = 1
+
+[node name="Timer1" type="Timer" parent="."]
+unique_name_in_owner = true
+wait_time = 2.0
+
+[node name="Timer2" type="Timer" parent="."]
+unique_name_in_owner = true
+wait_time = 2.0
+
+[node name="Effect" type="Panel" parent="."]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(150, 45)
+theme_override_styles/panel = SubResource("StyleBoxFlat_7ih4k")
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
+[connection signal="timeout" from="Timer1" to="." method="_on_timer_timeout"]
+[connection signal="timeout" from="Timer2" to="." method="_on_timer_timeout"]

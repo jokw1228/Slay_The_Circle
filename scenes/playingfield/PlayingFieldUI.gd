@@ -1,7 +1,8 @@
 extends CanvasLayer
 class_name PlayingFieldUI
 
-@export var Playing_node: Node2D
+@export var Best_node: Control
+@export var Time_node: Control
 @export var StoppedRight_node: Node2D
 @export var StoppedLeft_node: Node2D
 @export var NewRecord_node: Node2D
@@ -22,12 +23,16 @@ var seconds_value: int = 0
 var milliseconds_value: int = 0
 var is_new_record: bool = false
 
+func _ready():
+	Best_node.visible = false
+	Time_node.visible = false
+
 func playing_time_updated(time: float):
 	seconds_value = floor(time)
 	Seconds_node.text = str(seconds_value)
 	
 	milliseconds_value = floor((time - seconds_value) * 100)
-	Milliseconds_node.text = ":" + str(milliseconds_value)
+	Milliseconds_node.text = ".%02d" % milliseconds_value
 
 
 func close_Stopped_and_open_Playing():
@@ -54,20 +59,14 @@ func close_Stopped_and_open_Playing():
 	StoppedRight_node.visible = false
 	StoppedUp_node.visible = false
 	
-	# 게임 시작 시 화면 위쪽 끝에서 점수 창 내려오는 효과 
-	# 일관성을 위해 close_Playing_and_open_Stopped에도 사라지는 애니메이션 추가 가능.
-	# BEST랑 TIME 간 내려 오는 시간에 약간의 차이 두어 좀 더 디테일하게 만들고 싶었으나
-	# merge 복잡할 것 같아 일단 보류.
-
-	Playing_node.visible = false # 이미 visible일 경우 애니메이션 전에 보이는 것 방지
-	await get_tree().create_timer(0.7).timeout
-	Playing_node.visible = true
-	Playing_node.position = Vector2(0, -100)
-	var tween = get_tree().create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_EXPO)
-	tween.tween_property(Playing_node,"position",Vector2(0,0),0.6)
+	await Utils.timer(0.5)
+	Utils.slide_in(Best_node, 140, Vector2.DOWN, 0.5)
+	await Utils.timer(0.1)
+	Utils.slide_in(Time_node, 140, Vector2.DOWN, 0.8)
 
 func close_Playing_and_open_Stopped():
-	Playing_node.visible = false
+	Best_node.visible = false
+	Time_node.visible = false
 	StoppedLeft_node.visible = true
 	StoppedRight_node.visible = true
 	StoppedUp_node.visible = true

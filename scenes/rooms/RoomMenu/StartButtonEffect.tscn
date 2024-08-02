@@ -1,9 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://bt6bbmwqw6ba2"]
-
-[ext_resource type="Script" path="res://scenes/rooms/RoomMenu/StartButtonEffect.gd" id="1_hxeav"]
-
-[node name="StartButtonEffect" type="Line2D"]
-points = PackedVector2Array(-240, -88, 240, -88, 240, 88, -240, 88)
-closed = true
-width = 3.0
-script = ExtResource("1_hxeav")
