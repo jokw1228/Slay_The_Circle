@@ -36,6 +36,8 @@ func create_normal_bomb(bomb_position: Vector2, warning_time: float, bomb_time: 
 	inst2.warningtime = warning_time
 	var timer = inst.get_node("BombTimer")
 	timer.set_time = bomb_time
+	var timer2 = inst2.get_node("WarningTimer")
+	timer2.set_time = warning_time
 	
 	get_tree().current_scene.call_deferred("add_child", inst2)
 	Utils.attach_node(inst, inst2)
@@ -51,6 +53,8 @@ func create_hazard_bomb(bomb_position: Vector2, warning_time: float, bomb_time: 
 	inst2.warningtime = warning_time
 	var timer = inst.get_node("BombTimer")
 	timer.set_time = bomb_time
+	var timer2 = inst2.get_node("WarningTimer")
+	timer2.set_time = warning_time
 	
 	get_tree().current_scene.call_deferred("add_child", inst2)
 	Utils.attach_node(inst, inst2)
@@ -66,6 +70,8 @@ func create_numeric_bomb(bomb_position: Vector2, warning_time: float, bomb_time:
 	inst2.warningtime = warning_time
 	var timer = inst.get_node("BombTimer")
 	timer.set_time = bomb_time
+	var timer2 = inst2.get_node("WarningTimer")
+	timer2.set_time = warning_time
 	inst.id = bomb_id
 	
 	get_tree().current_scene.call_deferred("add_child", inst2)
@@ -82,6 +88,8 @@ func create_rotationinversion_bomb(bomb_position: Vector2, warning_time: float, 
 	inst2.warningtime = warning_time
 	var timer = inst.get_node("BombTimer")
 	timer.set_time = bomb_time
+	var timer2 = inst2.get_node("WarningTimer")
+	timer2.set_time = warning_time
 	
 	get_tree().current_scene.call_deferred("add_child", inst2)
 	Utils.attach_node(inst, inst2)
@@ -97,6 +105,8 @@ func create_rotationspeedup_bomb(bomb_position: Vector2, warning_time: float, bo
 	inst2.warningtime = warning_time
 	var timer = inst.get_node("BombTimer")
 	timer.set_time = bomb_time
+	var timer2 = inst2.get_node("WarningTimer")
+	timer2.set_time = warning_time
 	inst.rotation_speed_up_value = speed_up_value
 	
 	get_tree().current_scene.call_deferred("add_child", inst2)
@@ -113,6 +123,8 @@ func create_gamespeedup_bomb(bomb_position: Vector2, warning_time: float, bomb_t
 	inst2.warningtime = warning_time
 	var timer = inst.get_node("BombTimer")
 	timer.set_time = bomb_time
+	var timer2 = inst2.get_node("WarningTimer")
+	timer2.set_time = warning_time
 	inst.game_speed_up_value = speed_up_value
 	
 	get_tree().current_scene.call_deferred("add_child", inst2)
