@@ -1,8 +1,7 @@
-[gd_scene load_steps=10 format=3 uid="uid://1ohs6nj2dm33"]
+[gd_scene load_steps=9 format=3 uid="uid://1ohs6nj2dm33"]
 
 [ext_resource type="Script" path="res://scenes/bombs/RotationSpeedUpBomb.gd" id="1_07mff"]
-[ext_resource type="PackedScene" uid="uid://cs2ukp0c0vi80" path="res://scenes/bombs/bombeffects/Flame.tscn" id="2_q0uno"]
-[ext_resource type="Texture2D" uid="uid://cofhcmnt2gu5a" path="res://images/rotaion_speed_up.png" id="2_qaepo"]
+[ext_resource type="Texture2D" uid="uid://d2gno2lcf63pb" path="res://images/bomb/sprite_rotation_speed_up.svg" id="3_1xipd"]
 [ext_resource type="PackedScene" uid="uid://dq81owitrvpew" path="res://scenes/bombs/BombTimer.tscn" id="3_g3ujk"]
 [ext_resource type="Script" path="res://addons/resonate/sound_manager/sound_bank.gd" id="4_vtf52"]
 [ext_resource type="Script" path="res://addons/resonate/sound_manager/sound_event_resource.gd" id="5_jwm7d"]
@@ -21,15 +20,14 @@ streams = Array[AudioStream]([ExtResource("6_op5bq")])
 
 [node name="RotationSpeedUpBomb" type="Area2D"]
 script = ExtResource("1_07mff")
-Particle = ExtResource("2_q0uno")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_unecs")
 
 [node name="BombTimer" parent="." instance=ExtResource("3_g3ujk")]
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("2_qaepo")
+[node name="RotationSpeedUpSprite" type="Sprite2D" parent="."]
+texture = ExtResource("3_1xipd")
 
 [node name="SoundBank" type="Node" parent="."]
 script = ExtResource("4_vtf52")
