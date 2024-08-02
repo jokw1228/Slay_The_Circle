@@ -7,7 +7,7 @@ var center_list: Array[Node2D]
 var angular_velocity_list: Array[float]
 
 func _ready():
-	const number_of_centers = 6
+	const number_of_centers = 10
 	const radius_offset = 320
 	const radius_difference = 64
 	

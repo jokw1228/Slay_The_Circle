@@ -3,6 +3,7 @@
 [ext_resource type="Script" path="res://scenes/playingfield/PlayingField.gd" id="1_ed5yp"]
 [ext_resource type="PackedScene" uid="uid://crk2aniu1h5di" path="res://scenes/bombs/StartBomb.tscn" id="2_s84lx"]
 [ext_resource type="PackedScene" uid="uid://cn7ttflmrmpth" path="res://scenes/playingfield/PlayingFieldCamera.tscn" id="2_xhkow"]
+[ext_resource type="PackedScene" uid="uid://csx6yjkvpfqcy" path="res://scenes/background/BackGroundDeSterrennacht.tscn" id="3_0edn4"]
 [ext_resource type="PackedScene" uid="uid://dl4bge564bur" path="res://scenes/playingfield/PlayingFieldUI.tscn" id="3_7mvnn"]
 [ext_resource type="PackedScene" uid="uid://bhe55ocau21ot" path="res://scenes/player/Player.tscn" id="4_u3i3n"]
 [ext_resource type="PackedScene" uid="uid://s264e74phclm" path="res://scenes/playingfield/CircleField.tscn" id="5_1ahyj"]
@@ -14,7 +15,6 @@
 [ext_resource type="Script" path="res://addons/resonate/music_manager/music_stem_resource.gd" id="12_nuc5t"]
 [ext_resource type="AudioStream" uid="uid://c3v8s1j06a2nn" path="res://audio/bgm/slow_bgm.wav" id="13_rx567"]
 [ext_resource type="AudioStream" uid="uid://dl56qa7pijbom" path="res://audio/bgm/fast_bgm.wav" id="14_5nups"]
-[ext_resource type="Texture2D" uid="uid://bcfgnsvgldwp2" path="res://images/tmp_background.png" id="15_o6xhg"]
 
 [sub_resource type="Resource" id="Resource_x54bq"]
 script = ExtResource("8_g3bnd")
@@ -58,6 +58,8 @@ PlayingFieldUI_node = NodePath("PlayingFieldUI")
 Player_node = NodePath("Player")
 CircleField_node = NodePath("CircleField")
 
+[node name="BackGroundDeSterrennacht" parent="." instance=ExtResource("3_0edn4")]
+
 [node name="PlayingFieldCamera" parent="." instance=ExtResource("2_xhkow")]
 
 [node name="Player" parent="." instance=ExtResource("4_u3i3n")]
@@ -76,28 +78,14 @@ script = ExtResource("10_awu3q")
 label = "bgm_PF"
 tracks = Array[ExtResource("11_itom1")]([SubResource("Resource_pw51j"), SubResource("Resource_cxgo6")])
 
-[node name="TempBackground" type="TextureRect" parent="."]
-modulate = Color(1, 1, 1, 0.175)
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -800.0
-offset_top = -800.0
-offset_right = 800.0
-offset_bottom = 800.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("15_o6xhg")
-flip_h = true
-
 [connection signal="game_over" from="." to="PlayingFieldCamera" method="rotation_stop"]
-[connection signal="game_over" from="." to="PlayingFieldCamera" method="gameover_position_transition"]
 [connection signal="game_over" from="." to="PlayingFieldCamera" method="zoom_transition"]
-[connection signal="game_over" from="." to="PlayingFieldUI" method="close_Playing_and_open_Stopped"]
-[connection signal="game_over" from="." to="CircleField" method="create_game_over_effect"]
+[connection signal="game_over" from="." to="PlayingFieldCamera" method="gameover_position_transition"]
 [connection signal="game_over" from="." to="CircleField" method="stop_reverb_effect"]
+[connection signal="game_over" from="." to="CircleField" method="create_game_over_effect"]
+[connection signal="game_over" from="." to="PlayingFieldUI" method="close_Playing_and_open_Stopped"]
 [connection signal="game_ready" from="." to="CircleField" method="create_game_ready_effect"]
 [connection signal="game_start" from="." to="PlayingFieldCamera" method="rotation_reset"]
-[connection signal="game_start" from="." to="PlayingFieldUI" method="close_Stopped_and_open_Playing"]
 [connection signal="game_start" from="." to="CircleField" method="start_reverb_effect"]
+[connection signal="game_start" from="." to="PlayingFieldUI" method="close_Stopped_and_open_Playing"]
 [connection signal="grounded" from="Player" to="." method="_on_player_grounded"]
