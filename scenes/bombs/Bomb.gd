@@ -3,9 +3,9 @@ class_name Bomb
 
 signal player_body_entered()
 
-var Particle_scene: Resource = preload("res://scenes/bombs/bombeffects/Flame.tscn")
-var BombSlayedEffect_scene: Resource = preload("res://scenes/bombs/bombeffects/BombSlayedEffect.tscn")
-var BombExplodedEffect_scene: Resource = preload("res://scenes/bombs/bombeffects/BombExplodedEffect.tscn")
+var Particle_scene: PackedScene = preload("res://scenes/bombs/bombeffects/Flame.tscn")
+var BombSlayedEffect_scene: PackedScene = preload("res://scenes/bombs/bombeffects/BombSlayedEffect.tscn")
+var BombExplodedEffect_scene: PackedScene = preload("res://scenes/bombs/bombeffects/BombExplodedEffect.tscn")
 
 var slayed_direction: Vector2 = Vector2.ZERO
 
