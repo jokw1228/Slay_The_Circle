@@ -1,25 +1,27 @@
-[gd_scene load_steps=8 format=3 uid="uid://cs2ukp0c0vi80"]
+[gd_scene load_steps=9 format=3 uid="uid://cs2ukp0c0vi80"]
 
-[sub_resource type="Gradient" id="Gradient_o24kv"]
+[ext_resource type="Script" path="res://scenes/bombs/bombeffects/Flame.gd" id="1_xtd30"]
+
+[sub_resource type="Gradient" id="Gradient_ukrbu"]
 colors = PackedColorArray(0.117438, 0.117438, 0.117438, 1, 1, 1, 1, 1)
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_mu0ha"]
-gradient = SubResource("Gradient_o24kv")
+gradient = SubResource("Gradient_ukrbu")
 
-[sub_resource type="Gradient" id="Gradient_kcox8"]
+[sub_resource type="Gradient" id="Gradient_gc5yo"]
 colors = PackedColorArray(0, 1, 1, 1, 1, 1, 1, 1)
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_05fx7"]
-gradient = SubResource("Gradient_kcox8")
+gradient = SubResource("Gradient_gc5yo")
 
-[sub_resource type="Curve" id="Curve_lmcw2"]
+[sub_resource type="Curve" id="Curve_8y746"]
 _data = [Vector2(0, 0.757009), 0.0, 0.0, 0, 0, Vector2(0.415282, 0.175568), 0.0, 0.0, 0, 0, Vector2(0.780731, 0.383845), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 4
 
 [sub_resource type="CurveTexture" id="CurveTexture_q6kk3"]
-curve = SubResource("Curve_lmcw2")
+curve = SubResource("Curve_8y746")
 
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_homa5"]
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ke88d"]
 particle_flag_disable_z = true
 emission_shape = 3
 emission_box_extents = Vector3(1, 1, 1)
@@ -39,13 +41,14 @@ collision_bounce = 0.43
 sub_emitter_mode = 3
 sub_emitter_amount_at_collision = 1
 
-[node name="Flame" type="Node2D"]
-
-[node name="flame" type="GPUParticles2D" parent="."]
+[node name="Flame" type="GPUParticles2D"]
 emitting = false
 amount = 30
-process_material = SubResource("ParticleProcessMaterial_homa5")
+process_material = SubResource("ParticleProcessMaterial_ke88d")
 lifetime = 0.3
 one_shot = true
 explosiveness = 0.1
 randomness = 0.18
+script = ExtResource("1_xtd30")
+
+[connection signal="finished" from="." to="." method="_on_finished"]

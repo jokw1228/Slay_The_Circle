@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://dkm0cd66gmgph"]
+[gd_scene load_steps=19 format=3 uid="uid://dkm0cd66gmgph"]
 
 [ext_resource type="PackedScene" uid="uid://bhe55ocau21ot" path="res://scenes/player/Player.tscn" id="1_cqulv"]
 [ext_resource type="Script" path="res://scenes/rooms/RoomTutorial/RoomTutorial.gd" id="1_gg83j"]
@@ -17,12 +17,14 @@
 [ext_resource type="PackedScene" uid="uid://cg0il84hq0n8m" path="res://scenes/warnings/RotationSpeedUpBombWarning.tscn" id="13_usnwu"]
 [ext_resource type="PackedScene" uid="uid://dod3xtkvnfwuq" path="res://scenes/warnings/GameSpeedUpBombWarning.tscn" id="14_egxmf"]
 [ext_resource type="PackedScene" uid="uid://5hmqv8rxk05i" path="res://scenes/bombs/BombLink.tscn" id="15_q0i58"]
+[ext_resource type="PackedScene" uid="uid://csx6yjkvpfqcy" path="res://scenes/background/BackGroundDeSterrennacht.tscn" id="18_qqoh6"]
 
 [node name="RoomTutorial" type="Node2D"]
 script = ExtResource("1_gg83j")
 
-[node name="TutorialBombGenerator" type="Node2D" parent="."]
+[node name="TutorialBombGenerator" type="Node2D" parent="." node_paths=PackedStringArray("Player_node")]
 script = ExtResource("2_1582e")
+Player_node = NodePath("../Player")
 NormalBomb_scene = ExtResource("3_acov2")
 HazardBomb_scene = ExtResource("4_faqaq")
 NumericBomb_scene = ExtResource("5_p27ry")
@@ -37,12 +39,7 @@ RotationSpeedUpBomb_warning_scene = ExtResource("13_usnwu")
 GameSpeedUpBomb_warning_scene = ExtResource("14_egxmf")
 bomb_link = ExtResource("15_q0i58")
 
-[node name="BackGroundGray" type="ColorRect" parent="."]
-offset_left = -584.0
-offset_top = -328.0
-offset_right = 584.0
-offset_bottom = 336.0
-color = Color(0.142256, 0.142256, 0.142256, 1)
+[node name="BackGroundDeSterrennacht" parent="." instance=ExtResource("18_qqoh6")]
 
 [node name="Camera2D" type="Camera2D" parent="."]
 

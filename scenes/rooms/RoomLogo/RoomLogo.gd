@@ -3,13 +3,14 @@ extends Node2D
 var RoomMenu_room = "res://scenes/rooms/RoomMenu/RoomMenu.tscn"
 var RoomTutorial_room = "res://scenes/rooms/RoomTutorial/RoomTutorial.tscn"
 
-@onready var KoreaUniv_node: Sprite2D = $CanvasLayer/KoreaUniv
-@onready var Catdog_node: Sprite2D = $CanvasLayer/Catdog
-@onready var BackGroundBlack_node: ColorRect = $CanvasLayer/BackGroundBlack
-@onready var CircleField_node: CircleField = $CircleField
-@onready var Camera2D_node: Camera2D = $Camera2D
+@export var KoreaUniv_node: Sprite2D
+@export var Catdog_node: Sprite2D
+@export var BackGroundBlack_node: ColorRect
+@export var CircleField_node: CircleField
+@export var Camera2D_node: Camera2D
 
 func _ready():
+	SaveFileManager.load_game()
 	CircleField_node.stop_reverb_effect()
 	
 	await get_tree().create_timer(0.5).timeout
@@ -52,5 +53,8 @@ func _ready():
 	
 	await tween_camera.finished
 	await get_tree().create_timer(0.3).timeout
-	get_tree().change_scene_to_file(RoomTutorial_room)
+	if(!SaveFileManager.is_tutorial_cleared):
+		get_tree().change_scene_to_file(RoomTutorial_room)
+	else:
+		get_tree().change_scene_to_file(RoomMenu_room)
 	#get_tree().change_scene_to_file(RoomMenu_room)

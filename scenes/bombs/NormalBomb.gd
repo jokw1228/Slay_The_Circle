@@ -5,5 +5,3 @@ func slayed():
 	super()
 	
 	SoundManager.play("sfx_Nor_bomb","slay")
-
-

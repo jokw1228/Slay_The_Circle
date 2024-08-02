@@ -8,15 +8,15 @@ signal circlest
 signal hyper
 
 func select_circle():
-	room_menu.select_circle()
+	room_menu.select_stage(0)
 	circle.emit()
 
 func select_circler():
-	room_menu.select_circler()
+	room_menu.select_stage(1)
 	circler.emit()
 
 func select_circlest():
-	room_menu.select_circlest()
+	room_menu.select_stage(2)
 	circlest.emit()
 
 func select_hyper():

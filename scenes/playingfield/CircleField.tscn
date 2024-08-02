@@ -1,6 +1,7 @@
-[gd_scene load_steps=9 format=3 uid="uid://s264e74phclm"]
+[gd_scene load_steps=10 format=3 uid="uid://s264e74phclm"]
 
 [ext_resource type="Script" path="res://scenes/playingfield/CircleField.gd" id="1_8qsbc"]
+[ext_resource type="PackedScene" uid="uid://brlqmxr8es2ba" path="res://scenes/playingfield/CircleFieldReverbEffect.tscn" id="2_6ifv4"]
 [ext_resource type="PackedScene" uid="uid://csd3qsksn85gu" path="res://scenes/playingfield/CircleFieldEffect.tscn" id="2_k4607"]
 [ext_resource type="Shader" path="res://scenes/playingfield/WaveEffect.gdshader" id="3_52ji7"]
 
@@ -92,6 +93,7 @@ _data = {
 collision_layer = 32768
 collision_mask = 0
 script = ExtResource("1_8qsbc")
+CircleFieldReverbEffect_scene = ExtResource("2_6ifv4")
 CircleFieldEffect_scene = ExtResource("2_k4607")
 ReverbEffectTimer_node = NodePath("ReverbEffectTimer")
 BackgroundEffect_node = NodePath("BackGroundEffect")

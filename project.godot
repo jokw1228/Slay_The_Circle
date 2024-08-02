@@ -30,6 +30,7 @@ PlayingFieldInterface="*res://scenes/playingfield/PlayingFieldInterface.gd"
 SoundManager="*res://addons/resonate/sound_manager/sound_manager.gd"
 MusicManager="*res://addons/resonate/music_manager/music_manager.gd"
 Utils="*res://scenes/bombgenerators/Utils.gd"
+SaveFileManager="*res://scenes/savefilemanager/SaveFileManager.gd"
 
 [display]
 
@@ -42,6 +43,10 @@ naming/scene_name_casing=1
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/resonate/plugin.cfg")
+
+[gui]
+
+theme/custom="res://scenes/ui/Theme.tres"
 
 [rendering]
 

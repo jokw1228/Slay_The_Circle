@@ -1,0 +1,6 @@
+[gd_resource type="StyleBoxTexture" load_steps=2 format=3 uid="uid://drsdvl1n33di4"]
+
+[ext_resource type="Texture2D" uid="uid://qhs5qmnvqd55" path="res://scenes/ui/PanelTexture.svg" id="1_ctrnx"]
+
+[resource]
+texture = ExtResource("1_ctrnx")

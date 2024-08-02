@@ -1,1 +1,67 @@
-<svg height="128" width="128" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="2" width="124" height="124" rx="14" fill="#363d52" stroke="#212532" stroke-width="4"/><g transform="scale(.101) translate(122 122)"><g fill="#fff"><path d="M105 673v33q407 354 814 0v-33z"/><path d="m105 673 152 14q12 1 15 14l4 67 132 10 8-61q2-11 15-15h162q13 4 15 15l8 61 132-10 4-67q3-13 15-14l152-14V427q30-39 56-81-35-59-83-108-43 20-82 47-40-37-88-64 7-51 8-102-59-28-123-42-26 43-46 89-49-7-98 0-20-46-46-89-64 14-123 42 1 51 8 102-48 27-88 64-39-27-82-47-48 49-83 108 26 42 56 81zm0 33v39c0 276 813 276 814 0v-39l-134 12-5 69q-2 10-14 13l-162 11q-12 0-16-11l-10-65H446l-10 65q-4 11-16 11l-162-11q-12-3-14-13l-5-69z" fill="#478cbf"/><path d="M483 600c0 34 58 34 58 0v-86c0-34-58-34-58 0z"/><circle cx="725" cy="526" r="90"/><circle cx="299" cy="526" r="90"/></g><g fill="#414042"><circle cx="307" cy="532" r="60"/><circle cx="717" cy="532" r="60"/></g></g></svg>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="108"
+   height="108"
+   viewBox="0 0 28.574999 28.574999"
+   version="1.1"
+   id="svg1"
+   inkscape:version="1.3.2 (091e20e, 2023-11-25, custom)"
+   sodipodi:docname="icon.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="true"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="px"
+     inkscape:zoom="5.9666797"
+     inkscape:cx="37.877012"
+     inkscape:cy="38.04461"
+     inkscape:window-width="1440"
+     inkscape:window-height="830"
+     inkscape:window-x="-6"
+     inkscape:window-y="-6"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs1" />
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <circle
+       style="fill:#ffffff;stroke-width:0.228477"
+       id="path1"
+       cx="14.287499"
+       cy="14.287499"
+       r="4.2333331" />
+    <ellipse
+       style="fill:#ffffff;stroke-width:0.264583"
+       id="path2"
+       cx="14.287499"
+       cy="14.287499"
+       rx="0.79374999"
+       ry="6.3499999" />
+    <ellipse
+       style="fill:#ffffff;stroke-width:0.264583"
+       id="path2-8"
+       cx="14.287499"
+       cy="-14.287499"
+       rx="0.79374999"
+       ry="6.3499999"
+       transform="rotate(90)" />
+    <path
+       id="path1-4"
+       style="fill:#ffffff;stroke-width:0.283808"
+       d="M 14.2875,5.8208331 A 8.4666661,8.4666662 0 0 0 5.8208331,14.2875 8.4666661,8.4666662 0 0 0 14.2875,22.754166 8.4666661,8.4666662 0 0 0 22.754166,14.2875 8.4666661,8.4666662 0 0 0 14.2875,5.8208331 Z m 0,2.1166666 A 6.3499998,6.3499999 0 0 1 20.637499,14.2875 6.3499998,6.3499999 0 0 1 14.2875,20.637499 6.3499998,6.3499999 0 0 1 7.9374997,14.2875 6.3499998,6.3499999 0 0 1 14.2875,7.9374997 Z" />
+  </g>
+</svg>

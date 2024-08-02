@@ -5,7 +5,8 @@ var current_PlayingField_node: PlayingField
 var color = Color(1,1,1,1)
 
 func set_theme_color(themecolor : Color):
-	PlayingFieldInterface.color = themecolor
+	var tween_color: Tween = get_tree().create_tween()
+	tween_color.tween_property(self, "color", themecolor, 0.5)
 
 func get_theme_color() -> Color:
 	return PlayingFieldInterface.color
