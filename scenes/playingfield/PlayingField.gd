@@ -38,19 +38,14 @@ func start_PlayingField():
 		
 		BombGenerator_node = BombGenerator_scene.instantiate()
 		add_child(BombGenerator_node)
+		
+		connect("game_over", Callable(BombGenerator_node, "slay_left_bomb"))
 
 func stop_PlayingField(bomb_position: Vector2):
 	if playing == true:
 		playing = false
 		CircleField_node.set_bomb_position(bomb_position)
 		emit_signal("game_over")
-		#Lefted bombs are slayed
-		for node in get_tree().current_scene.get_children():
-			if node is Bomb:
-				node.queue_free()
-		
-		BombGenerator_node.get_tree().call_group("links", "queue_free")
-		BombGenerator_node.queue_free()
 		
 		PlayingFieldInterface.game_speed_reset()
 		

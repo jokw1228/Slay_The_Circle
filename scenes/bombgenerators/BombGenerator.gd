@@ -138,3 +138,13 @@ func create_bomb_link(bomb1: Bomb, bomb2: Bomb) -> BombLink:
 	link.set_child_bombs(bomb1, bomb2)
 	get_tree().current_scene.call_deferred("add_child", link)
 	return link
+
+
+func slay_left_bomb():
+	for node in get_tree().current_scene.get_children():
+			if node is Bomb or node is Warning:
+				node.queue_free()
+		
+	get_tree().call_group("links", "queue_free")
+	queue_free()
+		
