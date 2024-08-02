@@ -1,14 +1,17 @@
 [gd_scene load_steps=4 format=3 uid="uid://cg0il84hq0n8m"]
 
 [ext_resource type="Script" path="res://scenes/warnings/Warning.gd" id="1_ao6pq"]
-[ext_resource type="Texture2D" uid="uid://d223gdy5myi5w" path="res://images/NormalWarning.png" id="2_rt5lg"]
-[ext_resource type="PackedScene" uid="uid://c8jraovw1mroy" path="res://scenes/warnings/WarningTimer.tscn" id="3_hfmc8"]
+[ext_resource type="PackedScene" uid="uid://dq81owitrvpew" path="res://scenes/bombs/BombTimer.tscn" id="2_4jl87"]
+[ext_resource type="Texture2D" uid="uid://cgn8ysntgw1a2" path="res://images/bomb/sprite_normal.svg" id="3_igl4x"]
 
-[node name="RotationSpeedUpBombWarning" type="Area2D"]
+[node name="RotationSpeedUpBombWarning" type="Node2D"]
+modulate = Color(1, 1, 1, 0.12549)
 script = ExtResource("1_ao6pq")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(0.7, 0.7)
-texture = ExtResource("2_rt5lg")
+[node name="BombTimer" parent="." instance=ExtResource("2_4jl87")]
+fill_mode = 4
 
-[node name="WarningTimer" parent="." instance=ExtResource("3_hfmc8")]
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("3_igl4x")
+
+[connection signal="bomb_timeout" from="BombTimer" to="." method="queue_free"]
