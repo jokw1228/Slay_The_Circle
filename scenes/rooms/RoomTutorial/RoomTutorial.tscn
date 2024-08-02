@@ -1,22 +1,9 @@
-[gd_scene load_steps=19 format=3 uid="uid://dkm0cd66gmgph"]
+[gd_scene load_steps=6 format=3 uid="uid://dkm0cd66gmgph"]
 
 [ext_resource type="PackedScene" uid="uid://bhe55ocau21ot" path="res://scenes/player/Player.tscn" id="1_cqulv"]
 [ext_resource type="Script" path="res://scenes/rooms/RoomTutorial/RoomTutorial.gd" id="1_gg83j"]
 [ext_resource type="PackedScene" uid="uid://s264e74phclm" path="res://scenes/playingfield/CircleField.tscn" id="1_ro01m"]
 [ext_resource type="Script" path="res://scenes/rooms/RoomTutorial/TutorialBombGenerator.gd" id="2_1582e"]
-[ext_resource type="PackedScene" uid="uid://bj78l3upa26ik" path="res://scenes/bombs/NormalBomb.tscn" id="3_acov2"]
-[ext_resource type="PackedScene" uid="uid://cux2tpymcx5ny" path="res://scenes/bombs/HazardBomb.tscn" id="4_faqaq"]
-[ext_resource type="PackedScene" uid="uid://dug1fwwbjaopa" path="res://scenes/bombs/NumericBomb.tscn" id="5_p27ry"]
-[ext_resource type="PackedScene" uid="uid://bd65ne6jxvojv" path="res://scenes/bombs/RotationInversionBomb.tscn" id="6_got42"]
-[ext_resource type="PackedScene" uid="uid://1ohs6nj2dm33" path="res://scenes/bombs/RotationSpeedUpBomb.tscn" id="7_qua5h"]
-[ext_resource type="PackedScene" uid="uid://cr4l7m2i6dxl" path="res://scenes/bombs/GameSpeedUpBomb.tscn" id="8_512oc"]
-[ext_resource type="PackedScene" uid="uid://b88otl67w25a2" path="res://scenes/warnings/NormalBombWarning.tscn" id="9_ehtfd"]
-[ext_resource type="PackedScene" uid="uid://fdhauxo6f7gq" path="res://scenes/warnings/HazardBombWarning.tscn" id="10_4rd30"]
-[ext_resource type="PackedScene" uid="uid://dn8hj3t4klarb" path="res://scenes/warnings/NumericBombWarning.tscn" id="11_h8js6"]
-[ext_resource type="PackedScene" uid="uid://4wbytvc753ff" path="res://scenes/warnings/RotationInversionBombWarning.tscn" id="12_mt4nt"]
-[ext_resource type="PackedScene" uid="uid://cg0il84hq0n8m" path="res://scenes/warnings/RotationSpeedUpBombWarning.tscn" id="13_usnwu"]
-[ext_resource type="PackedScene" uid="uid://dod3xtkvnfwuq" path="res://scenes/warnings/GameSpeedUpBombWarning.tscn" id="14_egxmf"]
-[ext_resource type="PackedScene" uid="uid://5hmqv8rxk05i" path="res://scenes/bombs/BombLink.tscn" id="15_q0i58"]
 [ext_resource type="PackedScene" uid="uid://csx6yjkvpfqcy" path="res://scenes/background/BackGroundDeSterrennacht.tscn" id="18_qqoh6"]
 
 [node name="RoomTutorial" type="Node2D"]
@@ -25,19 +12,6 @@ script = ExtResource("1_gg83j")
 [node name="TutorialBombGenerator" type="Node2D" parent="." node_paths=PackedStringArray("Player_node")]
 script = ExtResource("2_1582e")
 Player_node = NodePath("../Player")
-NormalBomb_scene = ExtResource("3_acov2")
-HazardBomb_scene = ExtResource("4_faqaq")
-NumericBomb_scene = ExtResource("5_p27ry")
-RotationInversionBomb_scene = ExtResource("6_got42")
-RotationSpeedUpBomb_scene = ExtResource("7_qua5h")
-GameSpeedUpBomb_scene = ExtResource("8_512oc")
-Normalbomb_warning_scene = ExtResource("9_ehtfd")
-HazardBomb_warning_scene = ExtResource("10_4rd30")
-NumericBomb_warning_scene = ExtResource("11_h8js6")
-RotationInversionBomb_warning_scene = ExtResource("12_mt4nt")
-RotationSpeedUpBomb_warning_scene = ExtResource("13_usnwu")
-GameSpeedUpBomb_warning_scene = ExtResource("14_egxmf")
-bomb_link = ExtResource("15_q0i58")
 
 [node name="BackGroundDeSterrennacht" parent="." instance=ExtResource("18_qqoh6")]
 
