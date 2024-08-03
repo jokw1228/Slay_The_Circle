@@ -1,9 +1,8 @@
-[gd_scene load_steps=10 format=3 uid="uid://bd65ne6jxvojv"]
+[gd_scene load_steps=9 format=3 uid="uid://bd65ne6jxvojv"]
 
 [ext_resource type="Script" path="res://scenes/bombs/RotationInversionBomb.gd" id="1_u7xat"]
-[ext_resource type="PackedScene" uid="uid://cs2ukp0c0vi80" path="res://scenes/bombs/bombeffects/Flame.tscn" id="2_7qklp"]
 [ext_resource type="PackedScene" uid="uid://dq81owitrvpew" path="res://scenes/bombs/BombTimer.tscn" id="2_ix5n8"]
-[ext_resource type="Texture2D" uid="uid://cw5wu5qajpxdb" path="res://images/rotation_reverse.png" id="3_qnysg"]
+[ext_resource type="Texture2D" uid="uid://df7din20kvgkf" path="res://images/bomb/sprite_rotation_inversion.svg" id="3_5tknd"]
 [ext_resource type="Script" path="res://addons/resonate/sound_manager/sound_bank.gd" id="4_0dp2e"]
 [ext_resource type="Script" path="res://addons/resonate/sound_manager/sound_event_resource.gd" id="5_uvwg5"]
 [ext_resource type="AudioStream" uid="uid://c352772ve0yuk" path="res://audio/sfx/slice_3.wav" id="6_8mxx5"]
@@ -21,15 +20,14 @@ streams = Array[AudioStream]([ExtResource("6_8mxx5")])
 
 [node name="RotationInversionBomb" type="Area2D"]
 script = ExtResource("1_u7xat")
-Particle = ExtResource("2_7qklp")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_kp1xn")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("3_qnysg")
-
 [node name="BombTimer" parent="." instance=ExtResource("2_ix5n8")]
+
+[node name="RotationInversionSprite" type="Sprite2D" parent="."]
+texture = ExtResource("3_5tknd")
 
 [node name="SoundBank" type="Node" parent="."]
 script = ExtResource("4_0dp2e")
@@ -37,8 +35,8 @@ label = "sfx_RI_bomb"
 events = Array[ExtResource("5_uvwg5")]([SubResource("Resource_x4jvg")])
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
-[connection signal="player_body_entered" from="." to="." method="slayed"]
 [connection signal="player_body_entered" from="." to="." method="queue_free"]
+[connection signal="player_body_entered" from="." to="." method="slayed"]
+[connection signal="bomb_timeout" from="BombTimer" to="." method="queue_free"]
 [connection signal="bomb_timeout" from="BombTimer" to="." method="game_over"]
 [connection signal="bomb_timeout" from="BombTimer" to="." method="exploded"]
-[connection signal="bomb_timeout" from="BombTimer" to="." method="queue_free"]

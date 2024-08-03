@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://scenes/warnings/Warning.gd" id="1_pmny7"]
 [ext_resource type="PackedScene" uid="uid://dq81owitrvpew" path="res://scenes/bombs/BombTimer.tscn" id="2_eypwp"]
-[ext_resource type="Texture2D" uid="uid://cgn8ysntgw1a2" path="res://images/bomb/sprite_normal.svg" id="3_2hlhx"]
+[ext_resource type="Texture2D" uid="uid://df7din20kvgkf" path="res://images/bomb/sprite_rotation_inversion.svg" id="3_vucwp"]
 
 [node name="RotationInversionBombWarning" type="Node2D"]
 script = ExtResource("1_pmny7")
@@ -10,7 +10,7 @@ script = ExtResource("1_pmny7")
 [node name="BombTimer" parent="." instance=ExtResource("2_eypwp")]
 fill_mode = 4
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("3_2hlhx")
+[node name="RotationInversionSprite" type="Sprite2D" parent="."]
+texture = ExtResource("3_vucwp")
 
 [connection signal="bomb_timeout" from="BombTimer" to="." method="queue_free"]
