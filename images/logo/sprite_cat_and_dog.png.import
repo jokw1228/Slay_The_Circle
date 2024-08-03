@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dwamqpd1wliun"
-path="res://.godot/imported/sprite_korea_univ.png-a2977fbd86267729803bf61e78177ace.ctex"
+uid="uid://cevkho0emy0yl"
+path="res://.godot/imported/sprite_cat_and_dog.png-68f26a17cc40bf9a00607b48ac4dfb78.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://images/sprite_korea_univ.png"
-dest_files=["res://.godot/imported/sprite_korea_univ.png-a2977fbd86267729803bf61e78177ace.ctex"]
+source_file="res://images/logo/sprite_cat_and_dog.png"
+dest_files=["res://.godot/imported/sprite_cat_and_dog.png-68f26a17cc40bf9a00607b48ac4dfb78.ctex"]
 
 [params]
 

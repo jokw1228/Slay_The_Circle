@@ -56,7 +56,7 @@ reverb_effect_timer = NodePath("PlayingField/CircleField/ReverbEffectTimer")
 [node name="PlayingField" parent="." instance=ExtResource("8_x2ttg")]
 BombGenerator_scene = ExtResource("9_xjnco")
 
-[node name="PlayingFieldUI" parent="PlayingField" index="1"]
+[node name="PlayingFieldUI" parent="PlayingField" index="4"]
 visible = false
 
 [node name="SoundBank" type="Node" parent="."]
