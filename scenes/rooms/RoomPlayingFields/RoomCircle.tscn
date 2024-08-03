@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://ccay8yrm25adk"]
 
 [ext_resource type="PackedScene" uid="uid://dntg6argh8n3n" path="res://scenes/playingfield/PlayingField.tscn" id="1_ms04y"]
-[ext_resource type="PackedScene" uid="uid://b2u2vdsf24koj" path="res://scenes/bombgenerators/CircleBombGenerator.tscn" id="2_0f0p0"]
+[ext_resource type="PackedScene" uid="uid://b2u2vdsf24koj" path="res://scenes/bombgenerators/stagebombgenerator/CircleBombGenerator.tscn" id="2_0f0p0"]
 
 [node name="RoomCircle" type="Node2D"]
 

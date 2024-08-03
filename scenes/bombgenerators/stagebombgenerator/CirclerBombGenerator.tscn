@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://cem0qr76555n0"]
+
+[ext_resource type="Script" path="res://scenes/bombgenerators/stagebombgenerator/CirclerBombGenerator.gd" id="1_ocv0n"]
+
+[node name="CirclerBombGenerator" type="Node2D"]
+script = ExtResource("1_ocv0n")

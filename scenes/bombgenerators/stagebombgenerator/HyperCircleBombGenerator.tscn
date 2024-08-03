@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://dmo3p7bqabg78"]
+
+[ext_resource type="Script" path="res://scenes/bombgenerators/stagebombgenerator/HyperCircleBombGenerator.gd" id="1_x8d0w"]
+
+[node name="HyperCircleBombGenerator" type="Node2D"]
+script = ExtResource("1_x8d0w")

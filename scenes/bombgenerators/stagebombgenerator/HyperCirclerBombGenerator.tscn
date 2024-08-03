@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://crjsdlsihw7w2"]
+
+[ext_resource type="Script" path="res://scenes/bombgenerators/stagebombgenerator/HyperCirclerBombGenerator.gd" id="1_vlrxu"]
+
+[node name="HyperCirclerBombGenerator" type="Node2D"]
+script = ExtResource("1_vlrxu")

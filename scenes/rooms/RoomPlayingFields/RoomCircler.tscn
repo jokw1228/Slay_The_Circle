@@ -1,9 +1,9 @@
 [gd_scene load_steps=3 format=3 uid="uid://bmf6vxoacxub"]
 
 [ext_resource type="PackedScene" uid="uid://dntg6argh8n3n" path="res://scenes/playingfield/PlayingField.tscn" id="1_i2pim"]
-[ext_resource type="PackedScene" uid="uid://ba4gslxaaycwv" path="res://scenes/bombgenerators/testbombgenerators/SekangBombGenerator.tscn" id="2_wsqmb"]
+[ext_resource type="PackedScene" uid="uid://cem0qr76555n0" path="res://scenes/bombgenerators/stagebombgenerator/CirclerBombGenerator.tscn" id="2_nlmm6"]
 
 [node name="RoomCircler" type="Node2D"]
 
 [node name="PlayingField" parent="." instance=ExtResource("1_i2pim")]
-BombGenerator_scene = ExtResource("2_wsqmb")
+BombGenerator_scene = ExtResource("2_nlmm6")
