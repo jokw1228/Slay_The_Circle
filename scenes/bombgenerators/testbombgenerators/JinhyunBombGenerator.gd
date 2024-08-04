@@ -2,7 +2,7 @@ extends BombGenerator
 
 func _ready():
 	await get_tree().create_timer(3.0).timeout
-	await pattern_numeric(5)
+	await pattern_numeric(4)
 	#await pattern_spiral()
 	await pattern_blocking()
 	await pattern_blocking()

@@ -30,10 +30,12 @@ func make_partial_collision_polygon(radian: float):
 	const INNER_OFFSET = 0
 	const OUTER_OFFSET = 32
 	for i in range(NUMBER_OF_POINTS):
-		list.append(Vector2((CIRCLE_FIELD_RADIUS+INNER_OFFSET) * cos((i*(PI/2)/NUMBER_OF_POINTS) + radian), (CIRCLE_FIELD_RADIUS+INNER_OFFSET) * -sin((i*(PI/2)/NUMBER_OF_POINTS) + radian)))
+		list.append(Vector2((CIRCLE_FIELD_RADIUS+INNER_OFFSET) * cos((i*(PI/2)/NUMBER_OF_POINTS) + radian),\
+		(CIRCLE_FIELD_RADIUS+INNER_OFFSET) * -sin((i*(PI/2)/NUMBER_OF_POINTS) + radian)))
 	# make outer edges
 	for i in range(NUMBER_OF_POINTS - 1, -1, -1):
-		list.append(Vector2((CIRCLE_FIELD_RADIUS+OUTER_OFFSET) * cos((i*(PI/2)/NUMBER_OF_POINTS) + radian), (CIRCLE_FIELD_RADIUS+OUTER_OFFSET) * -sin((i*(PI/2)/NUMBER_OF_POINTS) + radian)))
+		list.append(Vector2((CIRCLE_FIELD_RADIUS+OUTER_OFFSET) * cos((i*(PI/2)/NUMBER_OF_POINTS) + radian),\
+		(CIRCLE_FIELD_RADIUS+OUTER_OFFSET) * -sin((i*(PI/2)/NUMBER_OF_POINTS) + radian)))
 	inst.polygon = list
 	add_child(inst)
 
@@ -54,7 +56,7 @@ func _on_reverb_effect_timer_timeout():
 	add_child(inst)
 
 func create_game_over_effect():
-	const time_to_zoom_in = 2.3
+	const time_to_zoom_in = 2
 	
 	const time_to_scale = 0.5
 	const number_of_blinks = 3
@@ -65,13 +67,12 @@ func create_game_over_effect():
 	
 	await get_tree().create_timer(time_to_zoom_in).timeout
 	
-	var bomb_screen_position: Vector2 = Vector2((bomb_position.x + 576) / get_viewport_rect().size.x, (bomb_position.y + 324) / get_viewport_rect().size.y)
-	var animation_player = BackgroundEffect_node.get_node("WaveAnimation")
-	var color_rect = BackgroundEffect_node.get_node("ColorRect")
+	var bomb_screen_position: Vector2 = Vector2((bomb_position.x + 576) / get_viewport_rect().size.x, \
+	(bomb_position.y + 324) / get_viewport_rect().size.y)
+	var animation_player: AnimationPlayer = BackgroundEffect_node.get_node("WaveAnimation")
+	var animation: Animation = animation_player.get_animation("MoveWaveOut")
 	
-	print(get_viewport_rect().size, bomb_position, bomb_screen_position)
-	color_rect.material.set_shader_parameter("center", bomb_screen_position)
-	print(color_rect.material.get_shader_parameter("center"))
+	animation.track_set_key_value(1, 0, bomb_screen_position)
 	animation_player.play("MoveWaveOut")
 	
 	inst.survival_time = time_to_scale + blink_delay * 2 * number_of_blinks + faded_delay
