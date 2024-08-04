@@ -35,6 +35,7 @@ SaveFileManager="*res://scenes/savefilemanager/SaveFileManager.gd"
 [display]
 
 window/stretch/mode="viewport"
+window/handheld/orientation=4
 
 [editor]
 
