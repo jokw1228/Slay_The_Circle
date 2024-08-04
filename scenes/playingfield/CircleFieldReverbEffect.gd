@@ -14,6 +14,9 @@ func _ready():
 	
 	var tween_radius = get_tree().create_tween()
 	tween_radius.tween_property(self, "radius_to_draw", CIRCLE_FIELD_RADIUS + 32, delay)
+	
+	await tween_alpha.finished
+	queue_free()
 
 func _draw():
 	var theme_color: Color = PlayingFieldInterface.get_theme_color()
