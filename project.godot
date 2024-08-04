@@ -49,6 +49,12 @@ enabled=PackedStringArray("res://addons/resonate/plugin.cfg")
 
 theme/custom="res://scenes/ui/Theme.tres"
 
+[importer_defaults]
+
+animation_library={
+"animation/fps": 60.0
+}
+
 [rendering]
 
 renderer/rendering_method="mobile"

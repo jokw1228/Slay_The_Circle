@@ -8,6 +8,7 @@ var RoomTutorial_room = "res://scenes/rooms/RoomTutorial/RoomTutorial.tscn"
 @export var BackGroundBlack_node: ColorRect
 @export var CircleField_node: CircleField
 @export var Camera2D_node: Camera2D
+@export var GameLogo_node: Node2D
 
 func _ready():
 	SaveFileManager.load_game()
@@ -53,6 +54,12 @@ func _ready():
 	
 	await tween_camera.finished
 	await get_tree().create_timer(0.3).timeout
+	
+	var tween_gamelogo: Tween = get_tree().create_tween()
+	tween_gamelogo.tween_property(GameLogo_node, "scale", Vector2(1, 0), 0.08)
+	
+	await tween_gamelogo.finished
+	
 	if(!SaveFileManager.is_tutorial_cleared):
 		get_tree().change_scene_to_file(RoomTutorial_room)
 	else:

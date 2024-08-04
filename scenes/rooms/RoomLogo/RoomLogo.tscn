@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://urb806lifej2"]
+[gd_scene load_steps=10 format=3 uid="uid://urb806lifej2"]
 
 [ext_resource type="Script" path="res://scenes/rooms/RoomLogo/RoomLogo.gd" id="1_84w0l"]
 [ext_resource type="Shader" path="res://scenes/rooms/RoomLogo/KoreaUnivShader.gdshader" id="2_01f0g"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://cevkho0emy0yl" path="res://images/logo/sprite_cat_and_dog.png" id="3_q2osc"]
 [ext_resource type="Shader" path="res://scenes/rooms/RoomLogo/CatdogShader.gdshader" id="4_omaa6"]
 [ext_resource type="PackedScene" uid="uid://s264e74phclm" path="res://scenes/playingfield/CircleField.tscn" id="6_s0thw"]
+[ext_resource type="PackedScene" uid="uid://bk8rdnnhvn2uj" path="res://scenes/gamelogo/GameLogo.tscn" id="7_ch1xr"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_1u3u5"]
 shader = ExtResource("2_01f0g")
@@ -13,13 +14,14 @@ shader = ExtResource("2_01f0g")
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_c8qsl"]
 shader = ExtResource("4_omaa6")
 
-[node name="RoomLogo" type="Node2D" node_paths=PackedStringArray("KoreaUniv_node", "Catdog_node", "BackGroundBlack_node", "CircleField_node", "Camera2D_node")]
+[node name="RoomLogo" type="Node2D" node_paths=PackedStringArray("KoreaUniv_node", "Catdog_node", "BackGroundBlack_node", "CircleField_node", "Camera2D_node", "GameLogo_node")]
 script = ExtResource("1_84w0l")
 KoreaUniv_node = NodePath("CanvasLayer/KoreaUniv")
 Catdog_node = NodePath("CanvasLayer/Catdog")
 BackGroundBlack_node = NodePath("CanvasLayer/BackGroundBlack")
 CircleField_node = NodePath("CircleField")
 Camera2D_node = NodePath("Camera2D")
+GameLogo_node = NodePath("GameLogo")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -55,3 +57,5 @@ color = Color(0.142256, 0.142256, 0.142256, 1)
 zoom = Vector2(2.5, 2.5)
 
 [node name="CircleField" parent="." instance=ExtResource("6_s0thw")]
+
+[node name="GameLogo" parent="." instance=ExtResource("7_ch1xr")]
