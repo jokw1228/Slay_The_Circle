@@ -41,3 +41,9 @@ func gameover_camera(x):
 	
 func get_player_position()->Vector2:
 	return get_PlayingField_node().Player_node.now_position()
+
+func get_playing_time():
+	return get_PlayingField_node().get_playing_time()
+
+func add_playing_time(time_to_add: float):
+	get_PlayingField_node().add_playing_time(time_to_add)

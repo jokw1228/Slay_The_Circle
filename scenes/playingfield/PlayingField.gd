@@ -80,3 +80,10 @@ func rotation_stop():
 
 func merge_transition(x):
 	PlayingFieldCamera_node.add_transition(x)
+
+func get_playing_time() -> float:
+	return playing_time
+
+func add_playing_time(time_to_add: float):
+	if playing == true:
+		playing_time += time_to_add
