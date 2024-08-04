@@ -10,8 +10,8 @@ BackGroundArcDrawer_scene = ExtResource("2_s77qa")
 
 [node name="BackGroundGray" type="ColorRect" parent="."]
 offset_left = -876.0
-offset_top = -498.0
+offset_top = -876.0
 offset_right = 876.0
-offset_bottom = 498.0
+offset_bottom = 876.0
 mouse_filter = 2
 color = Color(0.142256, 0.142256, 0.142256, 1)
