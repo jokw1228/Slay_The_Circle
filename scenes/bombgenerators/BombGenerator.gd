@@ -19,7 +19,7 @@ var bomb_link :PackedScene = preload("res://scenes/bombs/BombLink.tscn")
 
 
 func add_bomb(bomb_instance: Bomb, waiting_time: float):
-	Utils.timer(waiting_time)
+	await Utils.timer(waiting_time)
 	self.call_deferred("add_child", bomb_instance)
 
 
