@@ -19,8 +19,8 @@ var bomb_link :PackedScene = preload("res://scenes/bombs/BombLink.tscn")
 
 
 func add_bomb(bomb_instance: Bomb, waiting_time: float):
-	await get_tree().create_timer(waiting_time).timeout
-	get_tree().current_scene.call_deferred("add_child", bomb_instance)
+	Utils.timer(waiting_time)
+	self.call_deferred("add_child", bomb_instance)
 
 
 func create_normal_bomb(bomb_position: Vector2, warning_time: float, bomb_time: float) -> NormalBomb:
@@ -33,7 +33,7 @@ func create_normal_bomb(bomb_position: Vector2, warning_time: float, bomb_time: 
 	bomb_inst.get_node("BombTimer").set_time = bomb_time
 	warning_inst.get_node("BombTimer").set_time = warning_time
 	
-	get_tree().current_scene.call_deferred("add_child", warning_inst)
+	self.call_deferred("add_child", warning_inst)
 	Utils.attach_node(bomb_inst, warning_inst)
 	add_bomb(bomb_inst, warning_time)
 	return bomb_inst
@@ -49,7 +49,7 @@ func create_hazard_bomb(bomb_position: Vector2, warning_time: float, bomb_time: 
 	bomb_inst.get_node("BombTimer").set_time = bomb_time
 	warning_inst.get_node("BombTimer").set_time = warning_time
 	
-	get_tree().current_scene.call_deferred("add_child", warning_inst)
+	self.call_deferred("add_child", warning_inst)
 	Utils.attach_node(bomb_inst, warning_inst)
 	add_bomb(bomb_inst, warning_time)
 	return bomb_inst
@@ -68,7 +68,7 @@ func create_numeric_bomb(bomb_position: Vector2, warning_time: float, bomb_time:
 	bomb_inst.id = bomb_id
 	warning_inst.get_node("BombID").text = str(bomb_id)
 	
-	get_tree().current_scene.call_deferred("add_child", warning_inst)
+	self.call_deferred("add_child", warning_inst)
 	Utils.attach_node(bomb_inst, warning_inst)
 	add_bomb(bomb_inst, warning_time)
 	return bomb_inst
@@ -84,7 +84,7 @@ func create_rotationinversion_bomb(bomb_position: Vector2, warning_time: float, 
 	bomb_inst.get_node("BombTimer").set_time = bomb_time
 	warning_inst.get_node("BombTimer").set_time = warning_time
 	
-	get_tree().current_scene.call_deferred("add_child", warning_inst)
+	self.call_deferred("add_child", warning_inst)
 	Utils.attach_node(bomb_inst, warning_inst)
 	add_bomb(bomb_inst, warning_time)
 	return bomb_inst
@@ -102,7 +102,7 @@ func create_rotationspeedup_bomb(bomb_position: Vector2, warning_time: float, bo
 	
 	bomb_inst.rotation_speed_up_value = speed_up_value
 	
-	get_tree().current_scene.call_deferred("add_child", warning_inst)
+	self.call_deferred("add_child", warning_inst)
 	Utils.attach_node(bomb_inst, warning_inst)
 	add_bomb(bomb_inst, warning_time)
 	return bomb_inst
@@ -120,7 +120,7 @@ func create_gamespeedup_bomb(bomb_position: Vector2, warning_time: float, bomb_t
 	
 	bomb_inst.game_speed_up_value = speed_up_value
 	
-	get_tree().current_scene.call_deferred("add_child", warning_inst)
+	self.call_deferred("add_child", warning_inst)
 	Utils.attach_node(bomb_inst, warning_inst)
 	add_bomb(bomb_inst, warning_time)
 	return bomb_inst
@@ -129,15 +129,15 @@ func create_gamespeedup_bomb(bomb_position: Vector2, warning_time: float, bomb_t
 func create_bomb_link(bomb1: Bomb, bomb2: Bomb) -> BombLink:
 	var link = bomb_link.instantiate()
 	link.set_child_bombs(bomb1, bomb2)
-	get_tree().current_scene.call_deferred("add_child", link)
+	self.call_deferred("add_child", link)
 	return link
 
 
 func slay_left_bomb():
-	for node in get_tree().current_scene.get_children():
-			if node is Bomb or node is Warning:
-				node.queue_free()
+	#for node in get_tree().current_scene.get_children():
+	#		if node is Bomb or node is Warning:
+	#			node.queue_free()
 		
-	get_tree().call_group("links", "queue_free")
+	#get_tree().call_group("links", "queue_free")
 	queue_free()
 
