@@ -271,7 +271,7 @@ offset_top = 517.0
 offset_right = 1222.0
 offset_bottom = 607.0
 
-[node name="Value" parent="UIContainerSkewed/Start" index="3"]
+[node name="Value" parent="UIContainerSkewed/Start" index="4"]
 text = "START"
 
 [connection signal="pressed" from="UIContainerSkewed/Start" to="." method="start_stage"]
