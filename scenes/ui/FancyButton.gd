@@ -19,7 +19,7 @@ func _on_button_pressed():
 
 func _on_timer_timeout():
 	var new_effect: Panel = %Effect.duplicate()
-	add_child(new_effect)
+	%EffectHolder.add_child(new_effect)
 	new_effect.visible = true
 	Utils.tween().set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_QUAD)\
 		.tween_property(new_effect, "modulate", Color(255, 255, 255, 0), 0.5)
