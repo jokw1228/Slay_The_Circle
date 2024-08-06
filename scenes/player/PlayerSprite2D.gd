@@ -6,6 +6,10 @@ extends AnimatedSprite2D
 var ready_to_shoot: bool = false
 var ready_to_land: bool = false
 
+func _process(_delta):
+	var theme_color: Color = PlayingFieldInterface.get_theme_color()
+	modulate = theme_color
+
 func _on_player_grounded():
 	offset.x = -32
 	play("laser_landing")

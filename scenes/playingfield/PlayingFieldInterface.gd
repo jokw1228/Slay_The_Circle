@@ -54,7 +54,7 @@ func game_speed_reset():
 func gameover_camera(x):
 	get_PlayingField_node().merge_transition(x)
 	
-func get_player_position()->Vector2:
+func get_player_position() -> Vector2:
 	return get_PlayingField_node().Player_node.now_position()
 
 func get_playing_time():
