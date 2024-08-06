@@ -5,6 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://df7din20kvgkf" path="res://images/bomb/sprite_rotation_inversion.svg" id="3_vucwp"]
 
 [node name="RotationInversionBombWarning" type="Node2D"]
+modulate = Color(1, 1, 1, 0.12549)
 script = ExtResource("1_pmny7")
 
 [node name="BombTimer" parent="." instance=ExtResource("2_eypwp")]
