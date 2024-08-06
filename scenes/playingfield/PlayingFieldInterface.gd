@@ -2,10 +2,12 @@ extends Node2D
 #class_name PlayingFieldInterface
 
 var current_PlayingField_node: PlayingField
-var theme_color = Color.WHITE
+
+var theme_color: Color = Color.WHITE
+var theme_bright: float = 0.0 # [0.0, 1.0]
 
 var tween_theme_color: Tween
-func set_theme_color(theme_color_to_set : Color):
+func set_theme_color(theme_color_to_set: Color):
 	if tween_theme_color != null:
 		tween_theme_color.kill()
 	tween_theme_color = get_tree().create_tween()
@@ -13,6 +15,16 @@ func set_theme_color(theme_color_to_set : Color):
 
 func get_theme_color() -> Color:
 	return PlayingFieldInterface.theme_color
+
+var tween_theme_bright: Tween
+func set_theme_bright(theme_bright_to_set: float):
+	if tween_theme_bright != null:
+		tween_theme_bright.kill()
+	tween_theme_bright = get_tree().create_tween()
+	tween_theme_bright.tween_property(self, "theme_bright", theme_bright_to_set, 0.5)
+
+func get_theme_bright() -> float:
+	return theme_bright
 
 func get_PlayingField_node() -> PlayingField:
 	return current_PlayingField_node

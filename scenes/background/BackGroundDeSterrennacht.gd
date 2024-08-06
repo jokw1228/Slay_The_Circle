@@ -37,7 +37,10 @@ func _ready():
 
 func _process(delta):
 	var theme_color: Color = PlayingFieldInterface.get_theme_color()
-	BackGroundGray_node.color = Color(theme_color.r * 0.14, theme_color.g * 0.14, theme_color.b * 0.14, 1.0)
+	var theme_bright: float = PlayingFieldInterface.get_theme_bright()
+	
+	const base = 0.14
+	BackGroundGray_node.color = Color(theme_color.r * base + (1.0 - theme_color.r * base) * theme_bright, theme_color.g * base + (1.0 - theme_color.g * base) * theme_bright, theme_color.b * base + (1.0 - theme_color.b * base) * theme_bright, 1.0)
 	
 	for index: int in range(center_list.size()):
 		center_list[index].rotate(delta * angular_velocity_list[index])
