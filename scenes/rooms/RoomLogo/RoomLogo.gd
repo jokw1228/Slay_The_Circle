@@ -60,8 +60,6 @@ func _ready():
 	
 	await tween_gamelogo.finished
 	
-	get_tree().change_scene_to_file(RoomTutorial_room)
-	
 	if(!SaveFileManager.is_tutorial_cleared):
 		get_tree().change_scene_to_file(RoomTutorial_room)
 	else:
