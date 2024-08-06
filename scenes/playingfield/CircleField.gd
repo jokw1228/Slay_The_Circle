@@ -2,7 +2,6 @@ extends StaticBody2D
 class_name CircleField
 
 const CIRCLE_FIELD_RADIUS = 256
-var PlayingFieldColor = PlayingFieldInterface.get_theme_color()
 
 @export var CircleFieldReverbEffect_scene: PackedScene
 @export var CircleFieldEffect_scene: PackedScene
@@ -39,12 +38,10 @@ func make_partial_collision_polygon(radian: float):
 	inst.polygon = list
 	add_child(inst)
 
-func _process(_delta):
-	PlayingFieldColor = PlayingFieldInterface.get_theme_color()
-
 func _draw():
-	draw_arc(position, CIRCLE_FIELD_RADIUS, 0, 2 * PI, 1024, PlayingFieldColor, 8.0, true)
-
+	var theme_color: Color = PlayingFieldInterface.get_theme_color()
+	draw_arc(position, CIRCLE_FIELD_RADIUS, 0, 2 * PI, 1024, theme_color, 8.0, true)
+	
 func start_reverb_effect():
 	ReverbEffectTimer_node.start()
 

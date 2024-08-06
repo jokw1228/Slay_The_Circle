@@ -11,7 +11,7 @@ func _draw():
 	
 	const base = 0.2
 	var bright: float = (1.0 - base) * theme_bright
-	var arc_color: Color = Color(theme_color.r * base + bright, theme_color.g * base + bright, theme_color.b * base + bright,1)
+	var arc_color: Color = Color(theme_color.r * base + bright, theme_color.g * base + bright, theme_color.b * base + bright, 1)
 	
 	draw_arc(Vector2.ZERO, radius, 0, radian, 64, arc_color, arc_width, true)
 	draw_circle(Vector2(radius, 0), arc_width / 2.0, arc_color)
