@@ -46,9 +46,9 @@ texture = ExtResource("3_q2osc")
 
 [node name="BackGroundGray" type="ColorRect" parent="."]
 offset_left = -584.0
-offset_top = -328.0
+offset_top = -298.0
 offset_right = 584.0
-offset_bottom = 336.0
+offset_bottom = 366.0
 color = Color(0.142256, 0.142256, 0.142256, 1)
 
 [node name="Camera2D" type="Camera2D" parent="."]
