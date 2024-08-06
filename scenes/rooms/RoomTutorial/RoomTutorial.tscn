@@ -1,17 +1,24 @@
-[gd_scene load_steps=6 format=3 uid="uid://dkm0cd66gmgph"]
+[gd_scene load_steps=8 format=3 uid="uid://dkm0cd66gmgph"]
 
 [ext_resource type="PackedScene" uid="uid://bhe55ocau21ot" path="res://scenes/player/Player.tscn" id="1_cqulv"]
 [ext_resource type="Script" path="res://scenes/rooms/RoomTutorial/RoomTutorial.gd" id="1_gg83j"]
 [ext_resource type="PackedScene" uid="uid://s264e74phclm" path="res://scenes/playingfield/CircleField.tscn" id="1_ro01m"]
 [ext_resource type="Script" path="res://scenes/rooms/RoomTutorial/TutorialBombGenerator.gd" id="2_1582e"]
+[ext_resource type="FontFile" uid="uid://bn71j2rajnbrn" path="res://fonts/bump-it-up.ttf" id="6_go8x2"]
 [ext_resource type="PackedScene" uid="uid://csx6yjkvpfqcy" path="res://scenes/background/BackGroundDeSterrennacht.tscn" id="18_qqoh6"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_enhww"]
+font = ExtResource("6_go8x2")
+font_size = 64
+shadow_size = 2
 
 [node name="RoomTutorial" type="Node2D"]
 script = ExtResource("1_gg83j")
 
-[node name="TutorialBombGenerator" type="Node2D" parent="." node_paths=PackedStringArray("Player_node")]
+[node name="TutorialBombGenerator" type="Node2D" parent="." node_paths=PackedStringArray("Player_node", "tutorialtext")]
 script = ExtResource("2_1582e")
 Player_node = NodePath("../Player")
+tutorialtext = NodePath("../Tutorial")
 
 [node name="BackGroundDeSterrennacht" parent="." instance=ExtResource("18_qqoh6")]
 
@@ -20,5 +27,17 @@ Player_node = NodePath("../Player")
 [node name="Player" parent="." instance=ExtResource("1_cqulv")]
 
 [node name="CircleField" parent="." instance=ExtResource("1_ro01m")]
+
+[node name="Tutorial" type="Label" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(284, 40)
+text = "Tutorial"
+label_settings = SubResource("LabelSettings_enhww")
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [connection signal="tutorial_end" from="TutorialBombGenerator" to="." method="_on_tutorial_bomb_generator_tutorial_end"]
