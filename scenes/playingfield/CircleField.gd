@@ -41,7 +41,10 @@ func make_partial_collision_polygon(radian: float):
 func _draw():
 	var theme_color: Color = PlayingFieldInterface.get_theme_color()
 	draw_arc(position, CIRCLE_FIELD_RADIUS, 0, 2 * PI, 1024, theme_color, 8.0, true)
-	
+
+func _process(_delta):
+	queue_redraw()
+
 func start_reverb_effect():
 	ReverbEffectTimer_node.start()
 
