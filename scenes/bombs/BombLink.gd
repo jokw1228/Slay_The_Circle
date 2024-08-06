@@ -88,8 +88,8 @@ func _draw():
 						pos_1to2 + front + front, pos_1to2 + front + left, pos_1to2 + left]
 		points_2to1 = [pos_2to1 - front, pos_2to1 - right, pos_2to1 - front - right,
 						pos_2to1 - front - front, pos_2to1 - front - left, pos_2to1 - left]
-		draw_colored_polygon(points_1to2, Color.DEEP_SKY_BLUE)
-		draw_colored_polygon(points_2to1, Color.DEEP_SKY_BLUE)
+		draw_colored_polygon(points_1to2, Color(1,1,1,0.2))
+		draw_colored_polygon(points_2to1, Color(1,1,1,0.2))
 		
 		d += Size * 2
 		pos_1to2 += front * 2
