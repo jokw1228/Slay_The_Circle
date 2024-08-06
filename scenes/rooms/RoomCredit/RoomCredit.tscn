@@ -1,14 +1,14 @@
 [gd_scene load_steps=4 format=3 uid="uid://c0s4jvu7qncps"]
 
-[ext_resource type="Script" path="res://scenes/rooms/CreditRoom/CreditRoom.gd" id="1_5m0yp"]
-[ext_resource type="Texture2D" uid="uid://cpd50aakmwjtm" path="res://images/creditroom/CreditRoom.svg" id="2_vbluf"]
+[ext_resource type="Script" path="res://scenes/rooms/RoomCredit/RoomCredit.gd" id="1_axwsh"]
+[ext_resource type="Texture2D" uid="uid://cpd50aakmwjtm" path="res://images/creditroom/CreditRoom.svg" id="2_f4n2x"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_68kj1"]
 
-[node name="CreditRoom" type="Control" node_paths=PackedStringArray("Background_node", "GameLogo", "CreditText")]
+[node name="RoomCredit" type="Control" node_paths=PackedStringArray("Background_node", "GameLogo", "CreditText")]
 layout_mode = 3
 anchors_preset = 0
-script = ExtResource("1_5m0yp")
+script = ExtResource("1_axwsh")
 Background_node = NodePath("CanvasLayer/CreditBackground")
 GameLogo = NodePath("CanvasLayer/GameLogo")
 CreditText = NodePath("CanvasLayer/CreditText")
@@ -18,7 +18,7 @@ CreditText = NodePath("CanvasLayer/CreditText")
 [node name="CreditBackground" type="Sprite2D" parent="CanvasLayer"]
 position = Vector2(574.143, 329)
 scale = Vector2(0.867851, 0.702477)
-texture = ExtResource("2_vbluf")
+texture = ExtResource("2_f4n2x")
 
 [node name="CreditText" type="Label" parent="CanvasLayer"]
 offset_left = 263.0
