@@ -2,7 +2,7 @@ extends Node2D
 #class_name PlayingFieldInterface
 
 var current_PlayingField_node: PlayingField
-var theme_color = Color(1,1,1,1)
+var theme_color = Color.WHITE
 
 var tween_theme_color: Tween
 func set_theme_color(theme_color_to_set : Color):

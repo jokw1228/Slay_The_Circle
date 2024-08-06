@@ -3,6 +3,8 @@ class_name BackGroundDeSterrennacht
 
 @export var BackGroundArcDrawer_scene: PackedScene
 
+@export var BackGroundGray_node: ColorRect
+
 var center_list: Array[Node2D]
 var angular_velocity_list: Array[float]
 
@@ -34,5 +36,8 @@ func _ready():
 
 
 func _process(delta):
+	var theme_color: Color = PlayingFieldInterface.get_theme_color()
+	BackGroundGray_node.color = Color(theme_color.r * 0.14, theme_color.g * 0.14, theme_color.b * 0.14, 1.0)
+	
 	for index: int in range(center_list.size()):
 		center_list[index].rotate(delta * angular_velocity_list[index])
