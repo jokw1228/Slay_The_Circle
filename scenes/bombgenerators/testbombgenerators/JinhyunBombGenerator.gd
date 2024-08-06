@@ -14,8 +14,6 @@ func _ready():
 	#await pattern_rotation(6)
 	#await pattern_timing()
 	#await simple_effect()
-	
-	super()
 
 func pattern_numeric(num: int):
 	var player_position: Vector2 = PlayingFieldInterface.get_player_position()

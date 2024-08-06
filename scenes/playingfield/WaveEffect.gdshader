@@ -16,9 +16,9 @@ void fragment() {
 	
 	vec2 disp = normalize(scaledUV - center) * force * mask;
 	vec4 color = texture(SCREEN_TEXTURE, SCREEN_UV - disp);
-	color.r = texture(SCREEN_TEXTURE,vec2(SCREEN_UV.x + offset, SCREEN_UV.y) - disp).r;
-	color.g = texture(SCREEN_TEXTURE,SCREEN_UV - disp).g;
-	color.b = texture(SCREEN_TEXTURE,vec2(SCREEN_UV.x - offset, SCREEN_UV.y) - disp).b;
+	//color.r = texture(SCREEN_TEXTURE,vec2(SCREEN_UV.x + offset, SCREEN_UV.y) - disp).r;
+	//color.g = texture(SCREEN_TEXTURE,SCREEN_UV - disp).g;
+	//color.b = texture(SCREEN_TEXTURE,vec2(SCREEN_UV.x - offset, SCREEN_UV.y) - disp).b;
 	
 	COLOR = color;
 }
