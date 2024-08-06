@@ -1,0 +1,58 @@
+[gd_scene load_steps=4 format=3 uid="uid://c0s4jvu7qncps"]
+
+[ext_resource type="Script" path="res://scenes/rooms/CreditRoom/CreditRoom.gd" id="1_5m0yp"]
+[ext_resource type="Texture2D" uid="uid://cpd50aakmwjtm" path="res://images/creditroom/CreditRoom.svg" id="2_vbluf"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_68kj1"]
+
+[node name="CreditRoom" type="Control" node_paths=PackedStringArray("Background_node", "GameLogo", "CreditText")]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_5m0yp")
+Background_node = NodePath("CanvasLayer/CreditBackground")
+GameLogo = NodePath("CanvasLayer/GameLogo")
+CreditText = NodePath("CanvasLayer/CreditText")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="CreditBackground" type="Sprite2D" parent="CanvasLayer"]
+position = Vector2(574.143, 329)
+scale = Vector2(0.867851, 0.702477)
+texture = ExtResource("2_vbluf")
+
+[node name="CreditText" type="Label" parent="CanvasLayer"]
+offset_left = 263.0
+offset_top = 164.0
+offset_right = 962.0
+offset_bottom = 397.0
+text = "Credit Text
+12
+34
+45
+56
+한국어도 되지만 글꼴 적용이
+안되네 인생 그냥
+영어를 사용하자
+We need to use
+English!!!!"
+label_settings = SubResource("LabelSettings_68kj1")
+horizontal_alignment = 1
+
+[node name="GameLogo" type="Label" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 203.0
+offset_top = 45.0
+offset_right = -420.0
+offset_bottom = -544.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.53467, 1.53467)
+text = "Slay The Circle"
+horizontal_alignment = 1
+
+[node name="CharacterImage" type="Sprite2D" parent="CanvasLayer"]
+
+[connection signal="credit_on" from="." to="." method="_on_credit_on"]
+[connection signal="credit_reset" from="." to="." method="_on_credit_reset"]

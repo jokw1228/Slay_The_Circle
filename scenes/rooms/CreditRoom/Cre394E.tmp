@@ -1,0 +1,46 @@
+[gd_scene load_steps=3 format=3 uid="uid://c0s4jvu7qncps"]
+
+[ext_resource type="Script" path="res://scenes/rooms/CreditRoom/CreditRoom.gd" id="1_5m0yp"]
+[ext_resource type="Texture2D" uid="uid://cpd50aakmwjtm" path="res://images/creditroom/CreditRoom.svg" id="2_vbluf"]
+
+[node name="CreditRoom" type="Node2D"]
+script = ExtResource("1_5m0yp")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="CreditBackground" type="Sprite2D" parent="CanvasLayer"]
+position = Vector2(585.287, 329.079)
+scale = Vector2(0.857141, 0.702477)
+texture = ExtResource("2_vbluf")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer"]
+offset_left = 220.0
+offset_top = 51.0
+offset_right = 973.0
+offset_bottom = 555.0
+text = "Credit
+1
+2
+3
+4
+5
+6
+
+78
+
+8
+89
+34
+34
+45
+65
+7
+7
+67
+24
+234
+234
+234
+"
+
+[connection signal="credit_on" from="." to="." method="_on_credit_on"]
