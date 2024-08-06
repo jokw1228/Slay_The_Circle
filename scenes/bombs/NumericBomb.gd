@@ -21,7 +21,7 @@ func check_for_lower_value_bomb():
 		no_lower_value_bomb_exists.emit()
 
 func has_smaller_id_numeric_bomb():
-	for bomb in get_tree().current_scene.get_children():
+	for bomb in get_tree().get_nodes_in_group("group_numeric"):
 		if bomb is NumericBomb and bomb.id < id:
 			return true
 	return false
