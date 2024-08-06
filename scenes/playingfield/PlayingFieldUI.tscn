@@ -1,43 +1,21 @@
-[gd_scene load_steps=9 format=3 uid="uid://dl4bge564bur"]
+[gd_scene load_steps=5 format=3 uid="uid://dl4bge564bur"]
 
 [ext_resource type="Script" path="res://scenes/playingfield/PlayingFieldUI.gd" id="1_4jlcl"]
-[ext_resource type="FontFile" uid="uid://bn71j2rajnbrn" path="res://fonts/bump-it-up.ttf" id="2_ul78b"]
-[ext_resource type="PackedScene" uid="uid://bk6056kfjvjk4" path="res://scenes/playingfield/BackButton.tscn" id="3_x2rh8"]
+[ext_resource type="Texture2D" uid="uid://7ed2eanqanvm" path="res://scenes/ui/ColoredPanelTexture.svg" id="2_6hhks"]
+[ext_resource type="PackedScene" uid="uid://dp0cdsfw5ylxj" path="res://scenes/ui/FancyButton.tscn" id="3_vlemy"]
 
-[sub_resource type="LabelSettings" id="LabelSettings_rkghr"]
-font = ExtResource("2_ul78b")
-font_size = 32
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_gr0gd"]
+texture = ExtResource("2_6hhks")
+modulate_color = Color(0.913725, 0.12549, 0.12549, 1)
 
-[sub_resource type="LabelSettings" id="LabelSettings_v6pxw"]
-font = ExtResource("2_ul78b")
-font_size = 32
-
-[sub_resource type="LabelSettings" id="LabelSettings_w4pgt"]
-font = ExtResource("2_ul78b")
-font_size = 64
-
-[sub_resource type="LabelSettings" id="LabelSettings_ti1d4"]
-font = ExtResource("2_ul78b")
-font_size = 24
-
-[sub_resource type="LabelSettings" id="LabelSettings_5huar"]
-font = ExtResource("2_ul78b")
-font_size = 32
-
-[node name="PlayingFieldUI" type="CanvasLayer" node_paths=PackedStringArray("Best_node", "Time_node", "StoppedRight_node", "StoppedLeft_node", "NewRecord_node", "StoppedUp_node", "BackToMenu_node", "Seconds_node", "Milliseconds_node", "Last_Seconds_node", "Last_Milliseconds_node", "Gameover_node")]
+[node name="PlayingFieldUI" type="CanvasLayer" node_paths=PackedStringArray("Best_node", "Time_node", "Seconds_node", "Milliseconds_node", "Last_Seconds_node", "Last_Milliseconds_node")]
 script = ExtResource("1_4jlcl")
 Best_node = NodePath("Ingame/Best")
 Time_node = NodePath("Ingame/Time")
-StoppedRight_node = NodePath("StoppedRight")
-StoppedLeft_node = NodePath("StoppedLeft")
-NewRecord_node = NodePath("NewRecord")
-StoppedUp_node = NodePath("StoppedUp")
-BackToMenu_node = NodePath("BackToMenu")
 Seconds_node = NodePath("Ingame/Time/HBoxContainer/Label2")
 Milliseconds_node = NodePath("Ingame/Time/HBoxContainer/Label3")
-Last_Seconds_node = NodePath("StoppedRight/StoppedRightSkew/LastSeconds")
-Last_Milliseconds_node = NodePath("StoppedRight/StoppedRightSkew/LastMilliseconds")
-Gameover_node = NodePath("StoppedLeft/StoppedLeftSkew/Gameover")
+Last_Seconds_node = NodePath("CanvasLayerSkewed/PanelScore/HBoxContainer/Label2")
+Last_Milliseconds_node = NodePath("CanvasLayerSkewed/PanelScore/HBoxContainer/Label3")
 
 [node name="Ingame" type="Control" parent="."]
 layout_mode = 3
@@ -134,209 +112,138 @@ theme_override_font_sizes/font_size = 24
 text = ".34"
 horizontal_alignment = 2
 
-[node name="Playing" type="Node2D" parent="."]
+[node name="CanvasLayerSkewed" type="CanvasLayer" parent="."]
+scale = Vector2(1, 1.03078)
+transform = Transform2D(1, 0, -0.25, 1, 0, 0)
 
-[node name="PlayingSkew" type="Node2D" parent="Playing"]
-visible = false
-skew = 0.261799
-
-[node name="BEST" type="Label" parent="Playing/PlayingSkew"]
-visible = false
-offset_left = 32.0
-offset_top = 32.0
-offset_right = 198.0
-offset_bottom = 72.0
-text = "BEST: "
-label_settings = SubResource("LabelSettings_rkghr")
-
-[node name="TIME" type="Label" parent="Playing/PlayingSkew"]
-offset_left = 672.0
-offset_top = 32.0
-offset_right = 812.0
-offset_bottom = 72.0
-text = "TIME"
-label_settings = SubResource("LabelSettings_v6pxw")
-
-[node name="Seconds" type="Label" parent="Playing/PlayingSkew"]
-offset_left = 832.0
-offset_top = 24.0
-offset_right = 1038.0
-offset_bottom = 104.0
-text = "0"
-label_settings = SubResource("LabelSettings_w4pgt")
-horizontal_alignment = 2
-
-[node name="Milliseconds" type="Label" parent="Playing/PlayingSkew"]
-offset_left = 1040.0
-offset_top = 64.0
-offset_right = 1111.0
-offset_bottom = 94.0
-text = ":0"
-label_settings = SubResource("LabelSettings_ti1d4")
-
-[node name="StoppedLeft" type="Node2D" parent="."]
-
-[node name="StoppedLeftSkew" type="Node2D" parent="StoppedLeft"]
-skew = 0.261799
-
-[node name="GameoverRect" type="ColorRect" parent="StoppedLeft/StoppedLeftSkew"]
-offset_left = -15.1422
-offset_top = 208.091
-offset_right = 753.858
-offset_bottom = 365.091
+[node name="PanelGameOver" type="Panel" parent="CanvasLayerSkewed"]
+unique_name_in_owner = true
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = -40.75
+offset_top = -164.0
+offset_right = 729.25
+offset_bottom = -15.0
+grow_vertical = 2
 mouse_filter = 2
-color = Color(0, 0, 0, 0.478431)
 
-[node name="GameoverRectShadow" type="ColorRect" parent="StoppedLeft/StoppedLeftSkew"]
-offset_left = -15.0
+[node name="LabelGameOver" type="Label" parent="CanvasLayerSkewed/PanelGameOver"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -540.675
+offset_top = -30.0
+offset_right = -116.675
+offset_bottom = 30.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_font_sizes/font_size = 48
+text = "GAMEOVER"
+
+[node name="PanelScore" type="Panel" parent="CanvasLayerSkewed"]
+unique_name_in_owner = true
+offset_left = 653.5
 offset_top = 344.0
-offset_right = 754.0
-offset_bottom = 365.0
+offset_right = 1418.5
+offset_bottom = 495.0
 mouse_filter = 2
-color = Color(0, 0, 0, 0.478431)
 
-[node name="Gameover" type="Label" parent="StoppedLeft/StoppedLeftSkew"]
-offset_left = 187.576
-offset_top = 249.502
-offset_right = 1243.58
-offset_bottom = 399.502
-theme_override_fonts/font = ExtResource("2_ul78b")
-theme_override_font_sizes/font_size = 50
-text = "Gameover
-"
-
-[node name="StoppedRight" type="Node2D" parent="."]
-
-[node name="StoppedRightSkew" type="Node2D" parent="StoppedRight"]
-skew = 0.261799
-
-[node name="LastRect" type="ColorRect" parent="StoppedRight/StoppedRightSkew"]
-offset_left = 655.541
-offset_top = 355.1
-offset_right = 1424.54
-offset_bottom = 512.1
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayerSkewed/PanelScore"]
+layout_mode = 0
+offset_left = 44.5
+offset_top = 36.0
+offset_right = 569.5
+offset_bottom = 116.0
 mouse_filter = 2
-color = Color(0, 0, 0, 0.478431)
+alignment = 1
 
-[node name="LastRectShadow" type="ColorRect" parent="StoppedRight/StoppedRightSkew"]
-offset_left = 655.683
-offset_top = 491.009
-offset_right = 1424.68
-offset_bottom = 512.009
-mouse_filter = 2
-color = Color(0, 0, 0, 0.478431)
-
-[node name="LAST" type="Label" parent="StoppedRight/StoppedRightSkew"]
-offset_left = 750.0
-offset_top = 396.0
-offset_right = 1018.0
-offset_bottom = 535.0
-theme_override_fonts/font = ExtResource("2_ul78b")
-theme_override_font_sizes/font_size = 70
+[node name="LabelLast" type="Label" parent="CanvasLayerSkewed/PanelScore/HBoxContainer"]
+custom_minimum_size = Vector2(173.925, 44.26)
+layout_mode = 2
+size_flags_vertical = 8
 text = "LAST"
-label_settings = SubResource("LabelSettings_5huar")
 
-[node name="LastSeconds" type="Label" parent="StoppedRight/StoppedRightSkew"]
-offset_left = 820.976
-offset_top = 393.0
-offset_right = 1026.98
-offset_bottom = 473.0
-theme_override_font_sizes/font_size = 320
-text = "0"
-label_settings = SubResource("LabelSettings_w4pgt")
-horizontal_alignment = 2
+[node name="Label2" type="Label" parent="CanvasLayerSkewed/PanelScore/HBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 8
+theme_override_font_sizes/font_size = 64
+text = "1"
 
-[node name="LastMilliseconds" type="Label" parent="StoppedRight/StoppedRightSkew"]
-offset_left = 1023.43
-offset_top = 434.743
-offset_right = 1094.43
-offset_bottom = 464.743
-text = ":0"
-label_settings = SubResource("LabelSettings_ti1d4")
+[node name="Label3" type="Label" parent="CanvasLayerSkewed/PanelScore/HBoxContainer"]
+custom_minimum_size = Vector2(0, 49.37)
+layout_mode = 2
+size_flags_vertical = 8
+theme_override_font_sizes/font_size = 36
+text = ".34"
 
-[node name="NewRecord" type="Node2D" parent="."]
-
-[node name="NewRecordSkew" type="Node2D" parent="NewRecord"]
-skew = 0.261799
-
-[node name="LastRect2" type="ColorRect" parent="NewRecord/NewRecordSkew"]
-offset_left = 847.523
-offset_top = 260.89
-offset_right = 1408.52
-offset_bottom = 367.89
+[node name="PanelNewRecord" type="Panel" parent="CanvasLayerSkewed"]
+unique_name_in_owner = true
+offset_left = 839.75
+offset_top = 251.0
+offset_right = 1398.75
+offset_bottom = 352.0
 mouse_filter = 2
-color = Color(1, 0, 0, 0.803922)
+theme_override_styles/panel = SubResource("StyleBoxTexture_gr0gd")
 
-[node name="LastRect3" type="ColorRect" parent="NewRecord/NewRecordSkew"]
-offset_left = 848.0
-offset_top = 348.0
-offset_right = 1409.0
-offset_bottom = 368.0
-mouse_filter = 2
-color = Color(0.242311, 2.19597e-07, 5.41471e-08, 0.803922)
+[node name="Label" type="Label" parent="CanvasLayerSkewed/PanelNewRecord"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 26.0
+offset_top = -18.5
+offset_right = 367.0
+offset_bottom = 21.5
+grow_vertical = 2
+theme_override_colors/font_outline_color = Color(0.99018, 0.397088, 0.3448, 1)
+theme_override_constants/outline_size = 8
+text = "NEW RECORD!"
 
-[node name="NewRecordLabel" type="Label" parent="NewRecord/NewRecordSkew"]
-offset_left = 877.954
-offset_top = 285.736
-offset_right = 1242.95
-offset_bottom = 424.736
-theme_override_fonts/font = ExtResource("2_ul78b")
-theme_override_font_sizes/font_size = 70
-text = "New Record!"
-label_settings = SubResource("LabelSettings_5huar")
-
-[node name="StoppedUp" type="Node2D" parent="."]
-
-[node name="BackButton" parent="StoppedUp" instance=ExtResource("3_x2rh8")]
-position = Vector2(892, 12)
-
-[node name="BackToMenu" type="Node2D" parent="."]
-position = Vector2(96, 704)
-skew = 0.261799
-
-[node name="Highlight" type="ColorRect" parent="BackToMenu"]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_right = 1000.0
-offset_bottom = 100.0
+[node name="PanelBackMessage" type="Panel" parent="CanvasLayerSkewed"]
+unique_name_in_owner = true
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -301.0
+offset_top = 380.0
+offset_right = 695.0
+offset_bottom = 524.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.11, 0.11, 0.11, 0.490196)
-metadata/_edit_use_anchors_ = true
 
-[node name="Shadow" type="ColorRect" parent="BackToMenu"]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = 100.0
-offset_right = 1000.0
-offset_bottom = 150.0
+[node name="Label" type="Label" parent="CanvasLayerSkewed/PanelBackMessage"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -206.5
+offset_top = -20.0
+offset_right = 206.5
+offset_bottom = 20.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0, 0, 0, 0.490196)
-metadata/_edit_use_anchors_ = true
+theme_override_font_sizes/font_size = 48
+text = "BACK TO MENU..."
+horizontal_alignment = 1
 
-[node name="Text" type="Node2D" parent="BackToMenu"]
-position = Vector2(104.574, 33.1288)
+[node name="BackButton" parent="CanvasLayerSkewed" instance=ExtResource("3_vlemy")]
+unique_name_in_owner = true
+offset_left = 923.0
+offset_top = 12.0
+offset_right = 1136.0
+offset_bottom = 102.0
 
-[node name="BackShadow" type="Label" parent="BackToMenu/Text"]
-visible = false
-offset_left = 7.483
-offset_right = 845.483
-offset_bottom = 96.0
-theme_override_colors/font_color = Color(0, 0, 0, 0.545098)
-theme_override_fonts/font = ExtResource("2_ul78b")
-theme_override_font_sizes/font_size = 66
-text = "BACK TO MENU.."
-metadata/_edit_use_anchors_ = true
+[node name="Value" parent="CanvasLayerSkewed/BackButton" index="4"]
+text = "BACK"
 
-[node name="Back" type="Label" parent="BackToMenu/Text"]
-offset_right = 838.0
-offset_bottom = 96.0
-theme_override_fonts/font = ExtResource("2_ul78b")
-theme_override_font_sizes/font_size = 66
-text = "BACK TO MENU.."
-metadata/_edit_use_anchors_ = true
+[connection signal="pressed" from="CanvasLayerSkewed/BackButton" to="." method="_on_back_button_back"]
 
-[connection signal="back" from="StoppedUp/BackButton" to="." method="_on_back_button_back"]
+[editable path="CanvasLayerSkewed/BackButton"]

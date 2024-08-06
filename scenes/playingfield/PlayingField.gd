@@ -34,7 +34,7 @@ func start_PlayingField():
 		playing = true
 		emit_signal("game_start")
 		
-		playing_time = 0
+		playing_time = -1 # time offset due to an animation delay
 		
 		BombGenerator_node = BombGenerator_scene.instantiate()
 		add_child(BombGenerator_node)

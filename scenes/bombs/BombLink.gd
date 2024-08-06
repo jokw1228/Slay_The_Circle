@@ -22,8 +22,8 @@ func set_child_bombs(b1: Bomb, b2: Bomb):
 	bomb2.player_body_entered.connect(on_bomb_slayed)
 	set_ray_cast()
 	
-	LinkedMark1_node.position = bomb1.position
-	LinkedMark2_node.position = bomb2.position
+	Utils.attach(bomb1, LinkedMark1_node)
+	Utils.attach(bomb2, LinkedMark2_node)
 
 func set_ray_cast():
 	ray_1to2.global_position = bomb1.global_position
@@ -58,7 +58,7 @@ func game_over():
 	PlayingFieldInterface.game_over(position)
 
 func _draw():
-	if num_child_bombs == 0:
+	if num_child_bombs < 2:
 		return
 	
 	# Size: half of arrow size, BombSize: for pos offset
@@ -107,3 +107,5 @@ func _draw():
 func _process(delta):
 	LinkedMark1_node.rotate(delta * PI / 6)
 	LinkedMark2_node.rotate(delta * PI / 6)
+
+	queue_redraw()

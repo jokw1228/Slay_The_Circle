@@ -28,6 +28,14 @@ _bundled = {
 "version": 3
 }
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7ih4k"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(1, 1, 1, 1)
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_c0a27"]
 bg_color = Color(1, 0.713726, 0.00392157, 1)
 border_width_left = 3
@@ -66,14 +74,6 @@ corner_radius_bottom_left = 3
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_umss3"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7ih4k"]
-bg_color = Color(0.6, 0.6, 0.6, 0)
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 1
-border_color = Color(1, 1, 1, 1)
-
 [node name="FancyButton" type="Control"]
 layout_mode = 3
 anchors_preset = 0
@@ -107,6 +107,26 @@ offset_bottom = 5.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.72549, 0.513726, 0, 0.784314)
+
+[node name="EffectHolder" type="Control" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Effect" type="Panel" parent="EffectHolder"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(150, 45)
+theme_override_styles/panel = SubResource("StyleBoxFlat_7ih4k")
 
 [node name="Button" type="Button" parent="."]
 layout_mode = 1
@@ -145,18 +165,6 @@ wait_time = 2.0
 [node name="Timer2" type="Timer" parent="."]
 unique_name_in_owner = true
 wait_time = 2.0
-
-[node name="Effect" type="Panel" parent="."]
-unique_name_in_owner = true
-visible = false
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-pivot_offset = Vector2(150, 45)
-theme_override_styles/panel = SubResource("StyleBoxFlat_7ih4k")
 
 [connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
 [connection signal="timeout" from="Timer1" to="." method="_on_timer_timeout"]
