@@ -52,7 +52,7 @@ func _process(delta):
 	pattern6_process(delta)
 
 
-func pattern1(): # 10s
+func pattern1(): # 10s - circlest
 	pattern1_outer(elapsed_time)
 	for i in range(0,5):
 		var rotation_value = randf_range(0,2*PI)
@@ -70,7 +70,7 @@ func pattern1_outer(time: float):
 		await Utils.timer(0.07)
 
 
-func pattern2(): # 3s
+func pattern2(): # 3s - circlest
 	create_hazard_bomb(Vector2(180, 60), 1, 3)
 	create_hazard_bomb(Vector2(-180, 60), 1, 3)
 	create_hazard_bomb(Vector2(180, -60), 1, 3)
@@ -100,7 +100,7 @@ func pattern2_process(delta):
 			bomb_dir_changed[i] = false
 
 
-func pattern3(): # 4s random link
+func pattern3(): # 4s random link - circle
 	var vector = [Vector2(100, 100), Vector2(-100, 100), Vector2(100, -100), Vector2(-100, -100)]
 	vector.shuffle()
 	var bombs = []
@@ -117,7 +117,7 @@ var rand = [0, 0, 0, 1]
 const const_position = [Vector2(-pos, -pos), Vector2(pos, -pos), Vector2(-pos, pos), Vector2(pos, pos)]
 var bomb_pos = [1, 2, 3, 4] # 각 폭탄의 현재 위치
 	
-func pattern4(): # 6.2s
+func pattern4(): # 6.2s, circlest
 	var bombs = []
 	bomb_pos = [1, 2, 3, 4]
 	rand.shuffle()
@@ -196,7 +196,7 @@ func pattern4_process(delta):
 				pattern4_bomb[i].position = const_position[pattern4_moveseed[bomb_pos[i] - 1]- 1]
 
 
-func pattern5(): # 12s
+func pattern5(): # 12s, circler
 	var prev_value
 	for i in range(12):
 		create_normal_bomb(Vector2(0,0), 0, 1)
@@ -243,7 +243,7 @@ func pattern5_random(pattern: int):
 				rotation_value += PI / 2.5
 
 
-func pattern6(): # 3s
+func pattern6(): # 3s - circlest, moving link
 	create_normal_bomb(Vector2(0,0), 1, 2)
 	pattern6_moving = true
 	pattern6_random = randi_range(0,1)
@@ -275,7 +275,7 @@ func pattern6_process(delta):
 			pattern6_bomb[i].position += pattern6_direction[i] * pattern6_speed[i] * delta
 
 
-func pattern7():
+func pattern7(): # 보류 
 	var random = [1, -1]
 	create_hazard_bomb(Vector2.ZERO, 0.5, 0)
 	
@@ -323,6 +323,29 @@ func autorotate(posx: float, posy: float) -> Vector2: #풀레이어가 정남쪽
 
 ##############################################################################
 # 백업용
+
+# 템플릿
+###############################
+# pattern_name block start
+# made by kiyong
+
+var pattern_name_timer: float
+var pattern_name_timer_tween: Tween
+
+func pattern_name():
+	pattern_name_timer = 2.5
+	
+	if pattern_name_timer_tween != null:
+		pattern_name_timer_tween.kill()
+	pattern_name_timer_tween = get_tree().create_tween()
+	pattern_name_timer_tween.tween_property(self, "pattern_moving_link_timer", 0, 2.5)
+
+func pattern_name_end():
+	PlayingFieldInterface.add_playing_time(pattern_name_timer)
+	#pattern_shuffle_and_draw()
+
+# pattern_name block end
+###############################
 
 ###############################
 # pattern_random_link block start
