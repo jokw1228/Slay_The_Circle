@@ -16,6 +16,7 @@ func pattern_list_initialization():
 	pattern_list.append(Callable(self, "pattern_numeric_triangle_with_link"))
 	pattern_list.append(Callable(self, "pattern_star"))
 	pattern_list.append(Callable(self, "pattern_random_link"))
+	pattern_list.append(Callable(self, "pattern_timing"))
 	
 func pattern_shuffle_and_draw():
 	print("pattern_shuffle_and_draw")
@@ -179,4 +180,19 @@ func pattern_random_link_end():
 	pattern_shuffle_and_draw()
 
 # pattern_random_link block end
+###############################
+
+###############################
+# pattern_timing block start
+# made by Seonghyeon
+func pattern_timing():
+	const SIZE = 70
+	create_hazard_bomb(SIZE * Vector2.LEFT.rotated(deg_to_rad(60)), 0.8, 1.5)
+	create_hazard_bomb(SIZE * Vector2.LEFT.rotated(deg_to_rad(120)), 0.8, 1.5)
+	create_hazard_bomb(SIZE * Vector2.RIGHT.rotated(deg_to_rad(60)), 0.8, 1.5)
+	create_hazard_bomb(SIZE * Vector2.RIGHT.rotated(deg_to_rad(120)), 0.8, 1.5)
+	create_hazard_bomb(SIZE * Vector2.LEFT, 0.8, 1.3)
+	create_hazard_bomb(SIZE * Vector2.RIGHT, 0.8, 1.3)
+	create_normal_bomb(Vector2.ZERO, 0.8, 1.5) 
+# pattern_timing block end
 ###############################
