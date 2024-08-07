@@ -96,6 +96,7 @@ collision_mask = 32768
 script = ExtResource("2_wxquw")
 
 [node name="PlayerSprite2D" type="AnimatedSprite2D" parent="." node_paths=PackedStringArray("Player_node", "PlayerRayCast2D")]
+rotation = 1.5708
 sprite_frames = SubResource("SpriteFrames_spu1u")
 animation = &"idle"
 speed_scale = 16.0

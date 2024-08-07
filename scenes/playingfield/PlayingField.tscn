@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://cn7ttflmrmpth" path="res://scenes/playingfield/PlayingFieldCamera.tscn" id="2_xhkow"]
 [ext_resource type="PackedScene" uid="uid://csx6yjkvpfqcy" path="res://scenes/background/BackGroundDeSterrennacht.tscn" id="3_0edn4"]
 [ext_resource type="PackedScene" uid="uid://dl4bge564bur" path="res://scenes/playingfield/PlayingFieldUI.tscn" id="3_7mvnn"]
-[ext_resource type="PackedScene" path="res://scenes/background/BackGroundEffect.tscn" id="4_f42c7"]
+[ext_resource type="PackedScene" uid="uid://bp1nuspdeitey" path="res://scenes/background/BackGroundEffect.tscn" id="4_f42c7"]
 [ext_resource type="PackedScene" uid="uid://bhe55ocau21ot" path="res://scenes/player/Player.tscn" id="4_u3i3n"]
 [ext_resource type="PackedScene" uid="uid://s264e74phclm" path="res://scenes/playingfield/CircleField.tscn" id="5_1ahyj"]
 [ext_resource type="Script" path="res://addons/resonate/sound_manager/sound_bank.gd" id="7_lhgfl"]

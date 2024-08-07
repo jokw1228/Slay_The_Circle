@@ -54,5 +54,3 @@ func pattern_lightning():
 
 #pattern_star end
 ###############################
-
-

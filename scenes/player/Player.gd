@@ -11,6 +11,11 @@ var movement_queue: Array
 var is_moving: bool = false
 var current_position = null
 
+func _ready():
+	const CIRCLE_FIELD_RADIUS = 256
+	var start_position: Vector2 = Vector2(0.0, CIRCLE_FIELD_RADIUS - 16)
+	movement_queue.push_back(start_position)
+
 func _physics_process(_delta):
 	_movement_queue_proccessing()
 	move_and_slide()
