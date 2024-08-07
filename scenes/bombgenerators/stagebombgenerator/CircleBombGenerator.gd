@@ -17,6 +17,7 @@ func pattern_list_initialization():
 	pattern_list.append(Callable(self, "pattern_star"))
 	pattern_list.append(Callable(self, "pattern_random_link"))
 	pattern_list.append(Callable(self, "pattern_timing"))
+	pattern_list.append(Callable(self, "pattern_trafficlight"))
 	
 func pattern_shuffle_and_draw():
 	print("pattern_shuffle_and_draw")
@@ -200,4 +201,46 @@ func pattern_timing():
 	await Utils.timer(1.5)
 	pattern_shuffle_and_draw()
 # pattern_timing block end
+###############################
+
+###############################
+# pattern_trafficlight block start
+# made by Seonghyeon
+func pattern_trafficlight():
+	PlayingFieldInterface.set_theme_color(Color.HOT_PINK)
+
+	const DIST: float = 75
+	const UNIT: float = 0.5
+	const START: float = 1
+	const WARNING: float = 0.5
+
+	create_hazard_bomb(Vector2.LEFT * DIST * 2, WARNING, START + UNIT * 1)
+	create_hazard_bomb(Vector2.LEFT * DIST * 1, WARNING, START + UNIT * 2)
+	create_hazard_bomb(Vector2.ZERO, WARNING, START + UNIT * 3)
+	create_hazard_bomb(Vector2.RIGHT * DIST * 1, WARNING, START + UNIT * 4)
+	create_hazard_bomb(Vector2.RIGHT * DIST * 2, WARNING, START + UNIT * 5)
+
+	await Utils.timer(WARNING + START)
+	create_normal_bomb(Vector2.LEFT * DIST * 2, UNIT, UNIT)
+	create_hazard_bomb(Vector2.LEFT * DIST * 2, 2 * UNIT, UNIT * 4)
+
+	await Utils.timer(UNIT)
+	create_normal_bomb(Vector2.LEFT * DIST * 1, UNIT, UNIT)
+	create_hazard_bomb(Vector2.LEFT * DIST * 1, 2 * UNIT, UNIT * 3)
+
+	await Utils.timer(UNIT)
+	create_normal_bomb(Vector2.ZERO, UNIT, UNIT)
+	create_hazard_bomb(Vector2.ZERO, 2 * UNIT, UNIT * 2)
+
+	await Utils.timer(UNIT)
+	create_normal_bomb(Vector2.RIGHT * DIST * 1, UNIT, UNIT)
+	create_hazard_bomb(Vector2.RIGHT * DIST * 1, 2 * UNIT, UNIT * 1)
+
+	await Utils.timer(UNIT)
+	create_normal_bomb(Vector2.RIGHT * DIST * 2, UNIT, UNIT)
+
+	await Utils.timer(UNIT)
+
+	pattern_shuffle_and_draw()
+# pattern_trafficlight block end
 ###############################
