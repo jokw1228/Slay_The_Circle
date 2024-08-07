@@ -64,25 +64,28 @@ func pattern_numeric_triangle_with_link():
 	if pattern_numeric_triangle_with_link_timer_tween != null:
 		pattern_numeric_triangle_with_link_timer_tween.kill()
 	pattern_numeric_triangle_with_link_timer_tween = get_tree().create_tween()
-	pattern_numeric_triangle_with_link_timer_tween.tween_property(self, "pattern_triangle_with_link_timer", 0.0, 3.0)
+	pattern_numeric_triangle_with_link_timer_tween.tween_property(self, "pattern_numeric_triangle_with_link_timer", 0.0, 3.0)
 	
 	var player_position: Vector2 = PlayingFieldInterface.get_player_position()
-	
+	var angle_offset: float = player_position.angle() * -1
+	#print(player_position, angle_offset)
 	const CIRCLE_FIELD_RADIUS = 256
 	var bomb_radius: float = CIRCLE_FIELD_RADIUS * sqrt(3) / 3
 	
-	var bomb1: NumericBomb = create_numeric_bomb(Vector2(bomb_radius * cos(PI/6), bomb_radius * -sin(PI/6)), 0.5, 2.5, 1)
-	var bomb2: NumericBomb = create_numeric_bomb(Vector2(bomb_radius * cos(PI/2), bomb_radius * -sin(PI/2)), 0.5, 2.5, 2)
+	var ccw: float = 1 if randi() % 2 else -1
+	
+	var bomb1: NumericBomb = create_numeric_bomb(Vector2(bomb_radius * cos(angle_offset + ccw * PI/6), bomb_radius * -sin(angle_offset + ccw * PI/6)), 0.5, 2.5, 1)
+	var bomb2: NumericBomb = create_numeric_bomb(Vector2(bomb_radius * cos(angle_offset + ccw * PI/2), bomb_radius * -sin(angle_offset + ccw * PI/2)), 0.5, 2.5, 2)
 	
 	create_bomb_link(bomb1, bomb2)
 	
-	var bomb3: NumericBomb = create_numeric_bomb(Vector2(bomb_radius * cos(5*PI/6), bomb_radius * -sin(5*PI/6)), 0.5, 2.5, 3)
-	var bomb4: NumericBomb = create_numeric_bomb(Vector2(bomb_radius * cos(7*PI/6), bomb_radius * -sin(7*PI/6)), 0.5, 2.5, 4)
+	var bomb3: NumericBomb = create_numeric_bomb(Vector2(bomb_radius * cos(angle_offset + ccw * 5*PI/6), bomb_radius * -sin(angle_offset + ccw * 5*PI/6)), 0.5, 2.5, 3)
+	var bomb4: NumericBomb = create_numeric_bomb(Vector2(bomb_radius * cos(angle_offset + ccw * 7*PI/6), bomb_radius * -sin(angle_offset + ccw * 7*PI/6)), 0.5, 2.5, 4)
 	
 	create_bomb_link(bomb3, bomb4)
 	
-	var bomb5: NumericBomb = create_numeric_bomb(Vector2(bomb_radius * cos(3*PI/2), bomb_radius * -sin(3*PI/2)), 0.5, 2.5, 5)
-	var bomb6: NumericBomb = create_numeric_bomb(Vector2(bomb_radius * cos(11*PI/6), bomb_radius * -sin(11*PI/6)), 0.5, 2.5, 6)
+	var bomb5: NumericBomb = create_numeric_bomb(Vector2(bomb_radius * cos(angle_offset + ccw * 3*PI/2), bomb_radius * -sin(angle_offset + ccw * 3*PI/2)), 0.5, 2.5, 5)
+	var bomb6: NumericBomb = create_numeric_bomb(Vector2(bomb_radius * cos(angle_offset + ccw * 11*PI/6), bomb_radius * -sin(angle_offset + ccw * 11*PI/6)), 0.5, 2.5, 6)
 	
 	var link3: BombLink = create_bomb_link(bomb5, bomb6)
 	

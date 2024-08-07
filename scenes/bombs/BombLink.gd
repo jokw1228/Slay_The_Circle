@@ -62,8 +62,8 @@ func _draw():
 		return
 	
 	# Size: half of arrow size, BombSize: for pos offset
-	const Size: float = 10.0
-	const BombSize: float = Size * 6.5
+	const Size: float = 8
+	const BombSize: float = 48
 	
 	var bomb1_pos: Vector2 = bomb1.global_position
 	var bomb2_pos: Vector2 = bomb2.global_position
