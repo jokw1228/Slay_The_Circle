@@ -18,8 +18,8 @@ func _ready():
 	while 1:	
 		await Utils.timer(1.0)
 	
-		await pattern7() # test
-		await Utils.timer(0.5)
+		await pattern2() # test
+		await Utils.timer(12)
 	
 		await pattern1()
 	
@@ -82,7 +82,8 @@ func pattern2(): # 3s
 	create_bomb_link(bomb1, bomb2)
 	
 	Utils.timer(1.01)
-	# await wait_all_slayed()
+	await wait_all_slayed()
+	print("finished")
 
 const pattern2_speed = 500
 var bomb_direction = [1, -1]
@@ -99,7 +100,7 @@ func pattern2_process(delta):
 			bomb_dir_changed[i] = false
 
 
-func pattern3(): # 4s
+func pattern3(): # 4s random link
 	var vector = [Vector2(100, 100), Vector2(-100, 100), Vector2(100, -100), Vector2(-100, -100)]
 	vector.shuffle()
 	var bombs = []
@@ -318,3 +319,55 @@ func autorotate(posx: float, posy: float) -> Vector2: #풀레이어가 정남쪽
 	
 	var rotate_value = Vector2(0, 1).angle_to(player_direction)
 	return Vector2(posx, posy).rotated(rotate_value)
+
+
+##############################################################################
+# 백업용
+
+###############################
+# pattern_random_link block start
+# made by kiyong
+
+var pattern_random_link_timer: float
+var pattern_random_link_timer_tween: Tween
+
+var player_position: Vector2
+var player_angle: float
+const bomb_dist = 140
+
+func pattern_random_link():
+	pattern_random_link_timer = 2.5
+	
+	if pattern_random_link_timer_tween != null:
+		pattern_random_link_timer_tween.kill()
+	pattern_random_link_timer_tween = get_tree().create_tween()
+	pattern_random_link_timer_tween.tween_property(self, "pattern_random_link_timer", 0, 2.5)
+	
+	player_position = PlayingFieldInterface.get_player_position()
+	player_angle = player_position.angle()
+	
+	var order = [1,2,3]
+	order.shuffle()
+	var correction = (order[0]-2) * -(acos(sqrt(2)/4)-PI/4)
+	
+	var vector = [pattern_random_link_auto_rotate(0+correction), pattern_random_link_auto_rotate(PI/2+correction), pattern_random_link_auto_rotate(PI+correction), pattern_random_link_auto_rotate(3*PI/2+correction)]
+	var bombs = []
+	
+	bombs.append(create_numeric_bomb(vector[0], 0.5, 2, 1))
+	bombs.append(create_numeric_bomb(vector[order[0]], 0.5, 2, 2))
+	bombs.append(create_numeric_bomb(vector[order[1]], 0.5, 2, 3))
+	bombs.append(create_numeric_bomb(vector[order[2]], 0.5, 2, 4))
+	create_bomb_link(bombs[0], bombs[1])
+	create_bomb_link(bombs[2], bombs[3])
+	
+	bombs[3].connect("no_lower_value_bomb_exists",Callable(self,"pattern_random_link_end"))
+
+func pattern_random_link_auto_rotate(angle):
+	return Vector2(bomb_dist*cos(player_angle+angle),bomb_dist*sin(player_angle+angle))
+
+func pattern_random_link_end():
+	PlayingFieldInterface.add_playing_time(pattern_random_link_timer)
+	# pattern_shuffle_and_draw()
+
+# pattern_random_link block end
+###############################
