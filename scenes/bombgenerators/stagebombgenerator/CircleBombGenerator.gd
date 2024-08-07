@@ -13,11 +13,12 @@ func _ready():
 func pattern_list_initialization():
 	#pattern_list.append(Callable(self, "pattern_test_1"))
 	#pattern_list.append(Callable(self, "pattern_test_2"))
-	pattern_list.append(Callable(self, "pattern_numeric_triangle_with_link"))
-	pattern_list.append(Callable(self, "pattern_star"))
-	pattern_list.append(Callable(self, "pattern_random_link"))
-	pattern_list.append(Callable(self, "pattern_timing"))
-	pattern_list.append(Callable(self, "pattern_trafficlight"))
+	#pattern_list.append(Callable(self, "pattern_numeric_triangle_with_link"))
+	#pattern_list.append(Callable(self, "pattern_star"))
+	#pattern_list.append(Callable(self, "pattern_random_link"))
+	#pattern_list.append(Callable(self, "pattern_timing"))
+	#pattern_list.append(Callable(self, "pattern_trafficlight"))
+	pattern_list.append(Callable(self, "pattern_manyrotation"))
 	
 func pattern_shuffle_and_draw():
 	print("pattern_shuffle_and_draw")
@@ -243,4 +244,30 @@ func pattern_trafficlight():
 
 	pattern_shuffle_and_draw()
 # pattern_trafficlight block end
+###############################
+
+###############################
+# pattern_manyrotation block start
+# made by Seonghyeon
+func pattern_manyrotation():
+	PlayingFieldInterface.set_theme_color(Color.HOT_PINK)
+	const COUNT: int = 3
+	const DIST: float = 100
+	const UNIT: float = 0.6
+
+	for i in range(COUNT):
+		var bombs: Array[Bomb] = []
+		for j in range(3):
+			bombs.append(create_normal_bomb(DIST * Vector2.UP.rotated(deg_to_rad(120 * j)), UNIT, 2 * UNIT))
+		bombs.shuffle()
+		create_bomb_link(bombs[0], bombs[1])
+
+		await Utils.timer(2 * UNIT)
+		if randi_range(0, 1): create_rotationspeedup_bomb(Vector2.ZERO, UNIT, UNIT, 0.3)
+		else: create_rotationinversion_bomb(Vector2.ZERO, UNIT, UNIT)
+
+		await Utils.timer(2 * UNIT)
+
+	pattern_shuffle_and_draw()
+# pattern_manyrotation block end
 ###############################
