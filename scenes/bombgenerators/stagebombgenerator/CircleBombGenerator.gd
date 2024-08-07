@@ -14,7 +14,8 @@ func pattern_list_initialization():
 	#pattern_list.append(Callable(self, "pattern_test_1"))
 	#pattern_list.append(Callable(self, "pattern_test_2"))
 	pattern_list.append(Callable(self, "pattern_numeric_triangle_with_link"))
-
+	pattern_list.append(Callable(self, "pattern_star"))
+	
 func pattern_shuffle_and_draw():
 	print("pattern_shuffle_and_draw")
 	
@@ -96,4 +97,37 @@ func pattern_numeric_triangle_with_link_end():
 	pattern_shuffle_and_draw()
 
 # pattern_numeric_triangle_with_link block end
+###############################
+
+###############################
+# pattern_star block start
+# made by jooyoung
+
+var pattern_star_timer: float
+var pattern_star_timer_tween: Tween
+
+func pattern_star():
+	pattern_star_timer = 3.0
+	if pattern_star_timer_tween != null:
+		pattern_star_timer_tween.kill()
+	pattern_star_timer_tween = get_tree().create_tween()
+	pattern_star_timer_tween.tween_property(self,"pattern_star_timer",0.0,3.0)
+	
+	var player_position: Vector2 = PlayingFieldInterface.get_player_position()
+	var player_angle: float = player_position.angle()
+	const bomb_radius = 192
+	
+	var bomb1: NumericBomb = create_numeric_bomb(Vector2(bomb_radius * cos(player_angle),bomb_radius*sin(player_angle)), 0.5, 2.5, 1)
+	var bomb2: NumericBomb = create_numeric_bomb(Vector2(bomb_radius*cos(player_angle+4*PI/5),bomb_radius*sin(player_angle+4*PI/5)), 0.5, 2.5, 2)
+	var bomb3: NumericBomb = create_numeric_bomb(Vector2(bomb_radius*cos(player_angle+8*PI/5),bomb_radius*sin(player_angle+8*PI/5)), 0.5, 2.5, 3)
+	var bomb4: NumericBomb = create_numeric_bomb(Vector2(bomb_radius*cos(player_angle+2*PI/5),bomb_radius*sin(player_angle+2*PI/5)), 0.5, 2.5, 4)
+	var bomb5: NumericBomb = create_numeric_bomb(Vector2(bomb_radius*cos(player_angle+6*PI/5),bomb_radius*sin(player_angle+6*PI/5)), 0.5, 2.5, 5)
+
+	bomb5.connect("no_lower_value_bomb_exists",Callable(self,"pattern_star_end"))
+
+func pattern_star_end():
+	PlayingFieldInterface.add_playing_time(pattern_star_timer)
+	pattern_shuffle_and_draw()
+	
+#pattern_star end
 ###############################
