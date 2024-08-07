@@ -15,7 +15,7 @@ func _ready():
 	# make a CollisionPolygon2D in a circle shape
 	make_collision_polygon()
 	
-	BackgroundEffect_node.get_node("ColorRect").material.set_shader_parameter("size", 0)
+	BackgroundEffect_node.hide()
 
 func make_collision_polygon():
 	for i: float in range(0, 2*PI, PI/2):
@@ -56,24 +56,16 @@ func _on_reverb_effect_timer_timeout():
 	add_child(inst)
 
 func create_game_over_effect():
-	const time_to_zoom_in = 2
+	const time_to_zoom_in = 1
 	
-	const time_to_scale = 0.5
-	const number_of_blinks = 3
-	const blink_delay = 0.15
-	const faded_delay = 1
+	const time_to_scale = 0.3
+	const number_of_blinks = 2
+	const blink_delay = 0.1
+	const faded_delay = 0.3
 	
 	var inst = CircleFieldEffect_scene.instantiate()
 	
 	await get_tree().create_timer(time_to_zoom_in).timeout
-	
-	var bomb_screen_position: Vector2 = Vector2((bomb_position.x + 576) / get_viewport_rect().size.x, \
-	(bomb_position.y + 324) / get_viewport_rect().size.y)
-	var animation_player: AnimationPlayer = BackgroundEffect_node.get_node("WaveAnimation")
-	var animation: Animation = animation_player.get_animation("MoveWaveOut")
-	
-	animation.track_set_key_value(1, 0, bomb_screen_position)
-	animation_player.play("MoveWaveOut")
 	
 	inst.survival_time = time_to_scale + blink_delay * 2 * number_of_blinks + faded_delay
 	inst.width_to_draw = 16.0
@@ -84,10 +76,13 @@ func create_game_over_effect():
 	var tween_radius = get_tree().create_tween().set_parallel(true)
 	tween_radius.tween_property(inst, "radius_to_draw", CIRCLE_FIELD_RADIUS, time_to_scale)
 	tween_radius.tween_property(inst, "origin_to_draw", Vector2(0, 0), time_to_scale)
-	
 	add_child(inst)
 	
 	await get_tree().create_timer(time_to_scale).timeout
+	
+	var animation_player: AnimationPlayer = BackgroundEffect_node.get_node("WaveAnimation")
+	BackgroundEffect_node.show()
+	animation_player.play("MoveWaveOut") # 0.4sec
 	
 	for i in range(number_of_blinks):
 		await get_tree().create_timer(blink_delay).timeout
@@ -98,19 +93,16 @@ func create_game_over_effect():
 	var tween_alpha = get_tree().create_tween()
 	tween_alpha.tween_property(inst, "color_to_draw", Color.TRANSPARENT, faded_delay)
 
-
 func create_game_ready_effect():
-	const time_to_scale = 0.5
+	const time_to_scale = 0.3
 	
 	var inst = CircleFieldEffect_scene.instantiate()
 	
 	var animation_player = BackgroundEffect_node.get_node("WaveAnimation")
-	var color_rect = BackgroundEffect_node.get_node("ColorRect")
-	
-	color_rect.material.set_shader_parameter("center", Vector2(0.5, 0.5))
 	animation_player.play("MoveWaveIn")
 	
-	await get_tree().create_timer(0.55).timeout
+	await get_tree().create_timer(time_to_scale).timeout
+	BackgroundEffect_node.hide()
 	
 	inst.survival_time = time_to_scale
 	inst.width_to_draw = 16.0
@@ -120,8 +112,7 @@ func create_game_ready_effect():
 	
 	var tween_radius = get_tree().create_tween()
 	tween_radius.tween_property(inst, "radius_to_draw", 0, time_to_scale)
-	
 	add_child(inst)
-	
+
 func set_bomb_position(x: Vector2):
 	bomb_position = x

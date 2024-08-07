@@ -33,7 +33,6 @@ func set_PlayingField_node(node: PlayingField):
 	current_PlayingField_node = node
 
 func game_over(x):
-	get_PlayingField_node().merge_transition(x)
 	get_PlayingField_node().stop_PlayingField(x)
 	
 func rotation_speed_up(up: float):
@@ -50,10 +49,7 @@ func game_speed_up(up: float):
 	get_PlayingField_node().game_speed_up()
 
 func game_speed_reset():
-	Engine.time_scale = 1.0
-
-func gameover_camera(x):
-	get_PlayingField_node().merge_transition(x)
+	Engine.time_scale = 1
 	
 func get_player_position() -> Vector2:
 	return get_PlayingField_node().Player_node.now_position()
