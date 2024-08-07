@@ -70,15 +70,15 @@ func _on_player_grounded():
 
 ### interface
 func game_speed_up():
-	BackGroundEffect_node.speed_up()
+	BackGroundEffect_node.speed_up(PlayingFieldInterface.get_theme_color())
 
 func rotation_speed_up(up: float):
 	PlayingFieldCamera_node.rotation_speed_up(up)
-	BackGroundEffect_node.rotation_up()
+	BackGroundEffect_node.rotation_up(PlayingFieldInterface.get_theme_color())
 
 func rotation_inversion():
 	PlayingFieldCamera_node.rotation_inversion()
-	BackGroundEffect_node.rotation_inversion()
+	BackGroundEffect_node.rotation_inversion(PlayingFieldInterface.get_theme_color())
 	
 func rotation_stop():
 	PlayingFieldCamera_node.rotation_stop()
