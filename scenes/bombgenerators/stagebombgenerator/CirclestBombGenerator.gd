@@ -70,6 +70,7 @@ func pattern_cat_wheel():
 	
 	const rest_time = 0.5
 	await get_tree().create_timer(bomb_time - time_offset + rest_time).timeout
+	center.queue_free()
 	pattern_shuffle_and_draw()
 
 # pattern_cat_wheel end
