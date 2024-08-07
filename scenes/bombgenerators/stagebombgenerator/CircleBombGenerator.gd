@@ -140,9 +140,9 @@ func pattern_star_end():
 var pattern_random_link_timer: float
 var pattern_random_link_timer_tween: Tween
 
-var player_position: Vector2
-var player_angle: float
-const bomb_dist = 140
+var pattern_random_link_player_position: Vector2
+var pattern_random_link_player_angle: float
+const pattern_random_link_bomb_dist = 140
 
 func pattern_random_link():
 	pattern_random_link_timer = 2.5
@@ -152,8 +152,8 @@ func pattern_random_link():
 	pattern_random_link_timer_tween = get_tree().create_tween()
 	pattern_random_link_timer_tween.tween_property(self, "pattern_random_link_timer", 0, 2.5)
 	
-	player_position = PlayingFieldInterface.get_player_position()
-	player_angle = player_position.angle()
+	pattern_random_link_player_position = PlayingFieldInterface.get_player_position()
+	pattern_random_link_player_angle = pattern_random_link_player_position.angle()
 	
 	var order = [1,2,3]
 	order.shuffle()
@@ -172,7 +172,7 @@ func pattern_random_link():
 	bombs[3].connect("no_lower_value_bomb_exists",Callable(self,"pattern_random_link_end"))
 
 func pattern_random_link_auto_rotate(angle):
-	return Vector2(bomb_dist*cos(player_angle+angle),bomb_dist*sin(player_angle+angle))
+	return Vector2(pattern_random_link_bomb_dist*cos(pattern_random_link_player_angle+angle),pattern_random_link_bomb_dist*sin(pattern_random_link_player_angle+angle))
 
 func pattern_random_link_end():
 	PlayingFieldInterface.add_playing_time(pattern_random_link_timer)
