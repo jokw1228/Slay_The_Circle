@@ -6,7 +6,7 @@ class_name PlayingFieldCamera
 
 var rotation_amount: float = 0
 var rotation_direction = 1.0
-var position_array: Array = []
+var bomb_position: Vector2 = Vector2(0, 0)
 
 func _ready():
 	#rotation_amount = PI / 4
@@ -35,10 +35,10 @@ func rotation_reset():
 
 func zoom_transition():	
 	var tween1 = get_tree().create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_EXPO)
-	tween1.tween_property(self,"zoom",Vector2(2,2),0.5)
-	await get_tree().create_timer(2.5).timeout
+	tween1.tween_property(self,"zoom",Vector2(2,2),0.25)
+	await get_tree().create_timer(1).timeout
 	var tween2 = get_tree().create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_EXPO)
-	tween2.tween_property(self,"zoom",Vector2(1,1),0.5)
+	tween2.tween_property(self,"zoom",Vector2(1,1),0.25)
 
 func position_transition(x: Vector2, y: float):
 	var tween1 = get_tree().create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_EXPO)
@@ -47,20 +47,18 @@ func position_transition(x: Vector2, y: float):
 func rotation_transition():
 	var tween1 = get_tree().create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_EXPO)
 	tween1.tween_property(self,"rotation",0.0,0.4)
-
-func add_transition(x: Vector2):
-	position_array.append(x)
+	
+func set_bomb_position(x: Vector2):
+	bomb_position = x
 
 func gameover_position_transition():
-	GlitchEffect_node.visible = true
-	GlitchEffect_node.rotation = self.rotation
-	var times_to_trans: int = len(position_array)
-	var time_for_trans: float = 0.5/times_to_trans
-	for i in range(times_to_trans):
-		position_transition(position_array[i],time_for_trans)
-		await get_tree().create_timer(time_for_trans).timeout
-	await get_tree().create_timer(1.5).timeout
+	#GlitchEffect_node.visible = true
+	#GlitchEffect_node.rotation = self.rotation
+	var time_for_trans: float = 0.3
+	position_transition(bomb_position, time_for_trans)
+	await get_tree().create_timer(time_for_trans).timeout
+	
+	await get_tree().create_timer(0.7).timeout
 	var tween = get_tree().create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_EXPO)
-	tween.tween_property(self,"position",Vector2(0,0),0.5)
-	position_array.clear()
-	GlitchEffect_node.visible = false
+	tween.tween_property(self,"position",Vector2(0,0),0.25)
+	#GlitchEffect_node.visible = false
