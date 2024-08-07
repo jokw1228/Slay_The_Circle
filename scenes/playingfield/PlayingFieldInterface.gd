@@ -47,6 +47,7 @@ func rotation_stop():
 
 func game_speed_up(up: float):
 	Engine.time_scale += up
+	get_PlayingField_node().game_speed_up()
 
 func game_speed_reset():
 	Engine.time_scale = 1.0

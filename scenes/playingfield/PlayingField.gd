@@ -8,6 +8,7 @@ class_name PlayingField
 @export var PlayingFieldCamera_node: PlayingFieldCamera
 @export var PlayingFieldUI_node: PlayingFieldUI
 @export var Player_node: Player
+@export var BackGroundEffect_node: Node2D
 
 @export var CircleField_node: StaticBody2D
 
@@ -68,13 +69,17 @@ func _on_player_grounded():
 
 
 ### interface
+func game_speed_up():
+	BackGroundEffect_node.speed_up()
 
 func rotation_speed_up(up: float):
 	PlayingFieldCamera_node.rotation_speed_up(up)
+	BackGroundEffect_node.rotation_up()
 
 func rotation_inversion():
 	PlayingFieldCamera_node.rotation_inversion()
-
+	BackGroundEffect_node.rotation_inversion()
+	
 func rotation_stop():
 	PlayingFieldCamera_node.rotation_stop()
 

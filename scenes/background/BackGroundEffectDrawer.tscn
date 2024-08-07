@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://5x4btibl1o1u"]
+
+[ext_resource type="Script" path="res://scenes/background/BackGroundEffectDrawer.gd" id="1_g530h"]
+
+[node name="BackGroundEffectDrawer" type="Node2D"]
+script = ExtResource("1_g530h")

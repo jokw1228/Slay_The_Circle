@@ -1,0 +1,10 @@
+[gd_scene load_steps=4 format=3 uid="uid://bp1nuspdeitey"]
+
+[ext_resource type="Script" path="res://scenes/background/BackGroundEffect.gd" id="1_puv2y"]
+[ext_resource type="FontFile" uid="uid://bn71j2rajnbrn" path="res://fonts/bump-it-up.ttf" id="2_fg1q7"]
+[ext_resource type="PackedScene" path="res://scenes/background/BackGroundEffectDrawer.tscn" id="3_nqpve"]
+
+[node name="BackGroundEffect" type="Node2D"]
+script = ExtResource("1_puv2y")
+font = ExtResource("2_fg1q7")
+BackGroudEffectDrawer_Scene = ExtResource("3_nqpve")
