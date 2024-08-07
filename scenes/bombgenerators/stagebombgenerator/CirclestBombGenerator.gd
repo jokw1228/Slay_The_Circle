@@ -12,8 +12,9 @@ func _ready():
 
 func pattern_list_initialization():
 	# pattern_list.append(Callable(self, "pattern_test_1"))
-	pattern_list.append(Callable(self, "pattern_moving_link"))
-	pattern_list.append(Callable(self, "pattern_fruitninja"))
+	#pattern_list.append(Callable(self, "pattern_moving_link"))
+	#pattern_list.append(Callable(self, "pattern_fruitninja"))
+	pattern_list.append(Callable(self, "pattern_windmill"))
 
 func pattern_shuffle_and_draw():
 	randomize()
@@ -125,4 +126,31 @@ func pattern_fruitninja():
 			)
 		await Utils.timer(0.7)
 # pattern_fruitninja block end
+###############################
+
+###############################
+# pattern_windmill block start
+# made by Seonghyeon
+func pattern_windmill():
+	PlayingFieldInterface.set_theme_color(Color.HOT_PINK)
+	const DIST: float = 70
+
+	var rotator: Node2D = Node2D.new()
+	add_child(rotator)
+
+	for i in range(8):
+		var marker: Node2D = Node2D.new()
+		rotator.add_child(marker)
+		marker.global_position = Vector2(-256 + 32 + i * 64, 0)
+		Utils.attach_node(marker, create_hazard_bomb(marker.global_position, 0.5, 2))
+
+	Utils.tween(Tween.TRANS_LINEAR).tween_property(rotator, "rotation", deg_to_rad(600), 2.5)
+	create_normal_bomb(Vector2(1, 1) * DIST, 0.5, 2)
+	create_normal_bomb(Vector2(-1, 1) * DIST, 0.5, 2)
+	create_normal_bomb(Vector2(-1, -1) * DIST, 0.5, 2)
+	create_normal_bomb(Vector2(1, -1) * DIST, 0.5, 2)
+
+	await Utils.timer(2.5)
+	pattern_shuffle_and_draw()
+# pattern_windmill block end
 ###############################
