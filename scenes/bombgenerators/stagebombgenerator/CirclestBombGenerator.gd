@@ -35,23 +35,41 @@ func pattern_test_1():
 # made by Jo Kangwoo
 
 func pattern_cat_wheel():
+	PlayingFieldInterface.set_theme_color(Color.DEEP_SKY_BLUE)
+	
 	var player_position: Vector2 = PlayingFieldInterface.get_player_position()
 	var angle_start: float = player_position.angle() * -1
 	
 	const CIRCLE_FIELD_RADIUS = 256
 	const bomb_radius = CIRCLE_FIELD_RADIUS - 32
 	
+	var ccw: float = 1 if randi() % 2 else -1
+	
 	var hazard_bomb_list: Array[HazardBomb]
 	
-	const pattern_time = 10.0
-	
 	const number_of_hazard_bombs = 16
+	const warning_time = 0.5
+	const bomb_time = 4.5
 	for i in range(number_of_hazard_bombs):
-		if i == 0:
+		if i == 0 or i == number_of_hazard_bombs - 1 or i == number_of_hazard_bombs - 2:
 			continue
-		var inst: HazardBomb = create_hazard_bomb(Vector2(bomb_radius * cos(angle_start + i * (2*PI / number_of_hazard_bombs)), bomb_radius * -sin(angle_start + i * (2*PI / number_of_hazard_bombs))), 0.5, pattern_time)
+		var inst: HazardBomb = create_hazard_bomb(Vector2(bomb_radius * cos(angle_start + i * (ccw * (2*PI) / number_of_hazard_bombs)), bomb_radius * -sin(angle_start + i * (ccw * (2*PI) / number_of_hazard_bombs))), warning_time, bomb_time)
+		hazard_bomb_list.append(inst)
 	
-	await get_tree().create_timer(pattern_time).timeout
+	const time_offset = 1.0
+	await get_tree().create_timer(warning_time + time_offset).timeout
+	
+	var center: Node2D = Node2D.new()
+	add_child(center)
+	
+	for i in range(number_of_hazard_bombs - 3):
+		hazard_bomb_list[i].reparent(center)
+	
+	var tween_rotation: Tween = get_tree().create_tween()
+	tween_rotation.tween_property(center, "rotation", ccw * (2*PI), bomb_time - time_offset)
+	
+	const rest_time = 0.5
+	await get_tree().create_timer(bomb_time - time_offset + rest_time).timeout
 	pattern_shuffle_and_draw()
 
 # pattern_cat_wheel end
