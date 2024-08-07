@@ -8,7 +8,7 @@ signal circlest
 signal hyper
 
 func select_circle():
-	PlayingFieldInterface.set_theme_color(Color.RED)
+	PlayingFieldInterface.set_theme_color(Color.CHOCOLATE)
 	PlayingFieldInterface.set_theme_bright(0)
 	room_menu.select_stage(0)
 	circle.emit()
@@ -20,7 +20,7 @@ func select_circler():
 	circler.emit()
 
 func select_circlest():
-	PlayingFieldInterface.set_theme_color(Color(0,1,1,1))
+	PlayingFieldInterface.set_theme_color(Color.MEDIUM_AQUAMARINE)
 	PlayingFieldInterface.set_theme_bright(0)
 	room_menu.select_stage(2)
 	circlest.emit()

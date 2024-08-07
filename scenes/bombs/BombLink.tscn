@@ -28,5 +28,5 @@ texture = ExtResource("3_fdjm7")
 texture = ExtResource("3_fdjm7")
 
 [connection signal="both_bombs_removed" from="." to="." method="queue_free"]
-[connection signal="single_bomb_removed" from="." to="." method="game_over"]
 [connection signal="single_bomb_removed" from="." to="." method="queue_free"]
+[connection signal="single_bomb_removed" from="." to="." method="game_over"]
