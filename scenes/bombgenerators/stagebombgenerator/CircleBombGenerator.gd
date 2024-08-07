@@ -186,6 +186,8 @@ func pattern_random_link_end():
 # pattern_timing block start
 # made by Seonghyeon
 func pattern_timing():
+	PlayingFieldInterface.set_theme_color(Color.HOT_PINK)
+
 	const SIZE = 70
 	create_hazard_bomb(SIZE * Vector2.LEFT.rotated(deg_to_rad(60)), 0.8, 1.5)
 	create_hazard_bomb(SIZE * Vector2.LEFT.rotated(deg_to_rad(120)), 0.8, 1.5)
@@ -194,5 +196,8 @@ func pattern_timing():
 	create_hazard_bomb(SIZE * Vector2.LEFT, 0.8, 1.3)
 	create_hazard_bomb(SIZE * Vector2.RIGHT, 0.8, 1.3)
 	create_normal_bomb(Vector2.ZERO, 0.8, 1.5) 
+
+	await Utils.timer(1.5)
+	pattern_shuffle_and_draw()
 # pattern_timing block end
 ###############################

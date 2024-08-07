@@ -13,6 +13,7 @@ func _ready():
 func pattern_list_initialization():
 	# pattern_list.append(Callable(self, "pattern_test_1"))
 	pattern_list.append(Callable(self, "pattern_moving_link"))
+	pattern_list.append(Callable(self, "pattern_fruitninja"))
 
 func pattern_shuffle_and_draw():
 	randomize()
@@ -87,4 +88,41 @@ func pattern_moving_link_end():
 	pattern_shuffle_and_draw()
 
 # pattern_moving_link block end
+###############################
+
+###############################
+# pattern_fruitninja block start
+# made by Seonghyeon
+
+# Hyper에서 normal 사이에 hazard 끼워 넣으면 재미있을 듯
+# 마지막 폭탄 일찍 종료 안하면 0.5초 쯤 길어짐
+# 이렇게 짧은 친구들도 일찍 종료 걸어야 할까?
+func pattern_fruitninja():
+	PlayingFieldInterface.set_theme_color(Color.HOT_PINK)
+
+	var timer = get_tree().create_timer(4.0)
+
+	var rigidbodies: Array[RigidBody2D] = [RigidBody2D.new(), RigidBody2D.new(), RigidBody2D.new(), RigidBody2D.new(), RigidBody2D.new()]
+	var direction: Array[int] = [1, -1, 1, 1, -1] # 정해진 패턴 대신 완전 랜덤? 그런데 같은 방향 중복이 너무 많이 나올 때 있음.
+	
+	for i in range(5):
+		add_child(rigidbodies[i])
+		rigidbodies[i].gravity_scale = 1.5
+		rigidbodies[i].linear_velocity = Vector2(direction[i] * 600, -900 + randf_range(-200, 100))
+		rigidbodies[i].position = Vector2(-direction[i] * 400, 281)
+
+		var bomb = create_normal_bomb(rigidbodies[i].global_position, 0, 1.2)
+		Utils.attach_node(rigidbodies[i], bomb)
+
+		if i == 4: # last bomb
+			bomb.connect("player_body_entered", func ():	
+				print(timer.time_left)
+				for rigidbody in rigidbodies:
+					rigidbody.queue_free()
+				
+				PlayingFieldInterface.add_playing_time(timer.time_left)
+				pattern_shuffle_and_draw()
+			)
+		await Utils.timer(0.7)
+# pattern_fruitninja block end
 ###############################
