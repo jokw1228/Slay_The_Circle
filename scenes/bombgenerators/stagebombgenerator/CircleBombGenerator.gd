@@ -145,7 +145,7 @@ var pattern_random_link_timer_tween: Tween
 
 var pattern_random_link_player_position: Vector2
 var pattern_random_link_player_angle: float
-const pattern_random_link_bomb_dist = 140
+const pattern_random_link_bomb_dist = 128
 
 func pattern_random_link():
 	pattern_random_link_timer = 2.5
