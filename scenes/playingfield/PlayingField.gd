@@ -88,6 +88,10 @@ func rotation_stop():
 func get_playing_time() -> float:
 	return playing_time
 
-func add_playing_time(time_to_add: float):
+func add_playing_time(time_to_add: float): # legacy code
 	if playing == true:
 		playing_time += time_to_add / Engine.time_scale
+
+func set_playing_time(time_to_set: float):
+	if playing == true:
+		playing_time = time_to_set

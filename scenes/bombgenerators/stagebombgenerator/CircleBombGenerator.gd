@@ -3,6 +3,8 @@ class_name CircleBombGenerator
 
 var pattern_list: Array[Callable]
 
+var pattern_start_time: float
+
 func _ready():
 	pattern_list_initialization()
 	
@@ -11,24 +13,24 @@ func _ready():
 	pattern_shuffle_and_draw()
 
 func pattern_list_initialization():
-	pattern_list.append(Callable(self, "pattern_numeric_triangle_with_link"))
-	pattern_list.append(Callable(self, "pattern_star"))
-	pattern_list.append(Callable(self, "pattern_random_link"))
-	pattern_list.append(Callable(self, "pattern_timing"))
-	pattern_list.append(Callable(self, "pattern_trafficlight"))
-	pattern_list.append(Callable(self, "pattern_manyrotation"))
-	pattern_list.append(Callable(self, "pattern_speed_and_roation"))
-	pattern_list.append(Callable(self, "pattern_roll"))
-	pattern_list.append(Callable(self, "pattern_diamond"))
-	pattern_list.append(Callable(self, "pattern_twisted_numeric"))
-	pattern_list.append(Callable(self, "pattern_spiral"))
-	pattern_list.append(Callable(self, "pattern_numeric_choice"))
-	pattern_list.append(Callable(self, "pattern_hide_in_hazard"))
-	pattern_list.append(Callable(self, "pattern_diamond_with_hazard"))
-	pattern_list.append(Callable(self, "pattern_narrow_road"))
-	pattern_list.append(Callable(self, "pattern_369"))
-	pattern_list.append(Callable(self, "pattern_colosseum"))
-	pattern_list.append(Callable(self, "pattern_pizza"))
+	#pattern_list.append(Callable(self, "pattern_numeric_triangle_with_link"))
+	#pattern_list.append(Callable(self, "pattern_star"))
+	#pattern_list.append(Callable(self, "pattern_random_link"))
+	#pattern_list.append(Callable(self, "pattern_timing"))
+	#pattern_list.append(Callable(self, "pattern_trafficlight"))
+	#pattern_list.append(Callable(self, "pattern_manyrotation"))
+	pattern_list.append(Callable(self, "pattern_speed_and_rotation"))
+	#pattern_list.append(Callable(self, "pattern_roll"))
+	#pattern_list.append(Callable(self, "pattern_diamond"))
+	#pattern_list.append(Callable(self, "pattern_twisted_numeric"))
+	#pattern_list.append(Callable(self, "pattern_spiral"))
+	#pattern_list.append(Callable(self, "pattern_numeric_choice"))
+	#pattern_list.append(Callable(self, "pattern_hide_in_hazard"))
+	#pattern_list.append(Callable(self, "pattern_diamond_with_hazard"))
+	#pattern_list.append(Callable(self, "pattern_narrow_road"))
+	#pattern_list.append(Callable(self, "pattern_369"))
+	#pattern_list.append(Callable(self, "pattern_colosseum"))
+	#pattern_list.append(Callable(self, "pattern_pizza"))
 	
 func pattern_shuffle_and_draw():
 	randomize()
@@ -39,17 +41,12 @@ func pattern_shuffle_and_draw():
 # pattern_numeric_triangle_with_link block start
 # made by Jo Kangwoo
 
-var pattern_numeric_triangle_with_link_timer: float
-var pattern_numeric_triangle_with_link_timer_tween: Tween
+const pattern_numeric_tirangle_with_link_playing_time = 3.0
 
 func pattern_numeric_triangle_with_link():
 	PlayingFieldInterface.set_theme_color(Color.DEEP_SKY_BLUE)
 	
-	pattern_numeric_triangle_with_link_timer = 3.0
-	if pattern_numeric_triangle_with_link_timer_tween != null:
-		pattern_numeric_triangle_with_link_timer_tween.kill()
-	pattern_numeric_triangle_with_link_timer_tween = get_tree().create_tween()
-	pattern_numeric_triangle_with_link_timer_tween.tween_property(self, "pattern_numeric_triangle_with_link_timer", 0.0, 3.0)
+	pattern_start_time = PlayingFieldInterface.get_playing_time()
 	
 	var player_position: Vector2 = PlayingFieldInterface.get_player_position()
 	var angle_offset: float = player_position.angle() * -1
@@ -77,7 +74,7 @@ func pattern_numeric_triangle_with_link():
 	link3.connect("both_bombs_removed", Callable(self, "pattern_numeric_triangle_with_link_end"))
 
 func pattern_numeric_triangle_with_link_end():
-	PlayingFieldInterface.add_playing_time(pattern_numeric_triangle_with_link_timer)
+	PlayingFieldInterface.set_playing_time((pattern_start_time + pattern_numeric_tirangle_with_link_playing_time) / Engine.time_scale)
 	pattern_shuffle_and_draw()
 
 # pattern_numeric_triangle_with_link block end
@@ -87,30 +84,31 @@ func pattern_numeric_triangle_with_link_end():
 # pattern_star block start
 # made by jooyoung
 
-var pattern_star_timer: float
-var pattern_star_timer_tween: Tween
+#var pattern_star_start_time: float
+const pattern_star_playing_time = 3.0
 
 func pattern_star():
-	pattern_star_timer = 3.0
-	if pattern_star_timer_tween != null:
-		pattern_star_timer_tween.kill()
-	pattern_star_timer_tween = get_tree().create_tween()
-	pattern_star_timer_tween.tween_property(self,"pattern_star_timer",0.0,3.0)
+	pattern_start_time = PlayingFieldInterface.get_playing_time()
 	
 	var player_position: Vector2 = PlayingFieldInterface.get_player_position()
 	var player_angle: float = player_position.angle()
 	const bomb_radius = 192
 	
-	var bomb1: NumericBomb = create_numeric_bomb(Vector2(bomb_radius * cos(player_angle),bomb_radius*sin(player_angle)), 0.5, 2.5, 1)
-	var bomb2: NumericBomb = create_numeric_bomb(Vector2(bomb_radius*cos(player_angle+4*PI/5),bomb_radius*sin(player_angle+4*PI/5)), 0.5, 2.5, 2)
-	var bomb3: NumericBomb = create_numeric_bomb(Vector2(bomb_radius*cos(player_angle+8*PI/5),bomb_radius*sin(player_angle+8*PI/5)), 0.5, 2.5, 3)
-	var bomb4: NumericBomb = create_numeric_bomb(Vector2(bomb_radius*cos(player_angle+2*PI/5),bomb_radius*sin(player_angle+2*PI/5)), 0.5, 2.5, 4)
+	#bomb1
+	create_numeric_bomb(Vector2(bomb_radius * cos(player_angle),bomb_radius*sin(player_angle)), 0.5, 2.5, 1)
+	#bomb2
+	create_numeric_bomb(Vector2(bomb_radius*cos(player_angle+4*PI/5),bomb_radius*sin(player_angle+4*PI/5)), 0.5, 2.5, 2)
+	#bomb3
+	create_numeric_bomb(Vector2(bomb_radius*cos(player_angle+8*PI/5),bomb_radius*sin(player_angle+8*PI/5)), 0.5, 2.5, 3)
+	#bomb4
+	create_numeric_bomb(Vector2(bomb_radius*cos(player_angle+2*PI/5),bomb_radius*sin(player_angle+2*PI/5)), 0.5, 2.5, 4)
 	var bomb5: NumericBomb = create_numeric_bomb(Vector2(bomb_radius*cos(player_angle+6*PI/5),bomb_radius*sin(player_angle+6*PI/5)), 0.5, 2.5, 5)
 
 	bomb5.connect("no_lower_value_bomb_exists",Callable(self,"pattern_star_end"))
 
 func pattern_star_end():
-	PlayingFieldInterface.add_playing_time(pattern_star_timer)
+	await PlayingFieldInterface.player_grounded
+	PlayingFieldInterface.set_playing_time((pattern_start_time + pattern_star_playing_time) / Engine.time_scale)
 	pattern_shuffle_and_draw()
 	
 #pattern_star end
@@ -120,8 +118,7 @@ func pattern_star_end():
 # pattern_random_link block start
 # made by kiyong
 
-var pattern_random_link_timer: float
-var pattern_random_link_timer_tween: Tween
+const pattern_random_link_playing_time = 2.5
 
 var pattern_random_link_player_position: Vector2
 var pattern_random_link_player_angle: float
@@ -129,12 +126,8 @@ const pattern_random_link_bomb_dist = 128
 
 func pattern_random_link():
 	PlayingFieldInterface.set_theme_color(Color.AQUAMARINE)
-	pattern_random_link_timer = 2.5
 	
-	if pattern_random_link_timer_tween != null:
-		pattern_random_link_timer_tween.kill()
-	pattern_random_link_timer_tween = get_tree().create_tween()
-	pattern_random_link_timer_tween.tween_property(self, "pattern_random_link_timer", 0, 2.5)
+	pattern_start_time = PlayingFieldInterface.get_playing_time()
 	
 	pattern_random_link_player_position = PlayingFieldInterface.get_player_position()
 	pattern_random_link_player_angle = pattern_random_link_player_position.angle()
@@ -159,7 +152,8 @@ func pattern_random_link_auto_rotate(angle):
 	return Vector2(pattern_random_link_bomb_dist*cos(pattern_random_link_player_angle+angle),pattern_random_link_bomb_dist*sin(pattern_random_link_player_angle+angle))
 
 func pattern_random_link_end():
-	PlayingFieldInterface.add_playing_time(pattern_random_link_timer)
+	await PlayingFieldInterface.player_grounded
+	PlayingFieldInterface.set_playing_time((pattern_start_time + pattern_random_link_playing_time) / Engine.time_scale)
 	pattern_shuffle_and_draw()
 
 # pattern_random_link block end
@@ -168,9 +162,13 @@ func pattern_random_link_end():
 ###############################
 # pattern_timing block start
 # made by Seonghyeon
+const pattern_timing_playing_time = 2.3
+
 func pattern_timing():
 	PlayingFieldInterface.set_theme_color(Color.HOT_PINK)
-
+	
+	pattern_start_time = PlayingFieldInterface.get_playing_time()
+	
 	const SIZE = 70
 	create_hazard_bomb(SIZE * Vector2.LEFT.rotated(deg_to_rad(60)), 0.8, 1.5)
 	create_hazard_bomb(SIZE * Vector2.LEFT.rotated(deg_to_rad(120)), 0.8, 1.5)
@@ -178,9 +176,12 @@ func pattern_timing():
 	create_hazard_bomb(SIZE * Vector2.RIGHT.rotated(deg_to_rad(120)), 0.8, 1.5)
 	create_hazard_bomb(SIZE * Vector2.LEFT, 0.8, 1.3)
 	create_hazard_bomb(SIZE * Vector2.RIGHT, 0.8, 1.3)
-	create_normal_bomb(Vector2.ZERO, 0.8, 1.5) 
+	var bomb: NormalBomb = create_normal_bomb(Vector2.ZERO, 0.8, 1.5)
+	bomb.connect("player_body_entered", Callable(self, "pattern_timing_end"))
 
-	await Utils.timer(2.3)
+func pattern_timing_end():
+	await PlayingFieldInterface.player_grounded
+	PlayingFieldInterface.set_playing_time((pattern_start_time + pattern_timing_playing_time) / Engine.time_scale)
 	pattern_shuffle_and_draw()
 # pattern_timing block end
 ###############################
@@ -257,15 +258,11 @@ func pattern_manyrotation():
 # pattern_speed_and_roation block start
 # made by jooyoung
 
-var pattern_speed_or_rotation_timer: float
-var pattern_speed_or_rotation_timer_tween: Tween
+const pattern_speed_or_rotation_playing_time = 2.5
+const pattern_speed_or_rotation_rest_time = 0.5
 
-func pattern_speed_and_roation():
-	pattern_speed_or_rotation_timer = 3
-	if pattern_speed_or_rotation_timer_tween != null:
-		pattern_speed_or_rotation_timer_tween.kill()
-	pattern_speed_or_rotation_timer_tween = get_tree().create_tween()
-	pattern_speed_or_rotation_timer_tween.tween_property(self,"pattern_star_timer",0.0,2.5)
+func pattern_speed_and_rotation():
+	pattern_start_time = PlayingFieldInterface.get_playing_time()
 	
 	var player_position: Vector2 = PlayingFieldInterface.get_player_position()
 	var player_angle: float = player_position.angle()
@@ -284,7 +281,8 @@ func pattern_speed_and_roation():
 	link2.connect("both_bombs_removed",Callable(self,"pattern_speed_and_roation_end"))
 
 func pattern_speed_and_roation_end():
-	PlayingFieldInterface.add_playing_time(pattern_speed_or_rotation_timer)
+	PlayingFieldInterface.add_playing_time((pattern_start_time + pattern_speed_or_rotation_playing_time) / Engine.time_scale)
+	await get_tree().create_timer(pattern_speed_or_rotation_rest_time).timeout
 	pattern_shuffle_and_draw()
 	
 #pattern_speed_and_roation end
