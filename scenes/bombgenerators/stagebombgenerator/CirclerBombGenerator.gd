@@ -52,7 +52,7 @@ func pattern_lightning():
 	await Utils.timer(2.5)
 	pattern_shuffle_and_draw()
 
-#pattern_star end
+#pattern_lightning end
 ###############################
 
 

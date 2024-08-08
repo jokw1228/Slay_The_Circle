@@ -20,6 +20,8 @@ func pattern_list_initialization():
 	pattern_list.append(Callable(self, "pattern_trafficlight"))
 	pattern_list.append(Callable(self, "pattern_manyrotation"))
 	
+	pattern_list.append(Callable(self, "pattern_speed_and_roation"))
+	
 func pattern_shuffle_and_draw():
 	print("pattern_shuffle_and_draw")
 	
@@ -270,4 +272,41 @@ func pattern_manyrotation():
 
 	pattern_shuffle_and_draw()
 # pattern_manyrotation block end
+###############################
+
+###############################
+# pattern_speed_and_roation block start
+# made by jooyoung
+
+var pattern_speed_or_rotation_timer: float
+var pattern_speed_or_rotation_timer_tween: Tween
+
+func pattern_speed_and_roation():
+	pattern_speed_or_rotation_timer = 3
+	if pattern_speed_or_rotation_timer_tween != null:
+		pattern_speed_or_rotation_timer_tween.kill()
+	pattern_speed_or_rotation_timer_tween = get_tree().create_tween()
+	pattern_speed_or_rotation_timer_tween.tween_property(self,"pattern_star_timer",0.0,2.5)
+	
+	var player_position: Vector2 = PlayingFieldInterface.get_player_position()
+	var player_angle: float = player_position.angle()
+	const bomb_radius = 64
+	
+	var bomb1: NumericBomb = create_numeric_bomb(Vector2(2 * bomb_radius * cos(player_angle), 2 * bomb_radius * sin(player_angle)),0.5,2.0,1)
+	var bomb2: RotationSpeedUpBomb = create_rotationspeedup_bomb(Vector2(bomb_radius * cos(player_angle), bomb_radius * sin(player_angle)),0.5,2.0,0.5)
+	
+	create_bomb_link(bomb1,bomb2)
+	
+	var bomb3: GameSpeedUpBomb = create_gamespeedup_bomb(Vector2(bomb_radius * cos(player_angle+PI), bomb_radius * sin(player_angle+PI)),0.5,2.0,0.5)
+	var bomb4: NumericBomb = create_numeric_bomb(Vector2(2 * bomb_radius * cos(player_angle+PI), 2 * bomb_radius * sin(player_angle+PI)),0.5,2.0,2)
+	
+	var link2: BombLink = create_bomb_link(bomb3,bomb4)
+	
+	link2.connect("both_bombs_removed",Callable(self,"pattern_speed_and_roation_end"))
+
+func pattern_speed_and_roation_end():
+	PlayingFieldInterface.add_playing_time(pattern_speed_or_rotation_timer)
+	pattern_shuffle_and_draw()
+	
+#pattern_speed_and_roation end
 ###############################
