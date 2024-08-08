@@ -240,7 +240,7 @@ func pattern_trafficlight():
 	await Utils.timer(UNIT)
 	create_normal_bomb(Vector2.RIGHT * DIST * 2, UNIT, UNIT)
 
-	await Utils.timer(UNIT)
+	await Utils.timer(2 * UNIT)
 
 	pattern_shuffle_and_draw()
 # pattern_trafficlight block end
@@ -253,7 +253,7 @@ func pattern_manyrotation():
 	PlayingFieldInterface.set_theme_color(Color.HOT_PINK)
 	const COUNT: int = 3
 	const DIST: float = 100
-	const UNIT: float = 0.6
+	const UNIT: float = 0.7
 
 	for i in range(COUNT):
 		var bombs: Array[Bomb] = []

@@ -143,15 +143,15 @@ func pattern_windmill():
 		var marker: Node2D = Node2D.new()
 		rotator.add_child(marker)
 		marker.global_position = Vector2(-256 + 32 + i * 64, 0)
-		Utils.attach_node(marker, create_hazard_bomb(marker.global_position, 0.5, 2))
+		Utils.attach_node(marker, create_hazard_bomb(marker.global_position, 1, 2))
 
-	Utils.tween(Tween.TRANS_LINEAR).tween_property(rotator, "rotation", deg_to_rad(600), 2.5)
-	create_normal_bomb(Vector2(1, 1) * DIST, 0.5, 2)
-	create_normal_bomb(Vector2(-1, 1) * DIST, 0.5, 2)
-	create_normal_bomb(Vector2(-1, -1) * DIST, 0.5, 2)
-	create_normal_bomb(Vector2(1, -1) * DIST, 0.5, 2)
+	Utils.tween(Tween.TRANS_LINEAR).tween_property(rotator, "rotation", deg_to_rad(600), 3)
+	create_normal_bomb(Vector2(1, 1) * DIST, 1, 2)
+	create_normal_bomb(Vector2(-1, 1) * DIST, 1, 2)
+	create_normal_bomb(Vector2(-1, -1) * DIST, 1, 2)
+	create_normal_bomb(Vector2(1, -1) * DIST, 1, 2)
 
-	await Utils.timer(2.5)
+	await Utils.timer(3)
 	rotator.queue_free()
 	pattern_shuffle_and_draw()
 # pattern_windmill block end
