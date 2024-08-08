@@ -16,21 +16,19 @@ func _on_body_entered(body):
 
 func slayed(): # bomb slayed effect
 	var BombSlayedEffect_inst: BombSlayedEffect = BombSlayedEffect_scene.instantiate()
-	BombSlayedEffect_inst.position = position
+	BombSlayedEffect_inst.position = global_position
 	BombSlayedEffect_inst.direction = slayed_direction
 	get_tree().current_scene.add_child(BombSlayedEffect_inst)
 	
 	var Particle_instance = Particle_scene.instantiate()
 	get_tree().current_scene.add_child(Particle_instance)
-	Particle_instance.position = position
-	#var particles = Particle_instance.get_node("Flame")
-	#particles.position = position
+	Particle_instance.position = global_position
 	Particle_instance.emitting = true
 	
 func exploded(): # bomb explosion effect
 	var BombExplodedEffect_inst: BombExplodedEffect = BombExplodedEffect_scene.instantiate()
-	BombExplodedEffect_inst.position = position
+	BombExplodedEffect_inst.position = global_position
 	get_tree().current_scene.add_child(BombExplodedEffect_inst)
 
 func game_over():
-	PlayingFieldInterface.game_over(position)
+	PlayingFieldInterface.game_over(global_position)

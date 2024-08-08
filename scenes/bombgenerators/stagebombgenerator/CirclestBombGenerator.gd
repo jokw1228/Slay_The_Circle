@@ -11,6 +11,8 @@ func _ready():
 	pattern_shuffle_and_draw()
 
 func pattern_list_initialization():
+	#pattern_list.append(Callable(self, "pattern_test_1"))
+	pattern_list.append(Callable(self, "pattern_cat_wheel"))
 	# pattern_list.append(Callable(self, "pattern_test_1"))
 	pattern_list.append(Callable(self, "pattern_fruitninja"))
 	pattern_list.append(Callable(self, "pattern_windmill"))
@@ -40,6 +42,52 @@ func pattern_test_1():
 	pattern_shuffle_and_draw()
 
 # pattern_test_1 block end
+###############################
+
+###############################
+# pattern_cat_wheel block start
+# made by Jo Kangwoo
+
+func pattern_cat_wheel():
+	PlayingFieldInterface.set_theme_color(Color.DEEP_SKY_BLUE)
+	
+	var player_position: Vector2 = PlayingFieldInterface.get_player_position()
+	var angle_start: float = player_position.angle() * -1
+	
+	const CIRCLE_FIELD_RADIUS = 256
+	const bomb_radius = CIRCLE_FIELD_RADIUS - 32
+	
+	var ccw: float = 1 if randi() % 2 else -1
+	
+	var hazard_bomb_list: Array[HazardBomb]
+	
+	const number_of_hazard_bombs = 20
+	const warning_time = 0.5
+	const bomb_time = 4.5
+	for i in range(number_of_hazard_bombs):
+		if i <= 0 or i >= number_of_hazard_bombs - 4:
+			continue
+		var inst: HazardBomb = create_hazard_bomb(Vector2(bomb_radius * cos(angle_start + i * (ccw * (2*PI) / number_of_hazard_bombs)), bomb_radius * -sin(angle_start + i * (ccw * (2*PI) / number_of_hazard_bombs))), warning_time, bomb_time)
+		hazard_bomb_list.append(inst)
+	
+	const time_offset = 1.0
+	await get_tree().create_timer(warning_time + time_offset).timeout
+	
+	var center: Node2D = Node2D.new()
+	add_child(center)
+	
+	for i in range(number_of_hazard_bombs - 5):
+		hazard_bomb_list[i].reparent(center)
+	
+	var tween_rotation: Tween = get_tree().create_tween()
+	tween_rotation.tween_property(center, "rotation", ccw * (2*PI), bomb_time - time_offset)
+	
+	const rest_time = 0.5
+	await get_tree().create_timer(bomb_time - time_offset + rest_time).timeout
+	center.queue_free()
+	pattern_shuffle_and_draw()
+
+# pattern_cat_wheel end
 ###############################
 
 ###############################

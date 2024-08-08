@@ -90,4 +90,4 @@ func get_playing_time() -> float:
 
 func add_playing_time(time_to_add: float):
 	if playing == true:
-		playing_time += time_to_add
+		playing_time += time_to_add / Engine.time_scale
