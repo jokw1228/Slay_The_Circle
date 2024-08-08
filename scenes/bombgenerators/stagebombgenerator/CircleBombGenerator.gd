@@ -502,3 +502,167 @@ func pattern_hide_in_hazard_end():
 	
 #pattern_hide_in_hazard block end
 ###############################
+
+###############################
+# pattern_numeric_diamond_with_hazard block start
+# made by Bae Sekang
+
+var pattern_diamond_with_hazard_timer: float
+var pattern_diamond_with_hazard_timer_tween: Tween
+
+func pattern_diamond_with_hazard():
+	PlayingFieldInterface.set_theme_color(Color.DEEP_SKY_BLUE)
+	
+	pattern_diamond_with_hazard_timer = 3.0
+	if pattern_diamond_with_hazard_timer_tween != null:
+		pattern_diamond_with_hazard_timer_tween.kill()
+	pattern_diamond_with_hazard_timer_tween = get_tree().create_tween()
+	pattern_diamond_with_hazard_timer_tween.tween_property(self, "pattern_diamond_with_hazard_timer", 0.0, 3.0)
+	
+	
+	var bomb1: NumericBomb = create_numeric_bomb(Vector2(70,0), 0.5, 2.5, 1)
+	var bomb2: NumericBomb = create_numeric_bomb(Vector2(-70,0), 0.5, 2.5, 2)
+	var bomb3: NumericBomb = create_numeric_bomb(Vector2(0,100), 0.5, 2.5, 3)
+	var bomb4: NumericBomb = create_numeric_bomb(Vector2(0,-100), 0.5, 2.5, 4)
+	create_hazard_bomb(Vector2(0,0), 0.5,1)
+	
+	
+
+func pattern_diamond_with_hazard_end():
+	PlayingFieldInterface.add_playing_time(pattern_diamond_with_hazard_timer)
+	pattern_shuffle_and_draw()
+	
+# pattern_diamond_with_hazard block end
+###############################
+
+
+
+###############################
+# pattern_numeric_diamond_with_hazard block start
+# made by Bae Sekang
+
+var pattern_narrow_road_timer: float
+var pattern_narrow_road_timer_tween: Tween
+
+func pattern_narrow_road():
+	PlayingFieldInterface.set_theme_color(Color.DEEP_SKY_BLUE)
+	
+	
+	pattern_narrow_road_timer = 3.0
+	if pattern_narrow_road_timer_tween != null:
+		pattern_narrow_road_timer_tween.kill()
+	pattern_narrow_road_timer_tween = get_tree().create_tween()
+	pattern_narrow_road_timer_tween.tween_property(self, "pattern_narrow_road_timer", 0.0, 3.0)
+	var rng = RandomNumberGenerator.new()
+	var random_range_integer = rng.randi_range(-120, 120)
+	var rng2 = RandomNumberGenerator.new()
+	var is_upsidedown = rng2.randi_range(1, 2)
+	if is_upsidedown==2:
+		is_upsidedown = -1
+	for i in range(0,5,1):
+		create_hazard_bomb(Vector2(random_range_integer-80,is_upsidedown*(-100+50*i)), 0.5,2.5)
+		create_hazard_bomb(Vector2(random_range_integer+80,is_upsidedown*(-100+50*i)), 0.5,2.5)
+		create_numeric_bomb(Vector2(random_range_integer,is_upsidedown*(-100+50*i)), 0.5, 2.5, i+1)
+
+
+func pattern_narrow_road_end():
+	PlayingFieldInterface.add_playing_time(pattern_narrow_road_timer)
+	pattern_shuffle_and_draw()
+	
+# pattern_narrow_road block end
+###############################
+
+
+###############################
+# pattern_369 block start
+# made by Bae Sekang
+
+var pattern_369_timer: float
+var pattern_369_timer_tween: Tween
+
+func pattern_369():
+	PlayingFieldInterface.set_theme_color(Color.DEEP_SKY_BLUE)
+	
+	pattern_369_timer = 3.0
+	if pattern_369_timer_tween != null:
+		pattern_369_timer_tween.kill()
+	pattern_369_timer_tween = get_tree().create_tween()
+	pattern_369_timer_tween.tween_property(self, "pattern_369_timer", 0.0, 3.0)
+	for i in range(1, 10):
+		var i_ones_place=i%10
+		if i_ones_place%3!=0 or i_ones_place==0:
+			create_numeric_bomb(Vector2(200 * cos(i * PI/4.0), 200 * sin(i * PI/4.0)), 1.0, 2.5,i)
+		else:
+			create_hazard_bomb(Vector2(200 * cos(i * PI/4.0), 200 * sin(i * PI/4.0)), 2.5,1.5)
+		await get_tree().create_timer(0.4).timeout
+
+
+func pattern_369_end():
+	PlayingFieldInterface.add_playing_time(pattern_369_timer)
+	pattern_shuffle_and_draw()
+	
+# pattern_369 block end
+###############################
+
+
+
+###############################
+# pattern_colosseum block start
+# made by Bae Sekang
+
+var pattern_colosseum_timer: float
+var pattern_colosseum_timer_tween: Tween
+
+func pattern_colosseum():
+	PlayingFieldInterface.set_theme_color(Color.DEEP_SKY_BLUE)
+	
+	pattern_colosseum_timer = 3.0
+	if pattern_colosseum_timer_tween != null:
+		pattern_colosseum_timer_tween.kill()
+	pattern_colosseum_timer_tween = get_tree().create_tween()
+	pattern_colosseum_timer_tween.tween_property(self, "pattern_colosseum_timer", 0.0, 3.0)
+
+	for i in range(1, 7):
+		create_hazard_bomb(Vector2(140 * cos(i * PI/3.0), 140 * sin(i * PI/3.0)), 1.0, 1.0)
+		create_normal_bomb(Vector2(100 * cos((2*i-1) * PI/6.0), 100 * sin((2*i-1) * PI/6.0)), 1.0, 2.5)
+		create_normal_bomb(Vector2(100 * cos(2*i * PI/6.0), 100 * sin(2*i * PI/6.0)), 1.0, 2.5)
+
+func pattern_colosseum_end():
+	PlayingFieldInterface.add_playing_time(pattern_colosseum_timer)
+	pattern_shuffle_and_draw()
+	
+# pattern_colosseum block end
+###############################
+
+
+
+###############################
+# pattern_pizza block start
+# made by Bae Sekang
+
+var pattern_pizza_timer: float
+var pattern_pizza_timer_tween: Tween
+
+func pattern_pizza():
+	PlayingFieldInterface.set_theme_color(Color.DEEP_SKY_BLUE)
+	
+	pattern_pizza_timer = 3.0
+	if pattern_pizza_timer_tween != null:
+		pattern_pizza_timer_tween.kill()
+	pattern_pizza_timer_tween = get_tree().create_tween()
+	pattern_pizza_timer_tween.tween_property(self, "pattern_pizza_timer", 0.0, 3.0)
+
+	var bomb1: NumericBomb = create_numeric_bomb(Vector2(40,35), 0.5, 2.5, 1)
+	var bomb2: NumericBomb = create_numeric_bomb(Vector2(-110,105), 0.5, 2.5, 2)
+	create_normal_bomb(Vector2(-20,-75), 0.5, 2.5)
+	create_normal_bomb(Vector2(85,-10), 0.5, 2.5)
+	create_rotationspeedup_bomb(Vector2(0,0), 0.5, 2.5,1.5)
+	for i in range(1, 25):
+		create_hazard_bomb(Vector2(220 * cos(i * PI/12.0), 220 * sin(i * PI/12.0)), 2.5,0.1)
+
+func pattern_pizza_end():
+	PlayingFieldInterface.add_playing_time(pattern_pizza_timer)
+	pattern_shuffle_and_draw()
+	
+# pattern_pizza block end
+###############################
