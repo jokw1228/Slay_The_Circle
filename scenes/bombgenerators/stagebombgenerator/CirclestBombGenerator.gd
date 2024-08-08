@@ -162,6 +162,7 @@ var pattern_rotate_timing_random = 1
 var pattern_rotate_timing_moving = false
 
 func pattern_rotate_timing():
+	PlayingFieldInterface.set_theme_color(Color.AQUAMARINE)
 	pattern_rotate_timing_moving = false
 	pattern_rotate_timing_timer = 1.2
 	
@@ -217,6 +218,7 @@ var pattern_survive_random_slay_active: bool = false
 var pattern_survive_random_slay_direction: Array = [0, 0, 0]
 
 func pattern_survive_random_slay():
+	PlayingFieldInterface.set_theme_color(Color.AQUAMARINE)
 	pattern_survive_random_slay_hazard.clear()
 	pattern_survive_random_slay_bombs.clear()
 	pattern_survive_random_slay_active = false
@@ -301,6 +303,7 @@ var pattern_moving_link_bomb_dir_changed = [false, false]
 var pattern_moving_link_active: bool = false
 
 func pattern_moving_link():
+	PlayingFieldInterface.set_theme_color(Color.AQUAMARINE)
 	pattern_moving_link_active = false
 	pattern_moving_link_bomb.clear()
 	pattern_moving_link_hazard.clear()
@@ -368,6 +371,7 @@ var pattern_shuffle_game_moveseed = [0,0,0,0]
 var pattern_shuffle_game_speed = [0,0,0,0]
 
 func pattern_shuffle_game():
+	PlayingFieldInterface.set_theme_color(Color.AQUAMARINE)
 	pattern_shuffle_game_bombs.clear()
 	pattern_shuffle_game_moving = false
 	pattern_shuffle_game_timer = 4.6

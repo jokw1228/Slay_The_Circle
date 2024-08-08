@@ -61,6 +61,7 @@ func pattern_lightning():
 # made by kiyong
 
 func pattern_random_shape():
+	PlayingFieldInterface.set_theme_color(Color.AQUAMARINE)
 	var prev_value
 	const pattern_time = 0.9
 	for i in range(6):

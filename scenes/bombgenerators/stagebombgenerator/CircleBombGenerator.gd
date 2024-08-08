@@ -148,6 +148,7 @@ var pattern_random_link_player_angle: float
 const pattern_random_link_bomb_dist = 128
 
 func pattern_random_link():
+	PlayingFieldInterface.set_theme_color(Color.AQUAMARINE)
 	pattern_random_link_timer = 2.5
 	
 	if pattern_random_link_timer_tween != null:
