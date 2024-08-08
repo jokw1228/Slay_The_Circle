@@ -704,7 +704,7 @@ func pattern_darksight():
 func pattern_darksight_end():
 	PlayingFieldInterface.set_theme_color(Color.BISQUE)
 	PlayingFieldInterface.add_playing_time(pattern_darksight_timer)
-	#pattern_shuffle_and_draw()
+	pattern_shuffle_and_draw()
 	
 #pattern_darksight block end
 ###############################
