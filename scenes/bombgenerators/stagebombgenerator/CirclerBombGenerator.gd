@@ -17,6 +17,8 @@ func pattern_list_initialization():
 	pattern_list.append(Callable(self, "pattern_random_shape"))
 	pattern_list.append(Callable(self, "pattern_random_rotation"))
 	pattern_list.append(Callable(self, "pattern_blocking"))
+	pattern_list.append(Callable(self, "pattern_reactspeed_test")) 
+	pattern_list.append(Callable(self, "pattern_link_free")) 
 
 func pattern_shuffle_and_draw():
 	randomize()
@@ -260,4 +262,127 @@ func pattern_blocking_end():
 	pattern_shuffle_and_draw()
 	
 # pattern_blocking end
+###############################
+
+###############################
+# pattern_reactspeed_test block start
+# made by seokhee
+
+#반응속도 테스트
+#핸드폰으로 하면 circler 정도일듯 
+
+var pattern_reactspeed_test_timer : float
+var pattern_reactspeed_test_timer_tween : Tween
+var num_id : int = 0
+
+func pattern_reactspeed_test():
+	PlayingFieldInterface.set_theme_color(Color.BISQUE)
+	
+	pattern_reactspeed_test_timer = 7.0
+	
+	if pattern_reactspeed_test_timer_tween != null:
+		pattern_reactspeed_test_timer_tween.kill()
+	pattern_reactspeed_test_timer_tween = get_tree().create_tween()
+	pattern_reactspeed_test_timer_tween.tween_property(self, "pattern_reactspeed_test_timer", 0.0, 10.5)
+	
+	var num_rng = RandomNumberGenerator.new()
+	num_rng.randomize()
+	var my_array = []
+	
+	var pos_rng = RandomNumberGenerator.new()
+	pos_rng.randomize()
+	
+	
+	for i in range(10):  
+		var random_value = num_rng.randi_range(0, 2)
+		my_array.append(random_value)
+	for i in range(my_array.size()):
+		var value = my_array[i]
+		var random_pos_value = pos_rng.randi_range(0, 200)
+		match value:
+			0:
+				make_random_bomb(0, i, random_pos_value)
+			1:
+				make_random_bomb(1, i, random_pos_value)
+			2:
+				make_random_bomb(2, i, random_pos_value)
+				num_id+=1
+		await Utils.timer(0.3)
+	await Utils.timer(1.1)
+	pattern_shuffle_and_draw()
+func make_random_bomb(num, cnt, pos):
+	if num == 0:
+		var bomb : NormalBomb = create_normal_bomb(Vector2(pos * pow(-1, cnt + 1), pos * pow(-1, cnt)), 0.7, 0.7)
+	if num == 1:
+		var bomb : HazardBomb = create_hazard_bomb(Vector2(pos * pow(-1, cnt + 1), pos * pow(-1, cnt)), 0.7, 0.7)
+	if num == 2:
+		var bomb : NumericBomb = create_numeric_bomb(Vector2(pos * pow(-1, cnt + 1), pos * pow(-1, cnt)), 0.7, 0.7, num_id)
+	
+	
+
+func pattern_reactspeed_test_end():
+	PlayingFieldInterface.add_playing_time(pattern_reactspeed_test_timer)
+	pattern_shuffle_and_draw()
+	
+#pattern_reactspeed_test block end
+###############################
+
+###############################
+# pattern_link_free block start
+# made by seokhee
+
+#링크를 구하기 위해선 기다림도 필요한 법..
+#컴퓨터 기준으로 개어려워서 circlest 정도일 듯
+
+var pattern_link_free_timer : float
+var pattern_link_free_timer_tween : Tween
+
+func pattern_link_free():
+	PlayingFieldInterface.set_theme_color(Color.BISQUE)
+	
+	pattern_link_free_timer = 6.0
+	
+	if pattern_link_free_timer_tween != null:
+		pattern_link_free_timer_tween.kill()
+	pattern_link_free_timer_tween = get_tree().create_tween()
+	pattern_link_free_timer_tween.tween_property(self, "pattern_link_free_timer", 0.0, 6.0)
+	
+	var bomb1: NormalBomb = create_normal_bomb(Vector2(133, -100), 1.5, 3.0)
+	var bomb2: NormalBomb = create_normal_bomb(Vector2(133, 100), 1.5, 3.0)
+	
+	create_bomb_link(bomb1, bomb2)
+	
+	var bomb3: HazardBomb = create_hazard_bomb(Vector2(0, -100), 0.5, 4.5)
+	var bomb4: HazardBomb = create_hazard_bomb(Vector2(0, 0), 0.5, 4.5)
+	var bomb5: HazardBomb = create_hazard_bomb(Vector2(0, 100), 0.5, 4.5)
+	
+	var bomb6: NormalBomb = create_normal_bomb(Vector2(70,-200), 1.5, 3.0)
+	var bomb7: NormalBomb = create_normal_bomb(Vector2(-70, -200), 1.5, 3.0)
+	
+	create_bomb_link(bomb6, bomb7)
+	
+	var bomb8: NormalBomb = create_normal_bomb(Vector2(-133, -100), 1.5, 3.0)
+	var bomb9: NormalBomb = create_normal_bomb(Vector2(-133, 100), 1.5, 3.0)
+	
+	create_bomb_link(bomb8, bomb9)
+	
+	var bomb10: NormalBomb = create_normal_bomb(Vector2(70, 200), 1.5, 3.0)
+	var bomb11: NormalBomb = create_normal_bomb(Vector2(-70, 200), 1.5, 3.0)
+	
+	create_bomb_link(bomb10, bomb11)
+	
+	var bomb_main_link_1: NumericBomb = create_numeric_bomb(Vector2(-170, 0), 5.0, 1.0, 1)
+	var bomb_main_link_2: NumericBomb = create_numeric_bomb(Vector2(170, 0), 5.0, 1.0, 2)
+	
+	await Utils.timer(6.0)
+	pattern_shuffle_and_draw()
+	
+	#var bomb4: RotationSpeedUpBomb = create_rotationspeedup_bomb(Vector2(-256, 0), 0.5, 1.8, 0.3)
+	#var bomb5: RotationSpeedUpBomb = create_rotationspeedup_bomb(Vector2(0, 0), 0.5, 1.8, 0.3)
+
+func pattern_link_free_end():
+	PlayingFieldInterface.add_playing_time(pattern_link_free_timer)
+	pattern_shuffle_and_draw()
+	
+#pattern_link_free block end
 ###############################

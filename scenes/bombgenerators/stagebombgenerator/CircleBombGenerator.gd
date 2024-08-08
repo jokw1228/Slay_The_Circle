@@ -23,6 +23,7 @@ func pattern_list_initialization():
 	pattern_list.append(Callable(self, "pattern_twisted_numeric"))
 	pattern_list.append(Callable(self, "pattern_spiral"))
 	pattern_list.append(Callable(self, "pattern_numeric_choice"))
+	pattern_list.append(Callable(self, "pattern_hide_in_hazard")) 
 	
 func pattern_shuffle_and_draw():
 	randomize()
@@ -463,4 +464,41 @@ func pattern_numeric_choice_end():
 	pattern_shuffle_and_draw()
 	
 # pattern_numeric_choice end
+###############################
+
+###############################
+# pattern_hide_in_hazard block start
+# made by seokhee
+
+#위험하다고 피하는 건 좋지 않아요
+#circle 정도의 쉬?운 난이도
+
+var pattern_hide_in_hazard_timer : float
+var pattern_hide_in_hazard_timer_tween : Tween
+
+func pattern_hide_in_hazard():
+	PlayingFieldInterface.set_theme_color(Color.BISQUE)
+	
+	pattern_hide_in_hazard_timer = 6.0
+	
+	if pattern_hide_in_hazard_timer_tween != null:
+		pattern_hide_in_hazard_timer_tween.kill()
+	pattern_hide_in_hazard_timer_tween = get_tree().create_tween()
+	pattern_hide_in_hazard_timer_tween.tween_property(self, "pattern_hide_in_hazard_timer", 0.0, 6.0)
+	
+	for i in range(8):
+		var bomb : NormalBomb = create_normal_bomb(Vector2(150 * cos(i*PI/4), 150 * sin(i*PI/4)), 0.4, 5.6)
+	
+	for i in range(4):	
+		for j in range(8):
+			var bomb : HazardBomb = create_hazard_bomb(Vector2(150 * cos(j*PI/4), 150 * sin(j*PI/4)), 0.5, 1)
+		await Utils.timer(1.5)
+	pattern_shuffle_and_draw()
+	
+	
+func pattern_hide_in_hazard_end():
+	PlayingFieldInterface.add_playing_time(pattern_hide_in_hazard_timer)
+	pattern_shuffle_and_draw()
+	
+#pattern_hide_in_hazard block end
 ###############################
