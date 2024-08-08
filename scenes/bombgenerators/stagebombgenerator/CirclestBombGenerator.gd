@@ -261,12 +261,12 @@ var pattern_shuffle_game_speed = [0,0,0,0]
 func pattern_shuffle_game():
 	pattern_shuffle_game_bombs.clear()
 	pattern_shuffle_game_moving = false
-	pattern_shuffle_game_timer = 4.3
+	pattern_shuffle_game_timer = 4.6
 	
 	if pattern_shuffle_game_timer_tween != null:
 		pattern_shuffle_game_timer_tween.kill()
 	pattern_shuffle_game_timer_tween = get_tree().create_tween()
-	pattern_shuffle_game_timer_tween.tween_property(self, "pattern_shuffle_game_timer", 0, 4.3)
+	pattern_shuffle_game_timer_tween.tween_property(self, "pattern_shuffle_game_timer", 0, 4.6)
 
 	pattern_shuffle_game_bomb_pos = [1, 2, 3, 4]
 	pattern_shuffle_game_rand.shuffle()
@@ -337,6 +337,7 @@ func pattern_shuffle_game_process(delta):
 				pattern_shuffle_game_bombs[i].position = pattern_shuffle_game_const_position[pattern_shuffle_game_moveseed[pattern_shuffle_game_bomb_pos[i] - 1]- 1]
 
 func pattern_shuffle_game_end():
+	await Utils.timer(0.3)
 	PlayingFieldInterface.add_playing_time(pattern_shuffle_game_timer)
 	pattern_shuffle_and_draw()
 
