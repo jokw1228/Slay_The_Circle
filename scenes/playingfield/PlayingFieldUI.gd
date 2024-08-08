@@ -11,7 +11,7 @@ class_name PlayingFieldUI
 @export var Last_Milliseconds_node: Label
 
 var RoomMenu_room = "res://scenes/rooms/RoomMenu/RoomMenu.tscn"
-var stage_index: int = 1
+var stage_index: int = PlayingFieldInterface.get_stage_index()
 
 var seconds_value: int = 0
 var milliseconds_value: int = 0
@@ -38,7 +38,8 @@ func playing_time_updated(time: float):
 	Milliseconds_node.text = ".%02d" % milliseconds_value
 
 	if best_record == -1: 
-		best_record = SaveFileManager.get_best_record(stage_index)
+		# stage_index가 RoomMenu에서는 0-index를 사용, SaveFileManager에서는 1-index를 사용
+		best_record = SaveFileManager.get_best_record(stage_index + 1)
 		%LabelBestSec.text = "%d" % floor(best_record)
 		%LabelBestMilli.text = ".%02d" % round((best_record - floor(best_record)) * 100)
 	if time > best_record and %InGameNewRecord.visible == false:
@@ -81,7 +82,8 @@ func print_best_record():
 	#최고기록을 갱신한 경우 
 	if(current_record > best_record):
 		new_record_transition()
-		SaveFileManager.update_record(stage_index,current_record)
+		# stage_index가 RoomMenu에서는 0-index를 사용, SaveFileManager에서는 1-index를 사용
+		SaveFileManager.update_record(stage_index + 1,current_record)
 		is_new_record = true
 
 	best_record = -1

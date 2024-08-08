@@ -61,6 +61,7 @@ func start_stage(): # A signal is connected by the select button.=
 	# animation done
 	await Utils.timer(0.3)
 	PlayingFieldInterface.enable_player_input()
+	PlayingFieldInterface.set_stage_index(stage_index)
 	get_tree().change_scene_to_packed(room_to_go[stage_index])
 	
 func select_stage(difficulty: int):

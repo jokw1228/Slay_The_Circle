@@ -78,3 +78,10 @@ func disable_player_input():
 
 func enable_player_input():
 	is_player_input_enabled = true
+
+var stage_index: int = -1
+func set_stage_index(stage_index: int):
+	self.stage_index = stage_index
+
+func get_stage_index() -> int:
+	return stage_index
