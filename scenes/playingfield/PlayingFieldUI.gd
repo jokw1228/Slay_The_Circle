@@ -17,6 +17,8 @@ var seconds_value: int = 0
 var milliseconds_value: int = 0
 var is_new_record: bool = false
 
+var best_record: float = -1
+
 func _ready():
 	Best_node.visible = false
 	Time_node.visible = false
@@ -24,14 +26,24 @@ func _ready():
 	%PanelScore.visible = false
 	%PanelNewRecord.visible = false
 	%BackButton.visible = false
+	%InGameNewRecord.visible = false
 
 func playing_time_updated(time: float):
+	print(get_tree().root.get_child(0))
+	
 	seconds_value = floor(time)
 	Seconds_node.text = str(seconds_value)
 	
 	milliseconds_value = floor((time - seconds_value) * 100)
 	Milliseconds_node.text = ".%02d" % milliseconds_value
 
+	if best_record == -1: 
+		best_record = SaveFileManager.get_best_record(stage_index)
+		%LabelBestSec.text = "%d" % floor(best_record)
+		%LabelBestMilli.text = ".%02d" % floor((best_record - floor(best_record)) * 100)
+	if time > best_record and %InGameNewRecord.visible == false:
+		Utils.slide_in(%InGameNewRecord, 400, Vector2.RIGHT, 0.4)
+		Best_node.visible = false
 
 func close_Stopped_and_open_Playing():
 	#스타트 범브 터지면 gameover UI 들어가게
@@ -43,13 +55,15 @@ func close_Stopped_and_open_Playing():
 		is_new_record = false	
 
 	await Utils.timer(0.9)
-	Utils.slide_in(Best_node, 140, Vector2.DOWN, 0.5)
+	if %InGameNewRecord.visible == false:
+		Utils.slide_in(Best_node, 140, Vector2.DOWN, 0.5)
 	await Utils.timer(0.1)
 	Utils.slide_in(Time_node, 140, Vector2.DOWN, 0.8)
 
 func close_Playing_and_open_Stopped():
 	Best_node.visible = false
 	Time_node.visible = false
+	%InGameNewRecord.visible = false
 	
 	Last_Seconds_node.text = str(seconds_value)
 	Last_Milliseconds_node.text = ".%02d" % milliseconds_value
@@ -63,13 +77,14 @@ func close_Playing_and_open_Stopped():
 	Utils.slide_in(%BackButton, 200, Vector2(0.25, 1), 0.4)
 	
 func print_best_record():
-	var best_record = SaveFileManager.get_best_record(stage_index)
 	var current_record: float = seconds_value + float(milliseconds_value)/100
 	#최고기록을 갱신한 경우 
 	if(current_record > best_record):
 		new_record_transition()
 		SaveFileManager.update_record(stage_index,current_record)
 		is_new_record = true
+
+	best_record = -1
 	
 func new_record_transition():
 	await get_tree().create_timer(1.0).timeout
