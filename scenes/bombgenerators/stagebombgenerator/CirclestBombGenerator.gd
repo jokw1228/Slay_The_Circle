@@ -11,8 +11,6 @@ func _ready():
 	pattern_shuffle_and_draw()
 
 func pattern_list_initialization():
-	#pattern_list.append(Callable(self, "pattern_test_1"))
-	
 	pattern_list.append(Callable(self, "pattern_cat_wheel"))
 	pattern_list.append(Callable(self, "pattern_fruitninja"))
 	pattern_list.append(Callable(self, "pattern_windmill"))
@@ -34,16 +32,6 @@ func _process(delta):
 	pattern_survive_random_slay_process(delta)
 	pattern_moving_link_process(delta)
 	pattern_shuffle_game_process(delta)
-
-###############################
-# pattern_test_1 block start
-
-func pattern_test_1():
-	await Utils.timer(0.1) # do nothing
-	pattern_shuffle_and_draw()
-
-# pattern_test_1 block end
-###############################
 
 ###############################
 # pattern_cat_wheel block start

@@ -11,8 +11,6 @@ func _ready():
 	pattern_shuffle_and_draw()
 
 func pattern_list_initialization():
-	# pattern_list.append(Callable(self, "pattern_test_1"))
-	
 	pattern_list.append(Callable(self, "pattern_lightning"))
 	pattern_list.append(Callable(self, "pattern_wall_timing"))
 	pattern_list.append(Callable(self, "pattern_scattered_hazards"))
@@ -24,18 +22,6 @@ func pattern_shuffle_and_draw():
 	randomize()
 	var random_index: int = randi() % pattern_list.size()
 	pattern_list[random_index].call()
-	
-
-###############################
-# pattern_test_1 block start
-
-func pattern_test_1():
-	await Utils.timer(0.1) # do nothing
-	pattern_shuffle_and_draw()
-
-# pattern_test_1 block end
-###############################
-
 
 ###############################
 # pattern_lightning block start
@@ -191,87 +177,4 @@ func pattern_random_shape_random(pattern: int, randomrotation: float):
 				rotation_value += PI / 2.5
 
 # pattern_random_shape block end
-###############################
-
-###############################
-# pattern_random_rotation block start
-# made by jinhyun
-
-var pattern_random_rotation_timer: float
-var pattern_random_rotation_timer_tween: Tween
-
-func pattern_random_rotation():
-	PlayingFieldInterface.set_theme_color(Color.VIOLET)
-	
-	pattern_random_rotation_timer = 2.0
-	if pattern_random_rotation_timer_tween != null:
-		pattern_random_rotation_timer_tween.kill()
-	pattern_random_rotation_timer_tween = get_tree().create_tween()
-	pattern_random_rotation_timer_tween.tween_property(self,"pattern_random_rotation_timer",0.0,2.0)
-	
-	var player_position: Vector2
-	var rand: int
-	var bomb1: Bomb
-	
-	for i in range(6):
-		player_position = PlayingFieldInterface.get_player_position()
-		rand = randi() % 2
-		if rand == 0:
-			bomb1 = create_rotationspeedup_bomb(player_position.rotated(PI/2) * 0.6, 0.2, 0.5, 4*PI)
-			await bomb1.tree_exited
-			
-			if is_inside_tree():
-				await get_tree().create_timer(0.2).timeout
-			PlayingFieldInterface.rotation_stop()
-		else:
-			bomb1 = create_rotationspeedup_bomb(player_position.rotated(-PI/2) * 0.6, 0.2, 0.5, 4*PI)
-			await bomb1.tree_exited
-			
-			if is_inside_tree():
-				await get_tree().create_timer(0.2).timeout
-			PlayingFieldInterface.rotation_stop()
-	
-	await get_tree().create_timer(1.5).timeout
-	var bomb = create_normal_bomb(Vector2(0, 0), 0.3, 3)
-	bomb.connect("player_body_entered",Callable(self,"pattern_random_rotation_end"))
-
-func pattern_random_rotation_end():
-	PlayingFieldInterface.add_playing_time(pattern_random_rotation_timer)
-	pattern_shuffle_and_draw()
-	
-# pattern_random_rotation end
-###############################
-
-###############################
-# pattern_blocking block start
-# made by jinhyun
-
-var pattern_blocking_timer: float
-var pattern_blocking_timer_tween: Tween
-
-func pattern_blocking():
-	PlayingFieldInterface.set_theme_color(Color.VIOLET)
-	
-	pattern_blocking_timer = 3.0
-	if pattern_blocking_timer_tween != null:
-		pattern_blocking_timer_tween.kill()
-	pattern_blocking_timer_tween = get_tree().create_tween()
-	pattern_blocking_timer_tween.tween_property(self,"pattern_blocking_timer",0.0,3.0)
-	
-	var player_position: Vector2 = PlayingFieldInterface.get_player_position()
-	
-	for i in range(9):
-		create_hazard_bomb(player_position.rotated((i-4)*PI/8) * 0.7, 0.5, 2)
-	
-	var bomb1 = create_normal_bomb(player_position.rotated(3.0*PI/4.0) * 0.6, 0.3, 2)
-	var bomb2 = create_normal_bomb(player_position.rotated(-3.0*PI/4.0) * 0.6, 0.3, 2)
-	var link = create_bomb_link(bomb1, bomb2)
-	
-	link.connect("both_bombs_removed", Callable(self, "pattern_blocking_end"))
-
-func pattern_blocking_end():
-	PlayingFieldInterface.add_playing_time(pattern_blocking_timer)
-	pattern_shuffle_and_draw()
-	
-# pattern_blocking end
 ###############################
