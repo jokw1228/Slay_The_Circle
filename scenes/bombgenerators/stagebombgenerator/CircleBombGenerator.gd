@@ -23,7 +23,12 @@ func pattern_list_initialization():
 	pattern_list.append(Callable(self, "pattern_twisted_numeric"))
 	pattern_list.append(Callable(self, "pattern_spiral"))
 	pattern_list.append(Callable(self, "pattern_numeric_choice"))
-	pattern_list.append(Callable(self, "pattern_hide_in_hazard")) 
+	pattern_list.append(Callable(self, "pattern_hide_in_hazard"))
+	pattern_list.append(Callable(self, "pattern_diamond_with_hazard"))
+	pattern_list.append(Callable(self, "pattern_narrow_road"))
+	pattern_list.append(Callable(self, "pattern_369"))
+	pattern_list.append(Callable(self, "pattern_colosseum"))
+	pattern_list.append(Callable(self, "pattern_pizza"))
 	
 func pattern_shuffle_and_draw():
 	randomize()
@@ -525,8 +530,8 @@ func pattern_diamond_with_hazard():
 	var bomb3: NumericBomb = create_numeric_bomb(Vector2(0,100), 0.5, 2.5, 3)
 	var bomb4: NumericBomb = create_numeric_bomb(Vector2(0,-100), 0.5, 2.5, 4)
 	create_hazard_bomb(Vector2(0,0), 0.5,1)
-	
-	
+	await Utils.timer(2.5)
+	pattern_diamond_with_hazard_end()
 
 func pattern_diamond_with_hazard_end():
 	PlayingFieldInterface.add_playing_time(pattern_diamond_with_hazard_timer)
@@ -563,7 +568,8 @@ func pattern_narrow_road():
 		create_hazard_bomb(Vector2(random_range_integer-80,is_upsidedown*(-100+50*i)), 0.5,2.5)
 		create_hazard_bomb(Vector2(random_range_integer+80,is_upsidedown*(-100+50*i)), 0.5,2.5)
 		create_numeric_bomb(Vector2(random_range_integer,is_upsidedown*(-100+50*i)), 0.5, 2.5, i+1)
-
+	await Utils.timer(2.5)
+	pattern_narrow_road_end()
 
 func pattern_narrow_road_end():
 	PlayingFieldInterface.add_playing_time(pattern_narrow_road_timer)
@@ -595,7 +601,9 @@ func pattern_369():
 		else:
 			create_hazard_bomb(Vector2(200 * cos(i * PI/4.0), 200 * sin(i * PI/4.0)), 2.5,1.5)
 		await get_tree().create_timer(0.4).timeout
-
+	
+	await Utils.timer(2.5)
+	pattern_369_end()
 
 func pattern_369_end():
 	PlayingFieldInterface.add_playing_time(pattern_369_timer)
@@ -626,7 +634,10 @@ func pattern_colosseum():
 		create_hazard_bomb(Vector2(140 * cos(i * PI/3.0), 140 * sin(i * PI/3.0)), 1.0, 1.0)
 		create_normal_bomb(Vector2(100 * cos((2*i-1) * PI/6.0), 100 * sin((2*i-1) * PI/6.0)), 1.0, 2.5)
 		create_normal_bomb(Vector2(100 * cos(2*i * PI/6.0), 100 * sin(2*i * PI/6.0)), 1.0, 2.5)
-
+	
+	await Utils.timer(2.5)
+	pattern_colosseum_end()
+	
 func pattern_colosseum_end():
 	PlayingFieldInterface.add_playing_time(pattern_colosseum_timer)
 	pattern_shuffle_and_draw()
@@ -659,7 +670,9 @@ func pattern_pizza():
 	create_rotationspeedup_bomb(Vector2(0,0), 0.5, 2.5,1.5)
 	for i in range(1, 25):
 		create_hazard_bomb(Vector2(220 * cos(i * PI/12.0), 220 * sin(i * PI/12.0)), 2.5,0.1)
-
+	await Utils.timer(2.5)
+	pattern_pizza_end()
+	
 func pattern_pizza_end():
 	PlayingFieldInterface.add_playing_time(pattern_pizza_timer)
 	pattern_shuffle_and_draw()
