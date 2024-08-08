@@ -15,6 +15,7 @@ func pattern_list_initialization():
 	pattern_list.append(Callable(self, "pattern_rotate_timing"))
 	pattern_list.append(Callable(self, "pattern_survive_random_slay"))
 	pattern_list.append(Callable(self, "pattern_moving_link"))
+	pattern_list.append(Callable(self, "pattern_shuffle_game"))
 	
 func pattern_shuffle_and_draw():
 	randomize()
@@ -25,6 +26,7 @@ func _process(delta):
 	pattern_rotate_timing_process(delta)
 	pattern_survive_random_slay_process(delta)
 	pattern_moving_link_process(delta)
+	pattern_shuffle_game_process(delta)
 
 ###############################
 # pattern_test_1 block start
@@ -235,4 +237,108 @@ func pattern_moving_link_end():
 	pattern_shuffle_and_draw()
 
 # pattern_moving_link block end
+###############################
+
+###############################
+# pattern_shuffle_game block start
+# made by kiyong
+
+var pattern_shuffle_game_timer: float
+var pattern_shuffle_game_timer_tween: Tween
+var pattern_shuffle_game_bombs: Array[Node2D]
+var pattern_shuffle_game_real_bomb: Bomb
+var pattern_shuffle_game_moving: bool = false
+
+var pattern_shuffle_game_rand = [0, 0, 0, 1]
+const pattern_shuffle_game_const_position = [Vector2(-256 / sqrt(2), -256 / sqrt(2)), Vector2(256 / sqrt(2), -256 / sqrt(2)), Vector2(-256 / sqrt(2), 256 / sqrt(2)), Vector2(256 / sqrt(2), 256 / sqrt(2))]
+var pattern_shuffle_game_bomb_pos = [1, 2, 3, 4] # 각 폭탄의 현재 위치
+
+var pattern_shuffle_game_direction = [0,0,0,0]
+var pattern_shuffle_game_distance = [0,0,0,0]
+var pattern_shuffle_game_moveseed = [0,0,0,0]
+var pattern_shuffle_game_speed = [0,0,0,0]
+
+func pattern_shuffle_game():
+	pattern_shuffle_game_bombs.clear()
+	pattern_shuffle_game_moving = false
+	pattern_shuffle_game_timer = 4.3
+	
+	if pattern_shuffle_game_timer_tween != null:
+		pattern_shuffle_game_timer_tween.kill()
+	pattern_shuffle_game_timer_tween = get_tree().create_tween()
+	pattern_shuffle_game_timer_tween.tween_property(self, "pattern_shuffle_game_timer", 0, 4.3)
+
+	pattern_shuffle_game_bomb_pos = [1, 2, 3, 4]
+	pattern_shuffle_game_rand.shuffle()
+	var prev_value = 5
+	var real_bomb_position
+	
+	for i in range(4):
+		if pattern_shuffle_game_rand[i]:
+			pattern_shuffle_game_bombs.append(create_hazard_bomb(Vector2(1000, 1000), 4.2, 0))
+			pattern_shuffle_game_real_bomb = create_normal_bomb(pattern_shuffle_game_const_position[i], 4.2, 0.1)
+			pattern_shuffle_game_real_bomb.position = pattern_shuffle_game_const_position[i]
+			real_bomb_position = i
+		else:
+			pattern_shuffle_game_bombs.append(create_hazard_bomb(pattern_shuffle_game_const_position[i], 4.2, 0.1))
+			pattern_shuffle_game_bombs[i].position = pattern_shuffle_game_const_position[i]
+	
+	await Utils.timer(0.8)
+	pattern_shuffle_game_bombs[real_bomb_position].position = pattern_shuffle_game_const_position[real_bomb_position]
+	pattern_shuffle_game_real_bomb.position = Vector2(1000, 1000)
+	
+	for i in range(8): # 1회당 0.3초 
+		var rand_result = randi_range(0,4)
+		while rand_result == prev_value:
+			rand_result = randi_range(0,4)
+		prev_value = rand_result
+		await pattern_shuffle_game_random(rand_result)
+		await Utils.timer(0.05)
+		
+	await Utils.timer(1)
+	pattern_shuffle_game_real_bomb.connect("player_body_entered",Callable(self,"pattern_shuffle_game_end"))
+	# pattern_shuffle_game_bombs[real_bomb_position].position = Vector2(1000, 1000)
+	pattern_shuffle_game_real_bomb.position = pattern_shuffle_game_const_position[pattern_shuffle_game_bomb_pos[real_bomb_position]-1]
+
+func pattern_shuffle_game_random(pattern: int):
+	match pattern:
+		0:
+			await pattern_shuffle_game_move([2, 4, 1, 3]) # Clockwise
+		1:
+			await pattern_shuffle_game_move([3, 1, 4, 2]) # Counterclockwise
+		2:
+			await pattern_shuffle_game_move([3, 4, 1, 2]) # Swap vertically
+		3:
+			await pattern_shuffle_game_move([2, 1, 4, 3]) # Swap horizontally
+		4:
+			await pattern_shuffle_game_move([4, 3, 2, 1]) # Swap diagonally
+
+func pattern_shuffle_game_move(setseed: Array):
+	for i in range(4):
+		pattern_shuffle_game_moveseed[i] = setseed[i]
+	for i in range(4):
+		pattern_shuffle_game_speed[i] = (pattern_shuffle_game_const_position[pattern_shuffle_game_moveseed[pattern_shuffle_game_bomb_pos[i] - 1]- 1] - pattern_shuffle_game_bombs[i].position).length() * 5
+	pattern_shuffle_game_moving = true
+	await Utils.timer(0.25)
+	pattern_shuffle_game_moving = false
+	
+	for i in range(4):
+		pattern_shuffle_game_bomb_pos[i] = pattern_shuffle_game_moveseed[pattern_shuffle_game_bomb_pos[i] - 1]
+
+func pattern_shuffle_game_process(delta):
+	if pattern_shuffle_game_moving == true:
+		for i in range(4):
+			pattern_shuffle_game_direction[i] = (pattern_shuffle_game_const_position[pattern_shuffle_game_moveseed[pattern_shuffle_game_bomb_pos[i] - 1]- 1] - pattern_shuffle_game_bombs[i].position).normalized()
+			pattern_shuffle_game_distance[i] = (pattern_shuffle_game_const_position[pattern_shuffle_game_moveseed[pattern_shuffle_game_bomb_pos[i] - 1]- 1] - pattern_shuffle_game_bombs[i].position).length()
+			
+			if pattern_shuffle_game_distance[i] > 3:
+				pattern_shuffle_game_bombs[i].position += pattern_shuffle_game_direction[i] * pattern_shuffle_game_speed[i] * delta
+			else:
+				pattern_shuffle_game_bombs[i].position = pattern_shuffle_game_const_position[pattern_shuffle_game_moveseed[pattern_shuffle_game_bomb_pos[i] - 1]- 1]
+
+func pattern_shuffle_game_end():
+	PlayingFieldInterface.add_playing_time(pattern_shuffle_game_timer)
+	pattern_shuffle_and_draw()
+
+# pattern_shuffle_game block end
 ###############################
