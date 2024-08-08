@@ -26,7 +26,10 @@ func pattern_shuffle_and_draw():
 	pattern_list[random_index].call()
 
 func _process(delta):
+	pattern_rotate_timing_process(delta)
+	pattern_survive_random_slay_process(delta)
 	pattern_moving_link_process(delta)
+	pattern_shuffle_game_process(delta)
 
 ###############################
 # pattern_test_1 block start
