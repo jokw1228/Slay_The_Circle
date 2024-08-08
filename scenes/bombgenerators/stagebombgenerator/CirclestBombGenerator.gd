@@ -13,6 +13,9 @@ func _ready():
 func pattern_list_initialization():
 	# pattern_list.append(Callable(self, "pattern_test_1"))
 	pattern_list.append(Callable(self, "pattern_moving_link"))
+	pattern_list.append(Callable(self, "pattern_fruitninja"))
+	pattern_list.append(Callable(self, "pattern_windmill"))
+	pattern_list.append(Callable(self, "pattern_rain"))
 
 func pattern_shuffle_and_draw():
 	randomize()
@@ -87,4 +90,113 @@ func pattern_moving_link_end():
 	pattern_shuffle_and_draw()
 
 # pattern_moving_link block end
+###############################
+
+###############################
+# pattern_fruitninja block start
+# made by Seonghyeon
+
+# Hyper에서 normal 사이에 hazard 끼워 넣으면 재미있을 듯
+# 마지막 폭탄 일찍 종료 안하면 0.5초 쯤 길어짐
+# 이렇게 짧은 친구들도 일찍 종료 걸어야 할까?
+func pattern_fruitninja():
+	PlayingFieldInterface.set_theme_color(Color.HOT_PINK)
+
+	var timer = get_tree().create_timer(4.0)
+
+	var rigidbodies: Array[RigidBody2D] = [RigidBody2D.new(), RigidBody2D.new(), RigidBody2D.new(), RigidBody2D.new(), RigidBody2D.new()]
+	var direction: Array[int] = [1, -1, 1, 1, -1] # 정해진 패턴 대신 완전 랜덤? 그런데 같은 방향 중복이 너무 많이 나올 때 있음.
+	
+	for i in range(5):
+		add_child(rigidbodies[i])
+		rigidbodies[i].gravity_scale = 1.5
+		rigidbodies[i].linear_velocity = Vector2(direction[i] * 600, -900 + randf_range(-200, 100))
+		rigidbodies[i].position = Vector2(-direction[i] * 400, 281)
+
+		var bomb = create_normal_bomb(rigidbodies[i].global_position, 0, 1.2)
+		Utils.attach_node(rigidbodies[i], bomb)
+
+		if i == 4: # last bomb
+			bomb.connect("player_body_entered", func ():	
+				print(timer.time_left)
+				for rigidbody in rigidbodies:
+					rigidbody.queue_free()
+				
+				PlayingFieldInterface.add_playing_time(timer.time_left)
+				pattern_shuffle_and_draw()
+			)
+		await Utils.timer(0.7)
+# pattern_fruitninja block end
+###############################
+
+###############################
+# pattern_windmill block start
+# made by Seonghyeon
+func pattern_windmill():
+	PlayingFieldInterface.set_theme_color(Color.HOT_PINK)
+	const DIST: float = 70
+
+	var rotator: Node2D = Node2D.new()
+	add_child(rotator)
+
+	for i in range(8):
+		var marker: Node2D = Node2D.new()
+		rotator.add_child(marker)
+		marker.global_position = Vector2(-256 + 32 + i * 64, 0)
+		Utils.attach_node(marker, create_hazard_bomb(marker.global_position, 0.5, 2))
+
+	Utils.tween(Tween.TRANS_LINEAR).tween_property(rotator, "rotation", deg_to_rad(600), 2.5)
+	create_normal_bomb(Vector2(1, 1) * DIST, 0.5, 2)
+	create_normal_bomb(Vector2(-1, 1) * DIST, 0.5, 2)
+	create_normal_bomb(Vector2(-1, -1) * DIST, 0.5, 2)
+	create_normal_bomb(Vector2(1, -1) * DIST, 0.5, 2)
+
+	await Utils.timer(2.5)
+	rotator.queue_free()
+	pattern_shuffle_and_draw()
+# pattern_windmill block end
+###############################
+
+###############################
+# pattern_rain block start
+# made by Seonghyeon
+func pattern_rain():
+	PlayingFieldInterface.set_theme_color(Color.HOT_PINK)
+ 
+	pattern_rain_spawn_drop()
+	pattern_rain_spawn_bomb()
+
+	await Utils.timer(5.5)
+	pattern_shuffle_and_draw()
+ 
+func pattern_rain_spawn_drop():
+	for i in range(10):
+		pattern_rain_drop()
+		await Utils.timer(0.3)
+
+func pattern_rain_spawn_bomb():
+	for i in range(6):
+		pattern_rain_bomb()
+		await Utils.timer(0.5)
+
+func pattern_rain_drop():
+	const DIST: float = 300
+	const RANGE: float = 70
+
+	var bomb: HazardBomb = create_hazard_bomb(DIST * Vector2.UP.rotated(deg_to_rad(randf_range(-RANGE, RANGE))), 1, 2)
+	await Utils.timer(1)
+	Utils.tween(Tween.TRANS_EXPO, Tween.EASE_IN).tween_property(bomb, "global_position", Vector2(bomb.global_position.x, 500), 2)
+ 
+func pattern_rain_bomb():
+	const RANGE: float = 45
+	const DIST: float = 300
+
+	var direction: int = 1 if randi_range(0, 1) == 1 else -1
+	var pos: Vector2 = DIST * Vector2.LEFT.rotated(deg_to_rad(randf_range(-RANGE, 0)))
+	pos.x *= direction
+	var bomb: NormalBomb = create_normal_bomb(pos, 1, 2)
+	await Utils.timer(1)
+	Utils.tween(Tween.TRANS_LINEAR).tween_property(bomb, "global_position", Vector2(-pos.x, pos.y), 2)
+	
+# patter_rain block end
 ###############################

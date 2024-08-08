@@ -47,8 +47,18 @@ func slide_out(node: Control, length: float, direction: Vector2, duration: float
 	previous_tween[node].tween_property(node, "position", node.position + length * direction, duration)
 	# visible = false?
 
-func tween():
-	return get_tree().create_tween().set_trans(Tween.TRANS_EXPO).set_ease(Tween.EASE_OUT)
+func tween(transition: Tween.TransitionType = Tween.TRANS_EXPO, easing: Tween.EaseType = Tween.EASE_OUT):
+	return get_tree().create_tween().set_trans(transition).set_ease(easing)
+
+
+var tween_dict: Dictionary
+
+# Tween을 반환하되, 이전에 동일한 ID의 Tween이 반환된 적 있는 경우 해당 Tween을 kill합니다.
+func tween_unique(id: String, transition: Tween.TransitionType = Tween.TRANS_EXPO, easing: Tween.EaseType = Tween.EASE_OUT):
+	if tween_dict.has(id):
+		tween_dict[id].kill()
+	tween_dict[id] = tween(transition, easing)
+	return tween_dict[id]
 
 func _process(_delta):
 	for i in range(len(fixed_node)):

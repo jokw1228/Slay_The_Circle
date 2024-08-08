@@ -16,6 +16,9 @@ func pattern_list_initialization():
 	pattern_list.append(Callable(self, "pattern_numeric_triangle_with_link"))
 	pattern_list.append(Callable(self, "pattern_star"))
 	pattern_list.append(Callable(self, "pattern_random_link"))
+	pattern_list.append(Callable(self, "pattern_timing"))
+	pattern_list.append(Callable(self, "pattern_trafficlight"))
+	pattern_list.append(Callable(self, "pattern_manyrotation"))
 	
 func pattern_shuffle_and_draw():
 	print("pattern_shuffle_and_draw")
@@ -179,4 +182,92 @@ func pattern_random_link_end():
 	pattern_shuffle_and_draw()
 
 # pattern_random_link block end
+###############################
+
+###############################
+# pattern_timing block start
+# made by Seonghyeon
+func pattern_timing():
+	PlayingFieldInterface.set_theme_color(Color.HOT_PINK)
+
+	const SIZE = 70
+	create_hazard_bomb(SIZE * Vector2.LEFT.rotated(deg_to_rad(60)), 0.8, 1.5)
+	create_hazard_bomb(SIZE * Vector2.LEFT.rotated(deg_to_rad(120)), 0.8, 1.5)
+	create_hazard_bomb(SIZE * Vector2.RIGHT.rotated(deg_to_rad(60)), 0.8, 1.5)
+	create_hazard_bomb(SIZE * Vector2.RIGHT.rotated(deg_to_rad(120)), 0.8, 1.5)
+	create_hazard_bomb(SIZE * Vector2.LEFT, 0.8, 1.3)
+	create_hazard_bomb(SIZE * Vector2.RIGHT, 0.8, 1.3)
+	create_normal_bomb(Vector2.ZERO, 0.8, 1.5) 
+
+	await Utils.timer(2.3)
+	pattern_shuffle_and_draw()
+# pattern_timing block end
+###############################
+
+###############################
+# pattern_trafficlight block start
+# made by Seonghyeon
+func pattern_trafficlight():
+	PlayingFieldInterface.set_theme_color(Color.HOT_PINK)
+
+	const DIST: float = 75
+	const UNIT: float = 0.5
+	const START: float = 1
+	const WARNING: float = 0.5
+
+	create_hazard_bomb(Vector2.LEFT * DIST * 2, WARNING, START + UNIT * 1)
+	create_hazard_bomb(Vector2.LEFT * DIST * 1, WARNING, START + UNIT * 2)
+	create_hazard_bomb(Vector2.ZERO, WARNING, START + UNIT * 3)
+	create_hazard_bomb(Vector2.RIGHT * DIST * 1, WARNING, START + UNIT * 4)
+	create_hazard_bomb(Vector2.RIGHT * DIST * 2, WARNING, START + UNIT * 5)
+
+	await Utils.timer(WARNING + START)
+	create_normal_bomb(Vector2.LEFT * DIST * 2, UNIT, UNIT)
+	create_hazard_bomb(Vector2.LEFT * DIST * 2, 2 * UNIT, UNIT * 4)
+
+	await Utils.timer(UNIT)
+	create_normal_bomb(Vector2.LEFT * DIST * 1, UNIT, UNIT)
+	create_hazard_bomb(Vector2.LEFT * DIST * 1, 2 * UNIT, UNIT * 3)
+
+	await Utils.timer(UNIT)
+	create_normal_bomb(Vector2.ZERO, UNIT, UNIT)
+	create_hazard_bomb(Vector2.ZERO, 2 * UNIT, UNIT * 2)
+
+	await Utils.timer(UNIT)
+	create_normal_bomb(Vector2.RIGHT * DIST * 1, UNIT, UNIT)
+	create_hazard_bomb(Vector2.RIGHT * DIST * 1, 2 * UNIT, UNIT * 1)
+
+	await Utils.timer(UNIT)
+	create_normal_bomb(Vector2.RIGHT * DIST * 2, UNIT, UNIT)
+
+	await Utils.timer(UNIT)
+
+	pattern_shuffle_and_draw()
+# pattern_trafficlight block end
+###############################
+
+###############################
+# pattern_manyrotation block start
+# made by Seonghyeon
+func pattern_manyrotation():
+	PlayingFieldInterface.set_theme_color(Color.HOT_PINK)
+	const COUNT: int = 3
+	const DIST: float = 100
+	const UNIT: float = 0.6
+
+	for i in range(COUNT):
+		var bombs: Array[Bomb] = []
+		for j in range(3):
+			bombs.append(create_normal_bomb(DIST * Vector2.UP.rotated(deg_to_rad(120 * j)), UNIT, 2 * UNIT))
+		bombs.shuffle()
+		create_bomb_link(bombs[0], bombs[1])
+
+		await Utils.timer(2 * UNIT)
+		if randi_range(0, 1): create_rotationspeedup_bomb(Vector2.ZERO, UNIT, UNIT, 0.3)
+		else: create_rotationinversion_bomb(Vector2.ZERO, UNIT, UNIT)
+
+		await Utils.timer(2 * UNIT)
+
+	pattern_shuffle_and_draw()
+# pattern_manyrotation block end
 ###############################
