@@ -1,23 +1,24 @@
-[gd_scene load_steps=4 format=3 uid="uid://blnbiu221cwye"]
+[gd_scene load_steps=5 format=3 uid="uid://blnbiu221cwye"]
 
 [ext_resource type="PackedScene" uid="uid://dq3v4l3j35key" path="res://scenes/bombs/Bomb.tscn" id="1_ssmcn"]
 [ext_resource type="Script" path="res://scenes/bombs/MenuBomb.gd" id="2_23n1h"]
+[ext_resource type="Texture2D" uid="uid://baausxife2ayk" path="res://images/bomb/sprite_normal_outline.svg" id="3_tpriv"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_8hgk3"]
-radius = 24.0
+radius = 32.0
 
 [node name="MenuBomb" node_paths=PackedStringArray("sprite") instance=ExtResource("1_ssmcn")]
 script = ExtResource("2_23n1h")
 sprite = NodePath("Sprite2D")
-texture = null
+texture = ExtResource("3_tpriv")
 
-[node name="Polygon2D" type="Polygon2D" parent="." index="0"]
-polygon = PackedVector2Array(-16, -16, 0, -24, 16, -16, 24, 0, 16, 16, 0, 24, -16, 16, -24, 0)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." index="1"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." index="0"]
 shape = SubResource("CircleShape2D_8hgk3")
 debug_color = Color(1.15514e-06, 0.596143, 0.721682, 0.42)
 
-[node name="Sprite2D" type="Sprite2D" parent="." index="2"]
+[node name="Sprite2D" type="Sprite2D" parent="." index="1"]
+
+[node name="SpriteNormalOutline" type="Sprite2D" parent="." index="2"]
+texture = ExtResource("3_tpriv")
 
 [connection signal="player_body_entered" from="." to="." method="slayed"]

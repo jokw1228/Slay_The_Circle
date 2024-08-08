@@ -1,29 +1,62 @@
-[gd_scene load_steps=6 format=3 uid="uid://djvtf5t5jqw8u"]
+[gd_scene load_steps=7 format=3 uid="uid://djvtf5t5jqw8u"]
 
 [ext_resource type="Script" path="res://scenes/bombgenerators/MenuBombGenerator.gd" id="1_hpx4g"]
 [ext_resource type="PackedScene" uid="uid://blnbiu221cwye" path="res://scenes/bombs/MenuBomb.tscn" id="2_105il"]
-[ext_resource type="Texture2D" uid="uid://dgslkvvx2fvum" path="res://images/game_speed_up.png" id="3_cb50f"]
-[ext_resource type="Texture2D" uid="uid://cw5wu5qajpxdb" path="res://images/rotation_reverse.png" id="4_ur4wr"]
-[ext_resource type="Texture2D" uid="uid://cofhcmnt2gu5a" path="res://images/rotaion_speed_up.png" id="5_4ibfc"]
+[ext_resource type="Texture2D" uid="uid://ctsy5fqwgusll" path="res://images/bomb/sprite_menu_circlest.svg" id="3_xrvq3"]
+[ext_resource type="Texture2D" uid="uid://crs642dp8tqw7" path="res://images/bomb/sprite_menu_circle.svg" id="4_v6l65"]
+[ext_resource type="Texture2D" uid="uid://gfc0q8ljdy03" path="res://images/bomb/sprite_menu_circler.svg" id="5_bwpbq"]
+[ext_resource type="Texture2D" uid="uid://08leog74ub0o" path="res://images/bomb/sprite_menu_hyper.svg" id="6_dlnyq"]
 
 [node name="MenuBombGenerator" type="Node2D"]
 script = ExtResource("1_hpx4g")
 
 [node name="MenuBomb" parent="." instance=ExtResource("2_105il")]
 position = Vector2(128, 64)
-texture = ExtResource("3_cb50f")
+texture = ExtResource("3_xrvq3")
 
 [node name="MenuBomb2" parent="." instance=ExtResource("2_105il")]
 position = Vector2(0, -144)
-texture = ExtResource("4_ur4wr")
+texture = ExtResource("4_v6l65")
 
 [node name="MenuBomb3" parent="." instance=ExtResource("2_105il")]
 position = Vector2(-128, 64)
-texture = ExtResource("5_4ibfc")
+texture = ExtResource("5_bwpbq")
 
 [node name="MenuBomb4" parent="." instance=ExtResource("2_105il")]
-scale = Vector2(2.655, 2.655)
-texture = ExtResource("5_4ibfc")
+scale = Vector2(2, 2)
+texture = ExtResource("6_dlnyq")
+
+[node name="Label" type="Label" parent="."]
+offset_left = -191.0
+offset_top = 108.0
+offset_right = -67.0
+offset_bottom = 128.0
+theme_override_font_sizes/font_size = 14
+text = "CIRCLER"
+horizontal_alignment = 1
+
+[node name="Label2" type="Label" parent="."]
+offset_left = 61.0
+offset_top = 109.0
+offset_right = 202.0
+offset_bottom = 129.0
+theme_override_font_sizes/font_size = 14
+text = "CIRCLEST"
+horizontal_alignment = 1
+
+[node name="Label3" type="Label" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -49.0
+offset_top = -207.0
+offset_right = 57.0
+offset_bottom = -187.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 14
+text = "CIRCLE"
+horizontal_alignment = 1
 
 [connection signal="player_body_entered" from="MenuBomb" to="." method="select_circlest"]
 [connection signal="player_body_entered" from="MenuBomb2" to="." method="select_circle"]

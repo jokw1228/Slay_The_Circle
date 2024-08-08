@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dgslkvvx2fvum"
-path="res://.godot/imported/game_speed_up.png-e8eaa5af533c195db1ddbb6573d30bfe.ctex"
+uid="uid://crs642dp8tqw7"
+path="res://.godot/imported/sprite_menu_circle.svg-61503fb8aee06e8fb2556aa53305efb7.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://images/game_speed_up.png"
-dest_files=["res://.godot/imported/game_speed_up.png-e8eaa5af533c195db1ddbb6573d30bfe.ctex"]
+source_file="res://images/bomb/sprite_menu_circle.svg"
+dest_files=["res://.godot/imported/sprite_menu_circle.svg-61503fb8aee06e8fb2556aa53305efb7.ctex"]
 
 [params]
 
@@ -32,3 +32,6 @@ process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
 detect_3d/compress_to=1
+svg/scale=1.0
+editor/scale_with_editor_scale=false
+editor/convert_colors_with_editor_theme=false

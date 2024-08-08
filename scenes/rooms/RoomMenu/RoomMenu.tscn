@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://bdrilkeb2s5n0"]
+[gd_scene load_steps=26 format=3 uid="uid://bdrilkeb2s5n0"]
 
 [ext_resource type="Script" path="res://scenes/rooms/RoomMenu/RoomMenu.gd" id="1_sshbl"]
 [ext_resource type="PackedScene" uid="uid://ccay8yrm25adk" path="res://scenes/rooms/RoomPlayingFields/RoomCircle.tscn" id="2_2e64d"]
@@ -7,8 +7,12 @@
 [ext_resource type="PackedScene" uid="uid://d3qyao5pqwkn6" path="res://scenes/rooms/RoomPlayingFields/RoomHyperCircle.tscn" id="5_ysv52"]
 [ext_resource type="PackedScene" uid="uid://bbuev5x2anes0" path="res://scenes/rooms/RoomPlayingFields/RoomHyperCircler.tscn" id="6_0nfbl"]
 [ext_resource type="PackedScene" uid="uid://cpa7olvdr7242" path="res://scenes/rooms/RoomPlayingFields/RoomHyperCirclest.tscn" id="7_3e2ok"]
-[ext_resource type="PackedScene" uid="uid://dntg6argh8n3n" path="res://scenes/playingfield/PlayingField.tscn" id="8_x2ttg"]
+[ext_resource type="PackedScene" uid="uid://csx6yjkvpfqcy" path="res://scenes/background/BackGroundDeSterrennacht.tscn" id="8_i7cre"]
+[ext_resource type="PackedScene" uid="uid://bp1nuspdeitey" path="res://scenes/background/BackGroundEffect.tscn" id="9_hjh10"]
 [ext_resource type="PackedScene" uid="uid://djvtf5t5jqw8u" path="res://scenes/bombgenerators/MenuBombGenerator.tscn" id="9_xjnco"]
+[ext_resource type="PackedScene" uid="uid://bhe55ocau21ot" path="res://scenes/player/Player.tscn" id="10_qy0n6"]
+[ext_resource type="PackedScene" uid="uid://s264e74phclm" path="res://scenes/playingfield/CircleField.tscn" id="11_s1pwc"]
+[ext_resource type="PackedScene" uid="uid://cn7ttflmrmpth" path="res://scenes/playingfield/PlayingFieldCamera.tscn" id="13_itguu"]
 [ext_resource type="PackedScene" uid="uid://dp0cdsfw5ylxj" path="res://scenes/ui/FancyButton.tscn" id="13_yxsra"]
 [ext_resource type="Script" path="res://addons/resonate/sound_manager/sound_bank.gd" id="14_oop3p"]
 [ext_resource type="Script" path="res://addons/resonate/sound_manager/sound_event_resource.gd" id="15_rr3yb"]
@@ -45,19 +49,28 @@ streams = Array[AudioStream]([ExtResource("18_f5hei")])
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_sqgio"]
 texture = ExtResource("22_aomol")
 
-[node name="RoomMenu" type="Node2D" node_paths=PackedStringArray("playing_field", "ui_container_ready", "camera", "reverb_effect_timer")]
+[node name="RoomMenu" type="Node2D" node_paths=PackedStringArray("ui_container_ready", "camera", "reverb_effect_timer", "menu_bomb_generator")]
 script = ExtResource("1_sshbl")
 room_to_go = Array[PackedScene]([ExtResource("2_2e64d"), ExtResource("3_yvois"), ExtResource("4_2514v"), ExtResource("5_ysv52"), ExtResource("6_0nfbl"), ExtResource("7_3e2ok")])
-playing_field = NodePath("PlayingField")
 ui_container_ready = NodePath("UIContainerSkewed/Ready")
-camera = NodePath("PlayingField/PlayingFieldCamera")
-reverb_effect_timer = NodePath("PlayingField/CircleField/ReverbEffectTimer")
+camera = NodePath("Field/PlayingFieldCamera")
+reverb_effect_timer = NodePath("Field/CircleField/ReverbEffectTimer")
+menu_bomb_generator = NodePath("Field/MenuBombGenerator")
 
-[node name="PlayingField" parent="." instance=ExtResource("8_x2ttg")]
-BombGenerator_scene = ExtResource("9_xjnco")
+[node name="Field" type="Node2D" parent="."]
 
-[node name="PlayingFieldUI" parent="PlayingField" index="4"]
-visible = false
+[node name="BackGroundDeSterrennacht" parent="Field" instance=ExtResource("8_i7cre")]
+
+[node name="BackGroundEffect" parent="Field" instance=ExtResource("9_hjh10")]
+
+[node name="MenuBombGenerator" parent="Field" instance=ExtResource("9_xjnco")]
+unique_name_in_owner = true
+
+[node name="Player" parent="Field" instance=ExtResource("10_qy0n6")]
+
+[node name="CircleField" parent="Field" instance=ExtResource("11_s1pwc")]
+
+[node name="PlayingFieldCamera" parent="Field" instance=ExtResource("13_itguu")]
 
 [node name="SoundBank" type="Node" parent="."]
 script = ExtResource("14_oop3p")
@@ -276,6 +289,5 @@ text = "START"
 
 [connection signal="pressed" from="UIContainerSkewed/Start" to="." method="start_stage"]
 
-[editable path="PlayingField"]
-[editable path="PlayingField/CircleField"]
+[editable path="Field/CircleField"]
 [editable path="UIContainerSkewed/Start"]

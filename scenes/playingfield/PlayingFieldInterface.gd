@@ -71,3 +71,10 @@ func add_playing_time(time_to_add: float): # legacy code
 
 func set_playing_time(time_to_set: float):
 	get_PlayingField_node().set_playing_time(time_to_set)
+
+var is_player_input_enabled = true
+func disable_player_input():
+	is_player_input_enabled = false
+
+func enable_player_input():
+	is_player_input_enabled = true
