@@ -1,6 +1,8 @@
 extends Node2D
 #class_name PlayingFieldInterface
 
+signal player_grounded
+
 var current_PlayingField_node: PlayingField
 
 var theme_color: Color = Color.WHITE
@@ -31,6 +33,11 @@ func get_PlayingField_node() -> PlayingField:
 
 func set_PlayingField_node(node: PlayingField):
 	current_PlayingField_node = node
+	node.Player_node.connect("grounded", Callable(self, "player_grounded_emit"))
+
+func player_grounded_emit():
+	print(123)
+	player_grounded.emit()
 
 func game_over(x):
 	get_PlayingField_node().stop_PlayingField(x)
