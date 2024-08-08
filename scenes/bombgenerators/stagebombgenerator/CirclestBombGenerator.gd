@@ -462,7 +462,7 @@ func pattern_shuffle_game():
 	for i in range(4):
 		if pattern_shuffle_game_rand[i]:
 			pattern_shuffle_game_bombs.append(create_hazard_bomb(Vector2(1000, 1000), 4.2, 0))
-			pattern_shuffle_game_real_bomb = create_normal_bomb(pattern_shuffle_game_const_position[i], 4.2, 0.1)
+			pattern_shuffle_game_real_bomb = create_normal_bomb(pattern_shuffle_game_const_position[i], 4.2, 1)
 			pattern_shuffle_game_real_bomb.position = pattern_shuffle_game_const_position[i]
 			real_bomb_position = i
 		else:
@@ -480,11 +480,13 @@ func pattern_shuffle_game():
 		prev_value = rand_result
 		await pattern_shuffle_game_random(rand_result)
 		await Utils.timer(0.05)
-		
+	
+	pattern_shuffle_game_real_bomb.queue_free()
 	await Utils.timer(1)
-	pattern_shuffle_game_real_bomb.connect("player_body_entered",Callable(self,"pattern_shuffle_game_end"))
 	# pattern_shuffle_game_bombs[real_bomb_position].position = Vector2(1000, 1000)
-	pattern_shuffle_game_real_bomb.position = pattern_shuffle_game_const_position[pattern_shuffle_game_bomb_pos[real_bomb_position]-1]
+	# pattern_shuffle_game_real_bomb.position = pattern_shuffle_game_const_position[pattern_shuffle_game_bomb_pos[real_bomb_position]-1]
+	var bomb = create_normal_bomb(pattern_shuffle_game_const_position[pattern_shuffle_game_bomb_pos[real_bomb_position]-1], 0, 0.1)
+	bomb.connect("player_body_entered",Callable(self,"pattern_shuffle_game_end"))
 
 func pattern_shuffle_game_random(pattern: int):
 	match pattern:
