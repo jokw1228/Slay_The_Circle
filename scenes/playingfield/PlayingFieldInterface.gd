@@ -36,6 +36,8 @@ func set_PlayingField_node(node: PlayingField):
 	node.Player_node.connect("grounded", Callable(self, "player_grounded_emit"))
 
 func player_grounded_emit():
+	await get_tree().physics_frame
+	await get_tree().physics_frame
 	player_grounded.emit()
 
 func game_over(x):

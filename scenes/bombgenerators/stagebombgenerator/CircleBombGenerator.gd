@@ -348,8 +348,8 @@ func pattern_diamond():
 	
 	const CIRCLE_FIELD_RADIUS = 256
 	
-	const normal_radius = CIRCLE_FIELD_RADIUS - 32
-	const hazard_radius = CIRCLE_FIELD_RADIUS - 128
+	const normal_radius = CIRCLE_FIELD_RADIUS - 48
+	const hazard_radius = CIRCLE_FIELD_RADIUS - 144
 	
 	for i in range(4):
 		normal_bomb_list.append(create_normal_bomb(Vector2(normal_radius * cos(angle_offset + i * PI/2), normal_radius * sin(angle_offset + i * PI/2)), 0.5, 2.5))
