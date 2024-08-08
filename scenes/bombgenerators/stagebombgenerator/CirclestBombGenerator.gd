@@ -12,8 +12,8 @@ func _ready():
 
 func pattern_list_initialization():
 	#pattern_list.append(Callable(self, "pattern_test_1"))
+	
 	pattern_list.append(Callable(self, "pattern_cat_wheel"))
-	# pattern_list.append(Callable(self, "pattern_test_1"))
 	pattern_list.append(Callable(self, "pattern_fruitninja"))
 	pattern_list.append(Callable(self, "pattern_windmill"))
 	pattern_list.append(Callable(self, "pattern_rain"))
@@ -22,6 +22,7 @@ func pattern_list_initialization():
 	pattern_list.append(Callable(self, "pattern_survive_random_slay"))
 	pattern_list.append(Callable(self, "pattern_moving_link"))
 	pattern_list.append(Callable(self, "pattern_shuffle_game"))
+	pattern_list.append(Callable(self, "pattern_timing_return"))
 
 func pattern_shuffle_and_draw():
 	randomize()
@@ -539,4 +540,59 @@ func pattern_shuffle_game_end():
 	pattern_shuffle_and_draw()
 
 # pattern_shuffle_game block end
+###############################
+
+###############################
+# pattern_timing_return block start
+# made by jinhyun
+
+var pattern_timing_return_timer: float
+var pattern_timing_return_timer_tween: Tween
+
+func pattern_timing_return():
+	PlayingFieldInterface.set_theme_color(Color.VIOLET)
+	var player_position: Vector2
+	
+	pattern_timing_return_timer = 2.0
+	if pattern_timing_return_timer_tween != null:
+		pattern_timing_return_timer_tween.kill()
+	pattern_timing_return_timer_tween = get_tree().create_tween()
+	pattern_timing_return_timer_tween.tween_property(self,"pattern_timing_return_timer",0.0,2.0)
+	
+	await get_tree().create_timer(0.2).timeout
+	
+	player_position = PlayingFieldInterface.get_player_position()
+	
+	create_hazard_bomb(player_position.rotated(PI/3) * 0.7, 0.5, 0.5)
+	create_hazard_bomb(player_position.rotated(-PI/3) * 0.7, 0.5, 0.5)
+	create_hazard_bomb(player_position.rotated(PI/2) * 0.7, 0.5, 1)
+	create_hazard_bomb(player_position.rotated(-PI/2) * 0.7, 0.5, 1)
+	create_hazard_bomb(player_position.rotated(2*PI/3) * 0.7, 0.5, 1.5)
+	create_hazard_bomb(player_position.rotated(-2*PI/3) * 0.7, 0.5, 1.5)
+	
+	create_normal_bomb(Vector2(0, 0), 0.5, 1.7)
+	create_hazard_bomb(Vector2(0, 0), 0.5, 1.5)
+	
+	await get_tree().create_timer(1).timeout
+	player_position = PlayingFieldInterface.get_player_position()
+	var lasting = get_tree().create_timer(1.3)
+	
+	while lasting.time_left > 0:
+		if player_position != PlayingFieldInterface.get_player_position():
+			player_position = PlayingFieldInterface.get_player_position()
+			
+			for i in range(6):
+				create_normal_bomb(player_position * 0.3 * (i-3), 0.2, 1 - i*0.1)
+				await get_tree().create_timer(0.07).timeout
+		await get_tree().create_timer(0.02).timeout
+	
+	await get_tree().create_timer(1.5).timeout
+	var bomb = create_normal_bomb(Vector2(0, 0), 0.3, 3)
+	bomb.connect("player_body_entered",Callable(self,"pattern_timing_return_end"))
+
+func pattern_timing_return_end():
+	PlayingFieldInterface.add_playing_time(pattern_timing_return_timer)
+	pattern_shuffle_and_draw()
+	
+# pattern_timing_return end
 ###############################

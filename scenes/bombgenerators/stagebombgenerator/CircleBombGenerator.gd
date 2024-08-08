@@ -13,6 +13,7 @@ func _ready():
 func pattern_list_initialization():
 	#pattern_list.append(Callable(self, "pattern_test_1"))
 	#pattern_list.append(Callable(self, "pattern_test_2"))
+	
 	pattern_list.append(Callable(self, "pattern_numeric_triangle_with_link"))
 	pattern_list.append(Callable(self, "pattern_star"))
 	pattern_list.append(Callable(self, "pattern_random_link"))
@@ -23,6 +24,8 @@ func pattern_list_initialization():
 	pattern_list.append(Callable(self, "pattern_roll"))
 	pattern_list.append(Callable(self, "pattern_diamond"))
 	pattern_list.append(Callable(self, "pattern_twisted_numeric"))
+	pattern_list.append(Callable(self, "pattern_spiral"))
+	pattern_list.append(Callable(self, "pattern_numeric_choice"))
 	
 func pattern_shuffle_and_draw():
 	print("pattern_shuffle_and_draw")
@@ -419,4 +422,78 @@ func pattern_twisted_numeric_end():
 	pattern_shuffle_and_draw()
 
 # pattern_fast_numeric block end
+###############################
+
+###############################
+# pattern_spiral block start
+# made by jinhyun
+
+var pattern_spiral_timer: float
+var pattern_spiral_timer_tween: Tween
+
+func pattern_spiral():
+	PlayingFieldInterface.set_theme_color(Color.VIOLET)
+	
+	pattern_spiral_timer = 3.0
+	if pattern_spiral_timer_tween != null:
+		pattern_spiral_timer_tween.kill()
+	pattern_spiral_timer_tween = get_tree().create_tween()
+	pattern_spiral_timer_tween.tween_property(self,"pattern_spiral_timer",0.0,3.0)
+	
+	var init_position: Vector2 = Vector2.UP
+	
+	for i in range(16):
+		create_normal_bomb(init_position.rotated(i*PI/3) * (i+1) * 14, 0.3, 3)
+		await get_tree().create_timer(0.1).timeout
+	
+	await get_tree().create_timer(2).timeout
+	var bomb = create_normal_bomb(Vector2(0, 0), 0.3, 3)
+	bomb.connect("player_body_entered",Callable(self,"pattern_spiral_end"))
+
+func pattern_spiral_end():
+	PlayingFieldInterface.add_playing_time(pattern_spiral_timer)
+	pattern_shuffle_and_draw()
+	
+# pattern_spiral end
+###############################
+
+###############################
+# pattern_numeric_choice block start
+# made by jinhyun
+
+var pattern_numeric_choice_timer: float
+var pattern_numeric_choice_timer_tween: Tween
+
+func pattern_numeric_choice():
+	PlayingFieldInterface.set_theme_color(Color.VIOLET)
+	
+	pattern_numeric_choice_timer = 3.0
+	if pattern_numeric_choice_timer_tween != null:
+		pattern_numeric_choice_timer_tween.kill()
+	pattern_numeric_choice_timer_tween = get_tree().create_tween()
+	pattern_numeric_choice_timer_tween.tween_property(self,"pattern_numeric_choice_timer",0.0,3.0)
+	
+	var player_position: Vector2 = PlayingFieldInterface.get_player_position()
+	var rotation_box: Array = [PI/2, PI, -PI/2, 0]
+	var rotation_inv_box: Array = [-PI/2, PI, PI/2, 0]
+	var rand: int = randi() % 2
+	
+	if rand == 0:
+		for i in range(8):
+			create_numeric_bomb(player_position.rotated(rotation_box[i%4]) * 0.8, 0.3, 1, i+1)
+			await get_tree().create_timer(0.25).timeout
+	else:
+		for i in range(8):
+			create_numeric_bomb(player_position.rotated(rotation_inv_box[i%4]) * 0.8, 0.3, 1, i+1)
+			await get_tree().create_timer(0.25).timeout
+	
+	await get_tree().create_timer(2).timeout
+	var bomb = create_normal_bomb(Vector2(0, 0), 0.3, 3)
+	bomb.connect("player_body_entered",Callable(self,"pattern_numeric_choice_end"))
+
+func pattern_numeric_choice_end():
+	PlayingFieldInterface.add_playing_time(pattern_numeric_choice_timer)
+	pattern_shuffle_and_draw()
+	
+# pattern_numeric_choice end
 ###############################

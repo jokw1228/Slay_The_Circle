@@ -18,18 +18,17 @@ func _ready():
 func pattern_numeric(num: int):
 	var player_position: Vector2 = PlayingFieldInterface.get_player_position()
 	var rotation_box: Array = [PI/2, PI, -PI/2, 0]
+	var rotation_inv_box: Array = [-PI/2, PI, PI/2, 0]
+	var rand: int = randi() % 2
 	
-	for i in range(num):
-		create_numeric_bomb(player_position.rotated(rotation_box[i%4]) * 0.8, 0.3, 1, i+1)
-		await get_tree().create_timer(0.3).timeout
-
-func pattern_numeric_inv(num: int):
-	var player_position: Vector2 = PlayingFieldInterface.get_player_position()
-	var rotation_box: Array[float] = [-PI/2, PI, PI/2, 0]
-	
-	for i in range(num):
-		create_numeric_bomb(player_position.rotated(rotation_box[i%4]) * 0.8, 0.3, 1, i+1)
-		await get_tree().create_timer(0.3).timeout
+	if rand == 0:
+		for i in range(num):
+			create_numeric_bomb(player_position.rotated(rotation_box[i%4]) * 0.8, 0.3, 1, i+1)
+			await get_tree().create_timer(0.3).timeout
+	else:
+		for i in range(num):
+			create_numeric_bomb(player_position.rotated(rotation_inv_box[i%4]) * 0.8, 0.3, 1, i+1)
+			await get_tree().create_timer(0.3).timeout
 
 func pattern_spiral():
 	var init_position: Vector2 = Vector2.UP
@@ -80,7 +79,7 @@ func pattern_timing():
 	create_normal_bomb(Vector2(0, 0), 0.5, 1.8)
 	create_hazard_bomb(Vector2(0, 0), 0.5, 1.6)
 	
-	var lasting= get_tree().create_timer(2.5)
+	var lasting = get_tree().create_timer(2.5)
 	
 	while lasting.time_left > 0:
 		if player_position != PlayingFieldInterface.get_player_position():
