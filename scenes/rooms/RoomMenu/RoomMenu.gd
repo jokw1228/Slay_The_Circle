@@ -7,6 +7,7 @@ class_name RoomMenu
 @export var ui_container_ready: Control
 @export var camera: Camera2D
 @export var reverb_effect_timer: Timer
+@export var menu_bomb_generator: Node2D
 
 
 # The index of the stage currently selected in the menu window
@@ -17,13 +18,13 @@ const stage_index_maximum = 6
 
 func _ready():
 	# BombGenerator는 런타임에 생성되므로 get_node()를 통해 가져온다.
-	get_node("PlayingField/MenuBombGenerator").room_menu = self
+	%MenuBombGenerator.room_menu = self
 	
 	MusicManager.play("bgm_PF","test_fast",0,1)
 	
 	var tween_camera_zoom_out: Tween = Utils.tween()
 	tween_camera_zoom_out.set_ease(Tween.EASE_IN)
-	tween_camera_zoom_out.tween_property(playing_field.PlayingFieldCamera_node, "zoom", Vector2(0.75, 0.75), 0.5)
+	tween_camera_zoom_out.tween_property(camera, "zoom", Vector2(0.75, 0.75), 0.5)
 
 	%HyperStage.visible = false
 	%Stage.visible = false
