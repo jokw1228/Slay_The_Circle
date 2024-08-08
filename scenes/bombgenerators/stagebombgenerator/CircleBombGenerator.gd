@@ -20,6 +20,9 @@ func pattern_list_initialization():
 	pattern_list.append(Callable(self, "pattern_trafficlight"))
 	pattern_list.append(Callable(self, "pattern_manyrotation"))
 	pattern_list.append(Callable(self, "pattern_speed_and_roation"))
+	pattern_list.append(Callable(self, "pattern_roll"))
+	pattern_list.append(Callable(self, "pattern_diamond"))
+	pattern_list.append(Callable(self, "pattern_twisted_numeric"))
 	
 func pattern_shuffle_and_draw():
 	print("pattern_shuffle_and_draw")
@@ -309,4 +312,111 @@ func pattern_speed_and_roation_end():
 	pattern_shuffle_and_draw()
 	
 #pattern_speed_and_roation end
+###############################
+
+###############################
+# pattern_roll block start
+# made by Jaeyong
+
+var pattern_roll_timer: float
+var pattern_roll_timer_tween: Tween
+
+func pattern_roll():
+	
+	pattern_roll_timer = 3.0
+	if pattern_roll_timer_tween != null:
+		pattern_roll_timer_tween.kill()
+	pattern_roll_timer_tween = get_tree().create_tween()
+	pattern_roll_timer_tween.tween_property(self, "pattern_roll_timer", 0.0, 3.0)
+	
+	var left_bomb = 13
+	var end_bomb: NormalBomb = create_normal_bomb(Vector2(0, -200), 0.5, 2.5)
+	create_normal_bomb(Vector2(0, -100), 0.5, 2.5)
+	create_normal_bomb(Vector2(0, 0), 0.5, 2.5)
+	create_normal_bomb(Vector2(0, 100), 0.5, 2.5)
+	create_normal_bomb(Vector2(0, 200), 0.5, 2.5)
+	
+	create_normal_bomb(Vector2(100, -100), 0.5, 2.5)
+	create_normal_bomb(Vector2(100, 0), 0.5, 2.5)
+	create_normal_bomb(Vector2(100, 100), 0.5, 2.5)
+
+	create_normal_bomb(Vector2(-100, -100), 0.5, 2.5)
+	create_normal_bomb(Vector2(-100, 0), 0.5, 2.5)
+	create_normal_bomb(Vector2(-100, 100), 0.5, 2.5)
+	
+	create_normal_bomb(Vector2(200, 0), 0.5, 2.5)
+
+	create_normal_bomb(Vector2(-200, 0), 0.5, 2.5)
+
+	end_bomb.connect("player_body_entered", Callable(self, "pattern_roll_end"))
+
+func pattern_roll_end():
+	PlayingFieldInterface.add_playing_time(pattern_roll_timer)
+	pattern_shuffle_and_draw()
+	
+# pattern_roll block end
+###############################
+
+###############################
+# pattern_diamond block start
+# made by Jaeyong
+
+func pattern_diamond():
+	
+	var left_bomb: int = 4
+	create_hazard_bomb(Vector2(100, 0), 0.5, 2.5)
+	create_normal_bomb(Vector2(200, 0), 0.5, 2.5)
+	
+	create_hazard_bomb(Vector2(-100, 0), 0.5, 2.5)
+	create_normal_bomb(Vector2(-200, 0), 0.5, 2.5)
+	
+	create_hazard_bomb(Vector2(0, 100), 0.5, 2.5)
+	create_normal_bomb(Vector2(0, 200), 0.5, 2.5)
+	
+	create_hazard_bomb(Vector2(0, -100), 0.5, 2.5)
+	create_normal_bomb(Vector2(0, -200), 0.5, 2.5)
+
+	await Utils.timer(3.0)
+	
+	pattern_shuffle_and_draw()
+	
+# pattern_diamond block end
+###############################
+
+###############################
+# pattern_twisted_numeric block start
+# made by Jaeyong
+
+var pattern_twisted_numeric_timer: float
+var pattern_twisted_numeric_timer_tween: Tween
+
+func pattern_twisted_numeric():
+	
+	pattern_twisted_numeric_timer = 3.0
+	if pattern_twisted_numeric_timer_tween != null:
+		pattern_twisted_numeric_timer_tween.kill()
+	pattern_twisted_numeric_timer_tween = get_tree().create_tween()
+	pattern_twisted_numeric_timer_tween.tween_property(self, "pattern_twisted_numeric_timer", 0.0, 3.0)
+	
+	var left_bomb = 4
+	var end_bomb: NumericBomb
+	
+	if(PlayingFieldInterface.get_player_position() != Vector2(0,0)):
+		end_bomb = create_numeric_bomb(PlayingFieldInterface.get_player_position() * -0.6, 0.5, 2.5 ,4)
+		create_numeric_bomb(PlayingFieldInterface.get_player_position() * -0.2, 0.5, 2.5, 2)
+		create_numeric_bomb(PlayingFieldInterface.get_player_position() * 0.2 , 0.5, 2.5, 1)
+		create_numeric_bomb(PlayingFieldInterface.get_player_position() * 0.6, 0.5, 2.5, 3)
+	else:
+		end_bomb = create_numeric_bomb(Vector2(256,0) * -0.6, 0.5, 2.5 ,4)
+		create_numeric_bomb(Vector2(256,0) * -0.2, 0.5, 2.5, 2)
+		create_numeric_bomb(Vector2(256,0) * 0.2 , 0.5, 2.5, 1)
+		create_numeric_bomb(Vector2(256,0) * 0.6, 0.5, 2.5, 3)
+		
+	end_bomb.connect("player_body_entered", Callable(self, "pattern_twisted_numeric_end"))
+
+func pattern_twisted_numeric_end():
+	PlayingFieldInterface.add_playing_time(pattern_twisted_numeric_timer)
+	pattern_shuffle_and_draw()
+
+# pattern_fast_numeric block end
 ###############################

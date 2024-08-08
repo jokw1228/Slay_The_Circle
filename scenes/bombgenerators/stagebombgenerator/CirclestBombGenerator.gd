@@ -15,6 +15,7 @@ func pattern_list_initialization():
 	pattern_list.append(Callable(self, "pattern_fruitninja"))
 	pattern_list.append(Callable(self, "pattern_windmill"))
 	pattern_list.append(Callable(self, "pattern_rain"))
+	pattern_list.append(Callable(self, "pattern_hazard_wave"))
 	pattern_list.append(Callable(self, "pattern_rotate_timing"))
 	pattern_list.append(Callable(self, "pattern_survive_random_slay"))
 	pattern_list.append(Callable(self, "pattern_moving_link"))
@@ -148,6 +149,38 @@ func pattern_rain_bomb():
 	Utils.tween(Tween.TRANS_LINEAR).tween_property(bomb, "global_position", Vector2(-pos.x, pos.y), 2)
 	
 # patter_rain block end
+###############################
+
+###############################
+# pattern_hazard_wave block start
+# made by Jaeyong
+func pattern_hazard_wave():
+	var random: float = randf_range(0,2)
+	var spawn: int = 1 if random >= 1 else -1
+	
+	var hazard_list: Array[HazardBomb] = []
+	var rigidbody: Array[RigidBody2D] = [RigidBody2D.new(), RigidBody2D.new(), RigidBody2D.new(), RigidBody2D.new(), RigidBody2D.new(),RigidBody2D.new(), RigidBody2D.new(), RigidBody2D.new(), RigidBody2D.new()]
+
+	for i in (9):
+		add_child(rigidbody[i])
+		rigidbody[i].gravity_scale = 0
+		Utils.attach_node(rigidbody[i], create_hazard_bomb(Vector2(spawn * 400,-256 + (64 * i)),0,1.25))
+		rigidbody[i].position = Vector2(spawn * 400,-256 + (64 * i))
+		rigidbody[i].linear_velocity = Vector2(spawn * 700,0)
+		acceleration(i,rigidbody,-2 * spawn)
+		await get_tree().create_timer(0.1).timeout
+		
+		
+	await Utils.timer(1.5)
+
+	pattern_shuffle_and_draw()
+
+func acceleration(num: int,rigidbody: Array[RigidBody2D], ac: int):
+	for i in (50):
+			rigidbody[num].linear_velocity += Vector2(ac * i,0)
+			await get_tree().create_timer(0.00001).timeout
+		
+# pattern_hazard_wave block end
 ###############################
 
 ###############################

@@ -13,6 +13,8 @@ func _ready():
 func pattern_list_initialization():
 	# pattern_list.append(Callable(self, "pattern_test_1"))
 	pattern_list.append(Callable(self, "pattern_lightning"))
+	pattern_list.append(Callable(self, "pattern_wall_timing"))
+	pattern_list.append(Callable(self, "pattern_scattered_hazards"))
 	pattern_list.append(Callable(self, "pattern_random_shape"))
 
 func pattern_shuffle_and_draw():
@@ -54,6 +56,72 @@ func pattern_lightning():
 	pattern_shuffle_and_draw()
 
 #pattern_lightning end
+###############################
+
+###############################
+# pattern_wall_timing start
+# made by Jaeyong
+
+func pattern_wall_timing():
+	var left_bomb = 4
+	
+	var player_pos_normalized = PlayingFieldInterface.get_player_position().normalized()
+	if (player_pos_normalized == Vector2(0,0)):
+		player_pos_normalized = Vector2(1,0)
+	
+	create_normal_bomb(player_pos_normalized * 256 * -0.6 + Vector2(randf_range(0,80),randf_range(0, 40)), 0.25, 2.75)
+	create_normal_bomb(player_pos_normalized * 256 * -0.6 + Vector2(randf_range(-80,0),randf_range(-40,0)), 0.25, 2.75)
+	
+	create_normal_bomb(player_pos_normalized * 256 * 0.6 + Vector2(randf_range(0,80),randf_range(0, 40)), 0.25, 2.75)
+	create_normal_bomb(player_pos_normalized * 256 * 0.6 + Vector2(randf_range(-80,0),randf_range(-40,0)), 0.25, 2.75)
+	
+	
+	create_hazard_bomb(Vector2(0,0), 0.5, 0.5)
+	for i in (6):
+		create_hazard_bomb(player_pos_normalized.rotated(PI/2) * 256 * i/6, 0.5, 0.5)
+		create_hazard_bomb(player_pos_normalized.rotated(PI/2) * 256 * -i/6, 0.5, 0.5)
+		
+	await get_tree().create_timer(1).timeout
+	
+	create_hazard_bomb(Vector2(0,0), 0.5, 0.5)
+	for i in (6):
+		create_hazard_bomb(player_pos_normalized.rotated(PI/2) * 256 * i/6, 0.5, 0.5)
+		create_hazard_bomb(player_pos_normalized.rotated(PI/2) * 256 * -i/6, 0.5, 0.5)
+	
+	await get_tree().create_timer(1).timeout
+	
+	create_hazard_bomb(Vector2(0,0), 0.5, 0.5)
+	for i in (6):
+		create_hazard_bomb(player_pos_normalized.rotated(PI/2) * 256 * i/6, 0.5, 0.5)
+		create_hazard_bomb(player_pos_normalized.rotated(PI/2) * 256 * -i/6, 0.5, 0.5)
+
+	await Utils.timer(1) # do nothing
+	pattern_shuffle_and_draw()
+
+# pattern_wall_timing block end
+###############################
+
+###############################
+# pattern_scattered_hazards start
+# made by Jaeyong
+
+func pattern_scattered_hazards():
+	var left_bomb = 3
+	
+	var player_pos_normalized = PlayingFieldInterface.get_player_position().normalized()
+	if (player_pos_normalized == Vector2(0,0)):
+		player_pos_normalized = Vector2(1,0)
+	
+	for i in (8):
+		create_hazard_bomb(player_pos_normalized.rotated(PI/4 * i).rotated(PI/4) * 240 ,1,2)
+	
+	for i in (3):
+		create_normal_bomb(player_pos_normalized.rotated(PI/3 * i * 2) * 80 ,0.5,2.5)
+
+	await Utils.timer(3) # do nothing
+	pattern_shuffle_and_draw()
+
+# pattern_scattered_hazards block end
 ###############################
 
 ###############################
