@@ -55,7 +55,7 @@ func _movement_queue_proccessing():
 		position = position.normalized() * (CIRCLE_FIELD_RADIUS - GROUND_OFFSET)
 		
 		# grounded signal emit
-		grounded.emit()
+		emit_grounded_signal()
 		is_moving = false
 		
 	if is_moving == false && not click_queue.is_empty() && is_raycasting == false:
@@ -67,3 +67,7 @@ func now_position() -> Vector2:
 		return get_global_transform().origin
 	else:
 		return current_position # 플레이어가 움직이는 중인 경우
+
+func emit_grounded_signal():
+	await get_tree().physics_frame
+	grounded.emit()

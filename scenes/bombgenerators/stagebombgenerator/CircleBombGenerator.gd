@@ -19,9 +19,9 @@ func pattern_list_initialization():
 	#pattern_list.append(Callable(self, "pattern_timing"))
 	#pattern_list.append(Callable(self, "pattern_trafficlight"))
 	#pattern_list.append(Callable(self, "pattern_manyrotation"))
-	pattern_list.append(Callable(self, "pattern_speed_and_rotation"))
+	#pattern_list.append(Callable(self, "pattern_speed_and_rotation"))
 	#pattern_list.append(Callable(self, "pattern_roll"))
-	#pattern_list.append(Callable(self, "pattern_diamond"))
+	pattern_list.append(Callable(self, "pattern_diamond"))
 	#pattern_list.append(Callable(self, "pattern_twisted_numeric"))
 	#pattern_list.append(Callable(self, "pattern_spiral"))
 	#pattern_list.append(Callable(self, "pattern_numeric_choice"))
@@ -281,7 +281,7 @@ func pattern_speed_and_rotation():
 	link2.connect("both_bombs_removed",Callable(self,"pattern_speed_and_roation_end"))
 
 func pattern_speed_and_roation_end():
-	PlayingFieldInterface.add_playing_time((pattern_start_time + pattern_speed_or_rotation_playing_time) / Engine.time_scale)
+	PlayingFieldInterface.set_playing_time((pattern_start_time + pattern_speed_or_rotation_playing_time) / Engine.time_scale)
 	await get_tree().create_timer(pattern_speed_or_rotation_rest_time).timeout
 	pattern_shuffle_and_draw()
 	
@@ -292,41 +292,42 @@ func pattern_speed_and_roation_end():
 # pattern_roll block start
 # made by Jaeyong
 
-var pattern_roll_timer: float
-var pattern_roll_timer_tween: Tween
+const pattern_roll_playing_time = 3.0
+var pattern_roll_bomb_count: int
 
 func pattern_roll():
+	pattern_start_time = PlayingFieldInterface.get_playing_time()
 	
-	pattern_roll_timer = 3.0
-	if pattern_roll_timer_tween != null:
-		pattern_roll_timer_tween.kill()
-	pattern_roll_timer_tween = get_tree().create_tween()
-	pattern_roll_timer_tween.tween_property(self, "pattern_roll_timer", 0.0, 3.0)
+	pattern_roll_bomb_count = 13
+	var bomb_list: Array[NormalBomb]
 	
-	var left_bomb = 13
-	var end_bomb: NormalBomb = create_normal_bomb(Vector2(0, -200), 0.5, 2.5)
-	create_normal_bomb(Vector2(0, -100), 0.5, 2.5)
-	create_normal_bomb(Vector2(0, 0), 0.5, 2.5)
-	create_normal_bomb(Vector2(0, 100), 0.5, 2.5)
-	create_normal_bomb(Vector2(0, 200), 0.5, 2.5)
+	bomb_list.append(create_normal_bomb(Vector2(0, -200), 0.5, 2.5))
+	bomb_list.append(create_normal_bomb(Vector2(0, -100), 0.5, 2.5))
+	bomb_list.append(create_normal_bomb(Vector2(0, 0), 0.5, 2.5))
+	bomb_list.append(create_normal_bomb(Vector2(0, 100), 0.5, 2.5))
+	bomb_list.append(create_normal_bomb(Vector2(0, 200), 0.5, 2.5))
 	
-	create_normal_bomb(Vector2(100, -100), 0.5, 2.5)
-	create_normal_bomb(Vector2(100, 0), 0.5, 2.5)
-	create_normal_bomb(Vector2(100, 100), 0.5, 2.5)
+	bomb_list.append(create_normal_bomb(Vector2(100, -100), 0.5, 2.5))
+	bomb_list.append(create_normal_bomb(Vector2(100, 0), 0.5, 2.5))
+	bomb_list.append(create_normal_bomb(Vector2(100, 100), 0.5, 2.5))
 
-	create_normal_bomb(Vector2(-100, -100), 0.5, 2.5)
-	create_normal_bomb(Vector2(-100, 0), 0.5, 2.5)
-	create_normal_bomb(Vector2(-100, 100), 0.5, 2.5)
+	bomb_list.append(create_normal_bomb(Vector2(-100, -100), 0.5, 2.5))
+	bomb_list.append(create_normal_bomb(Vector2(-100, 0), 0.5, 2.5))
+	bomb_list.append(create_normal_bomb(Vector2(-100, 100), 0.5, 2.5))
 	
-	create_normal_bomb(Vector2(200, 0), 0.5, 2.5)
+	bomb_list.append(create_normal_bomb(Vector2(200, 0), 0.5, 2.5))
 
-	create_normal_bomb(Vector2(-200, 0), 0.5, 2.5)
-
-	end_bomb.connect("player_body_entered", Callable(self, "pattern_roll_end"))
+	bomb_list.append(create_normal_bomb(Vector2(-200, 0), 0.5, 2.5))
+	
+	for inst: NormalBomb in bomb_list:
+		inst.connect("player_body_entered", Callable(self, "pattern_roll_end"))
 
 func pattern_roll_end():
-	PlayingFieldInterface.add_playing_time(pattern_roll_timer)
-	pattern_shuffle_and_draw()
+	pattern_roll_bomb_count -= 1
+	if pattern_roll_bomb_count == 0:
+		await PlayingFieldInterface.player_grounded
+		PlayingFieldInterface.set_playing_time((pattern_start_time + pattern_roll_playing_time) / Engine.time_scale)
+		pattern_shuffle_and_draw()
 	
 # pattern_roll block end
 ###############################
@@ -335,25 +336,36 @@ func pattern_roll_end():
 # pattern_diamond block start
 # made by Jaeyong
 
-func pattern_diamond():
-	
-	var left_bomb: int = 4
-	create_hazard_bomb(Vector2(100, 0), 0.5, 2.5)
-	create_normal_bomb(Vector2(200, 0), 0.5, 2.5)
-	
-	create_hazard_bomb(Vector2(-100, 0), 0.5, 2.5)
-	create_normal_bomb(Vector2(-200, 0), 0.5, 2.5)
-	
-	create_hazard_bomb(Vector2(0, 100), 0.5, 2.5)
-	create_normal_bomb(Vector2(0, 200), 0.5, 2.5)
-	
-	create_hazard_bomb(Vector2(0, -100), 0.5, 2.5)
-	create_normal_bomb(Vector2(0, -200), 0.5, 2.5)
+const pattern_diamond_playing_time = 3
+var pattern_diamond_bomb_count: int
 
-	await Utils.timer(3.0)
+func pattern_diamond():
+	pattern_start_time = PlayingFieldInterface.get_playing_time()
 	
-	pattern_shuffle_and_draw()
+	pattern_diamond_bomb_count = 4
+	var angle_offset: float = randf() if pattern_start_time > 30.0 else PlayingFieldInterface.get_player_position().angle()
+	var normal_bomb_list: Array[NormalBomb]
 	
+	const CIRCLE_FIELD_RADIUS = 256
+	
+	const normal_radius = CIRCLE_FIELD_RADIUS - 32
+	const hazard_radius = CIRCLE_FIELD_RADIUS - 128
+	
+	for i in range(4):
+		normal_bomb_list.append(create_normal_bomb(Vector2(normal_radius * cos(angle_offset + i * PI/2), normal_radius * sin(angle_offset + i * PI/2)), 0.5, 2.5))
+		create_hazard_bomb(Vector2(hazard_radius * cos(angle_offset + i * PI/2), hazard_radius * sin(angle_offset + i * PI/2)), 0.5, 2.5)
+	
+	for inst: NormalBomb in normal_bomb_list:
+		inst.connect("player_body_entered", Callable(self, "pattern_diamond_end"))
+
+func pattern_diamond_end():
+	pattern_diamond_bomb_count -= 1
+	if pattern_diamond_bomb_count == 0:
+		get_tree().call_group("group_hazard_bomb", "early_eliminate")
+		await PlayingFieldInterface.player_grounded
+		PlayingFieldInterface.set_playing_time((pattern_start_time + pattern_diamond_playing_time) / Engine.time_scale)
+		pattern_shuffle_and_draw()
+
 # pattern_diamond block end
 ###############################
 

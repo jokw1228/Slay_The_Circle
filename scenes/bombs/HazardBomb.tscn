@@ -9,7 +9,7 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_1f6en"]
 radius = 32.0
 
-[node name="HazardBomb" type="Area2D"]
+[node name="HazardBomb" type="Area2D" groups=["group_hazard_bomb"]]
 position = Vector2(417, 248)
 script = ExtResource("1_wklac")
 HazardBombEndedEffect_scene = ExtResource("2_fng6q")
@@ -25,11 +25,11 @@ texture_progress = ExtResource("5_qnof4")
 texture = ExtResource("5_3ijwn")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
-[connection signal="player_body_entered" from="." to="." method="game_over"]
-[connection signal="player_body_entered" from="." to="." method="exploded"]
-[connection signal="player_body_entered" from="." to="." method="slayed"]
 [connection signal="player_body_entered" from="." to="." method="queue_free"]
-[connection signal="bomb_timeout" from="BombTimer" to="." method="hazard_bomb_ended_effect"]
+[connection signal="player_body_entered" from="." to="." method="game_over"]
+[connection signal="player_body_entered" from="." to="." method="slayed"]
+[connection signal="player_body_entered" from="." to="." method="exploded"]
 [connection signal="bomb_timeout" from="BombTimer" to="." method="queue_free"]
+[connection signal="bomb_timeout" from="BombTimer" to="." method="hazard_bomb_ended_effect"]
 
 [editable path="BombTimer"]

@@ -7,3 +7,7 @@ func hazard_bomb_ended_effect():
 	var inst = HazardBombEndedEffect_scene.instantiate()
 	inst.position = position
 	get_tree().current_scene.add_child(inst)
+
+func early_eliminate():
+	hazard_bomb_ended_effect()
+	queue_free()

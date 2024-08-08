@@ -18,7 +18,7 @@ volume = 0.0
 pitch = 1.0
 streams = Array[AudioStream]([ExtResource("5_7r5w0")])
 
-[node name="NumericBomb" type="Area2D" groups=["group_numeric"]]
+[node name="NumericBomb" type="Area2D" groups=["group_numeric_bomb"]]
 script = ExtResource("1_lkrkc")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -48,12 +48,12 @@ events = Array[ExtResource("4_pmjfd")]([SubResource("Resource_ue2f5")])
 [node name="NumericSprite" type="Sprite2D" parent="."]
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="lower_value_bomb_exists" from="." to="." method="queue_free"]
 [connection signal="lower_value_bomb_exists" from="." to="." method="game_over"]
 [connection signal="lower_value_bomb_exists" from="." to="." method="exploded"]
-[connection signal="lower_value_bomb_exists" from="." to="." method="queue_free"]
 [connection signal="no_lower_value_bomb_exists" from="." to="." method="queue_free"]
-[connection signal="player_body_entered" from="." to="." method="slayed"]
 [connection signal="player_body_entered" from="." to="." method="check_for_lower_value_bomb"]
+[connection signal="player_body_entered" from="." to="." method="slayed"]
+[connection signal="bomb_timeout" from="BombTimer" to="." method="queue_free"]
 [connection signal="bomb_timeout" from="BombTimer" to="." method="game_over"]
 [connection signal="bomb_timeout" from="BombTimer" to="." method="exploded"]
-[connection signal="bomb_timeout" from="BombTimer" to="." method="queue_free"]
