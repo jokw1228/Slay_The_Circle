@@ -11,7 +11,6 @@ func _ready():
 	pattern_shuffle_and_draw()
 
 func pattern_list_initialization():
-	# pattern_list.append(Callable(self, "pattern_test_1"))
 	pattern_list.append(Callable(self, "pattern_lightning"))
 	pattern_list.append(Callable(self, "pattern_wall_timing"))
 	pattern_list.append(Callable(self, "pattern_scattered_hazards"))
@@ -21,18 +20,6 @@ func pattern_shuffle_and_draw():
 	randomize()
 	var random_index: int = randi() % pattern_list.size()
 	pattern_list[random_index].call()
-	
-
-###############################
-# pattern_test_1 block start
-
-func pattern_test_1():
-	await Utils.timer(0.1) # do nothing
-	pattern_shuffle_and_draw()
-
-# pattern_test_1 block end
-###############################
-
 
 ###############################
 # pattern_lightning block start

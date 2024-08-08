@@ -36,7 +36,6 @@ func set_PlayingField_node(node: PlayingField):
 	node.Player_node.connect("grounded", Callable(self, "player_grounded_emit"))
 
 func player_grounded_emit():
-	print(123)
 	player_grounded.emit()
 
 func game_over(x):
