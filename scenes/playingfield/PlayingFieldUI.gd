@@ -40,7 +40,7 @@ func playing_time_updated(time: float):
 	if best_record == -1: 
 		best_record = SaveFileManager.get_best_record(stage_index)
 		%LabelBestSec.text = "%d" % floor(best_record)
-		%LabelBestMilli.text = ".%02d" % floor((best_record - floor(best_record)) * 100)
+		%LabelBestMilli.text = ".%02d" % round((best_record - floor(best_record)) * 100)
 	if time > best_record and %InGameNewRecord.visible == false:
 		Utils.slide_in(%InGameNewRecord, 400, Vector2.RIGHT, 0.4)
 		Best_node.visible = false
