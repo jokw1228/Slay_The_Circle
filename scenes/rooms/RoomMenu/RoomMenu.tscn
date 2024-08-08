@@ -63,12 +63,12 @@ menu_bomb_generator = NodePath("Field/MenuBombGenerator")
 
 [node name="BackGroundEffect" parent="Field" instance=ExtResource("9_hjh10")]
 
+[node name="MenuBombGenerator" parent="Field" instance=ExtResource("9_xjnco")]
+unique_name_in_owner = true
+
 [node name="Player" parent="Field" instance=ExtResource("10_qy0n6")]
 
 [node name="CircleField" parent="Field" instance=ExtResource("11_s1pwc")]
-
-[node name="MenuBombGenerator" parent="Field" instance=ExtResource("9_xjnco")]
-unique_name_in_owner = true
 
 [node name="PlayingFieldCamera" parent="Field" instance=ExtResource("13_itguu")]
 

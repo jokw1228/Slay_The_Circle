@@ -7,4 +7,5 @@ class_name MenuBomb
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	sprite.texture = texture
+	sprite.scale = Vector2(1, 1) * 64 / max(texture.get_height(), texture.get_width())
 	

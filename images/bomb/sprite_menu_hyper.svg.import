@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cw5wu5qajpxdb"
-path="res://.godot/imported/rotation_reverse.png-6ee8be424662d753654c287fe903764b.ctex"
+uid="uid://08leog74ub0o"
+path="res://.godot/imported/sprite_menu_hyper.svg-e2a95a1bad5e39455b0179c0b8b57bb8.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://images/rotation_reverse.png"
-dest_files=["res://.godot/imported/rotation_reverse.png-6ee8be424662d753654c287fe903764b.ctex"]
+source_file="res://images/bomb/sprite_menu_hyper.svg"
+dest_files=["res://.godot/imported/sprite_menu_hyper.svg-e2a95a1bad5e39455b0179c0b8b57bb8.ctex"]
 
 [params]
 
@@ -32,3 +32,6 @@ process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
 detect_3d/compress_to=1
+svg/scale=1.0
+editor/scale_with_editor_scale=false
+editor/convert_colors_with_editor_theme=false
