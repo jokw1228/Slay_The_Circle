@@ -76,6 +76,8 @@ func new_record_transition():
 	Utils.slide_in(%PanelNewRecord, 800, Vector2.LEFT, 0.4)
 	
 func _on_back_button_back():
+	PlayingFieldInterface.disable_player_input()
+
 	#백 버튼 클릭시 UI 정리 <- "스타트 범브 터지면 gameover UI 들어가게" 와 같은 상황
 	Utils.slide_out(%PanelGameOver, 800, Vector2.LEFT, 0.4)
 	Utils.slide_out(%PanelScore, 800, Vector2.RIGHT, 0.4)
@@ -86,5 +88,6 @@ func _on_back_button_back():
 	tween.tween_property(%PanelBackMessage, "position", Vector2(57.25, -167), 2.0)
 	
 	await tween.finished
+	PlayingFieldInterface.enable_player_input()
 	get_tree().change_scene_to_file(RoomMenu_room)
 	

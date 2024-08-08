@@ -21,11 +21,14 @@ func _physics_process(_delta):
 	move_and_slide()
 
 func _unhandled_input(event):
-	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
+	if event is InputEventMouseButton\
+		and event.button_index == MOUSE_BUTTON_LEFT\
+		and event.pressed\
+		and PlayingFieldInterface.is_player_input_enabled\
 		# store mouse input coordinates in queue
 		# store up to 4
-		if click_queue.size() < 4:
-			click_queue.push_back(get_global_mouse_position())
+		and click_queue.size() < 4:
+		click_queue.push_back(get_global_mouse_position())
 
 func _on_player_ray_cast_2d_move_player(position_to_go):
 	movement_queue.push_back(position_to_go)

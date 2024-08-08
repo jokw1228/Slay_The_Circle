@@ -65,3 +65,11 @@ func get_playing_time():
 
 func add_playing_time(time_to_add: float):
 	get_PlayingField_node().add_playing_time(time_to_add)
+
+
+var is_player_input_enabled = true
+func disable_player_input():
+	is_player_input_enabled = false
+
+func enable_player_input():
+	is_player_input_enabled = true

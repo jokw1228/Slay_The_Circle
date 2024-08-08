@@ -35,6 +35,7 @@ func start_stage(): # A signal is connected by the select button.=
 		"HYPER CIRCLE", "HYPER CIRCLER", "HYPER CIRCLEST"][stage_index]
 	
 	reverb_effect_timer.stop()
+	PlayingFieldInterface.disable_player_input()
 	
 	# hides panel
 	Utils.tween().tween_property(%HyperStage, "position", %HyperStage.position + Vector2(-400, 0), 0.4)
@@ -58,6 +59,7 @@ func start_stage(): # A signal is connected by the select button.=
 	
 	# animation done
 	await Utils.timer(0.3)
+	PlayingFieldInterface.enable_player_input()
 	get_tree().change_scene_to_packed(room_to_go[stage_index])
 	
 func select_stage(difficulty: int):
