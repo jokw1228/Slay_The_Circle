@@ -19,7 +19,6 @@ func pattern_list_initialization():
 	pattern_list.append(Callable(self, "pattern_timing"))
 	pattern_list.append(Callable(self, "pattern_trafficlight"))
 	pattern_list.append(Callable(self, "pattern_manyrotation"))
-	
 	pattern_list.append(Callable(self, "pattern_speed_and_roation"))
 	
 func pattern_shuffle_and_draw():
