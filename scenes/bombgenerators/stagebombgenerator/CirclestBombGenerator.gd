@@ -466,7 +466,7 @@ func pattern_shuffle_game():
 	for i in range(4):
 		if pattern_shuffle_game_rand[i]:
 			pattern_shuffle_game_bombs.append(create_hazard_bomb(Vector2(1000, 1000), 4.2, 0))
-			pattern_shuffle_game_real_bomb = create_normal_bomb(pattern_shuffle_game_const_position[i], 4.2, 1)
+			pattern_shuffle_game_real_bomb = create_normal_bomb(pattern_shuffle_game_const_position[i], 1, 6)
 			pattern_shuffle_game_real_bomb.position = pattern_shuffle_game_const_position[i]
 			real_bomb_position = i
 		else:
