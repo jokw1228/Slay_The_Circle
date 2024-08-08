@@ -12,9 +12,10 @@ func _ready():
 
 func pattern_list_initialization():
 	# pattern_list.append(Callable(self, "pattern_test_1"))
-	#pattern_list.append(Callable(self, "pattern_moving_link"))
-	#pattern_list.append(Callable(self, "pattern_fruitninja"))
+	pattern_list.append(Callable(self, "pattern_moving_link"))
+	pattern_list.append(Callable(self, "pattern_fruitninja"))
 	pattern_list.append(Callable(self, "pattern_windmill"))
+	pattern_list.append(Callable(self, "pattern_rain"))
 
 func pattern_shuffle_and_draw():
 	randomize()
@@ -151,6 +152,51 @@ func pattern_windmill():
 	create_normal_bomb(Vector2(1, -1) * DIST, 0.5, 2)
 
 	await Utils.timer(2.5)
+	rotator.queue_free()
 	pattern_shuffle_and_draw()
 # pattern_windmill block end
+###############################
+
+###############################
+# pattern_rain block start
+# made by Seonghyeon
+func pattern_rain():
+	PlayingFieldInterface.set_theme_color(Color.HOT_PINK)
+ 
+	pattern_rain_spawn_drop()
+	pattern_rain_spawn_bomb()
+
+	await Utils.timer(5.5)
+	pattern_shuffle_and_draw()
+ 
+func pattern_rain_spawn_drop():
+	for i in range(10):
+		pattern_rain_drop()
+		await Utils.timer(0.3)
+
+func pattern_rain_spawn_bomb():
+	for i in range(6):
+		pattern_rain_bomb()
+		await Utils.timer(0.5)
+
+func pattern_rain_drop():
+	const DIST: float = 300
+	const RANGE: float = 70
+
+	var bomb: HazardBomb = create_hazard_bomb(DIST * Vector2.UP.rotated(deg_to_rad(randf_range(-RANGE, RANGE))), 1, 2)
+	await Utils.timer(1)
+	Utils.tween(Tween.TRANS_EXPO, Tween.EASE_IN).tween_property(bomb, "global_position", Vector2(bomb.global_position.x, 500), 2)
+ 
+func pattern_rain_bomb():
+	const RANGE: float = 45
+	const DIST: float = 300
+
+	var direction: int = 1 if randi_range(0, 1) == 1 else -1
+	var pos: Vector2 = DIST * Vector2.LEFT.rotated(deg_to_rad(randf_range(-RANGE, 0)))
+	pos.x *= direction
+	var bomb: NormalBomb = create_normal_bomb(pos, 1, 2)
+	await Utils.timer(1)
+	Utils.tween(Tween.TRANS_LINEAR).tween_property(bomb, "global_position", Vector2(-pos.x, pos.y), 2)
+	
+# patter_rain block end
 ###############################

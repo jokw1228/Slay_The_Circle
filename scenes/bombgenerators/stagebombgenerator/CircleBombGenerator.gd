@@ -13,11 +13,11 @@ func _ready():
 func pattern_list_initialization():
 	#pattern_list.append(Callable(self, "pattern_test_1"))
 	#pattern_list.append(Callable(self, "pattern_test_2"))
-	#pattern_list.append(Callable(self, "pattern_numeric_triangle_with_link"))
-	#pattern_list.append(Callable(self, "pattern_star"))
-	#pattern_list.append(Callable(self, "pattern_random_link"))
-	#pattern_list.append(Callable(self, "pattern_timing"))
-	#pattern_list.append(Callable(self, "pattern_trafficlight"))
+	pattern_list.append(Callable(self, "pattern_numeric_triangle_with_link"))
+	pattern_list.append(Callable(self, "pattern_star"))
+	pattern_list.append(Callable(self, "pattern_random_link"))
+	pattern_list.append(Callable(self, "pattern_timing"))
+	pattern_list.append(Callable(self, "pattern_trafficlight"))
 	pattern_list.append(Callable(self, "pattern_manyrotation"))
 	
 func pattern_shuffle_and_draw():
@@ -199,7 +199,7 @@ func pattern_timing():
 	create_hazard_bomb(SIZE * Vector2.RIGHT, 0.8, 1.3)
 	create_normal_bomb(Vector2.ZERO, 0.8, 1.5) 
 
-	await Utils.timer(1.5)
+	await Utils.timer(2.3)
 	pattern_shuffle_and_draw()
 # pattern_timing block end
 ###############################
