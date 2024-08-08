@@ -13,24 +13,24 @@ func _ready():
 	pattern_shuffle_and_draw()
 
 func pattern_list_initialization():
-	#pattern_list.append(Callable(self, "pattern_numeric_triangle_with_link"))
-	#pattern_list.append(Callable(self, "pattern_star"))
-	#pattern_list.append(Callable(self, "pattern_random_link"))
-	#pattern_list.append(Callable(self, "pattern_timing"))
-	#pattern_list.append(Callable(self, "pattern_trafficlight"))
-	#pattern_list.append(Callable(self, "pattern_manyrotation"))
-	#pattern_list.append(Callable(self, "pattern_speed_and_rotation"))
-	#pattern_list.append(Callable(self, "pattern_roll"))
+	pattern_list.append(Callable(self, "pattern_numeric_triangle_with_link"))
+	pattern_list.append(Callable(self, "pattern_star"))
+	pattern_list.append(Callable(self, "pattern_random_link"))
+	pattern_list.append(Callable(self, "pattern_timing"))
+	pattern_list.append(Callable(self, "pattern_trafficlight"))
+	pattern_list.append(Callable(self, "pattern_manyrotation"))
+	pattern_list.append(Callable(self, "pattern_speed_and_rotation"))
+	pattern_list.append(Callable(self, "pattern_roll"))
 	pattern_list.append(Callable(self, "pattern_diamond"))
-	#pattern_list.append(Callable(self, "pattern_twisted_numeric"))
-	#pattern_list.append(Callable(self, "pattern_spiral"))
-	#pattern_list.append(Callable(self, "pattern_numeric_choice"))
-	#pattern_list.append(Callable(self, "pattern_hide_in_hazard"))
-	#pattern_list.append(Callable(self, "pattern_diamond_with_hazard"))
-	#pattern_list.append(Callable(self, "pattern_narrow_road"))
-	#pattern_list.append(Callable(self, "pattern_369"))
-	#pattern_list.append(Callable(self, "pattern_colosseum"))
-	#pattern_list.append(Callable(self, "pattern_pizza"))
+	pattern_list.append(Callable(self, "pattern_twisted_numeric"))
+	pattern_list.append(Callable(self, "pattern_spiral"))
+	pattern_list.append(Callable(self, "pattern_numeric_choice"))
+	pattern_list.append(Callable(self, "pattern_hide_in_hazard"))
+	pattern_list.append(Callable(self, "pattern_diamond_with_hazard"))
+	pattern_list.append(Callable(self, "pattern_narrow_road"))
+	pattern_list.append(Callable(self, "pattern_369"))
+	pattern_list.append(Callable(self, "pattern_colosseum"))
+	pattern_list.append(Callable(self, "pattern_pizza"))
 	
 func pattern_shuffle_and_draw():
 	randomize()
@@ -352,11 +352,9 @@ func pattern_diamond():
 	const hazard_radius = CIRCLE_FIELD_RADIUS - 144
 	
 	for i in range(4):
-		normal_bomb_list.append(create_normal_bomb(Vector2(normal_radius * cos(angle_offset + i * PI/2), normal_radius * sin(angle_offset + i * PI/2)), 0.5, 2.5))
+		var bomb: NormalBomb = create_normal_bomb(Vector2(normal_radius * cos(angle_offset + i * PI/2), normal_radius * sin(angle_offset + i * PI/2)), 0.5, 2.5)
+		bomb.connect("player_body_entered", Callable(self, "pattern_diamond_end"))
 		create_hazard_bomb(Vector2(hazard_radius * cos(angle_offset + i * PI/2), hazard_radius * sin(angle_offset + i * PI/2)), 0.5, 2.5)
-	
-	for inst: NormalBomb in normal_bomb_list:
-		inst.connect("player_body_entered", Callable(self, "pattern_diamond_end"))
 
 func pattern_diamond_end():
 	pattern_diamond_bomb_count -= 1
@@ -373,35 +371,23 @@ func pattern_diamond_end():
 # pattern_twisted_numeric block start
 # made by Jaeyong
 
-var pattern_twisted_numeric_timer: float
-var pattern_twisted_numeric_timer_tween: Tween
+const pattern_twisted_numeric_playing_time = 3.0
 
 func pattern_twisted_numeric():
+	pattern_start_time = PlayingFieldInterface.get_playing_time()
 	
-	pattern_twisted_numeric_timer = 3.0
-	if pattern_twisted_numeric_timer_tween != null:
-		pattern_twisted_numeric_timer_tween.kill()
-	pattern_twisted_numeric_timer_tween = get_tree().create_tween()
-	pattern_twisted_numeric_timer_tween.tween_property(self, "pattern_twisted_numeric_timer", 0.0, 3.0)
-	
-	var left_bomb = 4
 	var end_bomb: NumericBomb
 	
-	if(PlayingFieldInterface.get_player_position() != Vector2(0,0)):
-		end_bomb = create_numeric_bomb(PlayingFieldInterface.get_player_position() * -0.6, 0.5, 2.5 ,4)
-		create_numeric_bomb(PlayingFieldInterface.get_player_position() * -0.2, 0.5, 2.5, 2)
-		create_numeric_bomb(PlayingFieldInterface.get_player_position() * 0.2 , 0.5, 2.5, 1)
-		create_numeric_bomb(PlayingFieldInterface.get_player_position() * 0.6, 0.5, 2.5, 3)
-	else:
-		end_bomb = create_numeric_bomb(Vector2(256,0) * -0.6, 0.5, 2.5 ,4)
-		create_numeric_bomb(Vector2(256,0) * -0.2, 0.5, 2.5, 2)
-		create_numeric_bomb(Vector2(256,0) * 0.2 , 0.5, 2.5, 1)
-		create_numeric_bomb(Vector2(256,0) * 0.6, 0.5, 2.5, 3)
-		
+	end_bomb = create_numeric_bomb(PlayingFieldInterface.get_player_position() * -0.6, 0.5, 2.5 ,4)
+	create_numeric_bomb(PlayingFieldInterface.get_player_position() * -0.2, 0.5, 2.5, 2)
+	create_numeric_bomb(PlayingFieldInterface.get_player_position() * 0.2 , 0.5, 2.5, 1)
+	create_numeric_bomb(PlayingFieldInterface.get_player_position() * 0.6, 0.5, 2.5, 3)
+	
 	end_bomb.connect("player_body_entered", Callable(self, "pattern_twisted_numeric_end"))
 
 func pattern_twisted_numeric_end():
-	PlayingFieldInterface.add_playing_time(pattern_twisted_numeric_timer)
+	await PlayingFieldInterface.player_grounded
+	PlayingFieldInterface.set_playing_time((pattern_start_time + pattern_twisted_numeric_playing_time) / Engine.time_scale)
 	pattern_shuffle_and_draw()
 
 # pattern_fast_numeric block end
@@ -411,31 +397,28 @@ func pattern_twisted_numeric_end():
 # pattern_spiral block start
 # made by jinhyun
 
-var pattern_spiral_timer: float
-var pattern_spiral_timer_tween: Tween
+const pattern_spiral_playing_time = 3.0
+var pattern_spiral_bomb_count: int
 
 func pattern_spiral():
 	PlayingFieldInterface.set_theme_color(Color.VIOLET)
 	
-	pattern_spiral_timer = 3.0
-	if pattern_spiral_timer_tween != null:
-		pattern_spiral_timer_tween.kill()
-	pattern_spiral_timer_tween = get_tree().create_tween()
-	pattern_spiral_timer_tween.tween_property(self,"pattern_spiral_timer",0.0,3.0)
+	pattern_start_time = PlayingFieldInterface.get_playing_time()
 	
 	var init_position: Vector2 = Vector2.UP
 	
+	pattern_spiral_bomb_count = 16
 	for i in range(16):
-		create_normal_bomb(init_position.rotated(i*PI/3) * (i+1) * 14, 0.3, 3)
+		var bomb: NormalBomb = create_normal_bomb(init_position.rotated(i*PI/3) * (i+1) * 14, 0.3, 3)
+		bomb.connect("player_body_entered",Callable(self,"pattern_spiral_end"))
 		await get_tree().create_timer(0.1).timeout
-	
-	await get_tree().create_timer(2).timeout
-	var bomb = create_normal_bomb(Vector2(0, 0), 0.3, 3)
-	bomb.connect("player_body_entered",Callable(self,"pattern_spiral_end"))
 
 func pattern_spiral_end():
-	PlayingFieldInterface.add_playing_time(pattern_spiral_timer)
-	pattern_shuffle_and_draw()
+	pattern_spiral_bomb_count -= 1
+	if pattern_spiral_bomb_count == 0:
+		await PlayingFieldInterface.player_grounded
+		PlayingFieldInterface.set_playing_time((pattern_start_time + pattern_spiral_playing_time) / Engine.time_scale)
+		pattern_shuffle_and_draw()
 	
 # pattern_spiral end
 ###############################
@@ -444,39 +427,37 @@ func pattern_spiral_end():
 # pattern_numeric_choice block start
 # made by jinhyun
 
-var pattern_numeric_choice_timer: float
-var pattern_numeric_choice_timer_tween: Tween
+const pattern_numeric_choice_playing_time = 3.0
+var pattern_numeric_choice_bomb_count: int
 
 func pattern_numeric_choice():
 	PlayingFieldInterface.set_theme_color(Color.VIOLET)
 	
-	pattern_numeric_choice_timer = 3.0
-	if pattern_numeric_choice_timer_tween != null:
-		pattern_numeric_choice_timer_tween.kill()
-	pattern_numeric_choice_timer_tween = get_tree().create_tween()
-	pattern_numeric_choice_timer_tween.tween_property(self,"pattern_numeric_choice_timer",0.0,3.0)
+	pattern_start_time = PlayingFieldInterface.get_playing_time()
 	
 	var player_position: Vector2 = PlayingFieldInterface.get_player_position()
 	var rotation_box: Array = [PI/2, PI, -PI/2, 0]
 	var rotation_inv_box: Array = [-PI/2, PI, PI/2, 0]
 	var rand: int = randi() % 2
 	
+	pattern_numeric_choice_bomb_count = 8
 	if rand == 0:
 		for i in range(8):
-			create_numeric_bomb(player_position.rotated(rotation_box[i%4]) * 0.8, 0.3, 1, i+1)
+			var bomb: NumericBomb = create_numeric_bomb(player_position.rotated(rotation_box[i%4]) * 0.8, 0.3, 1, i+1)
+			bomb.connect("player_body_entered",Callable(self,"pattern_numeric_choice_end"))
 			await get_tree().create_timer(0.25).timeout
 	else:
 		for i in range(8):
-			create_numeric_bomb(player_position.rotated(rotation_inv_box[i%4]) * 0.8, 0.3, 1, i+1)
+			var bomb: NumericBomb = create_numeric_bomb(player_position.rotated(rotation_inv_box[i%4]) * 0.8, 0.3, 1, i+1)
+			bomb.connect("player_body_entered",Callable(self,"pattern_numeric_choice_end"))
 			await get_tree().create_timer(0.25).timeout
-	
-	await get_tree().create_timer(2).timeout
-	var bomb = create_normal_bomb(Vector2(0, 0), 0.3, 3)
-	bomb.connect("player_body_entered",Callable(self,"pattern_numeric_choice_end"))
 
 func pattern_numeric_choice_end():
-	PlayingFieldInterface.add_playing_time(pattern_numeric_choice_timer)
-	pattern_shuffle_and_draw()
+	pattern_numeric_choice_bomb_count -= 1
+	if pattern_numeric_choice_bomb_count == 0:
+		await PlayingFieldInterface.player_grounded
+		PlayingFieldInterface.set_playing_time((pattern_start_time + pattern_numeric_choice_playing_time) / Engine.time_scale)
+		pattern_shuffle_and_draw()
 	
 # pattern_numeric_choice end
 ###############################
@@ -488,18 +469,8 @@ func pattern_numeric_choice_end():
 #위험하다고 피하는 건 좋지 않아요
 #circle 정도의 쉬?운 난이도
 
-var pattern_hide_in_hazard_timer : float
-var pattern_hide_in_hazard_timer_tween : Tween
-
 func pattern_hide_in_hazard():
 	PlayingFieldInterface.set_theme_color(Color.BISQUE)
-	
-	pattern_hide_in_hazard_timer = 6.0
-	
-	if pattern_hide_in_hazard_timer_tween != null:
-		pattern_hide_in_hazard_timer_tween.kill()
-	pattern_hide_in_hazard_timer_tween = get_tree().create_tween()
-	pattern_hide_in_hazard_timer_tween.tween_property(self, "pattern_hide_in_hazard_timer", 0.0, 6.0)
 	
 	for i in range(8):
 		var bomb : NormalBomb = create_normal_bomb(Vector2(150 * cos(i*PI/4), 150 * sin(i*PI/4)), 0.4, 5.6)
@@ -509,12 +480,7 @@ func pattern_hide_in_hazard():
 			var bomb : HazardBomb = create_hazard_bomb(Vector2(150 * cos(j*PI/4), 150 * sin(j*PI/4)), 0.5, 1)
 		await Utils.timer(1.5)
 	pattern_shuffle_and_draw()
-	
-	
-func pattern_hide_in_hazard_end():
-	PlayingFieldInterface.add_playing_time(pattern_hide_in_hazard_timer)
-	pattern_shuffle_and_draw()
-	
+
 #pattern_hide_in_hazard block end
 ###############################
 
@@ -522,29 +488,23 @@ func pattern_hide_in_hazard_end():
 # pattern_numeric_diamond_with_hazard block start
 # made by Bae Sekang
 
-var pattern_diamond_with_hazard_timer: float
-var pattern_diamond_with_hazard_timer_tween: Tween
+const pattern_diamond_with_hazard_playing_time = 3.0
 
 func pattern_diamond_with_hazard():
 	PlayingFieldInterface.set_theme_color(Color.DEEP_SKY_BLUE)
 	
-	pattern_diamond_with_hazard_timer = 3.0
-	if pattern_diamond_with_hazard_timer_tween != null:
-		pattern_diamond_with_hazard_timer_tween.kill()
-	pattern_diamond_with_hazard_timer_tween = get_tree().create_tween()
-	pattern_diamond_with_hazard_timer_tween.tween_property(self, "pattern_diamond_with_hazard_timer", 0.0, 3.0)
+	pattern_start_time = PlayingFieldInterface.get_playing_time()
 	
-	
-	var bomb1: NumericBomb = create_numeric_bomb(Vector2(70,0), 0.5, 2.5, 1)
-	var bomb2: NumericBomb = create_numeric_bomb(Vector2(-70,0), 0.5, 2.5, 2)
-	var bomb3: NumericBomb = create_numeric_bomb(Vector2(0,100), 0.5, 2.5, 3)
-	var bomb4: NumericBomb = create_numeric_bomb(Vector2(0,-100), 0.5, 2.5, 4)
+	create_numeric_bomb(Vector2(70,0), 0.5, 2.5, 1)
+	create_numeric_bomb(Vector2(-70,0), 0.5, 2.5, 2)
+	create_numeric_bomb(Vector2(0,100), 0.5, 2.5, 3)
+	var bomb: NumericBomb = create_numeric_bomb(Vector2(0,-100), 0.5, 2.5, 4)
+	bomb.connect("no_lower_value_bomb_exists", Callable(self, "pattern_diamond_with_hazard_end"))
 	create_hazard_bomb(Vector2(0,0), 0.5,1)
-	await Utils.timer(2.5)
-	pattern_diamond_with_hazard_end()
 
 func pattern_diamond_with_hazard_end():
-	PlayingFieldInterface.add_playing_time(pattern_diamond_with_hazard_timer)
+	await PlayingFieldInterface.player_grounded
+	PlayingFieldInterface.set_playing_time((pattern_start_time + pattern_diamond_with_hazard_playing_time) / Engine.time_scale)
 	pattern_shuffle_and_draw()
 	
 # pattern_diamond_with_hazard block end
@@ -556,33 +516,30 @@ func pattern_diamond_with_hazard_end():
 # pattern_numeric_diamond_with_hazard block start
 # made by Bae Sekang
 
-var pattern_narrow_road_timer: float
-var pattern_narrow_road_timer_tween: Tween
+const pattern_narrow_road_playing_time = 3.0
 
 func pattern_narrow_road():
 	PlayingFieldInterface.set_theme_color(Color.DEEP_SKY_BLUE)
 	
+	pattern_start_time = PlayingFieldInterface.get_playing_time()
 	
-	pattern_narrow_road_timer = 3.0
-	if pattern_narrow_road_timer_tween != null:
-		pattern_narrow_road_timer_tween.kill()
-	pattern_narrow_road_timer_tween = get_tree().create_tween()
-	pattern_narrow_road_timer_tween.tween_property(self, "pattern_narrow_road_timer", 0.0, 3.0)
 	var rng = RandomNumberGenerator.new()
 	var random_range_integer = rng.randi_range(-120, 120)
 	var rng2 = RandomNumberGenerator.new()
 	var is_upsidedown = rng2.randi_range(1, 2)
 	if is_upsidedown==2:
 		is_upsidedown = -1
+	var bomb: NumericBomb
 	for i in range(0,5,1):
 		create_hazard_bomb(Vector2(random_range_integer-80,is_upsidedown*(-100+50*i)), 0.5,2.5)
 		create_hazard_bomb(Vector2(random_range_integer+80,is_upsidedown*(-100+50*i)), 0.5,2.5)
-		create_numeric_bomb(Vector2(random_range_integer,is_upsidedown*(-100+50*i)), 0.5, 2.5, i+1)
-	await Utils.timer(2.5)
-	pattern_narrow_road_end()
+		bomb = create_numeric_bomb(Vector2(random_range_integer,is_upsidedown*(-100+50*i)), 0.5, 2.5, i+1)
+	bomb.connect("no_lower_value_bomb_exists", Callable(self, "pattern_narrow_road_end"))
 
 func pattern_narrow_road_end():
-	PlayingFieldInterface.add_playing_time(pattern_narrow_road_timer)
+	get_tree().call_group("group_hazard_bomb", "early_eliminate")
+	await PlayingFieldInterface.player_grounded
+	PlayingFieldInterface.set_playing_time((pattern_start_time + pattern_narrow_road_playing_time) / Engine.time_scale)
 	pattern_shuffle_and_draw()
 	
 # pattern_narrow_road block end
@@ -593,30 +550,28 @@ func pattern_narrow_road_end():
 # pattern_369 block start
 # made by Bae Sekang
 
-var pattern_369_timer: float
-var pattern_369_timer_tween: Tween
+const pattern_369_playing_time = 5.5
 
 func pattern_369():
 	PlayingFieldInterface.set_theme_color(Color.DEEP_SKY_BLUE)
 	
-	pattern_369_timer = 3.0
-	if pattern_369_timer_tween != null:
-		pattern_369_timer_tween.kill()
-	pattern_369_timer_tween = get_tree().create_tween()
-	pattern_369_timer_tween.tween_property(self, "pattern_369_timer", 0.0, 3.0)
-	for i in range(1, 10):
-		var i_ones_place=i%10
-		if i_ones_place%3!=0 or i_ones_place==0:
-			create_numeric_bomb(Vector2(200 * cos(i * PI/4.0), 200 * sin(i * PI/4.0)), 1.0, 2.5,i)
-		else:
-			create_hazard_bomb(Vector2(200 * cos(i * PI/4.0), 200 * sin(i * PI/4.0)), 2.5,1.5)
-		await get_tree().create_timer(0.4).timeout
+	pattern_start_time = PlayingFieldInterface.get_playing_time()
 	
-	await Utils.timer(2.5)
-	pattern_369_end()
+	var angle_offset: float = PlayingFieldInterface.get_player_position().angle()
+	for i in range(1, 8):
+		if i % 3 != 0:
+			create_numeric_bomb(Vector2(208 * cos(angle_offset + i * PI/4.0), 208 * sin(angle_offset + i * PI/4.0)), 0.5, 1.5,i)
+		else:
+			create_hazard_bomb(Vector2(208 * cos(angle_offset + i * PI/4.0), 208 * sin(angle_offset + i * PI/4.0)), 0.5, 1.5)
+		await get_tree().create_timer(0.5).timeout
+	var end_bomb: NumericBomb
+	end_bomb = create_numeric_bomb(Vector2(208 * cos(angle_offset + 8 * PI/4.0), 208 * sin(angle_offset + 8 * PI/4.0)), 0.5, 1.5, 8)
+	end_bomb.connect("no_lower_value_bomb_exists", Callable(self, "pattern_369_end"))
 
 func pattern_369_end():
-	PlayingFieldInterface.add_playing_time(pattern_369_timer)
+	get_tree().call_group("group_hazard_bomb", "early_eliminate")
+	await PlayingFieldInterface.player_grounded
+	PlayingFieldInterface.set_playing_time((pattern_start_time + pattern_369_playing_time) / Engine.time_scale)
 	pattern_shuffle_and_draw()
 	
 # pattern_369 block end
@@ -628,29 +583,28 @@ func pattern_369_end():
 # pattern_colosseum block start
 # made by Bae Sekang
 
-var pattern_colosseum_timer: float
-var pattern_colosseum_timer_tween: Tween
+const pattern_colosseum_playing_time = 3.5
+var pattern_colosseum_bomb_count: int
 
 func pattern_colosseum():
 	PlayingFieldInterface.set_theme_color(Color.DEEP_SKY_BLUE)
 	
-	pattern_colosseum_timer = 3.0
-	if pattern_colosseum_timer_tween != null:
-		pattern_colosseum_timer_tween.kill()
-	pattern_colosseum_timer_tween = get_tree().create_tween()
-	pattern_colosseum_timer_tween.tween_property(self, "pattern_colosseum_timer", 0.0, 3.0)
-
+	pattern_start_time = PlayingFieldInterface.get_playing_time()
+	
+	pattern_colosseum_bomb_count = 12
 	for i in range(1, 7):
 		create_hazard_bomb(Vector2(140 * cos(i * PI/3.0), 140 * sin(i * PI/3.0)), 1.0, 1.0)
-		create_normal_bomb(Vector2(100 * cos((2*i-1) * PI/6.0), 100 * sin((2*i-1) * PI/6.0)), 1.0, 2.5)
-		create_normal_bomb(Vector2(100 * cos(2*i * PI/6.0), 100 * sin(2*i * PI/6.0)), 1.0, 2.5)
-	
-	await Utils.timer(2.5)
-	pattern_colosseum_end()
+		var bomb1: NormalBomb = create_normal_bomb(Vector2(100 * cos((2*i-1) * PI/6.0), 100 * sin((2*i-1) * PI/6.0)), 1.0, 2.5)
+		bomb1.connect("player_body_entered", Callable(self, "pattern_colosseum_end"))
+		var bomb2: NormalBomb = create_normal_bomb(Vector2(100 * cos(2*i * PI/6.0), 100 * sin(2*i * PI/6.0)), 1.0, 2.5)
+		bomb2.connect("player_body_entered", Callable(self, "pattern_colosseum_end"))
 	
 func pattern_colosseum_end():
-	PlayingFieldInterface.add_playing_time(pattern_colosseum_timer)
-	pattern_shuffle_and_draw()
+	pattern_colosseum_bomb_count -= 1
+	if pattern_colosseum_bomb_count == 0:
+		await PlayingFieldInterface.player_grounded
+		PlayingFieldInterface.set_playing_time((pattern_start_time + pattern_colosseum_playing_time) / Engine.time_scale)
+		pattern_shuffle_and_draw()
 	
 # pattern_colosseum block end
 ###############################
@@ -661,30 +615,17 @@ func pattern_colosseum_end():
 # pattern_pizza block start
 # made by Bae Sekang
 
-var pattern_pizza_timer: float
-var pattern_pizza_timer_tween: Tween
-
 func pattern_pizza():
 	PlayingFieldInterface.set_theme_color(Color.DEEP_SKY_BLUE)
-	
-	pattern_pizza_timer = 3.0
-	if pattern_pizza_timer_tween != null:
-		pattern_pizza_timer_tween.kill()
-	pattern_pizza_timer_tween = get_tree().create_tween()
-	pattern_pizza_timer_tween.tween_property(self, "pattern_pizza_timer", 0.0, 3.0)
 
-	var bomb1: NumericBomb = create_numeric_bomb(Vector2(40,35), 0.5, 2.5, 1)
-	var bomb2: NumericBomb = create_numeric_bomb(Vector2(-110,105), 0.5, 2.5, 2)
+	create_numeric_bomb(Vector2(40,35), 0.5, 2.5, 1)
+	create_numeric_bomb(Vector2(-110,105), 0.5, 2.5, 2)
 	create_normal_bomb(Vector2(-20,-75), 0.5, 2.5)
 	create_normal_bomb(Vector2(85,-10), 0.5, 2.5)
 	create_rotationspeedup_bomb(Vector2(0,0), 0.5, 2.5,1.5)
 	for i in range(1, 25):
 		create_hazard_bomb(Vector2(220 * cos(i * PI/12.0), 220 * sin(i * PI/12.0)), 2.5,0.1)
-	await Utils.timer(2.5)
-	pattern_pizza_end()
-	
-func pattern_pizza_end():
-	PlayingFieldInterface.add_playing_time(pattern_pizza_timer)
+	await Utils.timer(3.0)
 	pattern_shuffle_and_draw()
 	
 # pattern_pizza block end
