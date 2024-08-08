@@ -47,11 +47,11 @@ func pattern_cat_wheel():
 	
 	var hazard_bomb_list: Array[HazardBomb]
 	
-	const number_of_hazard_bombs = 16
+	const number_of_hazard_bombs = 20
 	const warning_time = 0.5
 	const bomb_time = 4.5
 	for i in range(number_of_hazard_bombs):
-		if i == 0 or i == number_of_hazard_bombs - 1 or i == number_of_hazard_bombs - 2:
+		if i <= 0 or i >= number_of_hazard_bombs - 4:
 			continue
 		var inst: HazardBomb = create_hazard_bomb(Vector2(bomb_radius * cos(angle_start + i * (ccw * (2*PI) / number_of_hazard_bombs)), bomb_radius * -sin(angle_start + i * (ccw * (2*PI) / number_of_hazard_bombs))), warning_time, bomb_time)
 		hazard_bomb_list.append(inst)
@@ -62,7 +62,7 @@ func pattern_cat_wheel():
 	var center: Node2D = Node2D.new()
 	add_child(center)
 	
-	for i in range(number_of_hazard_bombs - 3):
+	for i in range(number_of_hazard_bombs - 5):
 		hazard_bomb_list[i].reparent(center)
 	
 	var tween_rotation: Tween = get_tree().create_tween()
