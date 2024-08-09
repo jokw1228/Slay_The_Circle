@@ -13,23 +13,23 @@ func _ready():
 	pattern_shuffle_and_draw()
 
 func pattern_list_initialization():
-	pattern_list.append(Callable(self, "pattern_numeric_triangle_with_link"))
-	pattern_list.append(Callable(self, "pattern_star"))
-	pattern_list.append(Callable(self, "pattern_random_link"))
-	pattern_list.append(Callable(self, "pattern_timing"))
-	pattern_list.append(Callable(self, "pattern_trafficlight"))
-	pattern_list.append(Callable(self, "pattern_manyrotation"))
-	pattern_list.append(Callable(self, "pattern_speed_and_rotation"))
-	pattern_list.append(Callable(self, "pattern_roll"))
-	pattern_list.append(Callable(self, "pattern_diamond"))
-	pattern_list.append(Callable(self, "pattern_twisted_numeric"))
-	pattern_list.append(Callable(self, "pattern_spiral"))
-	pattern_list.append(Callable(self, "pattern_numeric_choice"))
-	pattern_list.append(Callable(self, "pattern_hide_in_hazard"))
-	pattern_list.append(Callable(self, "pattern_diamond_with_hazard"))
-	pattern_list.append(Callable(self, "pattern_narrow_road"))
-	pattern_list.append(Callable(self, "pattern_369"))
-	pattern_list.append(Callable(self, "pattern_colosseum"))
+	#pattern_list.append(Callable(self, "pattern_numeric_triangle_with_link"))
+	#pattern_list.append(Callable(self, "pattern_star"))
+	#pattern_list.append(Callable(self, "pattern_random_link"))
+	#pattern_list.append(Callable(self, "pattern_timing"))
+	#pattern_list.append(Callable(self, "pattern_trafficlight"))
+	#pattern_list.append(Callable(self, "pattern_manyrotation"))
+	#pattern_list.append(Callable(self, "pattern_speed_and_rotation"))
+	#pattern_list.append(Callable(self, "pattern_roll"))
+	#pattern_list.append(Callable(self, "pattern_diamond"))
+	#pattern_list.append(Callable(self, "pattern_twisted_numeric"))
+	#pattern_list.append(Callable(self, "pattern_spiral"))
+	#pattern_list.append(Callable(self, "pattern_numeric_choice"))
+	#pattern_list.append(Callable(self, "pattern_hide_in_hazard"))
+	#pattern_list.append(Callable(self, "pattern_diamond_with_hazard"))
+	#pattern_list.append(Callable(self, "pattern_narrow_road"))
+	#pattern_list.append(Callable(self, "pattern_369"))
+	#pattern_list.append(Callable(self, "pattern_colosseum"))
 	pattern_list.append(Callable(self, "pattern_pizza"))
 	
 func pattern_shuffle_and_draw():
@@ -74,6 +74,7 @@ func pattern_numeric_triangle_with_link():
 	link3.connect("both_bombs_removed", Callable(self, "pattern_numeric_triangle_with_link_end"))
 
 func pattern_numeric_triangle_with_link_end():
+	await PlayingFieldInterface.player_grounded
 	PlayingFieldInterface.set_playing_time(pattern_start_time + (pattern_numeric_tirangle_with_link_playing_time) / Engine.time_scale)
 	pattern_shuffle_and_draw()
 
