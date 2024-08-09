@@ -13,29 +13,174 @@ func _ready():
 	pattern_shuffle_and_draw()
 
 func pattern_list_initialization():
-	pattern_list.append(Callable(self, "pattern_numeric_triangle_with_link"))
-	pattern_list.append(Callable(self, "pattern_star"))
-	pattern_list.append(Callable(self, "pattern_random_link"))
-	pattern_list.append(Callable(self, "pattern_timing"))
-	pattern_list.append(Callable(self, "pattern_trafficlight"))
-	pattern_list.append(Callable(self, "pattern_manyrotation"))
-	pattern_list.append(Callable(self, "pattern_speed_and_rotation"))
-	pattern_list.append(Callable(self, "pattern_roll"))
-	pattern_list.append(Callable(self, "pattern_diamond"))
-	pattern_list.append(Callable(self, "pattern_twisted_numeric"))
-	pattern_list.append(Callable(self, "pattern_spiral"))
-	pattern_list.append(Callable(self, "pattern_numeric_choice"))
-	pattern_list.append(Callable(self, "pattern_hide_in_hazard"))
-	pattern_list.append(Callable(self, "pattern_diamond_with_hazard"))
-	pattern_list.append(Callable(self, "pattern_narrow_road"))
-	pattern_list.append(Callable(self, "pattern_369"))
-	pattern_list.append(Callable(self, "pattern_colosseum"))
-	pattern_list.append(Callable(self, "pattern_pizza"))
+	pattern_list.append(Callable(self, "pattern_numeric_center_then_link"))
+	pattern_list.append(Callable(self, "pattern_hazard_at_player_pos"))
+	pattern_list.append(Callable(self, "pattern_inversion_speedup"))
+	pattern_list.append(Callable(self, "pattern_321_go"))
+	#pattern_list.append(Callable(self, "pattern_numeric_triangle_with_link"))
+	#pattern_list.append(Callable(self, "pattern_star"))
+	#pattern_list.append(Callable(self, "pattern_random_link"))
+	#pattern_list.append(Callable(self, "pattern_timing"))
+	#pattern_list.append(Callable(self, "pattern_trafficlight"))
+	#pattern_list.append(Callable(self, "pattern_manyrotation"))
+	#pattern_list.append(Callable(self, "pattern_speed_and_rotation"))
+	#pattern_list.append(Callable(self, "pattern_roll"))
+	#pattern_list.append(Callable(self, "pattern_diamond"))
+	#pattern_list.append(Callable(self, "pattern_twisted_numeric"))
+	#pattern_list.append(Callable(self, "pattern_spiral"))
+	#pattern_list.append(Callable(self, "pattern_numeric_choice"))
+	#pattern_list.append(Callable(self, "pattern_hide_in_hazard"))
+	#pattern_list.append(Callable(self, "pattern_diamond_with_hazard"))
+	#pattern_list.append(Callable(self, "pattern_narrow_road"))
+	#pattern_list.append(Callable(self, "pattern_369"))
+	#pattern_list.append(Callable(self, "pattern_colosseum"))
+	#pattern_list.append(Callable(self, "pattern_pizza"))
 	
 func pattern_shuffle_and_draw():
 	randomize()
 	var random_index: int = randi() % pattern_list.size()
 	pattern_list[random_index].call()
+
+###############################
+# pattern_numeric_center_then_link block start
+# made by Lee Jinwoong
+
+const pattern_numeric_center_then_link_playing_time = 4.0
+
+func pattern_numeric_center_then_link():
+	PlayingFieldInterface.set_theme_color(Color.DEEP_SKY_BLUE)
+	
+	pattern_start_time = PlayingFieldInterface.get_playing_time()
+	
+	var player_position: Vector2 = PlayingFieldInterface.get_player_position()
+	
+	create_numeric_bomb(Vector2.ZERO, 1.0, 2.0, 1)
+	var bomb1: NumericBomb = create_numeric_bomb(player_position * -0.5, 1.0, 3.0, 2)
+	var bomb2: NumericBomb = create_numeric_bomb(player_position * 0.5, 1.0, 3.0, 3)
+	var link: BombLink = create_bomb_link(bomb1, bomb2)
+	
+	link.connect("both_bombs_removed", Callable(self, "pattern_numeric_center_then_link_end"))
+
+func pattern_numeric_center_then_link_end():
+	await PlayingFieldInterface.player_grounded
+	PlayingFieldInterface.set_playing_time(pattern_start_time + (pattern_numeric_center_then_link_playing_time) / Engine.time_scale)
+	pattern_shuffle_and_draw()
+
+# pattern_numeric_center_then_link block end
+###############################
+
+###############################
+# pattern_hazard_at_player_pos block start
+# made by Lee Jinwoong
+
+const pattern_hazard_at_player_pos_playing_time = 3.0
+
+func pattern_hazard_at_player_pos():
+	PlayingFieldInterface.set_theme_color(Color.FIREBRICK)
+	
+	pattern_start_time = PlayingFieldInterface.get_playing_time()
+	
+	var player_position: Vector2 = PlayingFieldInterface.get_player_position()
+	const bomb_radius: Vector2 = Vector2(32, 32)
+	
+	create_hazard_bomb(player_position * 240 / 256, 0.75, 0.75)
+	create_hazard_bomb(-player_position * 240 / 256, 0.75, 0.75)
+	await Utils.timer(0.75)
+	
+	player_position = PlayingFieldInterface.get_player_position()
+	create_hazard_bomb(player_position * 240 / 256, 0.75, 0.75)
+	create_hazard_bomb(-player_position * 240 / 256, 0.75, 0.75)
+	await Utils.timer(0.75)
+	
+	player_position = PlayingFieldInterface.get_player_position()
+	create_hazard_bomb(player_position * 240 / 256, 0.75, 0.75)
+	create_hazard_bomb(-player_position * 240 / 256, 0.75, 0.75)
+	await Utils.timer(1.5)
+	
+	pattern_hazard_at_player_pos_end()
+
+func pattern_hazard_at_player_pos_end():
+	PlayingFieldInterface.set_playing_time(pattern_start_time + (pattern_hazard_at_player_pos_playing_time) / Engine.time_scale)
+	pattern_shuffle_and_draw()
+
+# pattern_hazard_at_player_pos block end
+###############################
+
+###############################
+# pattern_inversion_speedup block start
+# made by Lee Jinwoong
+
+const pattern_inversion_speedup_playing_time = 4.0
+
+func pattern_inversion_speedup():
+	PlayingFieldInterface.set_theme_color(Color.DEEP_SKY_BLUE)
+	
+	pattern_start_time = PlayingFieldInterface.get_playing_time()
+	
+	var player_position: Vector2 = PlayingFieldInterface.get_player_position()
+	
+	create_rotationinversion_bomb(Vector2.ZERO, 1.0, 3.0)
+	var bomb1: RotationSpeedUpBomb = create_rotationspeedup_bomb(player_position.rotated(PI / 2.0) * 0.5, 1.0, 3.0, 0.2)
+	var bomb2: GameSpeedUpBomb = create_gamespeedup_bomb(player_position.rotated(PI / -2.0) * 0.5, 1.0, 3.0, 0.2)
+	var link: BombLink = create_bomb_link(bomb1, bomb2)
+	
+	link.connect("both_bombs_removed", Callable(self, "pattern_inversion_speedup_end"))
+
+func pattern_inversion_speedup_end():
+	await PlayingFieldInterface.player_grounded
+	PlayingFieldInterface.set_playing_time(pattern_start_time + (pattern_inversion_speedup_playing_time) / Engine.time_scale)
+	pattern_shuffle_and_draw()
+
+# pattern_inversion_speedup block end
+###############################
+
+###############################
+# pattern_321_go block start
+# made by Lee Jinwoong
+
+const pattern_321_go_playing_time = 5.2 # 2.0 + delta_time * 4 + time_offset
+
+func pattern_321_go():
+	PlayingFieldInterface.set_theme_color(Color.CRIMSON)
+	
+	pattern_start_time = PlayingFieldInterface.get_playing_time()
+	
+	var player_position: Vector2 = PlayingFieldInterface.get_player_position()
+	const delta_time: float = 0.75
+	const time_offset: float = 0.2
+	
+	create_hazard_bomb(player_position * -240 / 256,   2.0,   delta_time * 4 - time_offset)
+	create_hazard_bomb(player_position * -0.5,   2.0,   delta_time - time_offset / 2.0)
+	create_hazard_bomb(Vector2.ZERO,   2.0,   delta_time * 2 - time_offset / 2.0)
+	create_hazard_bomb(player_position * 0.5,   2.0,   delta_time * 3 - time_offset / 2.0)
+	for i in range(1, 8):
+		if i % 2 == 0:
+			create_hazard_bomb(player_position.rotated(i * PI / 8.0) * 0.5,   2.0,   delta_time * 4)
+		create_hazard_bomb(player_position.rotated(i * PI / 8.0) * 240 / 256,   2.0,   delta_time * 4)
+	for i in range(9, 16):
+		if i % 2 == 0:
+			create_hazard_bomb(player_position.rotated(i * PI / 8.0) * 0.5,   2.0,   delta_time * 4)
+		create_hazard_bomb(player_position.rotated(i * PI / 8.0) * 240 / 256,   2.0,   delta_time * 4)
+	await Utils.timer(2.0)
+	
+	var last: HazardBomb = create_hazard_bomb(player_position * 240 / 256,   delta_time * 4,   time_offset)
+	await Utils.timer(delta_time - time_offset / 2.0)
+	
+	create_numeric_bomb(player_position * -0.5,   0,   delta_time * 4,   3)
+	await Utils.timer(delta_time)
+	create_numeric_bomb(Vector2.ZERO,   0,   delta_time * 3,   2)
+	await Utils.timer(delta_time)
+	create_numeric_bomb(player_position * 0.5,   0,   delta_time * 2,   1)
+	await Utils.timer(delta_time + time_offset * 3.0 / 2.0)
+	
+	pattern_321_go_end()
+
+func pattern_321_go_end():
+	#PlayingFieldInterface.set_playing_time(pattern_start_time + (pattern_pattern_321_go_end_playing_time) / Engine.time_scale)
+	pattern_shuffle_and_draw()
+
+# pattern_321_go block end
+###############################
 
 ###############################
 # pattern_numeric_triangle_with_link block start
