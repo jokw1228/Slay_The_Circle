@@ -13,19 +13,19 @@ func _ready():
 	pattern_shuffle_and_draw()
 
 func pattern_list_initialization():
-	pattern_list.append(Callable(self, "pattern_cat_wheel"))
-	pattern_list.append(Callable(self, "pattern_fruitninja"))
-	pattern_list.append(Callable(self, "pattern_windmill"))
-	pattern_list.append(Callable(self, "pattern_rain"))
-	pattern_list.append(Callable(self, "pattern_hazard_wave"))
+	#pattern_list.append(Callable(self, "pattern_cat_wheel"))
+	#pattern_list.append(Callable(self, "pattern_fruitninja"))
+	#pattern_list.append(Callable(self, "pattern_windmill"))
+	#pattern_list.append(Callable(self, "pattern_rain"))
+	#pattern_list.append(Callable(self, "pattern_hazard_wave"))
 	pattern_list.append(Callable(self, "pattern_rotate_timing"))
-	pattern_list.append(Callable(self, "pattern_survive_random_slay"))
-	pattern_list.append(Callable(self, "pattern_moving_link"))
-	pattern_list.append(Callable(self, "pattern_shuffle_game"))
-	pattern_list.append(Callable(self, "pattern_timing_return"))
-	pattern_list.append(Callable(self, "pattern_rotation")) 
-	pattern_list.append(Callable(self, "pattern_trickery"))
-	pattern_list.append(Callable(self, "pattern_darksight"))
+	#pattern_list.append(Callable(self, "pattern_survive_random_slay"))
+	#pattern_list.append(Callable(self, "pattern_moving_link"))
+	#pattern_list.append(Callable(self, "pattern_shuffle_game"))
+	#pattern_list.append(Callable(self, "pattern_timing_return"))
+	#pattern_list.append(Callable(self, "pattern_rotation")) 
+	#pattern_list.append(Callable(self, "pattern_trickery"))
+	#pattern_list.append(Callable(self, "pattern_darksight"))
 
 
 func pattern_shuffle_and_draw():
@@ -34,8 +34,8 @@ func pattern_shuffle_and_draw():
 	pattern_list[random_index].call()
 
 func _process(delta):
-	pattern_rotate_timing_process(delta)
-	pattern_survive_random_slay_process(delta)
+	#pattern_rotate_timing_process(delta)
+	#pattern_survive_random_slay_process(delta)
 	pattern_moving_link_process(delta)
 	pattern_shuffle_game_process(delta)
 
@@ -230,55 +230,62 @@ func acceleration(num: int,rigidbody: Array[RigidBody2D], ac: int):
 # pattern_rotate_timing block start
 # made by kiyong
 
-var pattern_rotate_timing_timer: float
-var pattern_rotate_timing_timer_tween: Tween
-
 var pattern_rotate_timing_bomb: Array[Node2D]
 var pattern_rotate_timing_direction = [0,0,0,0,0,0]
-const pattern_rotate_timing_rotation_speed = 350
+const pattern_rotate_timing_rotation_speed = 260
 const pattern_rotate_timing_speed = [sqrt(2), 1, sqrt(2), sqrt(2), 1, sqrt(2)]
 var pattern_rotate_timing_random = 1
-var pattern_rotate_timing_moving = false
+signal pattern_rotate_timing_end_signal
+
+const pattern_rotate_timing_playing_time = 2
 
 func pattern_rotate_timing():
 	PlayingFieldInterface.set_theme_color(Color.AQUAMARINE)
-	pattern_rotate_timing_moving = false
-	pattern_rotate_timing_timer = 1.2
-	
-	if pattern_rotate_timing_timer_tween != null:
-		pattern_rotate_timing_timer_tween.kill()
-	pattern_rotate_timing_timer_tween = get_tree().create_tween()
-	pattern_rotate_timing_timer_tween.tween_property(self, "pattern_rotate_timing_timer", 0, 1.2)
-	
+	pattern_start_time = PlayingFieldInterface.get_playing_time()
 	pattern_rotate_timing_bomb.clear()
-	const p6sp = 80
-	var pattern_rotate_timing_position = [Vector2(p6sp, p6sp), Vector2(p6sp, 0), Vector2(p6sp, -p6sp), Vector2(-p6sp, p6sp), Vector2(-p6sp, 0), Vector2(-p6sp, -p6sp)]
+	const p6sp = 85
+	var pattern_rotate_timing_position = [Vector2(p6sp, p6sp-10), Vector2(p6sp, 0), Vector2(p6sp, -p6sp+10), Vector2(-p6sp, p6sp-10), Vector2(-p6sp, 0), Vector2(-p6sp, -p6sp+10)]
 	
-	var bomb = create_normal_bomb(Vector2(0,0), 0.2, 1)
-	pattern_rotate_timing_moving = true
+	var player_position: Vector2 = PlayingFieldInterface.get_player_position()
+	var player_angle: float = player_position.angle()
+	
+	var bomb = create_normal_bomb(Vector2(0,0), 0.2, 1.8)
 	pattern_rotate_timing_random = randi_range(0,1)
 	if pattern_rotate_timing_random == 0:
 		pattern_rotate_timing_random = -1
 	for i in range(6):
-		pattern_rotate_timing_bomb.append(create_hazard_bomb(Vector2(0, 0), 0.2, 1))
-		pattern_rotate_timing_bomb[i].position = pattern_rotate_timing_position[i]
+		pattern_rotate_timing_bomb.append(create_hazard_bomb(Vector2(0, 0), 0.2, 1.8))
+		pattern_rotate_timing_bomb[i].position = pattern_rotate_timing_position[i].rotated(player_angle)
+	
+	var center: Node2D = Node2D.new()
+	add_child(center)
+	
+	await Utils.timer(0.21)
+	for i in range(6):
+		pattern_rotate_timing_bomb[i].reparent(center)
+	
+	var tween_rotation: Tween = get_tree().create_tween()
+	tween_rotation.tween_property(center, "rotation", pattern_rotate_timing_random * (2*PI), 1.79)
 	
 	bomb.connect("player_body_entered",Callable(self,"pattern_rotate_timing_end"))
+	
 
-func pattern_rotate_timing_process(delta):
-	if pattern_rotate_timing_moving == true:
-		for i in range(6):
-			if is_instance_valid(pattern_rotate_timing_bomb[i]):
-				var x = pattern_rotate_timing_bomb[i].position.x
-				var y = pattern_rotate_timing_bomb[i].position.y
-				pattern_rotate_timing_direction[i] = Vector2(y * pattern_rotate_timing_random, -x * pattern_rotate_timing_random).normalized()
-				pattern_rotate_timing_bomb[i].position += pattern_rotate_timing_direction[i] * pattern_rotate_timing_rotation_speed * pattern_rotate_timing_speed[i] * delta
+#func pattern_rotate_timing_process(delta):
+#	if pattern_rotate_timing_moving == true:
+#		for i in range(6):
+#			if is_instance_valid(pattern_rotate_timing_bomb[i]):
+#				var x = pattern_rotate_timing_bomb[i].position.x
+#				var y = pattern_rotate_timing_bomb[i].position.y
+#				pattern_rotate_timing_direction[i] = Vector2(y * pattern_rotate_timing_random, -x * pattern_rotate_timing_random).normalized()
+#				pattern_rotate_timing_bomb[i].position += pattern_rotate_timing_direction[i] * pattern_rotate_timing_rotation_speed * pattern_rotate_timing_speed[i] * delta
 
 func pattern_rotate_timing_end():
-	for i in range(6):
-		pattern_rotate_timing_bomb[i].queue_free()
-	pattern_rotate_timing_moving = false
-	PlayingFieldInterface.add_playing_time(pattern_rotate_timing_timer)
+	await PlayingFieldInterface.player_grounded
+	pattern_rotate_timing_end_signal.emit()
+	for node in pattern_rotate_timing_bomb:
+		if is_instance_valid(node):
+			node.queue_free()
+	PlayingFieldInterface.set_playing_time(pattern_start_time + (pattern_rotate_timing_playing_time) / Engine.time_scale)
 	pattern_shuffle_and_draw()
 
 # pattern_rotate_timing block end
@@ -288,80 +295,86 @@ func pattern_rotate_timing_end():
 # pattern_survive_random_slay block start
 # made by kiyong
 
-var pattern_survive_random_slay_timer: float
-var pattern_survive_random_slay_timer_tween: Tween
 var pattern_survive_random_slay_hazard: Array[Node2D]
 var pattern_survive_random_slay_bombs: Array[Node2D]
-var pattern_survive_random_slay_active: bool = false
+signal pattern_survive_random_slay_end_signal
 
 var pattern_survive_random_slay_direction: Array = [0, 0, 0]
+const pattern_survive_random_slay_playing_time = 4.2
 
 func pattern_survive_random_slay():
 	PlayingFieldInterface.set_theme_color(Color.AQUAMARINE)
+	pattern_start_time = PlayingFieldInterface.get_playing_time()
+	
 	pattern_survive_random_slay_hazard.clear()
 	pattern_survive_random_slay_bombs.clear()
-	pattern_survive_random_slay_active = false
 	
-	pattern_survive_random_slay_timer = 4.3
-	
-	if pattern_survive_random_slay_timer_tween != null:
-		pattern_survive_random_slay_timer_tween.kill()
-	pattern_survive_random_slay_timer_tween = get_tree().create_tween()
-	pattern_survive_random_slay_timer_tween.tween_property(self, "pattern_survive_random_slay_timer", 0, 4.3)
-	
-	await Utils.timer(0.3)
-	pattern_survive_random_slay_active = true
-	pattern_survive_random_slay_outer()
+	var player_position: Vector2 = PlayingFieldInterface.get_player_position()
+	var player_angle: float = player_position.angle()
+	var rotation_value = player_angle + 7*PI/8
+	for i in range(3):
+		pattern_survive_random_slay_hazard.append(create_hazard_bomb(Vector2(224*cos(rotation_value), 224*sin(rotation_value)), 0.1, 4.1))
+		rotation_value += PI/8
+		
 	pattern_survive_random_slay_bomb0()
+	await Utils.timer(0.2)
 	
+	var pattern_survive_random_slay_centernode: Node2D = Node2D.new()
+	add_child(pattern_survive_random_slay_centernode)
+	
+	for i in range(3):
+		pattern_survive_random_slay_hazard[i].reparent(pattern_survive_random_slay_centernode)
+	
+	var tween_rotation: Tween = get_tree().create_tween()
+	tween_rotation.tween_property(pattern_survive_random_slay_centernode, "rotation", -6*PI, 4)
+	
+	await pattern_survive_random_slay_end_signal
+	pattern_survive_random_slay_centernode.queue_free()
 
 func pattern_survive_random_slay_bomb0():
 	var rotation_value = randf_range(0,2*PI)
 	var dist = randf_range(0,120)
-	pattern_survive_random_slay_bombs.append(create_normal_bomb(Vector2(dist*cos(rotation_value), dist*sin(rotation_value)), 0, 1))
+	pattern_survive_random_slay_bombs.append(create_normal_bomb(Vector2(dist*cos(rotation_value), dist*sin(rotation_value)), 0.2, 1))
 	pattern_survive_random_slay_bombs[0].connect("player_body_entered",Callable(self,"pattern_survive_random_slay_bomb1"))
 
 func pattern_survive_random_slay_bomb1():
 	var rotation_value = randf_range(0,2*PI)
 	var dist = randf_range(0,120)
+	await PlayingFieldInterface.player_grounded
 	pattern_survive_random_slay_bombs.append(create_normal_bomb(Vector2(dist*cos(rotation_value), dist*sin(rotation_value)), 0, 1))
 	pattern_survive_random_slay_bombs[1].connect("player_body_entered",Callable(self,"pattern_survive_random_slay_bomb2"))
 
 func pattern_survive_random_slay_bomb2():
 	var rotation_value = randf_range(0,2*PI)
 	var dist = randf_range(0,120)
+	await PlayingFieldInterface.player_grounded
 	pattern_survive_random_slay_bombs.append(create_normal_bomb(Vector2(dist*cos(rotation_value), dist*sin(rotation_value)), 0, 1))
 	pattern_survive_random_slay_bombs[2].connect("player_body_entered",Callable(self,"pattern_survive_random_slay_bomb3"))
 
 func pattern_survive_random_slay_bomb3():
 	var rotation_value = randf_range(0,2*PI)
 	var dist = randf_range(0,120)
+	await PlayingFieldInterface.player_grounded
 	pattern_survive_random_slay_bombs.append(create_normal_bomb(Vector2(dist*cos(rotation_value), dist*sin(rotation_value)), 0, 1))
 	pattern_survive_random_slay_bombs[3].connect("player_body_entered",Callable(self,"pattern_survive_random_slay_end"))
 
-func pattern_survive_random_slay_outer():
-	var player_position: Vector2 = PlayingFieldInterface.get_player_position()
-	var player_angle: float = player_position.angle()
-	var rotation_value = player_angle + 7*PI/8
-	for i in range(3):
-		pattern_survive_random_slay_hazard.append(create_hazard_bomb(Vector2(256*cos(rotation_value), 256*sin(rotation_value)), 0, 4.3))
-		rotation_value += PI/8
-
-func pattern_survive_random_slay_process(delta):
-	if pattern_survive_random_slay_active == true:
-			for i in range(3):
-				if is_instance_valid(pattern_survive_random_slay_hazard[i]):
-					var x = pattern_survive_random_slay_hazard[i].position.x
-					var y = pattern_survive_random_slay_hazard[i].position.y
-					pattern_survive_random_slay_direction[i] = Vector2(y, -x).normalized()
-					pattern_survive_random_slay_hazard[i].position += pattern_survive_random_slay_direction[i] * 1000 * delta
+#func pattern_survive_random_slay_process(delta):
+#	if pattern_survive_random_slay_active == true:
+#			for i in range(3):
+#				if is_instance_valid(pattern_survive_random_slay_hazard[i]):
+#					var x = pattern_survive_random_slay_hazard[i].position.x
+#					var y = pattern_survive_random_slay_hazard[i].position.y
+#					pattern_survive_random_slay_direction[i] = Vector2(y, -x).normalized()
+#					pattern_survive_random_slay_hazard[i].position += pattern_survive_random_slay_direction[i] * 1000 * delta
 
 func pattern_survive_random_slay_end():
-	pattern_survive_random_slay_active = false
+	pattern_survive_random_slay_end_signal.emit()
+	await PlayingFieldInterface.player_grounded
 	for node in pattern_survive_random_slay_hazard:
 		if is_instance_valid(node):
 			node.queue_free()
-	PlayingFieldInterface.add_playing_time(pattern_survive_random_slay_timer)
+	
+	PlayingFieldInterface.set_playing_time(pattern_start_time + (pattern_survive_random_slay_playing_time) / Engine.time_scale)
 	pattern_shuffle_and_draw()
 
 # pattern_survive_random_slay block end
@@ -395,12 +408,12 @@ func pattern_moving_link():
 	pattern_moving_link_timer_tween = get_tree().create_tween()
 	pattern_moving_link_timer_tween.tween_property(self, "pattern_moving_link_timer", 0, 2.25)
 
-	pattern_moving_link_hazard.append(create_hazard_bomb(Vector2(180, 60), 0.25, 2))
-	pattern_moving_link_hazard.append(create_hazard_bomb(Vector2(-180, 60), 0.25, 2))
-	pattern_moving_link_hazard.append(create_hazard_bomb(Vector2(180, -60), 0.25, 2))
-	pattern_moving_link_hazard.append(create_hazard_bomb(Vector2(-180, -60), 0.25, 2))
-	pattern_moving_link_bomb.append(create_normal_bomb(Vector2(0, 40), 0.25, 2))
-	pattern_moving_link_bomb.append(create_normal_bomb(Vector2(0, -40), 0.25, 2))
+	pattern_moving_link_hazard.append(create_hazard_bomb(pattern_moving_link_autorotate(180, 60), 0.25, 2))
+	pattern_moving_link_hazard.append(create_hazard_bomb(pattern_moving_link_autorotate(-180, 60), 0.25, 2))
+	pattern_moving_link_hazard.append(create_hazard_bomb(pattern_moving_link_autorotate(180, -60), 0.25, 2))
+	pattern_moving_link_hazard.append(create_hazard_bomb(pattern_moving_link_autorotate(-180, -60), 0.25, 2))
+	pattern_moving_link_bomb.append(create_normal_bomb(pattern_moving_link_autorotate(0, 40), 0.25, 2))
+	pattern_moving_link_bomb.append(create_normal_bomb(pattern_moving_link_autorotate(0, -40), 0.25, 2))
 	var link = create_bomb_link(pattern_moving_link_bomb[0], pattern_moving_link_bomb[1])
 	pattern_moving_link_active = true
 	
@@ -418,6 +431,13 @@ func pattern_moving_link_process(delta):
 				else:
 					pattern_moving_link_bomb_dir_changed[i] = false
 
+func pattern_moving_link_autorotate(posx: float, posy: float) -> Vector2: #풀레이어가 정남쪽에 있다고 가정할 때 폭탄을 자동으로 돌려줌 
+	var player_direction = (PlayingFieldInterface.get_player_position()).normalized()
+	if player_direction == Vector2(0, 0):
+		player_direction = Vector2(0, 1)
+	
+	var rotate_value = Vector2(0, 1).angle_to(player_direction)
+	return Vector2(posx, posy).rotated(rotate_value)
 
 func pattern_moving_link_end():
 	pattern_moving_link_active = false
@@ -441,7 +461,7 @@ var pattern_shuffle_game_real_bomb: Bomb
 var pattern_shuffle_game_moving: bool = false
 
 var pattern_shuffle_game_rand = [0, 0, 0, 1]
-const pattern_shuffle_game_const_position = [Vector2(-256 / sqrt(2), -256 / sqrt(2)), Vector2(256 / sqrt(2), -256 / sqrt(2)), Vector2(-256 / sqrt(2), 256 / sqrt(2)), Vector2(256 / sqrt(2), 256 / sqrt(2))]
+const pattern_shuffle_game_const_position = [Vector2(-224 / sqrt(2), -224 / sqrt(2)), Vector2(224 / sqrt(2), -224 / sqrt(2)), Vector2(-224 / sqrt(2), 224 / sqrt(2)), Vector2(224 / sqrt(2), 224 / sqrt(2))]
 var pattern_shuffle_game_bomb_pos = [1, 2, 3, 4] # 각 폭탄의 현재 위치
 
 var pattern_shuffle_game_direction = [0,0,0,0]
