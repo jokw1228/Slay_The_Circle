@@ -126,15 +126,21 @@ func pattern_random_shape():
 	PlayingFieldInterface.set_theme_color(Color.AQUAMARINE)
 	var prev_value
 	const pattern_time = 0.9
-	for i in range(6):
-		create_normal_bomb(Vector2(0,0), 0, pattern_time)
-		var rand_result = randi_range(0,4)
-		while rand_result == prev_value:
-			rand_result = randi_range(0,4)
-		prev_value = rand_result
-		var randomrotation = randf_range(0, 2*PI)
-		pattern_random_shape_random(rand_result, randomrotation)
-		await Utils.timer(pattern_time)
+	
+	create_normal_bomb(Vector2(0,0), 0, pattern_time)
+	var randomrotation = randf_range(0, 2*PI)
+	pattern_random_shape_random(0, randomrotation)
+	await Utils.timer(pattern_time)
+	
+	create_normal_bomb(Vector2(0,0), 0, pattern_time)
+	randomrotation = randf_range(0, 2*PI)
+	pattern_random_shape_random(3, randomrotation)
+	await Utils.timer(pattern_time)
+	
+	create_normal_bomb(Vector2(0,0), 0, pattern_time)
+	randomrotation = randf_range(0, 2*PI)
+	pattern_random_shape_random(2, randomrotation)
+	await Utils.timer(pattern_time)
 	
 	pattern_shuffle_and_draw()
 
@@ -161,12 +167,12 @@ func pattern_random_shape_random(pattern: int, randomrotation: float):
 		2: # *
 			pattern_random_shape_random(0, randomrotation)
 			pattern_random_shape_random(1, randomrotation)
-		3: # diamond
-			var x = [150,75,75,0,0,-75,-75,-150]
-			var y = [0,75,-75,150,-150,75,-75,0]
-			for i in range(8):
-				create_hazard_bomb(Vector2(x[i],y[i]).rotated(randomrotation), pattern_time, 0.1)
-		4: # star
+		#3: # diamond
+		#	var x = [150,75,75,0,0,-75,-75,-150]
+		#	var y = [0,75,-75,150,-150,75,-75,0]
+		#	for i in range(8):
+		#		create_hazard_bomb(Vector2(x[i],y[i]).rotated(randomrotation), pattern_time, 0.1)
+		3: # star
 			var rotation_value = 0
 			const inner_pentagon = 256 * tan(PI*3/20) / (tan(PI*1/5) + tan(PI*3/20)) / cos(PI/10)
 			const outer_pentagon = sqrt(pow(256 - (256 * tan(PI*1/5) / (tan(PI*1/5) + tan(PI*3/20))) / 2, 2) + pow((inner_pentagon * sin(PI/10) / 2), 2))
