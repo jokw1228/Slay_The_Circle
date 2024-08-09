@@ -18,9 +18,9 @@ func pattern_list_initialization():
 	#pattern_list.append(Callable(self, "pattern_windmill"))
 	#pattern_list.append(Callable(self, "pattern_rain"))
 	#pattern_list.append(Callable(self, "pattern_hazard_wave"))
-	pattern_list.append(Callable(self, "pattern_rotate_timing"))
+	#pattern_list.append(Callable(self, "pattern_rotate_timing"))
 	#pattern_list.append(Callable(self, "pattern_survive_random_slay"))
-	#pattern_list.append(Callable(self, "pattern_moving_link"))
+	pattern_list.append(Callable(self, "pattern_moving_link"))
 	#pattern_list.append(Callable(self, "pattern_shuffle_game"))
 	#pattern_list.append(Callable(self, "pattern_timing_return"))
 	#pattern_list.append(Callable(self, "pattern_rotation")) 
@@ -384,8 +384,7 @@ func pattern_survive_random_slay_end():
 # pattern_moving_link block start
 # made by kiyong
 
-var pattern_moving_link_timer: float
-var pattern_moving_link_timer_tween: Tween
+var pattern_moving_link_playing_time = 2.25
 var pattern_moving_link_bomb: Array[Node2D]
 var pattern_moving_link_hazard: Array[Node2D]
 
@@ -396,17 +395,14 @@ var pattern_moving_link_active: bool = false
 
 func pattern_moving_link():
 	PlayingFieldInterface.set_theme_color(Color.AQUAMARINE)
+	pattern_start_time = PlayingFieldInterface.get_playing_time()
+	var player_position: Vector2 = PlayingFieldInterface.get_player_position()
+	
 	pattern_moving_link_active = false
 	pattern_moving_link_bomb.clear()
 	pattern_moving_link_hazard.clear()
-	pattern_moving_link_bomb_direction = [1, -1]
+	pattern_moving_link_bomb_direction = [(player_position.rotated(PI/2)).normalized(), -(player_position.rotated(PI/2)).normalized()]
 	pattern_moving_link_bomb_dir_changed = [false, false]
-	pattern_moving_link_timer = 2.25
-	
-	if pattern_moving_link_timer_tween != null:
-		pattern_moving_link_timer_tween.kill()
-	pattern_moving_link_timer_tween = get_tree().create_tween()
-	pattern_moving_link_timer_tween.tween_property(self, "pattern_moving_link_timer", 0, 2.25)
 
 	pattern_moving_link_hazard.append(create_hazard_bomb(pattern_moving_link_autorotate(180, 60), 0.25, 2))
 	pattern_moving_link_hazard.append(create_hazard_bomb(pattern_moving_link_autorotate(-180, 60), 0.25, 2))
@@ -422,10 +418,10 @@ func pattern_moving_link():
 func pattern_moving_link_process(delta):
 	if pattern_moving_link_active == true:
 		if is_instance_valid(pattern_moving_link_bomb[0]) and is_instance_valid(pattern_moving_link_bomb[1]):
-			pattern_moving_link_bomb[0].position.x += pattern_moving_link_speed * pattern_moving_link_bomb_direction[0] * delta
-			pattern_moving_link_bomb[1].position.x += pattern_moving_link_speed * pattern_moving_link_bomb_direction[1] * delta
+			pattern_moving_link_bomb[0].position += pattern_moving_link_speed * pattern_moving_link_bomb_direction[0] * delta
+			pattern_moving_link_bomb[1].position += pattern_moving_link_speed * pattern_moving_link_bomb_direction[1] * delta
 			for i in range(2):
-				if (pattern_moving_link_bomb[i].position.x > 170 or pattern_moving_link_bomb[i].position.x < -170) and pattern_moving_link_bomb_dir_changed[i] == false:
+				if (pattern_moving_link_bomb[i].position.length() > 180 or pattern_moving_link_bomb[i].position.length() < -180) and pattern_moving_link_bomb_dir_changed[i] == false:
 					pattern_moving_link_bomb_dir_changed[i] = true
 					pattern_moving_link_bomb_direction[i] *= -1
 				else:
@@ -440,11 +436,12 @@ func pattern_moving_link_autorotate(posx: float, posy: float) -> Vector2: #í’€ë 
 	return Vector2(posx, posy).rotated(rotate_value)
 
 func pattern_moving_link_end():
+	await PlayingFieldInterface.player_grounded
 	pattern_moving_link_active = false
 	for node in pattern_moving_link_hazard:
 		if is_instance_valid(node):
 			node.queue_free()
-	PlayingFieldInterface.add_playing_time(pattern_moving_link_timer)
+	PlayingFieldInterface.set_playing_time(pattern_start_time + (pattern_survive_random_slay_playing_time) / Engine.time_scale)
 	pattern_shuffle_and_draw()
 
 # pattern_moving_link block end
