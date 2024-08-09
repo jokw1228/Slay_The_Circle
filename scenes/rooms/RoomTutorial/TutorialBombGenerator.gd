@@ -3,6 +3,7 @@ class_name TutorialBombGenerator
 
 @export var Player_node: Player
 @export var tutorialtext: Label
+@export var explaintext: Label
 
 signal tutorial_end
 
@@ -25,10 +26,11 @@ func _ready():
 	
 	var tween_tutorial_start = get_tree().create_tween()
 	tween_tutorial_start.tween_property(tutorialtext, "modulate", Color(1,1,1,1), 1.3)
-	tween_tutorial_start.tween_property(tutorialtext, "scale", Vector2(0.3,0.3), 0.5)
-	tween_tutorial_start.tween_property(tutorialtext, "position", Vector2(200, 260), 0.3)
-	await get_tree().create_timer(2.1).timeout
-	tutorialtext.text = "Aim and Slay!"
+	tween_tutorial_start.tween_property(tutorialtext, "modulate", Color(1,1,1,0), 0.7)
+	await get_tree().create_timer(2.0).timeout
+	if explaintext.visible == false:
+		explaintext.visible = true
+	explaintext.text = "Aim and Slay!"
 	pattern_1_start()
 	
 
@@ -54,8 +56,8 @@ func pattern_1_fail():
 	if pattern_1_count_value != -1:
 		pattern_1_count_value = -1
 		var tween_fail_color = get_tree().create_tween()
-		tween_fail_color.tween_property(tutorialtext, "modulate", Color(1,0,0,1), 0.3)
-		tween_fail_color.tween_property(tutorialtext, "modulate", Color(1,1,1,1), 0.7)
+		tween_fail_color.tween_property(explaintext, "modulate", Color(1,0,0,1), 0.3)
+		tween_fail_color.tween_property(explaintext, "modulate", Color(1,1,1,1), 0.7)
 		await get_tree().create_timer(1.0).timeout
 		pattern_1_start()
 
@@ -65,9 +67,9 @@ func pattern_1_count():
 		pattern_1_clear()
 
 func pattern_1_clear():
-	tutorialtext.text = "Nice job."
+	explaintext.text = "Nice job."
 	await get_tree().create_timer(1.0).timeout
-	tutorialtext.text = "Do Not Slay 'the red'!"
+	explaintext.text = "Do Not Slay 'the red'!"
 	pattern_2_start()
 
 ################################
@@ -104,8 +106,8 @@ func pattern_2_fail():
 		pattern_2_count_value = -1
 		pattern_2_fail_signal.emit()
 		var tween_fail_color = get_tree().create_tween()
-		tween_fail_color.tween_property(tutorialtext, "modulate", Color(1,0,0,1), 0.3)
-		tween_fail_color.tween_property(tutorialtext, "modulate", Color(1,1,1,1), 0.7)
+		tween_fail_color.tween_property(explaintext, "modulate", Color(1,0,0,1), 0.3)
+		tween_fail_color.tween_property(explaintext, "modulate", Color(1,1,1,1), 0.7)
 		await get_tree().create_timer(1.0).timeout
 		pattern_2_start()
 
@@ -115,10 +117,10 @@ func pattern_2_count():
 		pattern_2_clear()
 
 func pattern_2_clear():
-	tutorialtext.text = "Nice job."
+	explaintext.text = "Nice job."
 	pattern_2_clear_signal.emit()
 	await get_tree().create_timer(1.0).timeout
-	tutorialtext.text = "Just, slay it in order"
+	explaintext.text = "Just, slay it in order"
 	pattern_3_start()
 
 ################################
@@ -160,15 +162,15 @@ func pattern_3_fail():
 		pattern_3_count_value = false
 		pattern_3_fail_signal.emit()
 		var tween_fail_color = get_tree().create_tween()
-		tween_fail_color.tween_property(tutorialtext, "modulate", Color(1,0,0,1), 0.3)
-		tween_fail_color.tween_property(tutorialtext, "modulate", Color(1,1,1,1), 0.7)
+		tween_fail_color.tween_property(explaintext, "modulate", Color(1,0,0,1), 0.3)
+		tween_fail_color.tween_property(explaintext, "modulate", Color(1,1,1,1), 0.7)
 		await get_tree().create_timer(1.0).timeout
 		pattern_3_start()
 
 func pattern_3_clear():
-	tutorialtext.text = "Nice job."
+	explaintext.text = "Nice job."
 	await get_tree().create_timer(1.0).timeout
-	tutorialtext.text = "Slay the link 'at once'!"
+	explaintext.text = "Slay the link 'at once'!"
 	pattern_4_start()
 
 ################################
@@ -203,12 +205,12 @@ func pattern_4_fail():
 		pattern_4_count_value = false
 		pattern_4_fail_signal.emit()
 		var tween_fail_color = get_tree().create_tween()
-		tween_fail_color.tween_property(tutorialtext, "modulate", Color(1,0,0,1), 0.3)
-		tween_fail_color.tween_property(tutorialtext, "modulate", Color(1,1,1,1), 0.7)
+		tween_fail_color.tween_property(explaintext, "modulate", Color(1,0,0,1), 0.3)
+		tween_fail_color.tween_property(explaintext, "modulate", Color(1,1,1,1), 0.7)
 		await get_tree().create_timer(1.0).timeout
 		pattern_4_start()
 
 func pattern_4_clear():
-	tutorialtext.text = "Well done!"
+	explaintext.text = "Well done!"
 	await get_tree().create_timer(1.0).timeout
 	tutorial_end.emit()
