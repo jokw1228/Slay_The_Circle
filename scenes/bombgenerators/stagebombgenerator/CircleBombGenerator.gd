@@ -13,23 +13,23 @@ func _ready():
 	pattern_shuffle_and_draw()
 
 func pattern_list_initialization():
-	#pattern_list.append(Callable(self, "pattern_numeric_triangle_with_link"))
-	#pattern_list.append(Callable(self, "pattern_star"))
-	#pattern_list.append(Callable(self, "pattern_random_link"))
-	#pattern_list.append(Callable(self, "pattern_timing"))
-	#pattern_list.append(Callable(self, "pattern_trafficlight"))
-	#pattern_list.append(Callable(self, "pattern_manyrotation"))
-	#pattern_list.append(Callable(self, "pattern_speed_and_rotation"))
-	#pattern_list.append(Callable(self, "pattern_roll"))
-	#pattern_list.append(Callable(self, "pattern_diamond"))
-	#pattern_list.append(Callable(self, "pattern_twisted_numeric"))
-	#pattern_list.append(Callable(self, "pattern_spiral"))
-	#pattern_list.append(Callable(self, "pattern_numeric_choice"))
-	#pattern_list.append(Callable(self, "pattern_hide_in_hazard"))
-	#pattern_list.append(Callable(self, "pattern_diamond_with_hazard"))
-	#pattern_list.append(Callable(self, "pattern_narrow_road"))
-	#pattern_list.append(Callable(self, "pattern_369"))
-	#pattern_list.append(Callable(self, "pattern_colosseum"))
+	pattern_list.append(Callable(self, "pattern_numeric_triangle_with_link"))
+	pattern_list.append(Callable(self, "pattern_star"))
+	pattern_list.append(Callable(self, "pattern_random_link"))
+	pattern_list.append(Callable(self, "pattern_timing"))
+	pattern_list.append(Callable(self, "pattern_trafficlight"))
+	pattern_list.append(Callable(self, "pattern_manyrotation"))
+	pattern_list.append(Callable(self, "pattern_speed_and_rotation"))
+	pattern_list.append(Callable(self, "pattern_roll"))
+	pattern_list.append(Callable(self, "pattern_diamond"))
+	pattern_list.append(Callable(self, "pattern_twisted_numeric"))
+	pattern_list.append(Callable(self, "pattern_spiral"))
+	pattern_list.append(Callable(self, "pattern_numeric_choice"))
+	pattern_list.append(Callable(self, "pattern_hide_in_hazard"))
+	pattern_list.append(Callable(self, "pattern_diamond_with_hazard"))
+	pattern_list.append(Callable(self, "pattern_narrow_road"))
+	pattern_list.append(Callable(self, "pattern_369"))
+	pattern_list.append(Callable(self, "pattern_colosseum"))
 	pattern_list.append(Callable(self, "pattern_pizza"))
 	
 func pattern_shuffle_and_draw():
@@ -50,16 +50,21 @@ func pattern_numeric_triangle_with_link():
 	
 	var player_position: Vector2 = PlayingFieldInterface.get_player_position()
 	var angle_offset: float = player_position.angle() * -1
-	#print(player_position, angle_offset)
+	
 	const CIRCLE_FIELD_RADIUS = 256
 	var bomb_radius: float = CIRCLE_FIELD_RADIUS * sqrt(3) / 3
 	
 	var ccw: float = 1 if randi() % 2 else -1
 	
 	var bomb1: NumericBomb = create_numeric_bomb(Vector2(bomb_radius * cos(angle_offset + ccw * PI/6), bomb_radius * -sin(angle_offset + ccw * PI/6)), 0.5, 2.5, 1)
+	bomb1.add_child(Indicator.new())
 	var bomb2: NumericBomb = create_numeric_bomb(Vector2(bomb_radius * cos(angle_offset + ccw * PI/2), bomb_radius * -sin(angle_offset + ccw * PI/2)), 0.5, 2.5, 2)
 	
-	create_bomb_link(bomb1, bomb2)
+	var link1: BombLink = create_bomb_link(bomb1, bomb2)
+	var to_click: Indicator = Indicator.new()
+	to_click.set_size(24)
+	to_click.position = Vector2(CIRCLE_FIELD_RADIUS * cos(angle_offset + ccw * 2*PI/3), CIRCLE_FIELD_RADIUS * -sin(angle_offset + ccw * 2*PI/3))
+	link1.add_child(to_click)
 	
 	var bomb3: NumericBomb = create_numeric_bomb(Vector2(bomb_radius * cos(angle_offset + ccw * 5*PI/6), bomb_radius * -sin(angle_offset + ccw * 5*PI/6)), 0.5, 2.5, 3)
 	var bomb4: NumericBomb = create_numeric_bomb(Vector2(bomb_radius * cos(angle_offset + ccw * 7*PI/6), bomb_radius * -sin(angle_offset + ccw * 7*PI/6)), 0.5, 2.5, 4)
