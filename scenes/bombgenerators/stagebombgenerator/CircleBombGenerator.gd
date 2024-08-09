@@ -74,7 +74,7 @@ func pattern_numeric_triangle_with_link():
 	link3.connect("both_bombs_removed", Callable(self, "pattern_numeric_triangle_with_link_end"))
 
 func pattern_numeric_triangle_with_link_end():
-	PlayingFieldInterface.set_playing_time((pattern_start_time + pattern_numeric_tirangle_with_link_playing_time) / Engine.time_scale)
+	PlayingFieldInterface.set_playing_time(pattern_start_time + (pattern_numeric_tirangle_with_link_playing_time) / Engine.time_scale)
 	pattern_shuffle_and_draw()
 
 # pattern_numeric_triangle_with_link block end
@@ -108,7 +108,7 @@ func pattern_star():
 
 func pattern_star_end():
 	await PlayingFieldInterface.player_grounded
-	PlayingFieldInterface.set_playing_time((pattern_start_time + pattern_star_playing_time) / Engine.time_scale)
+	PlayingFieldInterface.set_playing_time(pattern_start_time + (pattern_star_playing_time) / Engine.time_scale)
 	pattern_shuffle_and_draw()
 	
 #pattern_star end
@@ -153,7 +153,7 @@ func pattern_random_link_auto_rotate(angle):
 
 func pattern_random_link_end():
 	await PlayingFieldInterface.player_grounded
-	PlayingFieldInterface.set_playing_time((pattern_start_time + pattern_random_link_playing_time) / Engine.time_scale)
+	PlayingFieldInterface.set_playing_time(pattern_start_time + (pattern_random_link_playing_time) / Engine.time_scale)
 	pattern_shuffle_and_draw()
 
 # pattern_random_link block end
@@ -181,7 +181,7 @@ func pattern_timing():
 
 func pattern_timing_end():
 	await PlayingFieldInterface.player_grounded
-	PlayingFieldInterface.set_playing_time((pattern_start_time + pattern_timing_playing_time) / Engine.time_scale)
+	PlayingFieldInterface.set_playing_time(pattern_start_time + (pattern_timing_playing_time) / Engine.time_scale)
 	pattern_shuffle_and_draw()
 # pattern_timing block end
 ###############################
@@ -281,7 +281,7 @@ func pattern_speed_and_rotation():
 	link2.connect("both_bombs_removed",Callable(self,"pattern_speed_and_roation_end"))
 
 func pattern_speed_and_roation_end():
-	PlayingFieldInterface.set_playing_time((pattern_start_time + pattern_speed_or_rotation_playing_time) / Engine.time_scale)
+	PlayingFieldInterface.set_playing_time(pattern_start_time + (pattern_speed_or_rotation_playing_time) / Engine.time_scale)
 	await get_tree().create_timer(pattern_speed_or_rotation_rest_time).timeout
 	pattern_shuffle_and_draw()
 	
@@ -326,7 +326,7 @@ func pattern_roll_end():
 	pattern_roll_bomb_count -= 1
 	if pattern_roll_bomb_count == 0:
 		await PlayingFieldInterface.player_grounded
-		PlayingFieldInterface.set_playing_time((pattern_start_time + pattern_roll_playing_time) / Engine.time_scale)
+		PlayingFieldInterface.set_playing_time(pattern_start_time + (pattern_roll_playing_time) / Engine.time_scale)
 		pattern_shuffle_and_draw()
 	
 # pattern_roll block end
@@ -361,7 +361,7 @@ func pattern_diamond_end():
 	if pattern_diamond_bomb_count == 0:
 		get_tree().call_group("group_hazard_bomb", "early_eliminate")
 		await PlayingFieldInterface.player_grounded
-		PlayingFieldInterface.set_playing_time((pattern_start_time + pattern_diamond_playing_time) / Engine.time_scale)
+		PlayingFieldInterface.set_playing_time(pattern_start_time + (pattern_diamond_playing_time) / Engine.time_scale)
 		pattern_shuffle_and_draw()
 
 # pattern_diamond block end
@@ -387,7 +387,7 @@ func pattern_twisted_numeric():
 
 func pattern_twisted_numeric_end():
 	await PlayingFieldInterface.player_grounded
-	PlayingFieldInterface.set_playing_time((pattern_start_time + pattern_twisted_numeric_playing_time) / Engine.time_scale)
+	PlayingFieldInterface.set_playing_time(pattern_start_time + (pattern_twisted_numeric_playing_time) / Engine.time_scale)
 	pattern_shuffle_and_draw()
 
 # pattern_fast_numeric block end
@@ -417,7 +417,7 @@ func pattern_spiral_end():
 	pattern_spiral_bomb_count -= 1
 	if pattern_spiral_bomb_count == 0:
 		await PlayingFieldInterface.player_grounded
-		PlayingFieldInterface.set_playing_time((pattern_start_time + pattern_spiral_playing_time) / Engine.time_scale)
+		PlayingFieldInterface.set_playing_time(pattern_start_time + (pattern_spiral_playing_time) / Engine.time_scale)
 		pattern_shuffle_and_draw()
 	
 # pattern_spiral end
@@ -456,7 +456,7 @@ func pattern_numeric_choice_end():
 	pattern_numeric_choice_bomb_count -= 1
 	if pattern_numeric_choice_bomb_count == 0:
 		await PlayingFieldInterface.player_grounded
-		PlayingFieldInterface.set_playing_time((pattern_start_time + pattern_numeric_choice_playing_time) / Engine.time_scale)
+		PlayingFieldInterface.set_playing_time(pattern_start_time + (pattern_numeric_choice_playing_time) / Engine.time_scale)
 		pattern_shuffle_and_draw()
 	
 # pattern_numeric_choice end
@@ -504,7 +504,7 @@ func pattern_diamond_with_hazard():
 
 func pattern_diamond_with_hazard_end():
 	await PlayingFieldInterface.player_grounded
-	PlayingFieldInterface.set_playing_time((pattern_start_time + pattern_diamond_with_hazard_playing_time) / Engine.time_scale)
+	PlayingFieldInterface.set_playing_time(pattern_start_time + (pattern_diamond_with_hazard_playing_time) / Engine.time_scale)
 	pattern_shuffle_and_draw()
 	
 # pattern_diamond_with_hazard block end
@@ -539,7 +539,7 @@ func pattern_narrow_road():
 func pattern_narrow_road_end():
 	get_tree().call_group("group_hazard_bomb", "early_eliminate")
 	await PlayingFieldInterface.player_grounded
-	PlayingFieldInterface.set_playing_time((pattern_start_time + pattern_narrow_road_playing_time) / Engine.time_scale)
+	PlayingFieldInterface.set_playing_time(pattern_start_time + (pattern_narrow_road_playing_time) / Engine.time_scale)
 	pattern_shuffle_and_draw()
 	
 # pattern_narrow_road block end
@@ -571,7 +571,7 @@ func pattern_369():
 func pattern_369_end():
 	get_tree().call_group("group_hazard_bomb", "early_eliminate")
 	await PlayingFieldInterface.player_grounded
-	PlayingFieldInterface.set_playing_time((pattern_start_time + pattern_369_playing_time) / Engine.time_scale)
+	PlayingFieldInterface.set_playing_time(pattern_start_time + (pattern_369_playing_time) / Engine.time_scale)
 	pattern_shuffle_and_draw()
 	
 # pattern_369 block end
@@ -603,7 +603,7 @@ func pattern_colosseum_end():
 	pattern_colosseum_bomb_count -= 1
 	if pattern_colosseum_bomb_count == 0:
 		await PlayingFieldInterface.player_grounded
-		PlayingFieldInterface.set_playing_time((pattern_start_time + pattern_colosseum_playing_time) / Engine.time_scale)
+		PlayingFieldInterface.set_playing_time(pattern_start_time + (pattern_colosseum_playing_time) / Engine.time_scale)
 		pattern_shuffle_and_draw()
 	
 # pattern_colosseum block end

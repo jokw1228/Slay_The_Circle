@@ -3,6 +3,8 @@ class_name CirclestBombGenerator
 
 var pattern_list: Array[Callable]
 
+var pattern_start_time: float
+
 func _ready():
 	pattern_list_initialization()
 	
