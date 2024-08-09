@@ -579,7 +579,7 @@ func pattern_timing_return():
 			
 			for i in range(6):
 				create_normal_bomb(player_position * 0.3 * (i-3), 0.2, 1 - i*0.1)
-				await get_tree().create_timer(0.07).timeout
+				await get_tree().create_timer(0.05).timeout
 		await get_tree().create_timer(0.02).timeout
 	
 	await get_tree().create_timer(1.5).timeout
