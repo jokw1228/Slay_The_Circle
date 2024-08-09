@@ -17,6 +17,7 @@ func pattern_list_initialization():
 	pattern_list.append(Callable(self, "pattern_random_shape"))
 	pattern_list.append(Callable(self, "pattern_random_rotation"))
 	pattern_list.append(Callable(self, "pattern_blocking"))
+	pattern_list.append(Callable(self, "pattern_maze"))
 	pattern_list.append(Callable(self, "pattern_reactspeed_test")) 
 	pattern_list.append(Callable(self, "pattern_link_free")) 
 
@@ -249,7 +250,7 @@ func pattern_blocking():
 	var player_position: Vector2 = PlayingFieldInterface.get_player_position()
 	
 	for i in range(9):
-		create_hazard_bomb(player_position.rotated((i-4)*PI/8) * 0.7, 0.5, 2)
+		create_hazard_bomb(player_position.rotated((i-4)*PI/8) * 0.6, 0.5, 2)
 	
 	var bomb1 = create_normal_bomb(player_position.rotated(3.0*PI/4.0) * 0.6, 0.3, 2)
 	var bomb2 = create_normal_bomb(player_position.rotated(-3.0*PI/4.0) * 0.6, 0.3, 2)
@@ -262,6 +263,41 @@ func pattern_blocking_end():
 	pattern_shuffle_and_draw()
 	
 # pattern_blocking end
+###############################
+
+###############################
+# pattern_maze block start
+# made by jinhyun
+
+var pattern_maze_timer: float
+var pattern_maze_timer_tween: Tween
+
+func pattern_maze():
+	PlayingFieldInterface.set_theme_color(Color.VIOLET)
+	
+	pattern_maze_timer = 3.0
+	if pattern_maze_timer_tween != null:
+		pattern_maze_timer_tween.kill()
+	pattern_maze_timer_tween = get_tree().create_tween()
+	pattern_maze_timer_tween.tween_property(self,"pattern_maze_timer",0.0,3.0)
+	
+	var player_position: Vector2 = PlayingFieldInterface.get_player_position()
+	var player_mul =  player_position * 0.35
+	var magnitude = player_mul.length()
+	var perpendicular = Vector2(-player_mul.y / magnitude, player_mul.x / magnitude)
+	
+	for i in range(7):
+		create_hazard_bomb(player_mul + perpendicular * (i-2) * 50, 0.1, 2)
+		create_hazard_bomb(-(player_mul + perpendicular * (i-2) * 50), 0.1, 2)
+	
+	var bomb = create_normal_bomb(-player_position * 0.8, 0.1, 2)
+	bomb.connect("player_body_entered", Callable(self, "pattern_maze_end"))
+
+func pattern_maze_end():
+	PlayingFieldInterface.add_playing_time(pattern_maze_timer)
+	pattern_shuffle_and_draw()
+	
+# pattern_maze end
 ###############################
 
 ###############################
