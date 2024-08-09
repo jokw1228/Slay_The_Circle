@@ -13,15 +13,15 @@ func _ready():
 	pattern_shuffle_and_draw()
 
 func pattern_list_initialization():
-	#pattern_list.append(Callable(self, "pattern_lightning"))
-	#pattern_list.append(Callable(self, "pattern_wall_timing"))
-	#pattern_list.append(Callable(self, "pattern_scattered_hazards"))
-	#pattern_list.append(Callable(self, "pattern_random_shape"))
+	pattern_list.append(Callable(self, "pattern_lightning"))
+	pattern_list.append(Callable(self, "pattern_wall_timing"))
+	pattern_list.append(Callable(self, "pattern_scattered_hazards"))
+	pattern_list.append(Callable(self, "pattern_random_shape"))
 	pattern_list.append(Callable(self, "pattern_random_rotation"))
-	#pattern_list.append(Callable(self, "pattern_blocking"))
-	#pattern_list.append(Callable(self, "pattern_maze"))
-	#pattern_list.append(Callable(self, "pattern_reactspeed_test")) 
-	#pattern_list.append(Callable(self, "pattern_link_free")) 
+	pattern_list.append(Callable(self, "pattern_blocking"))
+	pattern_list.append(Callable(self, "pattern_maze"))
+	pattern_list.append(Callable(self, "pattern_reactspeed_test")) 
+	pattern_list.append(Callable(self, "pattern_link_free")) 
 
 func pattern_shuffle_and_draw():
 	randomize()
