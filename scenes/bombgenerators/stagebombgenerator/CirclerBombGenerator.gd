@@ -256,17 +256,12 @@ func pattern_random_rotation_end():
 # pattern_blocking block start
 # made by jinhyun
 
-var pattern_blocking_timer: float
-var pattern_blocking_timer_tween: Tween
+const pattern_blocking_playing_time = 2.3
 
 func pattern_blocking():
 	PlayingFieldInterface.set_theme_color(Color.VIOLET)
 	
-	pattern_blocking_timer = 2.5
-	if pattern_blocking_timer_tween != null:
-		pattern_blocking_timer_tween.kill()
-	pattern_blocking_timer_tween = get_tree().create_tween()
-	pattern_blocking_timer_tween.tween_property(self,"pattern_blocking_timer",0.0,2.5)
+	pattern_start_time = PlayingFieldInterface.get_playing_time()
 	
 	var player_position: Vector2 = PlayingFieldInterface.get_player_position()
 	
@@ -280,7 +275,8 @@ func pattern_blocking():
 	link.connect("both_bombs_removed", Callable(self, "pattern_blocking_end"))
 
 func pattern_blocking_end():
-	PlayingFieldInterface.add_playing_time(pattern_blocking_timer)
+	get_tree().call_group("group_hazard_bomb", "early_eliminate")
+	PlayingFieldInterface.add_playing_time(pattern_start_time + (pattern_blocking_playing_time) / Engine.time_scale)
 	pattern_shuffle_and_draw()
 	
 # pattern_blocking end
