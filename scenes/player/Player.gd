@@ -5,11 +5,11 @@ signal change_click_queue_to_movement_queue(click_position)
 signal grounded
 signal shooted
 
-var click_queue: Array
+var click_queue: Array[Vector2]
 var is_raycasting: bool = false
-var movement_queue: Array
+var movement_queue: Array[Vector2]
 var is_moving: bool = false
-var current_position = null
+var current_position: Vector2 = Vector2.ZERO
 
 func _ready():
 	const CIRCLE_FIELD_RADIUS = 256
@@ -39,15 +39,15 @@ func _movement_queue_proccessing():
 		# start moving
 		shooted.emit()
 		is_moving = true
-		var position_to_go = movement_queue.pop_front()
+		var position_to_go: Vector2 = movement_queue.pop_front() as Vector2
 		current_position = position_to_go # 이동 중에는 가야 하는 위치 저장하기
 		
 		# actual movement
-		var speed: float = 2048
+		const speed: float = 2048
 		velocity = (position_to_go - position).normalized() * speed
 		var d = position_to_go - position
 		var distance: float = sqrt(d.x * d.x + d.y * d.y)
-		var timer = get_tree().create_timer(distance / speed)
+		var timer: SceneTreeTimer = get_tree().create_timer(distance / speed)
 		await timer.timeout
 		velocity = Vector2.ZERO
 		position = position_to_go
