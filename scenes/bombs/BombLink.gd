@@ -3,6 +3,8 @@ class_name BombLink
 
 @export var ray_1to2: RayCast2D
 @export var ray_2to1: RayCast2D
+@export var Indicator_1to2: Indicator
+@export var Indicator_2to1: Indicator
 
 signal both_bombs_removed
 signal single_bomb_removed
@@ -17,26 +19,30 @@ func set_child_bombs(b1: Bomb, b2: Bomb):
 	num_child_bombs = 2
 	bomb1.player_body_entered.connect(on_bomb_slayed)
 	bomb2.player_body_entered.connect(on_bomb_slayed)
-	set_ray_cast()
-	
 	bomb1.add_child( LinkedMark.create() )
 	bomb2.add_child( LinkedMark.create() )
+	set_ray_cast()
 
 func set_ray_cast():
-	ray_1to2.global_position = bomb1.global_position
-	ray_1to2.look_at(bomb2.global_position)
-	
-	ray_2to1.global_position = bomb2.global_position
-	ray_2to1.look_at(bomb1.global_position)
-	
-	# wait ray cast update
-	await ray_1to2.ray_cast_end
-	ray_1to2.enabled = false
-	
-	await ray_2to1.ray_cast_end
-	ray_2to1.enabled = false
-	
-	queue_redraw()
+	if bomb1 != null && bomb2 != null:
+		ray_1to2.global_position = bomb1.global_position
+		ray_1to2.look_at(bomb2.global_position)
+		
+		ray_2to1.global_position = bomb2.global_position
+		ray_2to1.look_at(bomb1.global_position)
+		
+		# wait ray cast update
+		await ray_1to2.ray_cast_end
+		ray_1to2.enabled = false
+		
+		await ray_2to1.ray_cast_end
+		ray_2to1.enabled = false
+		
+		queue_redraw()
+		
+		ray_1to2.enabled = true
+		ray_2to1.enabled = true
+		set_ray_cast()
 
 # connected to player_body_entered signal
 func on_bomb_slayed():
@@ -95,11 +101,20 @@ func _draw():
 	# display intersection point of link line and circle field
 	var ray_intersect: Vector2 = ray_1to2.get_collision_point()
 	if ray_intersect != Vector2.ZERO:
-		draw_circle(ray_intersect, 16, Color.WHITE)
-		
+		Indicator_1to2.position = ray_intersect
+		draw_circle(ray_intersect, 16, Color(1,1,1,0.5))
+	
 	ray_intersect = ray_2to1.get_collision_point()
 	if ray_intersect != Vector2.ZERO:
-		draw_circle(ray_intersect, 16, Color.WHITE)
+		Indicator_2to1.position = ray_intersect
+		draw_circle(ray_intersect, 16, Color(1,1,1,0.5))
+
+func _ready():
+	await get_tree().physics_frame
+	await get_tree().physics_frame
+	await get_tree().physics_frame
+	Indicator_1to2.visible = true
+	Indicator_2to1.visible = true
 
 func _process(delta):
 	queue_redraw()

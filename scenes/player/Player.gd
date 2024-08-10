@@ -69,4 +69,7 @@ func now_position() -> Vector2:
 	if is_moving == false and click_queue.is_empty(): # 플레이어가 가만히 있는 경우
 		return get_global_transform().origin
 	else:
-		return current_position # 플레이어가 움직이는 중인 경우
+		# adjust ground offset
+		const GROUND_OFFSET = 16
+		const CIRCLE_FIELD_RADIUS = 256
+		return current_position.normalized() * (CIRCLE_FIELD_RADIUS - GROUND_OFFSET) # 플레이어가 움직이는 중인 경우

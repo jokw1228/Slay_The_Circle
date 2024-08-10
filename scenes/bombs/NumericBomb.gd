@@ -7,11 +7,11 @@ signal lower_value_bomb_exists
 signal no_lower_value_bomb_exists
 
 var id: int = 0
-var Indicator_node: Indicator
 
 @export var CollisionShape2D_node: CollisionShape2D
 @export var BombTimer_node: BombTimer
 @export var WarningTimer_node: WarningTimer
+@export var Indicator_node: Indicator
 
 static func create(position_to_set: Vector2, warning_time_to_set: float, bomb_time_to_set: float, id_to_set: int) -> NumericBomb:
 	var bomb_inst: NumericBomb = preload(NumericBomb_scene).instantiate() as NumericBomb
@@ -27,9 +27,6 @@ func _on_warning_timer_warning_timeout():
 
 func _ready():
 	$BombID.text = str(id)
-	Indicator_node = Indicator.create()
-	Indicator_node.visible = false
-	add_child(Indicator_node)
 
 func _process(_delta):
 	var flag: bool = true
