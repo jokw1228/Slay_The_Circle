@@ -589,17 +589,18 @@ func pattern_numeric_choice():
 	var player_position: Vector2 = PlayingFieldInterface.get_player_position()
 	var rotation_box: Array = [PI/2, PI, -PI/2, 0]
 	var rotation_inv_box: Array = [-PI/2, PI, PI/2, 0]
+	randomize()
 	var rand: int = randi() % 2
 	
 	pattern_numeric_choice_bomb_count = 8
 	if rand == 0:
 		for i in range(8):
-			var bomb: NumericBomb = create_numeric_bomb(player_position.rotated(rotation_box[i%4]) * 0.8, 0.3, 1, i+1)
+			var bomb: NumericBomb = create_numeric_bomb(player_position.rotated(rotation_box[i%4]) * 0.8, 0.3, 0.7, i+1)
 			bomb.connect("player_body_entered",Callable(self,"pattern_numeric_choice_end"))
 			await get_tree().create_timer(0.25).timeout
 	else:
 		for i in range(8):
-			var bomb: NumericBomb = create_numeric_bomb(player_position.rotated(rotation_inv_box[i%4]) * 0.8, 0.3, 1, i+1)
+			var bomb: NumericBomb = create_numeric_bomb(player_position.rotated(rotation_inv_box[i%4]) * 0.8, 0.3, 0.7, i+1)
 			bomb.connect("player_body_entered",Callable(self,"pattern_numeric_choice_end"))
 			await get_tree().create_timer(0.25).timeout
 

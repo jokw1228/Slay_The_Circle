@@ -230,9 +230,16 @@ func pattern_random_rotation():
 	
 	for i in range(5):
 		player_position = PlayingFieldInterface.get_player_position()
-		rand = randi() % 2
+		rand = randi() % 3
 		if rand == 0:
 			bomb1 = create_rotationspeedup_bomb(player_position.rotated(PI/2) * 0.6, 0.2, 0.5, 4*PI)
+			await bomb1.tree_exited
+			
+			if is_inside_tree():
+				await get_tree().create_timer(0.2).timeout
+			PlayingFieldInterface.rotation_stop()
+		elif rand == 1:
+			bomb1 = create_rotationspeedup_bomb(player_position * -0.6, 0.2, 0.5, 4*PI)
 			await bomb1.tree_exited
 			
 			if is_inside_tree():
@@ -247,7 +254,7 @@ func pattern_random_rotation():
 			PlayingFieldInterface.rotation_stop()
 	
 	if is_inside_tree():
-		await get_tree().create_timer(1.5).timeout
+		await get_tree().create_timer(0.5).timeout
 	var bomb = create_normal_bomb(Vector2(0, 0), 0.3, 3)
 	bomb.connect("player_body_entered",Callable(self,"pattern_random_rotation_end"))
 
@@ -266,7 +273,6 @@ const pattern_blocking_playing_time = 2.3
 
 func pattern_blocking():
 	PlayingFieldInterface.set_theme_color(Color.VIOLET)
-	
 	pattern_start_time = PlayingFieldInterface.get_playing_time()
 	
 	var player_position: Vector2 = PlayingFieldInterface.get_player_position()
@@ -282,7 +288,7 @@ func pattern_blocking():
 
 func pattern_blocking_end():
 	get_tree().call_group("group_hazard_bomb", "early_eliminate")
-	PlayingFieldInterface.add_playing_time(pattern_start_time + (pattern_blocking_playing_time) / Engine.time_scale)
+	PlayingFieldInterface.set_playing_time(pattern_start_time + (pattern_blocking_playing_time) / Engine.time_scale)
 	pattern_shuffle_and_draw()
 	
 # pattern_blocking end
@@ -292,32 +298,28 @@ func pattern_blocking_end():
 # pattern_maze block start
 # made by jinhyun
 
-var pattern_maze_timer: float
-var pattern_maze_timer_tween: Tween
+const pattern_maze_playing_time = 2.5
 
 func pattern_maze():
 	PlayingFieldInterface.set_theme_color(Color.VIOLET)
-	
-	pattern_maze_timer = 3.0
-	if pattern_maze_timer_tween != null:
-		pattern_maze_timer_tween.kill()
-	pattern_maze_timer_tween = get_tree().create_tween()
-	pattern_maze_timer_tween.tween_property(self,"pattern_maze_timer",0.0,3.0)
+	pattern_start_time = PlayingFieldInterface.get_playing_time()
 	
 	var player_position: Vector2 = PlayingFieldInterface.get_player_position()
 	var player_mul =  player_position * 0.35
 	var magnitude = player_mul.length()
 	var perpendicular = Vector2(-player_mul.y / magnitude, player_mul.x / magnitude)
 	
-	for i in range(7):
-		create_hazard_bomb(player_mul + perpendicular * (i-2) * 50, 0.1, 2)
-		create_hazard_bomb(-(player_mul + perpendicular * (i-2) * 50), 0.1, 2)
+	for i in range(5):
+		create_hazard_bomb(player_mul + perpendicular * (i-3.1) * 64, 0.1, 2.3)
+		create_hazard_bomb(-(player_mul + perpendicular * (i-3.1) * 64), 0.1, 2.3)
 	
-	var bomb = create_normal_bomb(-player_position * 0.8, 0.1, 2)
+	var bomb = create_normal_bomb(-player_position * 0.8, 0.1, 2.3)
 	bomb.connect("player_body_entered", Callable(self, "pattern_maze_end"))
 
 func pattern_maze_end():
-	PlayingFieldInterface.add_playing_time(pattern_maze_timer)
+	get_tree().call_group("group_hazard_bomb", "early_eliminate")
+	await PlayingFieldInterface.player_grounded
+	PlayingFieldInterface.set_playing_time(pattern_start_time + (pattern_maze_playing_time) / Engine.time_scale)
 	pattern_shuffle_and_draw()
 	
 # pattern_maze end

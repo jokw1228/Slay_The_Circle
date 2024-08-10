@@ -535,21 +535,10 @@ func pattern_shuffle_game_process(delta):
 # pattern_timing_return block start
 # made by jinhyun
 
-var pattern_timing_return_timer: float
-var pattern_timing_return_timer_tween: Tween
-
 func pattern_timing_return():
 	PlayingFieldInterface.set_theme_color(Color.VIOLET)
 	var player_position: Vector2
 	var player_position_shift: Vector2
-	
-	pattern_timing_return_timer = 2.0
-	if pattern_timing_return_timer_tween != null:
-		pattern_timing_return_timer_tween.kill()
-	pattern_timing_return_timer_tween = get_tree().create_tween()
-	pattern_timing_return_timer_tween.tween_property(self,"pattern_timing_return_timer",0.0,2.0)
-	
-	await get_tree().create_timer(0.2).timeout
 	
 	player_position = PlayingFieldInterface.get_player_position()
 	
@@ -578,10 +567,6 @@ func pattern_timing_return():
 		await get_tree().create_timer(0.02).timeout
 	
 	await get_tree().create_timer(1).timeout
-	pattern_timing_return_end()
-
-func pattern_timing_return_end():
-	PlayingFieldInterface.add_playing_time(pattern_timing_return_timer)
 	pattern_shuffle_and_draw()
 	
 # pattern_timing_return end
