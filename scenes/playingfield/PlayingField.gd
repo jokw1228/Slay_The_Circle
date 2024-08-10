@@ -38,7 +38,7 @@ func start_PlayingField():
 		BombGenerator_node = BombGenerator_scene.instantiate()
 		add_child(BombGenerator_node)
 		
-		connect("game_over", Callable(BombGenerator_node, "slay_left_bomb"))
+		connect("game_over", Callable(BombGenerator_node, "queue_free"))
 
 func stop_PlayingField(bomb_position: Vector2):
 	if playing == true:
