@@ -3,8 +3,6 @@ class_name PlayingField
 
 @export var BombGenerator_scene: PackedScene
 
-@export var StartBomb_scene: PackedScene
-
 @export var PlayingFieldCamera_node: PlayingFieldCamera
 @export var PlayingFieldUI_node: PlayingFieldUI
 @export var Player_node: Player
@@ -22,7 +20,6 @@ var playing: bool = false
 var BombGenerator_node: Node2D
 
 func _ready():
-	#Engine.time_scale = 0.1
 	PlayingFieldInterface.set_PlayingField_node(self)
 	start_PlayingField()
 
@@ -59,10 +56,7 @@ func stop_PlayingField(bomb_position: Vector2):
 		await get_tree().create_timer(2.3).timeout
 		emit_signal("game_ready")
 		await get_tree().create_timer(0.6).timeout
-		var StartBomb_node: StartBomb = StartBomb_scene.instantiate()
-		StartBomb_node.position = Vector2.ZERO
-		StartBomb_node.started.connect(start_PlayingField)
-		get_tree().current_scene.add_child(StartBomb_node)
+		add_child( StartBomb.create(Vector2.ZERO, Callable(self, "start_PlayingField")) )
 
 # Logic for BombLink
 func _on_player_grounded():
