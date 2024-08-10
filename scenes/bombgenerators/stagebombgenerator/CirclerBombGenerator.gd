@@ -114,22 +114,32 @@ func pattern_wall_timing_auto_rotate(angle):
 ###############################
 # pattern_scattered_hazards start
 # made by Jaeyong
+const pattern_scattered_hazards_playing_time = 2
+var pattern_scattered_hazards_bomb_count: int
 
 func pattern_scattered_hazards():
 	var left_bomb = 3
+	pattern_scattered_hazards_bomb_count = 3
+	pattern_start_time = PlayingFieldInterface.get_playing_time()
 	
 	var player_pos_normalized = PlayingFieldInterface.get_player_position().normalized()
 	if (player_pos_normalized == Vector2(0,0)):
 		player_pos_normalized = Vector2(1,0)
 	
 	for i in (8):
-		create_hazard_bomb(player_pos_normalized.rotated(PI/4 * i).rotated(PI/4) * 240 ,1,2)
+		create_hazard_bomb(player_pos_normalized.rotated(PI/4 * i).rotated(3 * PI/8) * 224 ,0.25,1.75)
 	
 	for i in (3):
-		create_normal_bomb(player_pos_normalized.rotated(PI/3 * i * 2) * 80 ,0.5,2.5)
-
-	await Utils.timer(3) # do nothing
-	pattern_shuffle_and_draw()
+		var bomb: NormalBomb = create_normal_bomb(player_pos_normalized.rotated(PI/3 * i * 2).rotated(PI/4) * 84 ,0.5, 1.5)
+		bomb.connect("player_body_entered", Callable(self, "pattern_scattered_hazards_end"))
+	
+func pattern_scattered_hazards_end():
+	pattern_scattered_hazards_bomb_count -= 1
+	if pattern_scattered_hazards_bomb_count == 0:
+		get_tree().call_group("group_hazard_bomb", "early_eliminate")
+		await PlayingFieldInterface.player_grounded
+		PlayingFieldInterface.set_playing_time(pattern_start_time + (pattern_scattered_hazards_playing_time) / Engine.time_scale)
+		pattern_shuffle_and_draw()
 
 # pattern_scattered_hazards block end
 ###############################
