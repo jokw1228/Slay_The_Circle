@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=3 uid="uid://ltvbulh18nft"]
+
+[ext_resource type="Script" path="res://scenes/bombs/WarningTimer.gd" id="1_1p7sx"]
+[ext_resource type="Texture2D" uid="uid://baausxife2ayk" path="res://images/bomb/sprite_normal_outline.svg" id="1_cru2m"]
+
+[node name="WarningTimer" type="TextureProgressBar"]
+offset_left = -32.0
+offset_top = -32.0
+offset_right = 32.0
+offset_bottom = 32.0
+mouse_filter = 2
+value = 100.0
+fill_mode = 4
+texture_under = ExtResource("1_cru2m")
+texture_progress = ExtResource("1_cru2m")
+tint_under = Color(1, 1, 1, 0.25098)
+tint_over = Color(1, 1, 1, 0)
+script = ExtResource("1_1p7sx")
+
+[connection signal="warning_timeout" from="." to="." method="queue_free"]

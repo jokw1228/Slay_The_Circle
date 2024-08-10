@@ -1,8 +1,9 @@
-[gd_scene load_steps=9 format=3 uid="uid://bj78l3upa26ik"]
+[gd_scene load_steps=10 format=3 uid="uid://bj78l3upa26ik"]
 
 [ext_resource type="Script" path="res://scenes/bombs/NormalBomb.gd" id="1_d5v6f"]
 [ext_resource type="PackedScene" uid="uid://dq81owitrvpew" path="res://scenes/bombs/BombTimer.tscn" id="2_yellt"]
 [ext_resource type="Script" path="res://addons/resonate/sound_manager/sound_bank.gd" id="3_8xxje"]
+[ext_resource type="PackedScene" uid="uid://ltvbulh18nft" path="res://scenes/bombs/WarningTimer.tscn" id="3_s4471"]
 [ext_resource type="Script" path="res://addons/resonate/sound_manager/sound_event_resource.gd" id="4_d5lvo"]
 [ext_resource type="AudioStream" uid="uid://c352772ve0yuk" path="res://audio/sfx/slice_3.wav" id="5_1ui6s"]
 [ext_resource type="Texture2D" uid="uid://cgn8ysntgw1a2" path="res://images/bomb/sprite_normal.svg" id="7_kse0o"]
@@ -18,14 +19,21 @@ volume = 0.0
 pitch = 1.0
 streams = Array[AudioStream]([ExtResource("5_1ui6s")])
 
-[node name="NormalBomb" type="Area2D"]
+[node name="NormalBomb" type="Area2D" node_paths=PackedStringArray("CollisionShape2D_node", "BombTimer_node", "WarningTimer_node")]
+modulate = Color(1, 1, 1, 0.12549)
 collision_layer = 0
 script = ExtResource("1_d5v6f")
+CollisionShape2D_node = NodePath("CollisionShape2D")
+BombTimer_node = NodePath("BombTimer")
+WarningTimer_node = NodePath("WarningTimer")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_n2uys")
+disabled = true
 
 [node name="BombTimer" parent="." instance=ExtResource("2_yellt")]
+
+[node name="WarningTimer" parent="." instance=ExtResource("3_s4471")]
 
 [node name="SoundBank" type="Node" parent="."]
 script = ExtResource("3_8xxje")
@@ -36,8 +44,10 @@ events = Array[ExtResource("4_d5lvo")]([SubResource("Resource_kd5wo")])
 texture = ExtResource("7_kse0o")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
-[connection signal="player_body_entered" from="." to="." method="queue_free"]
 [connection signal="player_body_entered" from="." to="." method="slayed"]
-[connection signal="bomb_timeout" from="BombTimer" to="." method="queue_free"]
+[connection signal="player_body_entered" from="." to="." method="queue_free"]
 [connection signal="bomb_timeout" from="BombTimer" to="." method="game_over"]
 [connection signal="bomb_timeout" from="BombTimer" to="." method="exploded"]
+[connection signal="bomb_timeout" from="BombTimer" to="." method="queue_free"]
+[connection signal="warning_timeout" from="WarningTimer" to="." method="_on_warning_timer_warning_timeout"]
+[connection signal="warning_timeout" from="WarningTimer" to="BombTimer" method="bomb_timer_start"]

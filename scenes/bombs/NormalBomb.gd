@@ -2,15 +2,21 @@ extends Bomb
 class_name NormalBomb
 
 const NormalBomb_scene = "res://scenes/bombs/NormalBomb.tscn"
-const NormalBombWarning_scene = "res://scenes/warnings/NormalBombWarning.tscn"
 
-static func create(position_to_set: Vector2, time_to_set: float, warning_time_to_set: float) -> NormalBomb:
+@export var CollisionShape2D_node: CollisionShape2D
+@export var BombTimer_node: BombTimer
+@export var WarningTimer_node: WarningTimer
+
+static func create(position_to_set: Vector2, warning_time_to_set: float, bomb_time_to_set: float) -> NormalBomb:
 	var bomb_inst: NormalBomb = preload(NormalBomb_scene).instantiate() as NormalBomb
 	bomb_inst.position = position_to_set
-	bomb_inst.get_node("BombTimer").set_time = time_to_set
-	var warning_inst: Warning = preload("res://scenes/warnings/NormalBombWarning.tscn").instantiate() as Warning
-	bomb_inst.add_child(warning_inst)
+	bomb_inst.BombTimer_node.set_time = bomb_time_to_set
+	bomb_inst.WarningTimer_node.set_time = warning_time_to_set
 	return bomb_inst
+
+func _on_warning_timer_warning_timeout():
+	modulate.a = 1.0
+	CollisionShape2D_node.disabled = false
 
 func slayed():
 	super()
