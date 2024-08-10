@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://d1gtbnh1egb8g"]
+[gd_scene load_steps=2 format=3 uid="uid://vvhun62limmm"]
 
-[ext_resource type="Script" path="res://scenes/bombs/bombeffects/IndicatorReverbEffect.gd" id="1_jkqyi"]
+[ext_resource type="Script" path="res://scenes/bombs/bombeffects/IndicatorReverbEffect.gd" id="1_tt4pw"]
 
 [node name="IndicatorReverbEffect" type="Node2D"]
-script = ExtResource("1_jkqyi")
+modulate = Color(1, 1, 1, 0.501961)
+script = ExtResource("1_tt4pw")
