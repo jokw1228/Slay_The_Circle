@@ -1,9 +1,18 @@
 extends Node2D
 class_name BackGroundArcDrawer
 
+const BackGroundArcDrawer_scene = "res://scenes/background/BackGroundArcDrawer.tscn"
+
 var radius: float
 var radian: float
 const arc_width = 32
+
+static func create(radius_to_set: float, radian_to_set: float, to_rotate: float) -> BackGroundArcDrawer:
+	var inst: BackGroundArcDrawer = preload(BackGroundArcDrawer_scene).instantiate() as BackGroundArcDrawer
+	inst.radius = radius_to_set
+	inst.radian = radian_to_set
+	inst.rotate(to_rotate)
+	return inst
 
 func _draw():
 	var theme_color: Color = PlayingFieldInterface.get_theme_color()

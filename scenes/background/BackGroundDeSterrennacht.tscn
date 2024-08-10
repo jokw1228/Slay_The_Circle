@@ -1,12 +1,10 @@
-[gd_scene load_steps=3 format=3 uid="uid://csx6yjkvpfqcy"]
+[gd_scene load_steps=2 format=3 uid="uid://csx6yjkvpfqcy"]
 
 [ext_resource type="Script" path="res://scenes/background/BackGroundDeSterrennacht.gd" id="1_cfddy"]
-[ext_resource type="PackedScene" uid="uid://o8ply4dd0xxg" path="res://scenes/background/BackGroundArcDrawer.tscn" id="2_s77qa"]
 
 [node name="BackGroundDeSterrennacht" type="Node2D" node_paths=PackedStringArray("BackGroundGray_node")]
 z_index = -30
 script = ExtResource("1_cfddy")
-BackGroundArcDrawer_scene = ExtResource("2_s77qa")
 BackGroundGray_node = NodePath("BackGroundGray")
 
 [node name="BackGroundGray" type="ColorRect" parent="."]

@@ -1,21 +1,19 @@
 extends Node2D
 class_name Indicator
 
+const Indicator_scene = "res://scenes/bombs/bombeffects/Indicator.tscn"
+
 var size: float = 32
 
 static func create(position_to_set: Vector2 = Vector2.ZERO, size_to_set: float = 32) -> Indicator:
-	var inst: Indicator = Indicator.new()
+	var inst: Indicator = preload(Indicator_scene).instantiate() as Indicator
 	inst.position = position_to_set
 	inst.size = size_to_set
 	return inst
 
 func _ready():
-	modulate = Color(1,1,1,0.5)
-	z_index = 3
 	while true:
-		var inst: IndicatorReverbEffect = IndicatorReverbEffect.new()
-		inst.size = size
-		add_child(inst)
+		add_child( IndicatorReverbEffect.create(size) )
 		await get_tree().create_timer(0.5).timeout
 
 func _draw():

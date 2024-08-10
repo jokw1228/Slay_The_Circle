@@ -1,8 +1,6 @@
 extends Node2D
 class_name BackGroundDeSterrennacht
 
-@export var BackGroundArcDrawer_scene: PackedScene
-
 @export var BackGroundGray_node: ColorRect
 
 var center_list: Array[Node2D]
@@ -20,20 +18,13 @@ func _ready():
 		var radian_of_arc: float = (2*PI) / number_of_arc
 		var radian_of_arc_offset: float = (PI/12) * radian_of_arc
 		for j in range(number_of_arc):
-			var arc: BackGroundArcDrawer = BackGroundArcDrawer_scene.instantiate()
-			
-			arc.radius = radius_offset + i * radius_difference
-			arc.radian = radian_of_arc - radian_of_arc_offset
-			arc.rotate(j * radian_of_arc)
-			center.add_child(arc)
+			center.add_child( BackGroundArcDrawer.create(radius_offset + i * radius_difference, radian_of_arc - radian_of_arc_offset, j * radian_of_arc) )
 		
 		var sign_of_angular_velocity = 1 if (i % 2) else (-1)
 		angular_velocity_list.append(sign_of_angular_velocity)
 		center_list.append(center)
 		
 		add_child(center)
-		
-
 
 func _process(delta):
 	var theme_color: Color = PlayingFieldInterface.get_theme_color()
