@@ -541,6 +541,7 @@ var pattern_timing_return_timer_tween: Tween
 func pattern_timing_return():
 	PlayingFieldInterface.set_theme_color(Color.VIOLET)
 	var player_position: Vector2
+	var player_position_shift: Vector2
 	
 	pattern_timing_return_timer = 2.0
 	if pattern_timing_return_timer_tween != null:
@@ -556,28 +557,28 @@ func pattern_timing_return():
 	create_hazard_bomb(player_position.rotated(-PI/3) * 0.7, 0.5, 0.5)
 	create_hazard_bomb(player_position.rotated(PI/2) * 0.7, 0.5, 1)
 	create_hazard_bomb(player_position.rotated(-PI/2) * 0.7, 0.5, 1)
-	create_hazard_bomb(player_position.rotated(2*PI/3) * 0.7, 0.5, 1.5)
-	create_hazard_bomb(player_position.rotated(-2*PI/3) * 0.7, 0.5, 1.5)
+	create_hazard_bomb(player_position.rotated(2*PI/3) * 0.7, 0.5, 1.45)
+	create_hazard_bomb(player_position.rotated(-2*PI/3) * 0.7, 0.5, 1.45)
 	
-	create_normal_bomb(Vector2(0, 0), 0.5, 1.7)
-	create_hazard_bomb(Vector2(0, 0), 0.5, 1.5)
+	create_normal_bomb(Vector2(0, 0), 0.5, 1.6)
+	create_hazard_bomb(Vector2(0, 0), 0.5, 1.35)
 	
 	await get_tree().create_timer(1).timeout
 	player_position = PlayingFieldInterface.get_player_position()
-	var lasting = get_tree().create_timer(1.3)
+	var lasting_bool: bool = true
 	
-	while lasting.time_left > 0:
-		if player_position != PlayingFieldInterface.get_player_position():
-			player_position = PlayingFieldInterface.get_player_position()
-			
+	while lasting_bool:
+		player_position_shift = PlayingFieldInterface.get_player_position()
+		if player_position != player_position_shift:
+			player_position = player_position_shift
+			lasting_bool = false
 			for i in range(6):
-				create_normal_bomb(player_position * 0.3 * (i-3), 0.2, 1 - i*0.1)
-				await get_tree().create_timer(0.05).timeout
+				create_normal_bomb(player_position * 0.3 * (i-3), 0.05, 1 - i*0.1)
+				await get_tree().create_timer(0.025).timeout
 		await get_tree().create_timer(0.02).timeout
 	
-	await get_tree().create_timer(1.5).timeout
-	var bomb = create_normal_bomb(Vector2(0, 0), 0.3, 3)
-	bomb.connect("player_body_entered",Callable(self,"pattern_timing_return_end"))
+	await get_tree().create_timer(1).timeout
+	pattern_timing_return_end()
 
 func pattern_timing_return_end():
 	PlayingFieldInterface.add_playing_time(pattern_timing_return_timer)

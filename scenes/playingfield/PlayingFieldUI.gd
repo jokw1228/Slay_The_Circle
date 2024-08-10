@@ -29,15 +29,13 @@ func _ready():
 	%InGameNewRecord.visible = false
 
 func playing_time_updated(time: float):
-	print(get_tree().root.get_child(0))
-	
 	seconds_value = floor(time)
 	Seconds_node.text = str(seconds_value)
 	
 	milliseconds_value = floor((time - seconds_value) * 100)
 	Milliseconds_node.text = ".%02d" % milliseconds_value
 
-	if best_record == -1: 
+	if best_record == -1:
 		# stage_index가 RoomMenu에서는 0-index를 사용, SaveFileManager에서는 1-index를 사용
 		best_record = SaveFileManager.get_best_record(stage_index + 1)
 		%LabelBestSec.text = "%d" % floor(best_record)
