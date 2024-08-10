@@ -35,7 +35,7 @@ func pattern_list_initialization():
 	pattern_list.append(Callable(self, "pattern_369"))
 	pattern_list.append(Callable(self, "pattern_colosseum"))
 	pattern_list.append(Callable(self, "pattern_pizza"))
-	
+
 func pattern_shuffle_and_draw():
 	randomize()
 	var random_index: int = randi() % pattern_list.size()
@@ -202,14 +202,11 @@ func pattern_numeric_triangle_with_link():
 	var ccw: float = 1 if randi() % 2 else -1
 	
 	var bomb1: NumericBomb = create_numeric_bomb(Vector2(bomb_radius * cos(angle_offset + ccw * PI/6), bomb_radius * -sin(angle_offset + ccw * PI/6)), 0.5, 2.5, 1)
-	bomb1.add_child(Indicator.new())
+	bomb1.add_child(Indicator.create())
 	var bomb2: NumericBomb = create_numeric_bomb(Vector2(bomb_radius * cos(angle_offset + ccw * PI/2), bomb_radius * -sin(angle_offset + ccw * PI/2)), 0.5, 2.5, 2)
 	
 	var link1: BombLink = create_bomb_link(bomb1, bomb2)
-	var to_click: Indicator = Indicator.new()
-	to_click.set_size(24)
-	to_click.position = Vector2(CIRCLE_FIELD_RADIUS * cos(angle_offset + ccw * 2*PI/3), CIRCLE_FIELD_RADIUS * -sin(angle_offset + ccw * 2*PI/3))
-	link1.add_child(to_click)
+	link1.add_child(Indicator.create(Vector2(CIRCLE_FIELD_RADIUS * cos(angle_offset + ccw * 2*PI/3), CIRCLE_FIELD_RADIUS * -sin(angle_offset + ccw * 2*PI/3)), 24))
 	
 	var bomb3: NumericBomb = create_numeric_bomb(Vector2(bomb_radius * cos(angle_offset + ccw * 5*PI/6), bomb_radius * -sin(angle_offset + ccw * 5*PI/6)), 0.5, 2.5, 3)
 	var bomb4: NumericBomb = create_numeric_bomb(Vector2(bomb_radius * cos(angle_offset + ccw * 7*PI/6), bomb_radius * -sin(angle_offset + ccw * 7*PI/6)), 0.5, 2.5, 4)
