@@ -1,7 +1,7 @@
 extends Node2D
 class_name IndicatorReverbEffect
 
-const IndicatorReverbEffect_scene = "res://scenes/background/IndicatorReverbEffect.tscn"
+const IndicatorReverbEffect_scene = "res://scenes/bombs/bombeffects/IndicatorReverbEffect.tscn"
 
 var size: float = 32
 
