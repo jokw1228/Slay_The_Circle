@@ -1,66 +1,145 @@
 extends Control
 
-@export var Background_node: Sprite2D
-@export var GameLogo: Label
-@export var CreditText: Label
+@export var credits: Array = [
+	["Team", "Slay The Circle(STC)"],
+	["Korea University", "CAT&DOG"],
+	["조강우", "Team Leader\n\nPlanning\n\nPM\n\nProgrammer\n\nGraphic Designer"],
+	["이진웍", "Programmer\n\nLevel Manager"],
+	["강근호", "Programmer\n\nLevel Designer"],
+	["박주영", "Programmer\n\nGraphic Designer"],
+	["정성현", "Programmer\n\nGraphic Designer"],
+	["김기용", "Programmer\n\nLevel Manager"],
+	["김진현", "Programmer\n\nLevel Designer"],
+	["배세강", "Programmer\n\nLevel Designer"],
+	["홍석희", "Programmer\n\nLevel Manager"],
+	["박재용", "Programmer\n\nSound Designer"],
+]
 
-signal credit_on
-signal credit_reset
+@export var role_label: Label
+@export var name_label: Label
+@export var logo_text: Label
 
-var is_credit_on = 0
-var start_pos = null
-var end_pos = null
-var credit_time = 14.0
-var interval_time = 2.0
+@export var display_duration: float = 2.0
+@export var logo_display_duration: float = 2.0
+@export var name_offset: float = 96.0
+@export var interval_time: float = 0.2
+@export var wait_time: float = display_duration * 0.5
+
+@export var role_label_start_position: Vector2 = Vector2(400, 704)
+@export var name_label_start_position: Vector2 = Vector2(500, 704 + name_offset)
+@export var logo_text_start_position: Vector2 = Vector2(200, 704)
+
+@export var role_label_mid_position: Vector2 = Vector2(400, 288)
+@export var name_label_mid_position: Vector2 = Vector2(500, 288 + name_offset)
+@export var logo_text_mid_position: Vector2 = Vector2(200, 288)
+
+@export var role_label_end_position: Vector2 = Vector2(400, -128)
+@export var name_label_end_position: Vector2 = Vector2(500, -128 + name_offset)
+@export var logo_text_end_position: Vector2 = Vector2(200, -128)
+
+var current_index = -1
 
 func _ready():
-	GameLogo.visible = false
-	CreditText.visible = true
-	
-	
-	#Label 가운데 정렬
-	GameLogo.anchor_left = 0.5
-	GameLogo.anchor_top = 0.5
-	GameLogo.anchor_right = 0.5
-	GameLogo.anchor_bottom = 0.5
-	# Pivot offset을 가운데로 설정 (Label 크기의 절반)
-	GameLogo.pivot_offset = GameLogo.size / 2
-	
-	start_pos = Vector2(GameLogo.position.x,660)
-	end_pos = Vector2(GameLogo.position.x,-100)
-	
-	GameLogo.position = start_pos
-	CreditText.position = start_pos
-	
-	await get_tree().create_timer(interval_time*2).timeout
-	emit_signal("credit_on")
-	
-	
-	
-	
+	role_label.position = role_label_start_position
+	name_label.position = name_label_start_position
+	logo_text.position = logo_text_start_position
 
-func _on_credit_on():
-	#Credit 음악 재생
-	print("hi")
-	for credit_var in range (1,5,1):
-		if credit_var == 1:
-			GameLogo.visible = true
-			CreditText.visible = true
-			var logo_tween: Tween = get_tree().create_tween()
-			logo_tween.tween_property(GameLogo, "position", end_pos, credit_time)
-			await get_tree().create_timer(interval_time).timeout	
-			var text_tween: Tween = get_tree().create_tween()
-			text_tween.tween_property(CreditText, "position", end_pos, credit_time)
-			await get_tree().create_timer(credit_time).timeout	
-		elif credit_var == 2:
-			emit_signal("credit_reset")
-		await get_tree().create_timer(2.0).timeout
+	name_label.set_scale(Vector2(0.6, 0.6))
+	role_label.set_scale(Vector2(1.0, 1.0))
+	logo_text.set_scale(Vector2(1.5, 1.5))
 
+	await Utils.timer(0.5)
+	start_credit_roll()
 
-func _on_credit_reset():
-	GameLogo.visible = false
-	CreditText.visible = false
-	GameLogo.position = start_pos
-	CreditText.position = start_pos
-	await get_tree().create_timer(3.0).timeout
-	emit_signal("credit_on")
+func start_credit_roll():
+	if current_index == -1:
+		logo_text.text = "Slay The Circle"
+		var logo_mid_tween: Tween = get_tree().create_tween()
+		logo_mid_tween.set_ease(Tween.EASE_IN_OUT)
+		logo_mid_tween.set_trans(Tween.TRANS_SINE)
+		logo_mid_tween.tween_property(
+			logo_text,
+			"position",
+			logo_text_mid_position,
+			logo_display_duration
+		)
+		await Utils.timer(logo_display_duration + wait_time)
+
+		var logo_end_tween: Tween = get_tree().create_tween()
+		logo_end_tween.set_ease(Tween.EASE_IN_OUT)
+		logo_end_tween.set_trans(Tween.TRANS_SINE)
+		logo_end_tween.tween_property(
+			logo_text,
+			"position",
+			logo_text_end_position,
+			logo_display_duration
+		)
+		logo_end_tween.finished.connect(on_logo_finished)
+	else:
+		if current_index < credits.size():
+			var role = credits[current_index][0]
+			var name = credits[current_index][1]
+
+			role_label.text = role
+			name_label.text = name
+
+			var role_mid_tween: Tween = get_tree().create_tween()
+			role_mid_tween.set_ease(Tween.EASE_IN_OUT)
+			role_mid_tween.set_trans(Tween.TRANS_SINE)
+			role_mid_tween.tween_property(
+				role_label,
+				"position",
+				role_label_mid_position,
+				display_duration
+			)
+
+			var name_mid_tween: Tween = get_tree().create_tween()
+			name_mid_tween.set_ease(Tween.EASE_IN_OUT)
+			name_mid_tween.set_trans(Tween.TRANS_SINE)
+			name_mid_tween.tween_property(
+				name_label,
+				"position",
+				name_label_mid_position,
+				display_duration
+			)
+			await Utils.timer(display_duration + wait_time)
+
+			var role_end_tween: Tween = get_tree().create_tween()
+			role_end_tween.set_ease(Tween.EASE_IN_OUT)
+			role_end_tween.set_trans(Tween.TRANS_SINE)
+			role_end_tween.tween_property(
+				role_label,
+				"position",
+				role_label_end_position,
+				display_duration
+			)
+
+			var name_end_tween: Tween = get_tree().create_tween()
+			name_end_tween.set_ease(Tween.EASE_IN_OUT)
+			name_end_tween.set_trans(Tween.TRANS_SINE)
+			name_end_tween.tween_property(
+				name_label,
+				"position",
+				name_label_end_position,
+				display_duration
+			)
+			await Utils.timer(display_duration)
+			on_role_tween_finished()
+			on_name_tween_finished()
+		else:
+			await Utils.timer(3.0)
+			current_index = -1
+			start_credit_roll()
+
+func on_logo_finished():
+	current_index += 1
+	start_credit_roll()
+
+func on_role_tween_finished():
+	current_index += 1
+
+func on_name_tween_finished():
+	if current_index < credits.size():
+		role_label.position = role_label_start_position
+		name_label.position = name_label_start_position
+		start_credit_roll()

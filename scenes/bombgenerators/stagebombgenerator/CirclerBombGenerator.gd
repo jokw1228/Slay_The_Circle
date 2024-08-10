@@ -20,7 +20,8 @@ func pattern_list_initialization():
 	pattern_list.append(Callable(self, "pattern_blocking"))
 	pattern_list.append(Callable(self, "pattern_maze"))
 	pattern_list.append(Callable(self, "pattern_reactspeed_test")) 
-	pattern_list.append(Callable(self, "pattern_link_free")) 
+	pattern_list.append(Callable(self, "pattern_link_free"))
+	pattern_list.append(Callable(self, "pattern_diamond_with_hazard_puzzled"))
 
 func pattern_shuffle_and_draw():
 	randomize()
@@ -447,4 +448,33 @@ func pattern_link_free_end():
 	pattern_shuffle_and_draw()
 	
 #pattern_link_free block end
+###############################
+
+###############################
+# pattern_numeric_diamond_with_hazard_puzzled block start
+# made by Bae Sekang
+
+const pattern_diamond_with_hazard_puzzled_playing_time = 3.0
+
+func pattern_diamond_with_hazard_puzzled():
+	PlayingFieldInterface.set_theme_color(Color.ORANGE)
+	
+	pattern_start_time = PlayingFieldInterface.get_playing_time()
+	var player_position: Vector2 = PlayingFieldInterface.get_player_position()
+	var player_angle: float = player_position.angle()
+	var player_angle2: float = player_position.angle() * -1
+	var bomb_radius = 64
+	create_hazard_bomb(Vector2(0,0), 0.5, 2.5)
+	create_numeric_bomb(Vector2(2*bomb_radius*cos(player_angle+4*PI/2),2*bomb_radius*sin(player_angle+4*PI/2)), 0.5, 2.5, 1)
+	create_numeric_bomb(Vector2(2*bomb_radius*cos(player_angle+1*PI/2),2*bomb_radius*sin(player_angle+1*PI/2)), 0.5, 2.5, 3)
+	create_numeric_bomb(Vector2(2*bomb_radius*cos(player_angle+2*PI/2),2*bomb_radius*sin(player_angle+2*PI/2)), 0.5, 2.5, 2)
+	var bomb: NumericBomb = create_numeric_bomb(Vector2(2*bomb_radius*cos(player_angle+3*PI/2),2*bomb_radius*sin(player_angle+3*PI/2)), 0.5, 2.5, 4)
+	bomb.connect("no_lower_value_bomb_exists", Callable(self, "pattern_diamond_with_hazard_puzzled_end"))
+
+func pattern_diamond_with_hazard_puzzled_end():
+	await PlayingFieldInterface.player_grounded
+	PlayingFieldInterface.set_playing_time(pattern_start_time + (pattern_diamond_with_hazard_puzzled_playing_time) / Engine.time_scale)
+	pattern_shuffle_and_draw()
+	
+# pattern_diamond_with_hazard_puzzled block end
 ###############################

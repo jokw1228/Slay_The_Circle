@@ -667,16 +667,19 @@ func pattern_hide_in_hazard():
 const pattern_diamond_with_hazard_playing_time = 3.0
 
 func pattern_diamond_with_hazard():
-	PlayingFieldInterface.set_theme_color(Color.DEEP_SKY_BLUE)
+	PlayingFieldInterface.set_theme_color(Color.ORANGE)
 	
 	pattern_start_time = PlayingFieldInterface.get_playing_time()
-	
-	create_numeric_bomb(Vector2(70,0), 0.5, 2.5, 1)
-	create_numeric_bomb(Vector2(-70,0), 0.5, 2.5, 2)
-	create_numeric_bomb(Vector2(0,100), 0.5, 2.5, 3)
-	var bomb: NumericBomb = create_numeric_bomb(Vector2(0,-100), 0.5, 2.5, 4)
+	var player_position: Vector2 = PlayingFieldInterface.get_player_position()
+	var player_angle: float = player_position.angle()
+	var player_angle2: float = player_position.angle() * -1
+	var bomb_radius = 64
+	create_hazard_bomb(Vector2(0,0), 0.5, 2.5)
+	create_numeric_bomb(Vector2(2*bomb_radius*cos(player_angle+4*PI/2),2*bomb_radius*sin(player_angle+4*PI/2)), 0.5, 2.5, 1)
+	create_numeric_bomb(Vector2(2*bomb_radius*cos(player_angle+1*PI/2),2*bomb_radius*sin(player_angle+1*PI/2)), 0.5, 2.5, 2)
+	create_numeric_bomb(Vector2(2*bomb_radius*cos(player_angle+2*PI/2),2*bomb_radius*sin(player_angle+2*PI/2)), 0.5, 2.5, 3)
+	var bomb: NumericBomb = create_numeric_bomb(Vector2(2*bomb_radius*cos(player_angle+3*PI/2),2*bomb_radius*sin(player_angle+3*PI/2)), 0.5, 2.5, 4)
 	bomb.connect("no_lower_value_bomb_exists", Callable(self, "pattern_diamond_with_hazard_end"))
-	create_hazard_bomb(Vector2(0,0), 0.5,1)
 
 func pattern_diamond_with_hazard_end():
 	await PlayingFieldInterface.player_grounded
@@ -695,9 +698,12 @@ func pattern_diamond_with_hazard_end():
 const pattern_narrow_road_playing_time = 3.0
 
 func pattern_narrow_road():
-	PlayingFieldInterface.set_theme_color(Color.DEEP_SKY_BLUE)
+	PlayingFieldInterface.set_theme_color(Color.ORANGE)
 	
 	pattern_start_time = PlayingFieldInterface.get_playing_time()
+	var player_position: Vector2 = PlayingFieldInterface.get_player_position()
+	var player_angle: float = player_position.angle()
+	var bomb_radius
 	
 	var rng = RandomNumberGenerator.new()
 	var random_range_integer = rng.randi_range(-120, 120)
@@ -729,7 +735,7 @@ func pattern_narrow_road_end():
 const pattern_369_playing_time = 5.5
 
 func pattern_369():
-	PlayingFieldInterface.set_theme_color(Color.DEEP_SKY_BLUE)
+	PlayingFieldInterface.set_theme_color(Color.ORANGE)
 	
 	pattern_start_time = PlayingFieldInterface.get_playing_time()
 	
@@ -763,7 +769,7 @@ const pattern_colosseum_playing_time = 3.5
 var pattern_colosseum_bomb_count: int
 
 func pattern_colosseum():
-	PlayingFieldInterface.set_theme_color(Color.DEEP_SKY_BLUE)
+	PlayingFieldInterface.set_theme_color(Color.ORANGE)
 	
 	pattern_start_time = PlayingFieldInterface.get_playing_time()
 	
@@ -792,7 +798,7 @@ func pattern_colosseum_end():
 # made by Bae Sekang
 
 func pattern_pizza():
-	PlayingFieldInterface.set_theme_color(Color.DEEP_SKY_BLUE)
+	PlayingFieldInterface.set_theme_color(Color.ORANGE)
 
 	create_numeric_bomb(Vector2(40,35), 0.5, 2.5, 1)
 	create_numeric_bomb(Vector2(-110,105), 0.5, 2.5, 2)

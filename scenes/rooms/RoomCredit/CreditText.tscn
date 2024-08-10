@@ -1,0 +1,15 @@
+[gd_scene load_steps=2 format=3 uid="uid://pn2hakotjr3a"]
+
+[ext_resource type="Script" path="res://scenes/rooms/RoomCredit/CreditText.gd" id="1_bj8w8"]
+
+[node name="CreditText" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_bj8w8")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 289.0
+offset_top = 578.0
+offset_right = 895.0
+offset_bottom = 618.0
