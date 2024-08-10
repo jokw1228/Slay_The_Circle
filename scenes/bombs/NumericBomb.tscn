@@ -1,9 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://dug1fwwbjaopa"]
+[gd_scene load_steps=10 format=3 uid="uid://dug1fwwbjaopa"]
 
 [ext_resource type="Script" path="res://scenes/bombs/NumericBomb.gd" id="1_lkrkc"]
 [ext_resource type="FontFile" uid="uid://bn71j2rajnbrn" path="res://fonts/bump-it-up.ttf" id="2_mftcv"]
 [ext_resource type="Script" path="res://addons/resonate/sound_manager/sound_bank.gd" id="3_awam2"]
 [ext_resource type="PackedScene" uid="uid://dq81owitrvpew" path="res://scenes/bombs/BombTimer.tscn" id="4_c11ax"]
+[ext_resource type="PackedScene" uid="uid://ltvbulh18nft" path="res://scenes/bombs/WarningTimer.tscn" id="4_i8np4"]
 [ext_resource type="Script" path="res://addons/resonate/sound_manager/sound_event_resource.gd" id="4_pmjfd"]
 [ext_resource type="AudioStream" uid="uid://c352772ve0yuk" path="res://audio/sfx/slice_3.wav" id="5_7r5w0"]
 
@@ -18,11 +19,20 @@ volume = 0.0
 pitch = 1.0
 streams = Array[AudioStream]([ExtResource("5_7r5w0")])
 
-[node name="NumericBomb" type="Area2D" groups=["group_numeric_bomb"]]
+[node name="NumericBomb" type="Area2D" node_paths=PackedStringArray("CollisionShape2D_node", "BombTimer_node", "WarningTimer_node") groups=["group_numeric_bomb"]]
+modulate = Color(1, 1, 1, 0.12549)
 script = ExtResource("1_lkrkc")
+CollisionShape2D_node = NodePath("CollisionShape2D")
+BombTimer_node = NodePath("BombTimer")
+WarningTimer_node = NodePath("WarningTimer")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_51k8f")
+disabled = true
+
+[node name="BombTimer" parent="." instance=ExtResource("4_c11ax")]
+
+[node name="WarningTimer" parent="." instance=ExtResource("4_i8np4")]
 
 [node name="BombID" type="Label" parent="."]
 offset_left = -12.0
@@ -38,22 +48,20 @@ text = "0"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="BombTimer" parent="." instance=ExtResource("4_c11ax")]
-
 [node name="SoundBank" type="Node" parent="."]
 script = ExtResource("3_awam2")
 label = "sfx_Num_bomb"
 events = Array[ExtResource("4_pmjfd")]([SubResource("Resource_ue2f5")])
 
-[node name="NumericSprite" type="Sprite2D" parent="."]
-
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
-[connection signal="lower_value_bomb_exists" from="." to="." method="queue_free"]
 [connection signal="lower_value_bomb_exists" from="." to="." method="game_over"]
 [connection signal="lower_value_bomb_exists" from="." to="." method="exploded"]
+[connection signal="lower_value_bomb_exists" from="." to="." method="queue_free"]
 [connection signal="no_lower_value_bomb_exists" from="." to="." method="queue_free"]
-[connection signal="player_body_entered" from="." to="." method="check_for_lower_value_bomb"]
 [connection signal="player_body_entered" from="." to="." method="slayed"]
-[connection signal="bomb_timeout" from="BombTimer" to="." method="queue_free"]
+[connection signal="player_body_entered" from="." to="." method="check_for_lower_value_bomb"]
 [connection signal="bomb_timeout" from="BombTimer" to="." method="game_over"]
 [connection signal="bomb_timeout" from="BombTimer" to="." method="exploded"]
+[connection signal="bomb_timeout" from="BombTimer" to="." method="queue_free"]
+[connection signal="warning_timeout" from="WarningTimer" to="." method="_on_warning_timer_warning_timeout"]
+[connection signal="warning_timeout" from="WarningTimer" to="BombTimer" method="bomb_timer_start"]

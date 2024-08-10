@@ -3,9 +3,16 @@ class_name Indicator
 
 var size: float = 32
 
+static func create(position_to_set: Vector2 = Vector2.ZERO, size_to_set: float = 32) -> Indicator:
+	var inst: Indicator = Indicator.new()
+	inst.position = position_to_set
+	inst.size = size_to_set
+	return inst
+
 func _ready():
+	modulate = Color(1,1,1,0.5)
+	z_index = 3
 	while true:
-		print(size)
 		var inst: IndicatorReverbEffect = IndicatorReverbEffect.new()
 		inst.size = size
 		add_child(inst)
@@ -18,5 +25,5 @@ func _draw():
 func _process(_delta):
 	queue_redraw()
 
-func set_size(size_to_set: float):
+func set_size(size_to_set: float): # legacy code
 	size = size_to_set

@@ -4,6 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://baausxife2ayk" path="res://images/bomb/sprite_normal_outline.svg" id="2_rfpp5"]
 
 [node name="BombTimer" type="TextureProgressBar"]
+visible = false
 offset_left = -32.0
 offset_top = -32.0
 offset_right = 32.0
