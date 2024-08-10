@@ -207,15 +207,14 @@ func pattern_hazard_wave():
 		Utils.attach_node(rigidbody[i], create_hazard_bomb(Vector2(spawn * 400,-256 + (64 * i)),0,1.25))
 		rigidbody[i].position = Vector2(spawn * 400,-256 + (64 * i))
 		rigidbody[i].linear_velocity = Vector2(spawn * 700,0)
-		acceleration(i,rigidbody,-2 * spawn)
-		await get_tree().create_timer(0.1).timeout
+		pattern_hazard_wave_acceleration(i,rigidbody,-2 * spawn)
+		await get_tree().create_timer(0.15).timeout
 		
-		
-	await Utils.timer(1.5)
+	await Utils.timer(1.25)
 
 	pattern_shuffle_and_draw()
 
-func acceleration(num: int,rigidbody: Array[RigidBody2D], ac: int):
+func pattern_hazard_wave_acceleration(num: int,rigidbody: Array[RigidBody2D], ac: int):
 	for i in (50):
 			rigidbody[num].linear_velocity += Vector2(ac * i,0)
 			await get_tree().create_timer(0.00001).timeout
