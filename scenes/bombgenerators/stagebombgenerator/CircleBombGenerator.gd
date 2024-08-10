@@ -318,18 +318,20 @@ func pattern_timing():
 	
 	pattern_start_time = PlayingFieldInterface.get_playing_time()
 	
-	const SIZE = 70
-	create_hazard_bomb(SIZE * Vector2.LEFT.rotated(deg_to_rad(60)), 0.8, 1.5)
-	create_hazard_bomb(SIZE * Vector2.LEFT.rotated(deg_to_rad(120)), 0.8, 1.5)
-	create_hazard_bomb(SIZE * Vector2.RIGHT.rotated(deg_to_rad(60)), 0.8, 1.5)
-	create_hazard_bomb(SIZE * Vector2.RIGHT.rotated(deg_to_rad(120)), 0.8, 1.5)
-	create_hazard_bomb(SIZE * Vector2.LEFT, 0.8, 1.3)
-	create_hazard_bomb(SIZE * Vector2.RIGHT, 0.8, 1.3)
+	const SIZE = 96
+	var randomness: float = randf_range(0, 60)
+	create_hazard_bomb(SIZE * Vector2.LEFT.rotated(deg_to_rad(randomness + 60)), 0.8, 10)
+	create_hazard_bomb(SIZE * Vector2.LEFT.rotated(deg_to_rad(randomness + 120)), 0.8, 10)
+	create_hazard_bomb(SIZE * Vector2.LEFT.rotated(deg_to_rad(randomness + 240)), 0.8, 10)
+	create_hazard_bomb(SIZE * Vector2.LEFT.rotated(deg_to_rad(randomness + 300)), 0.8, 10)
+	create_hazard_bomb(SIZE * Vector2.LEFT.rotated(deg_to_rad(randomness + 0)), 0.8, 1.2)
+	create_hazard_bomb(SIZE * Vector2.LEFT.rotated(deg_to_rad(randomness + 180)), 0.8, 1.2)
 	var bomb: NormalBomb = create_normal_bomb(Vector2.ZERO, 0.8, 1.5)
 	bomb.connect("player_body_entered", Callable(self, "pattern_timing_end"))
 
 func pattern_timing_end():
 	await PlayingFieldInterface.player_grounded
+	get_tree().call_group("group_hazard_bomb", "early_eliminate")
 	PlayingFieldInterface.set_playing_time(pattern_start_time + (pattern_timing_playing_time) / Engine.time_scale)
 	pattern_shuffle_and_draw()
 # pattern_timing block end
@@ -341,37 +343,45 @@ func pattern_timing_end():
 func pattern_trafficlight():
 	PlayingFieldInterface.set_theme_color(Color.HOT_PINK)
 
-	const DIST: float = 75
+	const DIST: float = 96
 	const UNIT: float = 0.5
 	const START: float = 1
 	const WARNING: float = 0.5
 
-	create_hazard_bomb(Vector2.LEFT * DIST * 2, WARNING, START + UNIT * 1)
-	create_hazard_bomb(Vector2.LEFT * DIST * 1, WARNING, START + UNIT * 2)
-	create_hazard_bomb(Vector2.ZERO, WARNING, START + UNIT * 3)
-	create_hazard_bomb(Vector2.RIGHT * DIST * 1, WARNING, START + UNIT * 4)
-	create_hazard_bomb(Vector2.RIGHT * DIST * 2, WARNING, START + UNIT * 5)
+	var rotator: Node2D = Node2D.new()
+	add_child(rotator)
 
-	await Utils.timer(WARNING + START)
-	create_normal_bomb(Vector2.LEFT * DIST * 2, UNIT, UNIT)
-	create_hazard_bomb(Vector2.LEFT * DIST * 2, 2 * UNIT, UNIT * 4)
+	var rotation_value: float = PlayingFieldInterface.get_player_position().angle() + 3*PI/2
 
+	create_hazard_bomb((Vector2.LEFT * DIST * 2).rotated(rotation_value), WARNING, START + UNIT * 1)
+	create_hazard_bomb((Vector2.LEFT * DIST * 1).rotated(rotation_value), WARNING, START + UNIT * 2)
+	create_hazard_bomb((Vector2.ZERO).rotated(rotation_value), WARNING, START + UNIT * 3)
+	create_hazard_bomb((Vector2.RIGHT * DIST * 1).rotated(rotation_value), WARNING, START + UNIT * 4)
+	create_hazard_bomb((Vector2.RIGHT * DIST * 2).rotated(rotation_value), WARNING, START + UNIT * 5)
+
+	await Utils.timer(WARNING + START - UNIT)
+	create_normal_bomb((Vector2.LEFT * DIST * 2).rotated(rotation_value), 2 * UNIT, UNIT)
 	await Utils.timer(UNIT)
-	create_normal_bomb(Vector2.LEFT * DIST * 1, UNIT, UNIT)
-	create_hazard_bomb(Vector2.LEFT * DIST * 1, 2 * UNIT, UNIT * 3)
-
+	create_normal_bomb((Vector2.LEFT * DIST * 1).rotated(rotation_value), 2 * UNIT, UNIT)
 	await Utils.timer(UNIT)
-	create_normal_bomb(Vector2.ZERO, UNIT, UNIT)
-	create_hazard_bomb(Vector2.ZERO, 2 * UNIT, UNIT * 2)
-
+	create_normal_bomb((Vector2.ZERO).rotated(rotation_value), 2 * UNIT, UNIT)
 	await Utils.timer(UNIT)
-	create_normal_bomb(Vector2.RIGHT * DIST * 1, UNIT, UNIT)
-	create_hazard_bomb(Vector2.RIGHT * DIST * 1, 2 * UNIT, UNIT * 1)
-
+	create_normal_bomb((Vector2.RIGHT * DIST * 1).rotated(rotation_value), 2 * UNIT, UNIT)
+	create_hazard_bomb((Vector2.LEFT * DIST * 2).rotated(rotation_value), 0, UNIT * 4)
 	await Utils.timer(UNIT)
-	create_normal_bomb(Vector2.RIGHT * DIST * 2, UNIT, UNIT)
+	create_normal_bomb((Vector2.RIGHT * DIST * 2).rotated(rotation_value), 2 * UNIT, UNIT)
+	create_hazard_bomb((Vector2.LEFT * DIST * 1).rotated(rotation_value), 0, UNIT * 3)
+	await Utils.timer(UNIT)
+	create_hazard_bomb((Vector2.ZERO).rotated(rotation_value), 0, UNIT * 2)
+	await Utils.timer(UNIT)
+	create_hazard_bomb((Vector2.RIGHT * DIST * 1).rotated(rotation_value), 0, UNIT * 1)
+	
 
-	await Utils.timer(2 * UNIT)
+
+
+
+
+	await Utils.timer(3 * UNIT)
 
 	pattern_shuffle_and_draw()
 # pattern_trafficlight block end
@@ -383,7 +393,7 @@ func pattern_trafficlight():
 func pattern_manyrotation():
 	PlayingFieldInterface.set_theme_color(Color.HOT_PINK)
 	const COUNT: int = 3
-	const DIST: float = 100
+	const DIST: float = 96
 	const UNIT: float = 0.7
 
 	for i in range(COUNT):
@@ -393,11 +403,14 @@ func pattern_manyrotation():
 		bombs.shuffle()
 		create_bomb_link(bombs[0], bombs[1])
 
-		await Utils.timer(2 * UNIT)
-		if randi_range(0, 1): create_rotationspeedup_bomb(Vector2.ZERO, UNIT, UNIT, 0.3)
-		else: create_rotationinversion_bomb(Vector2.ZERO, UNIT, UNIT)
+		if PlayingFieldInterface.get_rotation_speed() != 0:
+			await Utils.timer(2 * UNIT)
+			create_rotationinversion_bomb(Vector2.ZERO, UNIT, UNIT)
+			await Utils.timer(2 * UNIT)
+		else:
+			await Utils.timer(3 * UNIT)
+			break
 
-		await Utils.timer(2 * UNIT)
 
 	pattern_shuffle_and_draw()
 # pattern_manyrotation block end
