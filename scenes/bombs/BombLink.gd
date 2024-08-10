@@ -3,9 +3,8 @@ class_name BombLink
 
 @export var ray_1to2: RayCast2D
 @export var ray_2to1: RayCast2D
-
-@export var LinkedMark1_node: Sprite2D
-@export var LinkedMark2_node: Sprite2D
+@export var bomb_link_mark: PackedScene
+@export var bomb_link_indicator: PackedScene
 
 signal both_bombs_removed
 signal single_bomb_removed
@@ -13,6 +12,13 @@ signal single_bomb_removed
 var bomb1: Bomb
 var bomb2: Bomb
 var num_child_bombs: int = 0
+var bomb1_indicator: Sprite2D
+var bomb2_indicator: Sprite2D
+var bomb1_last_position: Vector2
+var bomb2_last_position: Vector2
+
+var last_bright: float
+var last_color: Color
 
 func set_child_bombs(b1: Bomb, b2: Bomb):
 	bomb1 = b1
@@ -20,12 +26,22 @@ func set_child_bombs(b1: Bomb, b2: Bomb):
 	num_child_bombs = 2
 	bomb1.player_body_entered.connect(on_bomb_slayed)
 	bomb2.player_body_entered.connect(on_bomb_slayed)
-	set_ray_cast()
 	
-	Utils.attach(bomb1, LinkedMark1_node)
-	Utils.attach(bomb2, LinkedMark2_node)
+	bomb1.add_child(bomb_link_mark.instantiate())
+	bomb2.add_child(bomb_link_mark.instantiate())
+
+	bomb1_indicator = bomb_link_indicator.instantiate()
+	bomb2_indicator = bomb_link_indicator.instantiate()
+	add_child(bomb1_indicator)
+	add_child(bomb2_indicator)
+
+	update_drawings()
+
 
 func set_ray_cast():
+	ray_1to2.enabled = true
+	ray_2to1.enabled = true
+
 	ray_1to2.global_position = bomb1.global_position
 	ray_1to2.look_at(bomb2.global_position)
 	
@@ -33,6 +49,9 @@ func set_ray_cast():
 	ray_2to1.look_at(bomb1.global_position)
 	
 	# wait ray cast update
+	# 여전히 bomblink indicator는 raycast의 근본적인 문제로 인해
+	# 1프레임 씩 밀리는 문제 존재.
+	# 해결하려면 직선의 방정식 풀어야 함.
 	await ray_1to2.ray_cast_end
 	ray_1to2.enabled = false
 	
@@ -58,9 +77,9 @@ func game_over():
 	PlayingFieldInterface.game_over(position)
 
 func _draw():
-	if num_child_bombs < 2:
+	if num_child_bombs < 2: # queue_redraw() 말고도 redraw하는 경우가 있나
 		return
-	
+
 	# Size: half of arrow size, BombSize: for pos offset
 	const Size: float = 8
 	const BombSize: float = 48
@@ -88,8 +107,10 @@ func _draw():
 						pos_1to2 + front + front, pos_1to2 + front + left, pos_1to2 + left]
 		points_2to1 = [pos_2to1 - front, pos_2to1 - right, pos_2to1 - front - right,
 						pos_2to1 - front - front, pos_2to1 - front - left, pos_2to1 - left]
-		draw_colored_polygon(points_1to2, Color(1,1,1,0.2))
-		draw_colored_polygon(points_2to1, Color(1,1,1,0.2))
+		
+		var color_value: float = 1 - PlayingFieldInterface.get_theme_bright()
+		draw_colored_polygon(points_1to2, Color(color_value, color_value, color_value, 0.5))
+		draw_colored_polygon(points_2to1, Color(color_value, color_value, color_value, 0.5))
 		
 		d += Size * 2
 		pos_1to2 += front * 2
@@ -98,14 +119,35 @@ func _draw():
 	# display intersection point of link line and circle field
 	var ray_intersect: Vector2 = ray_1to2.get_collision_point()
 	if ray_intersect != Vector2.ZERO:
-		draw_circle(ray_intersect, 20, Color.RED)
+		bomb2_indicator.global_position = ray_intersect
+		bomb2_indicator.look_at(bomb2.global_position)
+		bomb2_indicator.modulate = PlayingFieldInterface.get_theme_color()
 		
 	ray_intersect = ray_2to1.get_collision_point()
 	if ray_intersect != Vector2.ZERO:
-		draw_circle(ray_intersect, 20, Color.RED)
+		bomb1_indicator.global_position = ray_intersect
+		bomb1_indicator.look_at(bomb1.global_position)
+		bomb1_indicator.modulate = PlayingFieldInterface.get_theme_color()
+		
 
-func _process(delta):
-	LinkedMark1_node.rotate(delta * PI / 6)
-	LinkedMark2_node.rotate(delta * PI / 6)
+func _process(_delta):
+	update_drawings()
 
+func update_drawings():
+	if num_child_bombs < 2:
+		bomb1_indicator.visible = false
+		bomb2_indicator.visible = false
+		return
+	if bomb1_last_position != null and bomb2_last_position != null\
+		and bomb1_last_position == bomb1.global_position and bomb2_last_position == bomb2.global_position\
+		and last_bright == PlayingFieldInterface.get_theme_bright() and last_color == PlayingFieldInterface.get_theme_color():
+			#print("%d bomblink redraw skipped" % Engine.get_frames_drawn())
+			return
+	
+	bomb1_last_position = bomb1.global_position
+	bomb2_last_position = bomb2.global_position
+	last_bright = PlayingFieldInterface.get_theme_bright()
+	last_color = PlayingFieldInterface.get_theme_color()
+
+	set_ray_cast()
 	queue_redraw()
