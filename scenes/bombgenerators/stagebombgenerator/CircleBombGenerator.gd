@@ -6,6 +6,7 @@ var pattern_list: Array[Callable]
 var pattern_start_time: float
 
 func _ready():
+	PlayingFieldInterface.set_theme_bright(1)
 	pattern_list_initialization()
 	
 	await Utils.timer(1.0) # game start time offset

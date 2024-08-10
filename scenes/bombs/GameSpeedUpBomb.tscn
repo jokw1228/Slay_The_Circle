@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://cr4l7m2i6dxl"]
+[gd_scene load_steps=11 format=3 uid="uid://cr4l7m2i6dxl"]
 
 [ext_resource type="Script" path="res://scenes/bombs/GameSpeedUpBomb.gd" id="1_xqi0c"]
 [ext_resource type="PackedScene" uid="uid://dq81owitrvpew" path="res://scenes/bombs/BombTimer.tscn" id="2_iykik"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" path="res://addons/resonate/sound_manager/sound_bank.gd" id="4_nc41i"]
 [ext_resource type="Script" path="res://addons/resonate/sound_manager/sound_event_resource.gd" id="5_2780o"]
 [ext_resource type="AudioStream" uid="uid://c352772ve0yuk" path="res://audio/sfx/slice_3.wav" id="6_wilqc"]
+[ext_resource type="PackedScene" uid="uid://b6vb4gmrkuugo" path="res://scenes/bombs/bombeffects/BrightModulator.tscn" id="8_5svdm"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_l8raj"]
 radius = 32.0
@@ -42,11 +43,13 @@ script = ExtResource("4_nc41i")
 label = "sfx_SU_bomb"
 events = Array[ExtResource("5_2780o")]([SubResource("Resource_37u8r")])
 
+[node name="BrightModulator" parent="." instance=ExtResource("8_5svdm")]
+
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
-[connection signal="player_body_entered" from="." to="." method="slayed"]
 [connection signal="player_body_entered" from="." to="." method="queue_free"]
+[connection signal="player_body_entered" from="." to="." method="slayed"]
+[connection signal="bomb_timeout" from="BombTimer" to="." method="queue_free"]
 [connection signal="bomb_timeout" from="BombTimer" to="." method="game_over"]
 [connection signal="bomb_timeout" from="BombTimer" to="." method="exploded"]
-[connection signal="bomb_timeout" from="BombTimer" to="." method="queue_free"]
 [connection signal="warning_timeout" from="WarningTimer" to="." method="_on_warning_timer_warning_timeout"]
 [connection signal="warning_timeout" from="WarningTimer" to="BombTimer" method="bomb_timer_start"]

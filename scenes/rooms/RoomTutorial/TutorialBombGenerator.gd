@@ -43,6 +43,9 @@ func pattern_1_start():
 	var inst1: NormalBomb = NormalBomb.create(Vector2(-128, 0), 1.0, 5.0)
 	var inst2: NormalBomb = NormalBomb.create(Vector2(128, 0), 1.0, 5.0)
 	
+	inst1.add_child( Indicator.create() )
+	inst2.add_child( Indicator.create() )
+	
 	inst1.get_node("BombTimer").disconnect("bomb_timeout", Callable(inst1, "game_over"))
 	inst2.get_node("BombTimer").disconnect("bomb_timeout", Callable(inst2, "game_over"))
 	
@@ -84,6 +87,8 @@ func pattern_2_start():
 	var inst1: NormalBomb = NormalBomb.create(Vector2(-128, 0), 1.0, 5.0)
 	var inst2: NormalBomb = NormalBomb.create(Vector2(128, 0), 1.0, 5.0)
 	var inst3: HazardBomb = HazardBomb.create(Vector2(0, 0), 1.0, 5.0)
+	
+	inst3.add_child( Indicator.create() )
 	
 	inst1.get_node("BombTimer").disconnect("bomb_timeout", Callable(inst1, "game_over"))
 	inst2.get_node("BombTimer").disconnect("bomb_timeout", Callable(inst2, "game_over"))
@@ -141,6 +146,8 @@ func pattern_3_start():
 	var inst2: NumericBomb = NumericBomb.create(Vector2(radius * cos(7*PI/6), radius * -sin(7*PI/6)), 1.0, 5.0, 2)
 	var inst3: NumericBomb = NumericBomb.create(Vector2(radius * cos(11*PI/6), radius * -sin(11*PI/6)), 1.0, 5.0, 3)
 	
+	inst1.add_child( Indicator.create() )
+	
 	inst1.get_node("BombTimer").disconnect("bomb_timeout", Callable(inst1, "game_over"))
 	inst1.disconnect("lower_value_bomb_exists", Callable(inst1, "game_over"))
 	inst2.get_node("BombTimer").disconnect("bomb_timeout", Callable(inst2, "game_over"))
@@ -194,6 +201,9 @@ func pattern_4_start():
 	var inst2: NormalBomb = NormalBomb.create(Vector2(128, 0), 1.0, 5.0)
 	var link: BombLink = create_bomb_link(inst1, inst2)
 	Player_node.connect("grounded", Callable(link, "on_player_grounded"))
+	
+	inst1.add_child( Indicator.create() )
+	inst2.add_child( Indicator.create() )
 	
 	inst1.get_node("BombTimer").disconnect("bomb_timeout", Callable(inst1, "game_over"))
 	inst2.get_node("BombTimer").disconnect("bomb_timeout", Callable(inst2, "game_over"))

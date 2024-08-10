@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://blnbiu221cwye"]
+[gd_scene load_steps=6 format=3 uid="uid://blnbiu221cwye"]
 
 [ext_resource type="PackedScene" uid="uid://dq3v4l3j35key" path="res://scenes/bombs/Bomb.tscn" id="1_ssmcn"]
 [ext_resource type="Script" path="res://scenes/bombs/MenuBomb.gd" id="2_23n1h"]
 [ext_resource type="Texture2D" uid="uid://baausxife2ayk" path="res://images/bomb/sprite_normal_outline.svg" id="3_tpriv"]
+[ext_resource type="PackedScene" uid="uid://b6vb4gmrkuugo" path="res://scenes/bombs/bombeffects/BrightModulator.tscn" id="4_4g2mf"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_8hgk3"]
 radius = 32.0
@@ -20,5 +21,7 @@ debug_color = Color(1.15514e-06, 0.596143, 0.721682, 0.42)
 
 [node name="SpriteNormalOutline" type="Sprite2D" parent="." index="2"]
 texture = ExtResource("3_tpriv")
+
+[node name="BrightModulator" parent="." index="3" instance=ExtResource("4_4g2mf")]
 
 [connection signal="player_body_entered" from="." to="." method="slayed"]

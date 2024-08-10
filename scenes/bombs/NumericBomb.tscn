@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://dug1fwwbjaopa"]
+[gd_scene load_steps=11 format=3 uid="uid://dug1fwwbjaopa"]
 
 [ext_resource type="Script" path="res://scenes/bombs/NumericBomb.gd" id="1_lkrkc"]
 [ext_resource type="FontFile" uid="uid://bn71j2rajnbrn" path="res://fonts/bump-it-up.ttf" id="2_mftcv"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://ltvbulh18nft" path="res://scenes/bombs/WarningTimer.tscn" id="4_i8np4"]
 [ext_resource type="Script" path="res://addons/resonate/sound_manager/sound_event_resource.gd" id="4_pmjfd"]
 [ext_resource type="AudioStream" uid="uid://c352772ve0yuk" path="res://audio/sfx/slice_3.wav" id="5_7r5w0"]
+[ext_resource type="PackedScene" uid="uid://b6vb4gmrkuugo" path="res://scenes/bombs/bombeffects/BrightModulator.tscn" id="8_r1127"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_51k8f"]
 radius = 32.0
@@ -53,15 +54,17 @@ script = ExtResource("3_awam2")
 label = "sfx_Num_bomb"
 events = Array[ExtResource("4_pmjfd")]([SubResource("Resource_ue2f5")])
 
+[node name="BrightModulator" parent="." instance=ExtResource("8_r1127")]
+
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="lower_value_bomb_exists" from="." to="." method="queue_free"]
 [connection signal="lower_value_bomb_exists" from="." to="." method="game_over"]
 [connection signal="lower_value_bomb_exists" from="." to="." method="exploded"]
-[connection signal="lower_value_bomb_exists" from="." to="." method="queue_free"]
 [connection signal="no_lower_value_bomb_exists" from="." to="." method="queue_free"]
-[connection signal="player_body_entered" from="." to="." method="slayed"]
 [connection signal="player_body_entered" from="." to="." method="check_for_lower_value_bomb"]
+[connection signal="player_body_entered" from="." to="." method="slayed"]
+[connection signal="bomb_timeout" from="BombTimer" to="." method="queue_free"]
 [connection signal="bomb_timeout" from="BombTimer" to="." method="game_over"]
 [connection signal="bomb_timeout" from="BombTimer" to="." method="exploded"]
-[connection signal="bomb_timeout" from="BombTimer" to="." method="queue_free"]
 [connection signal="warning_timeout" from="WarningTimer" to="." method="_on_warning_timer_warning_timeout"]
 [connection signal="warning_timeout" from="WarningTimer" to="BombTimer" method="bomb_timer_start"]

@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://dl4bge564bur"]
+[gd_scene load_steps=6 format=3 uid="uid://dl4bge564bur"]
 
 [ext_resource type="Script" path="res://scenes/playingfield/PlayingFieldUI.gd" id="1_4jlcl"]
 [ext_resource type="Texture2D" uid="uid://7ed2eanqanvm" path="res://scenes/ui/ColoredPanelTexture.svg" id="2_6hhks"]
+[ext_resource type="PackedScene" uid="uid://b6vb4gmrkuugo" path="res://scenes/bombs/bombeffects/BrightModulator.tscn" id="2_f8tx4"]
 [ext_resource type="PackedScene" uid="uid://dp0cdsfw5ylxj" path="res://scenes/ui/FancyButton.tscn" id="3_vlemy"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_gr0gd"]
@@ -63,6 +64,8 @@ theme_type_variation = &"NoShadow"
 theme_override_font_sizes/font_size = 24
 text = ".34"
 
+[node name="BrightModulator" parent="Ingame/Best" instance=ExtResource("2_f8tx4")]
+
 [node name="Time" type="Control" parent="Ingame"]
 anchors_preset = 0
 offset_left = 943.0
@@ -113,6 +116,8 @@ theme_type_variation = &"NoShadow"
 theme_override_font_sizes/font_size = 24
 text = ".34"
 horizontal_alignment = 2
+
+[node name="BrightModulator" parent="Ingame/Time" instance=ExtResource("2_f8tx4")]
 
 [node name="CanvasLayerSkewed" type="CanvasLayer" parent="."]
 scale = Vector2(1, 1.03078)

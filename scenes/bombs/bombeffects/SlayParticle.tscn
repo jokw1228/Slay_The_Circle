@@ -1,6 +1,7 @@
-[gd_scene load_steps=9 format=3 uid="uid://cs2ukp0c0vi80"]
+[gd_scene load_steps=10 format=3 uid="uid://cs2ukp0c0vi80"]
 
 [ext_resource type="Script" path="res://scenes/bombs/bombeffects/SlayParticle.gd" id="1_so7lb"]
+[ext_resource type="PackedScene" uid="uid://b6vb4gmrkuugo" path="res://scenes/bombs/bombeffects/BrightModulator.tscn" id="2_8vdbt"]
 
 [sub_resource type="Gradient" id="Gradient_ukrbu"]
 colors = PackedColorArray(0.117438, 0.117438, 0.117438, 1, 1, 1, 1, 1)
@@ -50,5 +51,7 @@ one_shot = true
 explosiveness = 0.1
 randomness = 0.18
 script = ExtResource("1_so7lb")
+
+[node name="BrightModulator" parent="." instance=ExtResource("2_8vdbt")]
 
 [connection signal="finished" from="." to="." method="queue_free"]
