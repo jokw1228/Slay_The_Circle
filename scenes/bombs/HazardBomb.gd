@@ -2,7 +2,6 @@ extends Bomb
 class_name HazardBomb
 
 const HazardBomb_scene = "res://scenes/bombs/HazardBomb.tscn"
-@export var HazardBombEndedEffect_scene: PackedScene
 
 @export var CollisionShape2D_node: CollisionShape2D
 @export var BombTimer_node: BombTimer
@@ -20,9 +19,7 @@ func _on_warning_timer_warning_timeout():
 	CollisionShape2D_node.disabled = false
 
 func hazard_bomb_ended_effect():
-	var inst = HazardBombEndedEffect_scene.instantiate()
-	inst.position = position
-	get_tree().current_scene.add_child(inst)
+	get_tree().current_scene.add_child( HazardBombEndedEffect.create(global_position) )
 
 func early_eliminate():
 	hazard_bomb_ended_effect()

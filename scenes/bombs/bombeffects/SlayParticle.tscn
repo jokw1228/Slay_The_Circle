@@ -1,4 +1,6 @@
-[gd_scene load_steps=8 format=3 uid="uid://cs2ukp0c0vi80"]
+[gd_scene load_steps=9 format=3 uid="uid://cs2ukp0c0vi80"]
+
+[ext_resource type="Script" path="res://scenes/bombs/bombeffects/SlayParticle.gd" id="1_so7lb"]
 
 [sub_resource type="Gradient" id="Gradient_ukrbu"]
 colors = PackedColorArray(0.117438, 0.117438, 0.117438, 1, 1, 1, 1, 1)
@@ -39,7 +41,7 @@ collision_bounce = 0.43
 sub_emitter_mode = 3
 sub_emitter_amount_at_collision = 1
 
-[node name="Flame" type="GPUParticles2D"]
+[node name="SlayParticle" type="GPUParticles2D"]
 emitting = false
 amount = 30
 process_material = SubResource("ParticleProcessMaterial_ke88d")
@@ -47,5 +49,6 @@ lifetime = 0.3
 one_shot = true
 explosiveness = 0.1
 randomness = 0.18
+script = ExtResource("1_so7lb")
 
 [connection signal="finished" from="." to="." method="queue_free"]

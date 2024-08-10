@@ -1,7 +1,7 @@
 extends Node2D
 class_name BombExplodedEffect
 
-@export var BombDeathEffect_scene: PackedScene
+const BombExplodedEffect_scene = "res://scenes/bombs/bombeffects/BombExplodedEffect.tscn"
 
 @export var sprite: Sprite2D
 
@@ -9,6 +9,11 @@ const end_time = 0.6
 const max_scale = 2
 
 var elapsed_time: float = 0.0
+
+static func create(position_to_set: Vector2) -> BombExplodedEffect:
+	var inst: BombExplodedEffect = preload(BombExplodedEffect_scene).instantiate() as BombExplodedEffect
+	inst.position = position_to_set
+	return inst
 
 func _ready():
 	death_effect()
@@ -19,9 +24,7 @@ func _ready():
 func death_effect():
 	const death_effect_count = 8
 	for i: float in range(death_effect_count):
-		var inst: BombDeathEffect = BombDeathEffect_scene.instantiate()
-		inst.angle_offset = 2*PI * i / death_effect_count
-		add_child(inst)
+		add_child( BombDeathEffect.create(2*PI * i / death_effect_count) )
 
 func _process(delta):
 	elapsed_time += delta

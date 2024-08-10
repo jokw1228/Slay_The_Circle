@@ -1,7 +1,6 @@
-[gd_scene load_steps=8 format=3 uid="uid://cux2tpymcx5ny"]
+[gd_scene load_steps=7 format=3 uid="uid://cux2tpymcx5ny"]
 
 [ext_resource type="Script" path="res://scenes/bombs/HazardBomb.gd" id="1_wklac"]
-[ext_resource type="PackedScene" uid="uid://3njnae72fiai" path="res://scenes/bombs/bombeffects/HazardBombEndedEffect.tscn" id="2_fng6q"]
 [ext_resource type="PackedScene" uid="uid://dq81owitrvpew" path="res://scenes/bombs/BombTimer.tscn" id="2_xj2gr"]
 [ext_resource type="Texture2D" uid="uid://b3xqa1yf5olkc" path="res://images/bomb/sprite_hazard.svg" id="5_3ijwn"]
 [ext_resource type="Texture2D" uid="uid://1esd5uit6qlp" path="res://images/bomb/sprite_hazard_outline.svg" id="5_qnof4"]
@@ -13,7 +12,6 @@ radius = 32.0
 [node name="HazardBomb" type="Area2D" node_paths=PackedStringArray("CollisionShape2D_node", "BombTimer_node", "WarningTimer_node") groups=["group_hazard_bomb"]]
 modulate = Color(1, 1, 1, 0.12549)
 script = ExtResource("1_wklac")
-HazardBombEndedEffect_scene = ExtResource("2_fng6q")
 CollisionShape2D_node = NodePath("CollisionShape2D")
 BombTimer_node = NodePath("BombTimer")
 WarningTimer_node = NodePath("WarningTimer")
@@ -34,12 +32,12 @@ texture_progress = ExtResource("5_qnof4")
 texture = ExtResource("5_3ijwn")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="player_body_entered" from="." to="." method="queue_free"]
 [connection signal="player_body_entered" from="." to="." method="game_over"]
 [connection signal="player_body_entered" from="." to="." method="exploded"]
 [connection signal="player_body_entered" from="." to="." method="slayed"]
-[connection signal="player_body_entered" from="." to="." method="queue_free"]
-[connection signal="bomb_timeout" from="BombTimer" to="." method="hazard_bomb_ended_effect"]
 [connection signal="bomb_timeout" from="BombTimer" to="." method="queue_free"]
+[connection signal="bomb_timeout" from="BombTimer" to="." method="hazard_bomb_ended_effect"]
 [connection signal="warning_timeout" from="WarningTimer" to="." method="_on_warning_timer_warning_timeout"]
 [connection signal="warning_timeout" from="WarningTimer" to="BombTimer" method="bomb_timer_start"]
 

@@ -1,12 +1,10 @@
-[gd_scene load_steps=4 format=3 uid="uid://kf6hseo17j78"]
+[gd_scene load_steps=3 format=3 uid="uid://kf6hseo17j78"]
 
 [ext_resource type="Texture2D" uid="uid://dm4tq6jgaqbei" path="res://images/bomb/sprite_bomb_exploded.svg" id="1_2hmjo"]
 [ext_resource type="Script" path="res://scenes/bombs/bombeffects/BombExplodedEffect.gd" id="1_7r3qi"]
-[ext_resource type="PackedScene" uid="uid://8ho3wj1ttt5w" path="res://scenes/bombs/bombeffects/BombDeathEffect.tscn" id="2_j8k1j"]
 
 [node name="BombExplodedEffect" type="Node2D" node_paths=PackedStringArray("sprite")]
 script = ExtResource("1_7r3qi")
-BombDeathEffect_scene = ExtResource("2_j8k1j")
 sprite = NodePath("Sprite2D")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]

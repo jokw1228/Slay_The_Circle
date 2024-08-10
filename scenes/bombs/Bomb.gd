@@ -3,10 +3,6 @@ class_name Bomb
 
 signal player_body_entered()
 
-var Particle_scene: PackedScene = preload("res://scenes/bombs/bombeffects/Flame.tscn")
-var BombSlayedEffect_scene: PackedScene = preload("res://scenes/bombs/bombeffects/BombSlayedEffect.tscn")
-var BombExplodedEffect_scene: PackedScene = preload("res://scenes/bombs/bombeffects/BombExplodedEffect.tscn")
-
 var slayed_direction: Vector2 = Vector2.ZERO
 
 func _on_body_entered(body):
@@ -15,20 +11,11 @@ func _on_body_entered(body):
 		player_body_entered.emit()
 
 func slayed(): # bomb slayed effect
-	var BombSlayedEffect_inst: BombSlayedEffect = BombSlayedEffect_scene.instantiate()
-	BombSlayedEffect_inst.position = global_position
-	BombSlayedEffect_inst.direction = slayed_direction
-	get_tree().current_scene.add_child(BombSlayedEffect_inst)
-	
-	var Particle_instance = Particle_scene.instantiate()
-	get_tree().current_scene.add_child(Particle_instance)
-	Particle_instance.position = global_position
-	Particle_instance.emitting = true
-	
+	get_tree().current_scene.add_child( BombSlayedEffect.create(global_position, slayed_direction) )
+	get_tree().current_scene.add_child( SlayParticle.create(global_position) )
+
 func exploded(): # bomb explosion effect
-	var BombExplodedEffect_inst: BombExplodedEffect = BombExplodedEffect_scene.instantiate()
-	BombExplodedEffect_inst.position = global_position
-	get_tree().current_scene.add_child(BombExplodedEffect_inst)
+	get_tree().current_scene.add_child( BombExplodedEffect.create(global_position) )
 
 func game_over():
 	PlayingFieldInterface.game_over(global_position)
