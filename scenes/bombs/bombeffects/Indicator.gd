@@ -17,8 +17,7 @@ func _ready():
 		await get_tree().create_timer(0.5).timeout
 
 func _draw():
-	var theme_color: Color = PlayingFieldInterface.get_theme_color()
-	draw_arc(Vector2.ZERO, size, 0, 2 * PI, 32, theme_color, 3.0, true)
+	draw_arc(Vector2.ZERO, size, 0, 2 * PI, 32, Color.WHITE, 3.0, true)
 
 func _process(_delta):
 	queue_redraw()

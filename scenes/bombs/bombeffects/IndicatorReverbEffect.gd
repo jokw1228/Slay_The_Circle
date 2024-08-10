@@ -28,8 +28,7 @@ func _ready():
 	queue_free()
 
 func _draw():
-	var theme_color: Color = PlayingFieldInterface.get_theme_color()
-	draw_arc(Vector2.ZERO, radius_to_draw, 0, 2*PI, 32, Color(theme_color.r, theme_color.g, theme_color.b, color_alpha), 2, true)
+	draw_arc(Vector2.ZERO, radius_to_draw, 0, 2*PI, 32, Color(1, 1, 1, color_alpha), 2, true)
 
 func _process(_delta):
 	queue_redraw()
