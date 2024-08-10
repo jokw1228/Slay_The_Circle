@@ -449,33 +449,61 @@ var pattern_roll_bomb_count: int
 func pattern_roll():
 	pattern_start_time = PlayingFieldInterface.get_playing_time()
 	
-	pattern_roll_bomb_count = 13
+	var angle_offset: float = PlayingFieldInterface.get_player_position().angle()
+	var rng = RandomNumberGenerator.new()
+	rng.randomize()
+	
+	var hazard_line: int = rng.randi_range(1,4)
+	if hazard_line == 4:
+		hazard_line = 2 #가운데 나오는 비율을 더 많이 주고 싶어서...
+	
+	pattern_roll_bomb_count = 10 if hazard_line == 2 else 11
 	var bomb_list: Array[NormalBomb]
-	
-	bomb_list.append(create_normal_bomb(Vector2(0, -200), 0.5, 2.5))
-	bomb_list.append(create_normal_bomb(Vector2(0, -100), 0.5, 2.5))
-	bomb_list.append(create_normal_bomb(Vector2(0, 0), 0.5, 2.5))
-	bomb_list.append(create_normal_bomb(Vector2(0, 100), 0.5, 2.5))
-	bomb_list.append(create_normal_bomb(Vector2(0, 200), 0.5, 2.5))
-	
-	bomb_list.append(create_normal_bomb(Vector2(100, -100), 0.5, 2.5))
-	bomb_list.append(create_normal_bomb(Vector2(100, 0), 0.5, 2.5))
-	bomb_list.append(create_normal_bomb(Vector2(100, 100), 0.5, 2.5))
 
-	bomb_list.append(create_normal_bomb(Vector2(-100, -100), 0.5, 2.5))
-	bomb_list.append(create_normal_bomb(Vector2(-100, 0), 0.5, 2.5))
-	bomb_list.append(create_normal_bomb(Vector2(-100, 100), 0.5, 2.5))
+	for i in (3):
+		var bomb: NormalBomb = create_normal_bomb(Vector2(96 * i,192 - 96 * i).rotated(angle_offset - PI/2), 0.2, 2.4)
+		bomb.connect("player_body_entered", Callable(self, "pattern_roll_end"))
+	await get_tree().create_timer(0.1).timeout
 	
-	bomb_list.append(create_normal_bomb(Vector2(200, 0), 0.5, 2.5))
+	
+	if hazard_line == 1:
+		create_hazard_bomb(Vector2(96, 0).rotated(angle_offset - PI/2), 0.2, 2.4)
+		create_hazard_bomb(Vector2(0, 96).rotated(angle_offset - PI/2), 0.2, 2.4)
+	else :
+		for i in (2):
+			var bomb: NormalBomb = create_normal_bomb(Vector2(96 - 96 * i,96 * i).rotated(angle_offset - PI/2), 0.2, 2.4)
+			bomb.connect("player_body_entered", Callable(self, "pattern_roll_end"))
+	await get_tree().create_timer(0.1).timeout
 
-	bomb_list.append(create_normal_bomb(Vector2(-200, 0), 0.5, 2.5))
 	
-	for inst: NormalBomb in bomb_list:
-		inst.connect("player_body_entered", Callable(self, "pattern_roll_end"))
+	if hazard_line == 2:
+		create_hazard_bomb(Vector2(-96, 96).rotated(angle_offset - PI/2), 0.2, 2.4)
+		create_hazard_bomb(Vector2(0, 0).rotated(angle_offset - PI/2), 0.2, 2.4)
+		create_hazard_bomb(Vector2(96, -96).rotated(angle_offset - PI/2), 0.2, 2.4)
+	else :		
+		for i in (3):
+			var bomb: NormalBomb = create_normal_bomb(Vector2(-96 + 96 * i, 96 - 96 * i).rotated(angle_offset - PI/2), 0.2, 2.4)
+			bomb.connect("player_body_entered", Callable(self, "pattern_roll_end"))
+	await get_tree().create_timer(0.1).timeout
+		
+		
+	if hazard_line == 3:
+		create_hazard_bomb(Vector2(-96, 0).rotated(angle_offset - PI/2), 0.2, 2.4)
+		create_hazard_bomb(Vector2(0, -96).rotated(angle_offset - PI/2), 0.2, 2.4)
+	else :
+		for i in (2):
+			var bomb: NormalBomb = create_normal_bomb(Vector2(-96 + 96 * i,- 96 * i).rotated(angle_offset - PI/2), 0.2, 2.4)
+			bomb.connect("player_body_entered", Callable(self, "pattern_roll_end"))
+	await get_tree().create_timer(0.1).timeout
+	
+	for i in (3):
+		var bomb: NormalBomb = create_normal_bomb(Vector2(-96 * i, -192 + 96 * i).rotated(angle_offset - PI/2), 0.2, 2.4)
+		bomb.connect("player_body_entered", Callable(self, "pattern_roll_end"))
 
 func pattern_roll_end():
 	pattern_roll_bomb_count -= 1
 	if pattern_roll_bomb_count == 0:
+		get_tree().call_group("group_hazard_bomb", "early_eliminate")
 		await PlayingFieldInterface.player_grounded
 		PlayingFieldInterface.set_playing_time(pattern_start_time + (pattern_roll_playing_time) / Engine.time_scale)
 		pattern_shuffle_and_draw()
