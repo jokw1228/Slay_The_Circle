@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://pm6qbfqcqv7v"]
+
+[ext_resource type="Texture2D" uid="uid://br514524tfbp1" path="res://images/bomb/sprite_linked_mark.svg" id="1_ixora"]
+[ext_resource type="Script" path="res://scenes/bombs/bombeffects/LinkedMark.gd" id="2_61v57"]
+
+[node name="LinkedMark" type="Sprite2D"]
+modulate = Color(1, 1, 1, 0.25098)
+texture = ExtResource("1_ixora")
+script = ExtResource("2_61v57")

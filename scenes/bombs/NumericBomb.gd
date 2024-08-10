@@ -7,6 +7,7 @@ signal lower_value_bomb_exists
 signal no_lower_value_bomb_exists
 
 var id: int = 0
+var Indicator_node: Indicator
 
 @export var CollisionShape2D_node: CollisionShape2D
 @export var BombTimer_node: BombTimer
@@ -26,6 +27,19 @@ func _on_warning_timer_warning_timeout():
 
 func _ready():
 	$BombID.text = str(id)
+	Indicator_node = Indicator.create()
+	Indicator_node.visible = false
+	add_child(Indicator_node)
+
+func _process(_delta):
+	var flag: bool = true
+	for i: NumericBomb in get_tree().get_nodes_in_group("group_numeric_bomb"):
+		if i.id < id:
+			Indicator_node.visible = false
+			flag = false
+			break
+	if flag == true:
+		Indicator_node.visible = true
 
 func slayed():
 	super()
