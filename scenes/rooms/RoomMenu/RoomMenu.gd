@@ -84,12 +84,15 @@ func select_stage(difficulty: int):
 		0:
 			high_score = SaveFileManager.circle_record
 			%InfoLabel2.text = "HARD"
+			%InfoLabel3.text = "SIMPLE!"
 		1:
 			high_score = SaveFileManager.circler_record
 			%InfoLabel2.text = "HARDER"
+			%InfoLabel3.text = "HARZARD!!"
 		2:
 			high_score = SaveFileManager.circlest_record
 			%InfoLabel2.text = "HARDEST"
+			%InfoLabel3.text = "MOVING!!!"
 	%InfoLabel1.text = str(high_score)
 	
 	Utils.slide_in(%Info, 400, Vector2.LEFT, 0.4)
@@ -114,12 +117,15 @@ func select_hyper():
 		3:
 			high_score = SaveFileManager.hypercircle_record
 			%InfoLabel2.text = "F**K"
+			%InfoLabel3.text = "..."
 		4:
 			high_score = SaveFileManager.hypercircler_record
 			%InfoLabel2.text = "F**KER"
+			%InfoLabel3.text = "..?"
 		5:
 			high_score = SaveFileManager.hypercirclest_record
 			%InfoLabel2.text = "F**KEST"
+			%InfoLabel3.text = "..!"
 	%InfoLabel1.text = str(high_score)
 	Utils.slide_in(%Info, 400, Vector2.LEFT, 0.4)
 	
