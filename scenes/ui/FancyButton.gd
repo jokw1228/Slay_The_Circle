@@ -12,7 +12,7 @@ func _ready():
 
 
 func _on_button_pressed():
-	SoundManager.play("sfx_menu","start")
+	SoundManager.play("sfx_fancy_button","big_button")
 	pressed.emit()
 
 # TODO 타이머로부터 시그널 받아서 Panel 복제하여 scale 키우는 이펙트 구현하기

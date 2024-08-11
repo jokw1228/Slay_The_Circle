@@ -16,6 +16,8 @@ static func create(position_to_set: Vector2, callable_to_connect: Callable) -> S
 func slayed():
 	started.emit()
 	super()
+	
+	SoundManager.play("sfx_S_bomb","slay")
 
 func _process(delta):
 	RestartSprite_node.rotate(-delta * PI / 2)

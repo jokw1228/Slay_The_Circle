@@ -1,12 +1,23 @@
-[gd_scene load_steps=6 format=3 uid="uid://crk2aniu1h5di"]
+[gd_scene load_steps=10 format=3 uid="uid://crk2aniu1h5di"]
 
 [ext_resource type="Script" path="res://scenes/bombs/StartBomb.gd" id="1_0384a"]
 [ext_resource type="Texture2D" uid="uid://cgn8ysntgw1a2" path="res://images/bomb/sprite_normal.svg" id="3_i43v8"]
 [ext_resource type="PackedScene" uid="uid://b6vb4gmrkuugo" path="res://scenes/bombs/bombeffects/BrightModulator.tscn" id="4_jqlx2"]
 [ext_resource type="Texture2D" uid="uid://idkeqjx3wkpe" path="res://images/bomb/sprite_restart.svg" id="4_ryl6g"]
+[ext_resource type="Script" path="res://addons/resonate/sound_manager/sound_bank.gd" id="5_3cyy8"]
+[ext_resource type="Script" path="res://addons/resonate/sound_manager/sound_event_resource.gd" id="6_cg20x"]
+[ext_resource type="AudioStream" uid="uid://c352772ve0yuk" path="res://audio/sfx/slice_3.wav" id="7_i05rq"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_v3tcq"]
 radius = 32.0
+
+[sub_resource type="Resource" id="Resource_ist51"]
+script = ExtResource("6_cg20x")
+name = "slay"
+bus = ""
+volume = 0.0
+pitch = 1.0
+streams = Array[AudioStream]([ExtResource("7_i05rq")])
 
 [node name="StartBomb" type="Area2D"]
 script = ExtResource("1_0384a")
@@ -21,6 +32,11 @@ texture = ExtResource("3_i43v8")
 texture = ExtResource("4_ryl6g")
 
 [node name="BrightModulator" parent="." instance=ExtResource("4_jqlx2")]
+
+[node name="SoundBank" type="Node" parent="."]
+script = ExtResource("5_3cyy8")
+label = "sfx_S_bomb"
+events = Array[ExtResource("6_cg20x")]([SubResource("Resource_ist51")])
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="player_body_entered" from="." to="." method="queue_free"]
