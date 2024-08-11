@@ -13,10 +13,10 @@ func _ready():
 	pattern_shuffle_and_draw()
 
 func pattern_list_initialization():
-	pattern_list.append(Callable(self, "pattern_numeric_center_then_link"))
-	pattern_list.append(Callable(self, "pattern_hazard_at_player_pos"))
-	pattern_list.append(Callable(self, "pattern_inversion_speedup"))
-	pattern_list.append(Callable(self, "pattern_321_go"))
+	#pattern_list.append(Callable(self, "pattern_numeric_center_then_link"))
+	#pattern_list.append(Callable(self, "pattern_hazard_at_player_pos"))
+	#pattern_list.append(Callable(self, "pattern_inversion_speedup"))
+	#pattern_list.append(Callable(self, "pattern_321_go"))
 	#pattern_list.append(Callable(self, "pattern_numeric_triangle_with_link"))
 	#pattern_list.append(Callable(self, "pattern_star"))
 	#pattern_list.append(Callable(self, "pattern_random_link"))
@@ -29,7 +29,7 @@ func pattern_list_initialization():
 	#pattern_list.append(Callable(self, "pattern_twisted_numeric"))
 	#pattern_list.append(Callable(self, "pattern_spiral"))
 	#pattern_list.append(Callable(self, "pattern_numeric_choice"))
-	#pattern_list.append(Callable(self, "pattern_hide_in_hazard"))
+	pattern_list.append(Callable(self, "pattern_hide_in_hazard"))
 	#pattern_list.append(Callable(self, "pattern_diamond_with_hazard"))
 	#pattern_list.append(Callable(self, "pattern_narrow_road"))
 	#pattern_list.append(Callable(self, "pattern_369"))
@@ -620,18 +620,43 @@ func pattern_numeric_choice_end():
 #위험하다고 피하는 건 좋지 않아요
 #circle 정도의 쉬?운 난이도
 
+const pattern_hide_in_hazard_playing_time = 6.75
+var bomb_count = 0
+
 func pattern_hide_in_hazard():
+	pattern_start_time = PlayingFieldInterface.get_playing_time()
 	PlayingFieldInterface.set_theme_color(Color.BISQUE)
 	
-	for i in range(8):
-		var bomb : NormalBomb = create_normal_bomb(Vector2(150 * cos(i*PI/4), 150 * sin(i*PI/4)), 0.4, 5.6)
+	var player_position: Vector2 = PlayingFieldInterface.get_player_position()
+	var angle_offset: float = player_position.angle() * -1
 	
-	for i in range(4):	
-		for j in range(8):
-			var bomb : HazardBomb = create_hazard_bomb(Vector2(150 * cos(j*PI/4), 150 * sin(j*PI/4)), 0.5, 1)
-		await Utils.timer(1.5)
-	pattern_shuffle_and_draw()
+	const CIRCLE_FIELD_RADIUS = 256
+	var bomb_radius: float = CIRCLE_FIELD_RADIUS * sqrt(3) / 3
+	
+	var ccw: float = 1 if randi() % 2 else -1
+	
+	var bomb1: NumericBomb = create_numeric_bomb(Vector2(bomb_radius * cos(angle_offset + ccw * PI/6), bomb_radius * -sin(angle_offset + ccw * PI/6)), 0.75, 6, 1)
+	var bomb2: NumericBomb = create_numeric_bomb(Vector2(bomb_radius * cos(angle_offset + ccw * PI/2), bomb_radius * -sin(angle_offset + ccw * PI/2)), 0.75, 6, 2)
+	
+	var bomb3: NumericBomb = create_numeric_bomb(Vector2(bomb_radius * cos(angle_offset + ccw * 5*PI/6), bomb_radius * -sin(angle_offset + ccw * 5*PI/6)), 0.75, 6, 3)
+	var bomb4: NumericBomb = create_numeric_bomb(Vector2(bomb_radius * cos(angle_offset + ccw * 7*PI/6), bomb_radius * -sin(angle_offset + ccw * 7*PI/6)), 0.75, 6, 4)
+	
+	var bomb5: NumericBomb = create_numeric_bomb(Vector2(bomb_radius * cos(angle_offset + ccw * 3*PI/2), bomb_radius * -sin(angle_offset + ccw * 3*PI/2)), 0.75, 6, 5)
+	var bomb6: NumericBomb = create_numeric_bomb(Vector2(bomb_radius * cos(angle_offset + ccw * 11*PI/6), bomb_radius * -sin(angle_offset + ccw * 11*PI/6)), 0.75, 6, 6)
+	
+	bomb6.connect("player_body_entered", Callable(self, "pattern_hide_in_hazard_end"))
+	
+	for i in range(3):
+		for j in range(6):
+			var bomb : HazardBomb = create_hazard_bomb(Vector2(bomb_radius * cos(angle_offset + ccw * (2*j-1)*PI/6), bomb_radius * -sin(angle_offset + ccw * (2*j-1)*PI/6)), 0.75, 1)
+		await Utils.timer(1.75)
 
+func pattern_hide_in_hazard_end():
+	get_tree().call_group("group_hazard_bomb", "early_eliminate")
+	await PlayingFieldInterface.player_grounded
+	PlayingFieldInterface.set_playing_time(pattern_start_time + (pattern_hide_in_hazard_playing_time) / Engine.time_scale)
+	pattern_shuffle_and_draw()
+	
 #pattern_hide_in_hazard block end
 ###############################
 

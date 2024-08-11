@@ -13,19 +13,19 @@ func _ready():
 	pattern_shuffle_and_draw()
 
 func pattern_list_initialization():
-	pattern_list.append(Callable(self, "pattern_cat_wheel"))
-	pattern_list.append(Callable(self, "pattern_fruitninja"))
-	pattern_list.append(Callable(self, "pattern_windmill"))
-	pattern_list.append(Callable(self, "pattern_rain"))
-	pattern_list.append(Callable(self, "pattern_hazard_wave"))
-	pattern_list.append(Callable(self, "pattern_rotate_timing"))
-	pattern_list.append(Callable(self, "pattern_survive_random_slay"))
-	pattern_list.append(Callable(self, "pattern_moving_link"))
-	pattern_list.append(Callable(self, "pattern_shuffle_game"))
-	pattern_list.append(Callable(self, "pattern_timing_return"))
-	pattern_list.append(Callable(self, "pattern_rotation")) 
+	#pattern_list.append(Callable(self, "pattern_cat_wheel"))
+	#pattern_list.append(Callable(self, "pattern_fruitninja"))
+	#pattern_list.append(Callable(self, "pattern_windmill"))
+	#pattern_list.append(Callable(self, "pattern_rain"))
+	#pattern_list.append(Callable(self, "pattern_hazard_wave"))
+	#pattern_list.append(Callable(self, "pattern_rotate_timing"))
+	#pattern_list.append(Callable(self, "pattern_survive_random_slay"))
+	#pattern_list.append(Callable(self, "pattern_moving_link"))
+	#pattern_list.append(Callable(self, "pattern_shuffle_game"))
+	#pattern_list.append(Callable(self, "pattern_timing_return"))
+	#pattern_list.append(Callable(self, "pattern_rotation")) 
 	pattern_list.append(Callable(self, "pattern_trickery"))
-	pattern_list.append(Callable(self, "pattern_darksight"))
+	#pattern_list.append(Callable(self, "pattern_darksight"))
 
 func pattern_shuffle_and_draw():
 	randomize()
@@ -593,29 +593,16 @@ func pattern_timing_return_end():
 #회전 필요할 때 쉬어가는 코너. bomb exploded 되는 속도가 빨라서
 #circlest 나 hyper 혹은 일정 시간이 지난 후 사용하면 좋을 듯합니다 
 
-var pattern_rotation_timer : float
-var pattern_rotation_timer_tween : Tween
+const pattern_rotation_playing_time = 2.3
 
 func pattern_rotation():
+	pattern_start_time = PlayingFieldInterface.get_playing_time()
 	PlayingFieldInterface.set_theme_color(Color.BISQUE)
-	
-	pattern_rotation_timer = 2.3
-	
-	if pattern_rotation_timer_tween != null:
-		pattern_rotation_timer_tween.kill()
-	pattern_rotation_timer_tween = get_tree().create_tween()
-	pattern_rotation_timer_tween.tween_property(self, "pattern_rotation_timer", 0.0, 2.3)
-	
-	var bomb1: RotationSpeedUpBomb = create_rotationspeedup_bomb(Vector2(0, -256), 0.5, 1.8, 0.3)
-	var bomb2: RotationSpeedUpBomb = create_rotationspeedup_bomb(Vector2(0, 256), 0.5, 1.8, 0.3)
-	var bomb3: RotationSpeedUpBomb = create_rotationspeedup_bomb(Vector2(256, 0), 0.5, 1.8, 0.3)
-	var bomb4: RotationSpeedUpBomb = create_rotationspeedup_bomb(Vector2(-256, 0), 0.5, 1.8, 0.3)
-	var bomb5: RotationSpeedUpBomb = create_rotationspeedup_bomb(Vector2(0, 0), 0.5, 1.8, 0.3)
-	await Utils.timer(2.3)
-	pattern_shuffle_and_draw()
+	var bomb_rotation: RotationSpeedUpBomb = create_rotationspeedup_bomb(Vector2(0, 0), 0.5, 1.8, 0.03)
+	bomb_rotation.connect("player_body_entered", Callable(self, "pattern_rotation_end"))
 	
 func pattern_rotation_end():
-	PlayingFieldInterface.add_playing_time(pattern_rotation_timer)
+	PlayingFieldInterface.set_playing_time(pattern_start_time + (pattern_rotation_playing_time) / Engine.time_scale)
 	pattern_shuffle_and_draw()
 	
 #pattern_rotation block end
@@ -629,35 +616,36 @@ func pattern_rotation_end():
 # 일정 시간이 지난 후 (60초 정도?) 플레이어를 억까시키고 싶을때
 # 사용하면 좋을 듯합니다 
 
-var pattern_trickery_timer : float
-var pattern_trickery_timer_tween : Tween
+const pattern_trickery_playing_time = 3.5
 
 func pattern_trickery():
+	pattern_start_time = PlayingFieldInterface.get_playing_time()
 	PlayingFieldInterface.set_theme_color(Color.BISQUE)
-	
-	pattern_trickery_timer = 2.3
 	
 	var num_rng = RandomNumberGenerator.new()
 	num_rng.randomize()
-	var trick_num = num_rng.randi_range(4,6)
+	var trick_num = num_rng.randi_range(1,100)
 	
-	if pattern_trickery_timer_tween != null:
-		pattern_trickery_timer_tween.kill()
-	pattern_trickery_timer_tween = get_tree().create_tween()
-	pattern_trickery_timer_tween.tween_property(self, "pattern_trickery_timer", 0.0, 2.3)
+	var bomb1: NormalBomb = create_normal_bomb(Vector2(-144, 0), 0.5, 2.0)
+	var bomb2: NormalBomb = create_normal_bomb(Vector2(0, 0), 0.5, 2.0)
+	var bomb3: NormalBomb = create_normal_bomb(Vector2(144, 0), 0.5, 2.0)
+	var bomb4: NumericBomb = create_numeric_bomb(Vector2(-144, -64), 0.5, 2, trick_num%3 + 1)
+	var bomb5: NumericBomb = create_numeric_bomb(Vector2(0, -64), 0.5, 2, (trick_num + 2)%3 + 1)
+	var bomb6: NumericBomb = create_numeric_bomb(Vector2(144, -64), 0.5, 2, (trick_num + 1)%3 + 1)
+	var last_bomb: NumericBomb = create_numeric_bomb(Vector2(0, -192), 2.5, 1, 4)
 	
-	var bomb1: NormalBomb = create_normal_bomb(Vector2(-150, 0), 0.2, 2.1)
-	var bomb2: NormalBomb = create_normal_bomb(Vector2(0, 0), 0.2, 2.1)
-	var bomb3: NormalBomb = create_normal_bomb(Vector2(150, 0), 0.2, 2.1)
-	var bomb4: NumericBomb = create_numeric_bomb(Vector2(-150, 0), 0.5, 1.8, trick_num%3 + 1)
-	var bomb5: NumericBomb = create_numeric_bomb(Vector2(0, 0), 0.5, 1.8, (trick_num + 1)%3 + 1)
-	var bomb6: NumericBomb = create_numeric_bomb(Vector2(150, 0), 0.5, 1.8, (trick_num + 2)%3 + 1)
+	var tween1_position_change = get_tree().create_tween()
+	var tween2_position_change = get_tree().create_tween()
+	var tween3_position_change = get_tree().create_tween()
+	tween1_position_change.tween_property(bomb4, "position", Vector2(-144,0), 0.5)
+	tween2_position_change.tween_property(bomb5, "position", Vector2(0,0), 0.5)
+	tween3_position_change.tween_property(bomb6, "position", Vector2(144,0), 0.5)
 	
-	await Utils.timer(2.3)
-	pattern_shuffle_and_draw()
+	last_bomb.connect("player_body_entered", Callable(self, "pattern_trickery_end"))
 	
 func pattern_trickery_end():
-	PlayingFieldInterface.add_playing_time(pattern_trickery_timer)
+	await PlayingFieldInterface.player_grounded
+	PlayingFieldInterface.set_playing_time(pattern_start_time + (pattern_trickery_playing_time) / Engine.time_scale)
 	pattern_shuffle_and_draw()
 	
 #pattern_trickery block end
@@ -670,19 +658,19 @@ func pattern_trickery_end():
 #캐릭터 위치 정도는 기억하시죠?
 #당황시킬 수 있기에 circlest 정도 잡는 게 좋을 것 같습니다 
 
-var pattern_darksight_timer : float
-var pattern_darksight_timer_tween : Tween
+const pattern_darksight_playing_time = 6
+
+var wall : ColorRect = ColorRect.new()
 
 func pattern_darksight():
+	pattern_start_time = PlayingFieldInterface.get_playing_time()
 	PlayingFieldInterface.set_theme_color(Color.BLACK)
 	
-	pattern_darksight_timer = 6.0
-	
-	if pattern_darksight_timer_tween != null:
-		pattern_darksight_timer_tween.kill()
-	pattern_darksight_timer_tween = get_tree().create_tween()
-	pattern_darksight_timer_tween.tween_property(self, "pattern_darksight_timer", 0.0, 6.0)
-	
+	#create_hazard_bomb(Vector2(0,0), 0.0, 2)
+	#get_tree().current_scene.add_child(wall)
+	#wall.min_size = Vector2(50,50)
+	#wall.position = Vector2(0,0)
+	#wall.color = Color(1,1,1,1)
 	
 	var bomb1 : NumericBomb = create_numeric_bomb(Vector2(150,0), 0.4, 5.6, 1)
 	var bomb2 : NumericBomb = create_numeric_bomb(Vector2(-150,0), 0.4, 5.6, 2)
@@ -698,7 +686,8 @@ func pattern_darksight():
 	
 func pattern_darksight_end():
 	PlayingFieldInterface.set_theme_color(Color.BISQUE)
-	PlayingFieldInterface.add_playing_time(pattern_darksight_timer)
+	await PlayingFieldInterface.player_grounded
+	PlayingFieldInterface.set_playing_time(pattern_start_time + (pattern_darksight_playing_time) / Engine.time_scale)
 	pattern_shuffle_and_draw()
 	
 #pattern_darksight block end
