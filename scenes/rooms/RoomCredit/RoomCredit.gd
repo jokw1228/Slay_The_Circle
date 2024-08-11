@@ -4,7 +4,7 @@ extends Control
 	["Team", "Slay The Circle(STC)"],
 	["Korea University", "CAT&DOG"],
 	["조강우", "Team Leader\n\nPlanning\n\nPM\n\nProgrammer\n\nGraphic Designer"],
-	["이진웍", "Programmer\n\nLevel Manager"],
+	["이진웅", "Programmer\n\nLevel Manager"],
 	["강근호", "Programmer\n\nLevel Designer"],
 	["박주영", "Programmer\n\nGraphic Designer"],
 	["정성현", "Programmer\n\nGraphic Designer"],
@@ -140,6 +140,10 @@ func on_role_tween_finished():
 
 func on_name_tween_finished():
 	if current_index < credits.size():
+		role_label.visible = false
+		name_label.visible = false
 		role_label.position = role_label_start_position
 		name_label.position = name_label_start_position
+		role_label.visible = true
+		name_label.visible = true
 		start_credit_roll()

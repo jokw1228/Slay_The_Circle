@@ -527,32 +527,31 @@ func pattern_narrow_road():
 	PlayingFieldInterface.set_theme_color(Color.ORANGE)
 	
 	pattern_start_time = PlayingFieldInterface.get_playing_time()
+	
 	var player_position: Vector2 = PlayingFieldInterface.get_player_position()
+	var rng2 = RandomNumberGenerator.new()
+	var random_rotate = rng2.randi_range(0, 4)	
 	var player_angle: float = player_position.angle()
+	player_angle+=random_rotate*PI/2
 	var hazard1_angle: float = player_position.angle()+1*PI/5
 	var hazard2_angle: float = player_position.angle()-1*PI/5
 	var bomb_radius = 64
 	var length = 64
-	var rng = RandomNumberGenerator.new()
-	var rng2 = RandomNumberGenerator.new()
-	var is_upsidedown = rng2.randi_range(1, 2)
-	var is_wide_or_length = rng2.randi_range(1, 2)
-	if is_upsidedown==2:
-		is_upsidedown = -1
-	if is_wide_or_length==2:
-		is_wide_or_length = -1
 	var bomb: NumericBomb
-	var first_hazard1: HazardBomb = create_hazard_bomb(Vector2(64*cos(player_angle+4*PI/2+PI/5),64*sin(player_angle+4*PI/2+PI/5)),0.5,2.5)
-	var first_hazard2: HazardBomb = create_hazard_bomb(Vector2(64*cos(player_angle+4*PI/2-PI/5),64*sin(player_angle+4*PI/2-PI/5)),0.5,2.5)
-	
-	for i in range(0,3,1):
-		create_numeric_bomb(Vector2(64*i*cos(player_angle+4*PI/2),64*i*sin(player_angle+4*PI/2)),0.5,2.5,i+1)
-		
-	#for i in range(0,5,1):
-		#create_hazard_bomb(Vector2(random_range_integer-80,is_upsidedown*(-100+50*i)), 0.5,2.5)
-		#create_hazard_bomb(Vector2(random_range_integer+80,is_upsidedown*(-100+50*i)), 0.5,2.5)
-		#bomb = create_numeric_bomb(Vector2(random_range_integer,is_upsidedown*(-100+50*i)), 0.5, 2.5, i+1)
-	#bomb.connect("no_lower_value_bomb_exists", Callable(self, "pattern_narrow_road_end"))
+	var first_hazard1: HazardBomb = create_hazard_bomb(Vector2(2.4*bomb_radius*cos(player_angle+PI/5),2.4*bomb_radius*sin(player_angle+PI/5)),0.5,2.5)
+	var first_hazard2: HazardBomb = create_hazard_bomb(Vector2(2.4*bomb_radius*cos(player_angle-PI/5),2.4*bomb_radius*sin(player_angle-PI/5)),0.5,2.5)
+	var first_numeric: NumericBomb = create_numeric_bomb(Vector2(2*bomb_radius*cos(player_angle+4*PI/2),2*bomb_radius*sin(player_angle+4*PI/2)),0.5,2.5,1)
+	var first_hazard1_position = first_hazard1.position
+	var first_hazard2_position = first_hazard2.position
+	var first_numeric_position = first_numeric.position
+	for t in range(1,5,1):
+		create_hazard_bomb(first_hazard1_position+t*Vector2(bomb_radius*cos(player_angle+PI),bomb_radius*sin(player_angle+PI)),0.5,2.5)
+		create_hazard_bomb(first_hazard2_position+t*Vector2(bomb_radius*cos(player_angle+PI),bomb_radius*sin(player_angle+PI)),0.5,2.5)
+		if t<4 :
+			create_numeric_bomb(first_numeric_position+t*Vector2(bomb_radius*cos(player_angle+PI),bomb_radius*sin(player_angle+PI)),0.5,2.5,t+1)
+	var end_bomb: NumericBomb
+	end_bomb = create_numeric_bomb(first_numeric_position+4*Vector2(bomb_radius*cos(player_angle+PI),bomb_radius*sin(player_angle+PI)),0.5,2.5,5)
+	end_bomb.connect("no_lower_value_bomb_exists", Callable(self, "pattern_narrow_road_end"))
 
 func pattern_narrow_road_end():
 	get_tree().call_group("group_hazard_bomb", "early_eliminate")
