@@ -85,3 +85,6 @@ func set_stage_index(stage_index_to_set: int):
 
 func get_stage_index() -> int:
 	return stage_index
+
+func get_rotation_speed() -> float:
+	return get_PlayingField_node().PlayingFieldCamera_node.rotation_amount

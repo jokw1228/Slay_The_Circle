@@ -1,6 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://5hmqv8rxk05i"]
 
 [ext_resource type="Script" path="res://scenes/bombs/BombLink.gd" id="1_7a02t"]
+[ext_resource type="PackedScene" uid="uid://cyvw3omsqwl4b" path="res://scenes/bombs/BombLinkMark.tscn" id="2_5vlv6"]
 [ext_resource type="Script" path="res://scenes/bombs/BombLinkRayCast2D.gd" id="2_cro0j"]
 [ext_resource type="PackedScene" uid="uid://b6vb4gmrkuugo" path="res://scenes/bombs/bombeffects/BrightModulator.tscn" id="4_ddxdw"]
 [ext_resource type="PackedScene" uid="uid://b5bt215x185hg" path="res://scenes/bombs/bombeffects/Indicator.tscn" id="4_rp0nx"]

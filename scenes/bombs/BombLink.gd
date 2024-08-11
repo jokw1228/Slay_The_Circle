@@ -12,6 +12,13 @@ signal single_bomb_removed
 var bomb1: Bomb
 var bomb2: Bomb
 var num_child_bombs: int = 0
+var bomb1_indicator: Sprite2D
+var bomb2_indicator: Sprite2D
+var bomb1_last_position: Vector2
+var bomb2_last_position: Vector2
+
+var last_bright: float
+var last_color: Color
 
 func set_child_bombs(b1: Bomb, b2: Bomb):
 	bomb1 = b1
@@ -22,6 +29,14 @@ func set_child_bombs(b1: Bomb, b2: Bomb):
 	bomb1.add_child( LinkedMark.create() )
 	bomb2.add_child( LinkedMark.create() )
 	set_ray_cast()
+
+	bomb1_indicator = bomb_link_indicator.instantiate()
+	bomb2_indicator = bomb_link_indicator.instantiate()
+	add_child(bomb1_indicator)
+	add_child(bomb2_indicator)
+
+	update_drawings()
+
 
 func set_ray_cast():
 	if bomb1 != null && bomb2 != null:
@@ -61,9 +76,9 @@ func game_over():
 	PlayingFieldInterface.game_over(position)
 
 func _draw():
-	if num_child_bombs < 2:
+	if num_child_bombs < 2: # queue_redraw() 말고도 redraw하는 경우가 있나
 		return
-	
+
 	# Size: half of arrow size, BombSize: for pos offset
 	const Size: float = 8
 	const BombSize: float = 48
@@ -91,8 +106,10 @@ func _draw():
 						pos_1to2 + front + front, pos_1to2 + front + left, pos_1to2 + left]
 		points_2to1 = [pos_2to1 - front, pos_2to1 - right, pos_2to1 - front - right,
 						pos_2to1 - front - front, pos_2to1 - front - left, pos_2to1 - left]
-		draw_colored_polygon(points_1to2, Color(1,1,1,0.2))
-		draw_colored_polygon(points_2to1, Color(1,1,1,0.2))
+		
+		var color_value: float = 1 - PlayingFieldInterface.get_theme_bright()
+		draw_colored_polygon(points_1to2, Color(color_value, color_value, color_value, 0.5))
+		draw_colored_polygon(points_2to1, Color(color_value, color_value, color_value, 0.5))
 		
 		d += Size * 2
 		pos_1to2 += front * 2

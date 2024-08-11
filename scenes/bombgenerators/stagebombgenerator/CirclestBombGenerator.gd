@@ -98,7 +98,7 @@ func pattern_fruitninja():
 
 		if i == 4: # last bomb
 			bomb.connect("player_body_entered", func ():	
-				print(timer.time_left)
+				await PlayingFieldInterface.player_grounded
 				for rigidbody in rigidbodies:
 					rigidbody.queue_free()
 				
@@ -150,9 +150,9 @@ func pattern_rain():
 	pattern_shuffle_and_draw()
  
 func pattern_rain_spawn_drop():
-	for i in range(10):
+	for i in range(6):
 		pattern_rain_drop()
-		await Utils.timer(0.3)
+		await Utils.timer(0.5)
 
 func pattern_rain_spawn_bomb():
 	for i in range(6):
