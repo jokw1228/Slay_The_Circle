@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://c0s4jvu7qncps"]
+[gd_scene load_steps=5 format=3 uid="uid://c0s4jvu7qncps"]
 
 [ext_resource type="Script" path="res://scenes/rooms/RoomCredit/RoomCredit.gd" id="1_axwsh"]
 [ext_resource type="Texture2D" uid="uid://cpd50aakmwjtm" path="res://images/creditroom/CreditRoom.svg" id="2_f4n2x"]
 [ext_resource type="Texture2D" uid="uid://mxfswu8da8vp" path="res://images/player/sprite_player_landed.png" id="3_4ytvs"]
+[ext_resource type="Texture2D" uid="uid://cevkho0emy0yl" path="res://images/logo/sprite_cat_and_dog.png" id="4_hae08"]
 
 [node name="RoomCredit" type="Control" node_paths=PackedStringArray("role_label", "name_label", "logo_text")]
 layout_mode = 3
@@ -20,14 +21,15 @@ scale = Vector2(0.867851, 0.702477)
 texture = ExtResource("2_f4n2x")
 
 [node name="LogoText" type="Label" parent="CanvasLayer"]
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -242.5
-offset_top = -40.0
-offset_right = 242.5
+anchors_preset = -1
+anchor_left = 0.611
+anchor_top = 0.988
+anchor_right = 0.611
+anchor_bottom = 0.988
+offset_left = -370.372
+offset_top = -32.224
+offset_right = 114.628
+offset_bottom = 7.776
 grow_horizontal = 2
 grow_vertical = 0
 scale = Vector2(1.53467, 1.53467)
@@ -42,9 +44,9 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -20.0
+offset_left = -64.0
 offset_top = -40.0
-offset_right = 20.0
+offset_right = 64.0
 grow_horizontal = 2
 grow_vertical = 0
 size_flags_horizontal = 3
@@ -55,14 +57,22 @@ vertical_alignment = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -20.0
-offset_right = 20.0
+offset_left = -64.0
+offset_right = 64.0
 offset_bottom = 40.0
 grow_horizontal = 2
 size_flags_horizontal = 3
 horizontal_alignment = 1
 
 [node name="CharacterImage" type="Sprite2D" parent="CanvasLayer"]
-position = Vector2(598, 258)
-scale = Vector2(0.5, 0.5)
+position = Vector2(88, 560)
+rotation = 1.87955
+scale = Vector2(1.9743, 1.9035)
 texture = ExtResource("3_4ytvs")
+
+[node name="CATDOGLOGO" type="Sprite2D" parent="CanvasLayer"]
+position = Vector2(1064, 96)
+rotation = -0.000602737
+scale = Vector2(0.12045, 0.11964)
+skew = -0.0211478
+texture = ExtResource("4_hae08")

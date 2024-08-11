@@ -22,6 +22,9 @@ func pattern_list_initialization():
 	pattern_list.append(Callable(self, "pattern_reactspeed_test")) 
 	pattern_list.append(Callable(self, "pattern_link_free"))
 	pattern_list.append(Callable(self, "pattern_diamond_with_hazard_puzzled"))
+	pattern_list.append(Callable(self, "pattern_pizza"))
+	pattern_list.append(Callable(self, "pattern_narrow_road"))
+	
 
 func pattern_shuffle_and_draw():
 	randomize()
@@ -435,4 +438,84 @@ func pattern_diamond_with_hazard_puzzled_end():
 	pattern_shuffle_and_draw()
 	
 # pattern_diamond_with_hazard_puzzled block end
+###############################
+
+###############################
+# pattern_pizza block start
+# made by Bae Sekang
+
+var pattern_pizza_bomb_count = 27
+const pattern_pizza_playing_time = 3
+
+func pattern_pizza():
+	PlayingFieldInterface.set_theme_color(Color.ORANGE)
+	var player_position: Vector2 = PlayingFieldInterface.get_player_position()
+	var player_angle: float = player_position.angle()
+	var bomb_radius = 220
+	
+	
+	create_hazard_bomb(Vector2(0,0), 0.5,2.5)
+	create_normal_bomb(Vector2(64*cos(player_angle+4*PI/2),64*sin(player_angle+4*PI/2)),0.5,2.5)
+	create_normal_bomb(Vector2(64*cos(player_angle+4*PI/3),64*sin(player_angle+4*PI/3)),0.5,2.5)
+	create_normal_bomb(Vector2(64*cos(player_angle+2*PI/3),64*sin(player_angle+2*PI/3)),0.5,2.5)
+	
+	for i in range(1, 25):
+		var bomb: NormalBomb = create_normal_bomb(Vector2(bomb_radius * cos(player_angle+i * PI/12.0), bomb_radius * sin(player_angle+i * PI/12.0)), 0.5,2.5)
+		bomb.connect("player_body_entered",Callable(self,"pattern_pizza_end"))
+	await Utils.timer(3.0)
+	pattern_shuffle_and_draw()
+
+func pattern_pizza_end():
+	pattern_pizza_bomb_count -= 1
+	if pattern_pizza_bomb_count == 0:
+		await PlayingFieldInterface.player_grounded
+		PlayingFieldInterface.set_playing_time(pattern_start_time + (pattern_pizza_playing_time) / Engine.time_scale)
+		pattern_shuffle_and_draw()
+	
+# pattern_pizza block end
+###############################
+
+###############################
+# pattern_narrow_road block start
+# made by Bae Sekang
+
+const pattern_narrow_road_playing_time = 3.0
+
+func pattern_narrow_road():
+	PlayingFieldInterface.set_theme_color(Color.ORANGE)
+	
+	pattern_start_time = PlayingFieldInterface.get_playing_time()
+	
+	var player_position: Vector2 = PlayingFieldInterface.get_player_position()
+	var rng2 = RandomNumberGenerator.new()
+	var random_rotate = rng2.randi_range(0, 4)	
+	var player_angle: float = player_position.angle()
+	player_angle+=random_rotate*PI/2
+	var hazard1_angle: float = player_position.angle()+1*PI/5
+	var hazard2_angle: float = player_position.angle()-1*PI/5
+	var bomb_radius = 64
+	var length = 64
+	var bomb: NumericBomb
+	var first_hazard1: HazardBomb = create_hazard_bomb(Vector2(2.4*bomb_radius*cos(player_angle+PI/5),2.4*bomb_radius*sin(player_angle+PI/5)),0.5,2.5)
+	var first_hazard2: HazardBomb = create_hazard_bomb(Vector2(2.4*bomb_radius*cos(player_angle-PI/5),2.4*bomb_radius*sin(player_angle-PI/5)),0.5,2.5)
+	var first_numeric: NumericBomb = create_numeric_bomb(Vector2(2*bomb_radius*cos(player_angle+4*PI/2),2*bomb_radius*sin(player_angle+4*PI/2)),0.5,2.5,1)
+	var first_hazard1_position = first_hazard1.position
+	var first_hazard2_position = first_hazard2.position
+	var first_numeric_position = first_numeric.position
+	for t in range(1,5,1):
+		create_hazard_bomb(first_hazard1_position+t*Vector2(bomb_radius*cos(player_angle+PI),bomb_radius*sin(player_angle+PI)),0.5,2.5)
+		create_hazard_bomb(first_hazard2_position+t*Vector2(bomb_radius*cos(player_angle+PI),bomb_radius*sin(player_angle+PI)),0.5,2.5)
+		if t<4 :
+			create_numeric_bomb(first_numeric_position+t*Vector2(bomb_radius*cos(player_angle+PI),bomb_radius*sin(player_angle+PI)),0.5,2.5,t+1)
+	var end_bomb: NumericBomb
+	end_bomb = create_numeric_bomb(first_numeric_position+4*Vector2(bomb_radius*cos(player_angle+PI),bomb_radius*sin(player_angle+PI)),0.5,2.5,5)
+	end_bomb.connect("no_lower_value_bomb_exists", Callable(self, "pattern_narrow_road_end"))
+
+func pattern_narrow_road_end():
+	get_tree().call_group("group_hazard_bomb", "early_eliminate")
+	await PlayingFieldInterface.player_grounded
+	PlayingFieldInterface.set_playing_time(pattern_start_time + (pattern_narrow_road_playing_time) / Engine.time_scale)
+	pattern_shuffle_and_draw()
+	
+# pattern_narrow_road block end
 ###############################
