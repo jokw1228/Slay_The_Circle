@@ -30,13 +30,6 @@ func set_child_bombs(b1: Bomb, b2: Bomb):
 	bomb2.add_child( LinkedMark.create() )
 	set_ray_cast()
 
-	bomb1_indicator = bomb_link_indicator.instantiate()
-	bomb2_indicator = bomb_link_indicator.instantiate()
-	add_child(bomb1_indicator)
-	add_child(bomb2_indicator)
-
-	update_drawings()
-
 
 func set_ray_cast():
 	if bomb1 != null && bomb2 != null:
