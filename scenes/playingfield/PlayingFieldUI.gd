@@ -98,9 +98,9 @@ func _on_back_button_back():
 	Utils.slide_out(%PanelScore, 800, Vector2.RIGHT, 0.4)
 	Utils.slide_out(%PanelNewRecord, 800, Vector2.RIGHT, 0.4)
 	Utils.slide_out(%BackButton, 200, Vector2(-0.25, -1), 0.4)
-
+	
 	var tween: Tween = Utils.tween().set_ease(Tween.EASE_OUT_IN).set_trans(Tween.TRANS_CIRC)
-	tween.tween_property(%PanelBackMessage, "position", Vector2(57.25, -167), 2.0)
+	tween.tween_property(%PanelBackMessage, "position", Vector2(57.25, -167), 1.0)
 	
 	await tween.finished
 	PlayingFieldInterface.enable_player_input()
