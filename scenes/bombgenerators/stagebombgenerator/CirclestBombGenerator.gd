@@ -13,19 +13,19 @@ func _ready():
 	pattern_shuffle_and_draw()
 
 func pattern_list_initialization():
-	#pattern_list.append(Callable(self, "pattern_cat_wheel"))
-	#pattern_list.append(Callable(self, "pattern_fruitninja"))
-	#pattern_list.append(Callable(self, "pattern_windmill"))
-	#pattern_list.append(Callable(self, "pattern_rain"))
-	#pattern_list.append(Callable(self, "pattern_hazard_wave"))
-	#pattern_list.append(Callable(self, "pattern_rotate_timing"))
-	#pattern_list.append(Callable(self, "pattern_survive_random_slay"))
-	#pattern_list.append(Callable(self, "pattern_moving_link"))
-	#pattern_list.append(Callable(self, "pattern_shuffle_game"))
-	#pattern_list.append(Callable(self, "pattern_timing_return"))
-	#pattern_list.append(Callable(self, "pattern_rotation")) 
+	pattern_list.append(Callable(self, "pattern_cat_wheel"))
+	pattern_list.append(Callable(self, "pattern_fruitninja"))
+	pattern_list.append(Callable(self, "pattern_windmill"))
+	pattern_list.append(Callable(self, "pattern_rain"))
+	pattern_list.append(Callable(self, "pattern_hazard_wave"))
+	pattern_list.append(Callable(self, "pattern_rotate_timing"))
+	pattern_list.append(Callable(self, "pattern_survive_random_slay"))
+	pattern_list.append(Callable(self, "pattern_moving_link"))
+	pattern_list.append(Callable(self, "pattern_shuffle_game"))
+	pattern_list.append(Callable(self, "pattern_timing_return"))
+	pattern_list.append(Callable(self, "pattern_rotation")) 
 	pattern_list.append(Callable(self, "pattern_trickery"))
-	#pattern_list.append(Callable(self, "pattern_darksight"))
+	pattern_list.append(Callable(self, "pattern_darksight"))
 
 func pattern_shuffle_and_draw():
 	randomize()
@@ -635,17 +635,10 @@ func pattern_trickery_end():
 
 const pattern_darksight_playing_time = 6
 
-var wall : ColorRect = ColorRect.new()
+var pattern_darksight_darksight_node: Darksight
 
 func pattern_darksight():
-	pattern_start_time = PlayingFieldInterface.get_playing_time()
-	PlayingFieldInterface.set_theme_color(Color.BLACK)
-	
-	#create_hazard_bomb(Vector2(0,0), 0.0, 2)
-	#get_tree().current_scene.add_child(wall)
-	#wall.min_size = Vector2(50,50)
-	#wall.position = Vector2(0,0)
-	#wall.color = Color(1,1,1,1)
+	pattern_start_time = PlayingFieldInterface.get_playing_time()	
 	
 	var bomb1 : NumericBomb = create_numeric_bomb(Vector2(150,0), 0.4, 5.6, 1)
 	var bomb2 : NumericBomb = create_numeric_bomb(Vector2(-150,0), 0.4, 5.6, 2)
@@ -657,12 +650,15 @@ func pattern_darksight():
 	
 	link2.connect("both_bombs_removed", Callable(self, "pattern_darksight_end"))
 	
-	#await Utils.timer(1.5)
+	await get_tree().create_timer(0.5)
+	pattern_darksight_darksight_node = Darksight.create()
+	add_child(pattern_darksight_darksight_node)
 	
 func pattern_darksight_end():
-	PlayingFieldInterface.set_theme_color(Color.BISQUE)
+	pattern_darksight_darksight_node.fade_out()
 	await PlayingFieldInterface.player_grounded
 	PlayingFieldInterface.set_playing_time(pattern_start_time + (pattern_darksight_playing_time) / Engine.time_scale)
+	await get_tree().create_timer(0.5).timeout
 	pattern_shuffle_and_draw()
 	
 #pattern_darksight block end

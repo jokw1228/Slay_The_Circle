@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://d0vrs4tbjr1hq"]
+
+[ext_resource type="Script" path="res://scenes/bombs/bombeffects/Darksight.gd" id="1_iw840"]
+
+[node name="Darksight" type="ColorRect"]
+z_index = 50
+offset_left = -876.0
+offset_top = -876.0
+offset_right = 876.0
+offset_bottom = 876.0
+mouse_filter = 2
+color = Color(0, 0, 0, 0)
+script = ExtResource("1_iw840")
