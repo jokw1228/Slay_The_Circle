@@ -112,12 +112,10 @@ func _draw():
 	var ray_intersect: Vector2 = ray_1to2.get_collision_point()
 	if ray_intersect != Vector2.ZERO:
 		Indicator_1to2.position = ray_intersect
-		draw_circle(ray_intersect, 16, Color(1,1,1,0.5))
 	
 	ray_intersect = ray_2to1.get_collision_point()
 	if ray_intersect != Vector2.ZERO:
 		Indicator_2to1.position = ray_intersect
-		draw_circle(ray_intersect, 16, Color(1,1,1,0.5))
 
 func _ready():
 	await get_tree().physics_frame
@@ -126,5 +124,5 @@ func _ready():
 	Indicator_1to2.visible = true
 	Indicator_2to1.visible = true
 
-func _process(delta):
+func _process(_delta):
 	queue_redraw()

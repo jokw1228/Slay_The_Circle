@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://5hmqv8rxk05i"]
+[gd_scene load_steps=6 format=3 uid="uid://5hmqv8rxk05i"]
 
 [ext_resource type="Script" path="res://scenes/bombs/BombLink.gd" id="1_7a02t"]
 [ext_resource type="Script" path="res://scenes/bombs/BombLinkRayCast2D.gd" id="2_cro0j"]
 [ext_resource type="PackedScene" uid="uid://b6vb4gmrkuugo" path="res://scenes/bombs/bombeffects/BrightModulator.tscn" id="4_ddxdw"]
 [ext_resource type="PackedScene" uid="uid://b5bt215x185hg" path="res://scenes/bombs/bombeffects/Indicator.tscn" id="4_rp0nx"]
+[ext_resource type="Texture2D" uid="uid://fmijig1s0ghp" path="res://images/bomb/sprite_linked_indicator.svg" id="5_62ttc"]
 
 [node name="BombLink" type="Node2D" node_paths=PackedStringArray("ray_1to2", "ray_2to1", "Indicator_1to2", "Indicator_2to1") groups=["links"]]
 script = ExtResource("1_7a02t")
@@ -28,9 +29,15 @@ script = ExtResource("2_cro0j")
 visible = false
 size = 16.0
 
+[node name="Sprite2D" type="Sprite2D" parent="Indicator_1to2"]
+texture = ExtResource("5_62ttc")
+
 [node name="Indicator_2to1" parent="." instance=ExtResource("4_rp0nx")]
 visible = false
 size = 16.0
+
+[node name="Sprite2D" type="Sprite2D" parent="Indicator_2to1"]
+texture = ExtResource("5_62ttc")
 
 [connection signal="both_bombs_removed" from="." to="." method="queue_free"]
 [connection signal="single_bomb_removed" from="." to="." method="game_over"]

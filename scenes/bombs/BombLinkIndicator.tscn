@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://cpf17qsitca0y"]
-
-[ext_resource type="Texture2D" uid="uid://fmijig1s0ghp" path="res://images/bomb/sprite_linked_indicator.svg" id="1_natjb"]
-
-[node name="BombLinkIndicator" type="Sprite2D"]
-texture = ExtResource("1_natjb")
