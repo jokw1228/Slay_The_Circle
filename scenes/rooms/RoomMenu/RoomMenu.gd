@@ -21,7 +21,7 @@ func _ready():
 	# BombGenerator는 런타임에 생성되므로 get_node()를 통해 가져온다.
 	%MenuBombGenerator.room_menu = self
 	
-	MusicManager.play("bgm_PF","test_fast",0,1)
+	MusicManager.play("bgm_RM","main_fast",0,1)
 	
 	var tween_camera_zoom_out: Tween = Utils.tween()
 	tween_camera_zoom_out.set_ease(Tween.EASE_IN)

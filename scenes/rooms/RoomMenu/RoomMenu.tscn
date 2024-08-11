@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://bdrilkeb2s5n0"]
+[gd_scene load_steps=32 format=3 uid="uid://bdrilkeb2s5n0"]
 
 [ext_resource type="Script" path="res://scenes/rooms/RoomMenu/RoomMenu.gd" id="1_sshbl"]
 [ext_resource type="PackedScene" uid="uid://ccay8yrm25adk" path="res://scenes/rooms/RoomPlayingFields/RoomCircle.tscn" id="2_2e64d"]
@@ -12,7 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://djvtf5t5jqw8u" path="res://scenes/bombgenerators/MenuBombGenerator.tscn" id="9_xjnco"]
 [ext_resource type="PackedScene" uid="uid://bhe55ocau21ot" path="res://scenes/player/Player.tscn" id="10_qy0n6"]
 [ext_resource type="PackedScene" uid="uid://s264e74phclm" path="res://scenes/playingfield/CircleField.tscn" id="11_s1pwc"]
-[ext_resource type="PackedScene" uid="uid://cn7ttflmrmpth" path="res://scenes/playingfield/PlayingFieldCamera.tscn" id="13_itguu"]
+[ext_resource type="PackedScene" uid="uid://cn7ttflmrmpth" path="res://scenes/playingfield/PlayingfieldCamera.tscn" id="13_itguu"]
 [ext_resource type="PackedScene" uid="uid://dp0cdsfw5ylxj" path="res://scenes/ui/FancyButton.tscn" id="13_yxsra"]
 [ext_resource type="Script" path="res://addons/resonate/sound_manager/sound_bank.gd" id="14_oop3p"]
 [ext_resource type="Script" path="res://addons/resonate/sound_manager/sound_event_resource.gd" id="15_rr3yb"]
@@ -21,6 +21,10 @@
 [ext_resource type="AudioStream" uid="uid://4s45v1x286p0" path="res://audio/sfx/start_3.wav" id="18_f5hei"]
 [ext_resource type="Texture2D" uid="uid://51htjdg3re4g" path="res://images/star.svg" id="21_4bwp4"]
 [ext_resource type="Texture2D" uid="uid://b812gsdmi0oco" path="res://scenes/rooms/RoomMenu/HyperPanelTexture.svg" id="22_aomol"]
+[ext_resource type="Script" path="res://addons/resonate/music_manager/music_bank.gd" id="22_cviuo"]
+[ext_resource type="Script" path="res://addons/resonate/music_manager/music_track_resource.gd" id="23_v74bq"]
+[ext_resource type="Script" path="res://addons/resonate/music_manager/music_stem_resource.gd" id="24_h5epd"]
+[ext_resource type="AudioStream" uid="uid://dl56qa7pijbom" path="res://audio/bgm/fast_bgm.wav" id="25_r03bj"]
 
 [sub_resource type="Resource" id="Resource_u5uqr"]
 script = ExtResource("15_rr3yb")
@@ -48,6 +52,19 @@ streams = Array[AudioStream]([ExtResource("18_f5hei")])
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_sqgio"]
 texture = ExtResource("22_aomol")
+
+[sub_resource type="Resource" id="Resource_gy52r"]
+script = ExtResource("24_h5epd")
+name = "complete"
+enabled = true
+volume = 0.0
+stream = ExtResource("25_r03bj")
+
+[sub_resource type="Resource" id="Resource_lcarn"]
+script = ExtResource("23_v74bq")
+name = "main_fast"
+bus = ""
+stems = Array[ExtResource("24_h5epd")]([SubResource("Resource_gy52r")])
 
 [node name="RoomMenu" type="Node2D" node_paths=PackedStringArray("ui_container_ready", "camera", "reverb_effect_timer", "menu_bomb_generator")]
 script = ExtResource("1_sshbl")
@@ -286,6 +303,11 @@ offset_bottom = 607.0
 
 [node name="Value" parent="UIContainerSkewed/Start" index="4"]
 text = "START"
+
+[node name="MusicBank" type="Node" parent="."]
+script = ExtResource("22_cviuo")
+label = "bgm_RM"
+tracks = Array[ExtResource("23_v74bq")]([SubResource("Resource_lcarn")])
 
 [connection signal="pressed" from="UIContainerSkewed/Start" to="." method="start_stage"]
 

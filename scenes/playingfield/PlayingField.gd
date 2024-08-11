@@ -39,6 +39,13 @@ func start_PlayingField():
 		add_child(BombGenerator_node)
 		
 		connect("game_over", Callable(BombGenerator_node, "queue_free"))
+		
+	if (MusicManager.is_playing("bgm_PF","playing_bgm")):
+		MusicManager.disable_stem("dead",0.5)
+		MusicManager.enable_stem("on_game",0.5)
+	else:
+		MusicManager.stop(0.5)
+		MusicManager.play("bgm_PF","playing_bgm",0.5,1)
 
 func stop_PlayingField(bomb_position: Vector2):
 	if playing == true:
@@ -50,7 +57,8 @@ func stop_PlayingField(bomb_position: Vector2):
 		PlayingFieldInterface.game_speed_reset()
 		
 		SoundManager.play("sfx_PF","explosion")
-		MusicManager.play("bgm_PF","test_slow",0,1)
+		MusicManager.enable_stem("dead",0.5)
+		MusicManager.disable_stem("on_game",0.5)
 		
 		# Create a StartBomb
 		await get_tree().create_timer(2.3).timeout
