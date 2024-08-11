@@ -40,5 +40,5 @@ size = 16.0
 texture = ExtResource("5_62ttc")
 
 [connection signal="both_bombs_removed" from="." to="." method="queue_free"]
-[connection signal="single_bomb_removed" from="." to="." method="queue_free"]
 [connection signal="single_bomb_removed" from="." to="." method="game_over"]
+[connection signal="single_bomb_removed" from="." to="." method="queue_free"]

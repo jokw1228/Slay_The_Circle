@@ -33,7 +33,6 @@ func pattern_shuffle_and_draw():
 ###############################
 # pattern_wall_timing start
 # made by Jaeyong
-# get_tree().call_group("group_hazard_bomb", "early_eliminate")가 경고를 안제거해서 곤란합니다...ㅠㅠ
 
 const pattern_wall_timing_playing_time = 3
 var pattern_wall_timing_bomb_count: int
@@ -60,20 +59,19 @@ func pattern_wall_timing():
 	bomb4.connect("player_body_entered", Callable(self, "pattern_wall_timing_end"))
 	create_bomb_link(bomb3, bomb4)
 	
-	create_hazard_bomb(Vector2(0,0), 0.5, 0.5)
-	for i in (5):
-		create_hazard_bomb(pattern_wall_timing_pos_nor.rotated(PI/2) * 256 * i/5, 0.5, 0.5)
-		create_hazard_bomb(pattern_wall_timing_pos_nor.rotated(PI/2) * 256 * -i/5, 0.5, 0.5)
-		
-	create_hazard_bomb(Vector2(0,0), 1.5, 0.5)
-	for i in (5):
-		create_hazard_bomb(pattern_wall_timing_pos_nor.rotated(PI/2) * 256 * i/5, 1.5, 0.5)
-		create_hazard_bomb(pattern_wall_timing_pos_nor.rotated(PI/2) * 256 * -i/5, 1.5, 0.5)
-		
-	create_hazard_bomb(Vector2(0,0), 2.5, 0.5)
-	for i in (5):
-		create_hazard_bomb(pattern_wall_timing_pos_nor.rotated(PI/2) * 256 * i/5, 2.5, 0.5)
-		create_hazard_bomb(pattern_wall_timing_pos_nor.rotated(PI/2) * 256 * -i/5, 2.5, 0.5)
+	for i in (4):
+		create_hazard_bomb(pattern_wall_timing_pos_nor.rotated(PI/2) * 256 * i/4, 0.5, 0.5)
+		create_hazard_bomb(pattern_wall_timing_pos_nor.rotated(PI/2) * 256 * -i/4, 0.5, 0.5)
+	
+	await get_tree().create_timer(1.0).timeout
+	for i in (4):
+		create_hazard_bomb(pattern_wall_timing_pos_nor.rotated(PI/2) * 256 * i/4, 0.5, 0.5)
+		create_hazard_bomb(pattern_wall_timing_pos_nor.rotated(PI/2) * 256 * -i/4, 0.5, 0.5)
+	
+	await get_tree().create_timer(1.0).timeout
+	for i in (4):
+		create_hazard_bomb(pattern_wall_timing_pos_nor.rotated(PI/2) * 256 * i/4, 0.5, 0.5)
+		create_hazard_bomb(pattern_wall_timing_pos_nor.rotated(PI/2) * 256 * -i/4, 0.5, 0.5)
 
 func pattern_wall_timing_end():
 	pattern_wall_timing_bomb_count -= 1
