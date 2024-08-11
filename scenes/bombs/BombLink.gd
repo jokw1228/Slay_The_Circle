@@ -66,7 +66,14 @@ func on_player_grounded():
 		single_bomb_removed.emit()
 
 func game_over():
-	PlayingFieldInterface.game_over(position)
+	var return_position: Vector2 = Vector2.ZERO
+	if bomb1 != null:
+		return_position = bomb1.global_position
+		bomb1.exploded()
+	elif bomb2 != null:
+		return_position = bomb2.global_position
+		bomb2.exploded()
+	PlayingFieldInterface.game_over(return_position)
 
 func _draw():
 	if num_child_bombs < 2: # queue_redraw() 말고도 redraw하는 경우가 있나

@@ -24,7 +24,6 @@ func pattern_list_initialization():
 	pattern_list.append(Callable(self, "pattern_diamond_with_hazard_puzzled"))
 	pattern_list.append(Callable(self, "pattern_pizza"))
 	pattern_list.append(Callable(self, "pattern_narrow_road"))
-	
 
 func pattern_shuffle_and_draw():
 	randomize()
