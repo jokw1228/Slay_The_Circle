@@ -197,7 +197,7 @@ text = "123"
 custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
-text = "TEST1"
+text = "DIFFICULTY"
 
 [node name="InfoLabel2" type="Label" parent="UIContainerSkewed/Info/VBoxContainer"]
 unique_name_in_owner = true

@@ -79,7 +79,19 @@ func select_stage(difficulty: int):
 	Utils.slide_in(%Stage, 400, Vector2.RIGHT, 0.4)
 	
 	%Info.visible = true
-	%InfoLabel1.text = str(stage_index) # 테스트용 텍스트.
+	var high_score: float
+	match stage_index:
+		0:
+			high_score = SaveFileManager.circle_record
+			%InfoLabel2.text = "HARD"
+		1:
+			high_score = SaveFileManager.circler_record
+			%InfoLabel2.text = "HARDER"
+		2:
+			high_score = SaveFileManager.circlest_record
+			%InfoLabel2.text = "HARDEST"
+	%InfoLabel1.text = str(high_score)
+	
 	Utils.slide_in(%Info, 400, Vector2.LEFT, 0.4)
 	
 	if %Start.visible == false: # 시작 버튼 없을 경우 (처음 스테이지 선택한 경우)
@@ -97,7 +109,18 @@ func select_hyper():
 	Utils.slide_in(%HyperStage, 400, Vector2.RIGHT, 0.4)
 	
 	%Info.visible = true
-	%InfoLabel1.text = str(stage_index) # 테스트용 텍스트.
+	var high_score: float
+	match stage_index:
+		3:
+			high_score = SaveFileManager.hypercircle_record
+			%InfoLabel2.text = "F**K"
+		4:
+			high_score = SaveFileManager.hypercircler_record
+			%InfoLabel2.text = "F**KER"
+		5:
+			high_score = SaveFileManager.hypercirclest_record
+			%InfoLabel2.text = "F**KEST"
+	%InfoLabel1.text = str(high_score)
 	Utils.slide_in(%Info, 400, Vector2.LEFT, 0.4)
 	
 	#하이퍼 선택 사운드
