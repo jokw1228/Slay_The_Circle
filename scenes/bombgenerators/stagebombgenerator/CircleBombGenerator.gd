@@ -70,15 +70,20 @@ func pattern_numeric_center_then_link():
 	
 	var player_position: Vector2 = PlayingFieldInterface.get_player_position()
 	
-	create_numeric_bomb(Vector2.ZERO, 1.0, 2.0, 1)
-	var bomb1: NumericBomb = create_numeric_bomb(player_position * -0.5, 1.0, 3.0, 2)
-	var bomb2: NumericBomb = create_numeric_bomb(player_position * 0.5, 1.0, 3.0, 3)
+	create_numeric_bomb(Vector2.ZERO, 0.75, 2.25, 1)
+	var bomb1: NumericBomb = create_numeric_bomb(player_position * -0.5, 0.75, 3.25, 2)
+	var bomb2: NumericBomb = create_numeric_bomb(player_position * 0.5, 0.75, 3.25, 3)
 	var link: BombLink = create_bomb_link(bomb1, bomb2)
+	
+	if pattern_count > 16:
+		create_hazard_bomb(player_position.rotated(PI / 2.0) * 208.0 / 240.0, 0.75, 2.25)
+		create_hazard_bomb(player_position.rotated(PI / -2.0) * 208.0 / 240.0, 0.75, 2.25)
 	
 	link.connect("both_bombs_removed", Callable(self, "pattern_numeric_center_then_link_end"))
 
 func pattern_numeric_center_then_link_end():
 	await PlayingFieldInterface.player_grounded
+	get_tree().call_group("group_hazard_bomb", "early_eliminate")
 	PlayingFieldInterface.set_playing_time(pattern_start_time + (pattern_numeric_center_then_link_playing_time) / Engine.time_scale)
 	pattern_shuffle_and_draw()
 
@@ -131,9 +136,9 @@ func pattern_inversion_speedup():
 	var player_position: Vector2 = PlayingFieldInterface.get_player_position()
 	var speedup_value: float = 0.2 if pattern_count < 20 else 0.1
 	
-	create_rotationinversion_bomb(Vector2.ZERO, 1.0, 3.0)
-	var bomb1: RotationSpeedUpBomb = create_rotationspeedup_bomb(player_position.rotated(PI / 2.0) * 0.5, 1.0, 3.0, speedup_value)
-	var bomb2: GameSpeedUpBomb = create_gamespeedup_bomb(player_position.rotated(PI / -2.0) * 0.5, 1.0, 3.0, speedup_value)
+	create_rotationinversion_bomb(Vector2.ZERO, 0.75, 3.25)
+	var bomb1: RotationSpeedUpBomb = create_rotationspeedup_bomb(player_position.rotated(PI / 2.0) * 0.5, 0.75, 3.25, speedup_value * 2.0)
+	var bomb2: GameSpeedUpBomb = create_gamespeedup_bomb(player_position.rotated(PI / -2.0) * 0.5, 0.75, 3.25, speedup_value)
 	var link: BombLink = create_bomb_link(bomb1, bomb2)
 	
 	link.connect("both_bombs_removed", Callable(self, "pattern_inversion_speedup_end"))
@@ -216,19 +221,22 @@ func pattern_numeric_triangle_with_link():
 	
 	var ccw: float = 1 if randi() % 2 else -1
 	
-	var bomb1: NumericBomb = create_numeric_bomb(Vector2(bomb_radius * cos(angle_offset + ccw * PI/6), bomb_radius * -sin(angle_offset + ccw * PI/6)), 1.0, 3.0, 1)
-	var bomb2: NumericBomb = create_numeric_bomb(Vector2(bomb_radius * cos(angle_offset + ccw * PI/2), bomb_radius * -sin(angle_offset + ccw * PI/2)), 1.0, 3.0, 2)
+	if pattern_count > 16:
+		angle_offset += PI / -3.0 if ccw == 1 else PI / 3.0
+		
+	var bomb1: NumericBomb = create_numeric_bomb(Vector2(bomb_radius * cos(angle_offset + ccw * PI/6), bomb_radius * -sin(angle_offset + ccw * PI/6)), 0.75, 3.25, 1)
+	var bomb2: NumericBomb = create_numeric_bomb(Vector2(bomb_radius * cos(angle_offset + ccw * PI/2), bomb_radius * -sin(angle_offset + ccw * PI/2)), 0.75, 3.25, 2)
 	
 	var link1: BombLink = create_bomb_link(bomb1, bomb2)
 	link1.add_child(Indicator.create(Vector2(CIRCLE_FIELD_RADIUS * cos(angle_offset + ccw * 2*PI/3), CIRCLE_FIELD_RADIUS * -sin(angle_offset + ccw * 2*PI/3)), 32))
 	
-	var bomb3: NumericBomb = create_numeric_bomb(Vector2(bomb_radius * cos(angle_offset + ccw * 5*PI/6), bomb_radius * -sin(angle_offset + ccw * 5*PI/6)), 1.0, 3.0, 3)
-	var bomb4: NumericBomb = create_numeric_bomb(Vector2(bomb_radius * cos(angle_offset + ccw * 7*PI/6), bomb_radius * -sin(angle_offset + ccw * 7*PI/6)), 1.0, 3.0, 4)
+	var bomb3: NumericBomb = create_numeric_bomb(Vector2(bomb_radius * cos(angle_offset + ccw * 5*PI/6), bomb_radius * -sin(angle_offset + ccw * 5*PI/6)), 0.75, 3.25, 3)
+	var bomb4: NumericBomb = create_numeric_bomb(Vector2(bomb_radius * cos(angle_offset + ccw * 7*PI/6), bomb_radius * -sin(angle_offset + ccw * 7*PI/6)), 0.75, 3.25, 4)
 	
 	create_bomb_link(bomb3, bomb4)
 	
-	var bomb5: NumericBomb = create_numeric_bomb(Vector2(bomb_radius * cos(angle_offset + ccw * 3*PI/2), bomb_radius * -sin(angle_offset + ccw * 3*PI/2)), 1.0, 3.0, 5)
-	var bomb6: NumericBomb = create_numeric_bomb(Vector2(bomb_radius * cos(angle_offset + ccw * 11*PI/6), bomb_radius * -sin(angle_offset + ccw * 11*PI/6)), 1.0, 3.0, 6)
+	var bomb5: NumericBomb = create_numeric_bomb(Vector2(bomb_radius * cos(angle_offset + ccw * 3*PI/2), bomb_radius * -sin(angle_offset + ccw * 3*PI/2)), 0.75, 3.25, 5)
+	var bomb6: NumericBomb = create_numeric_bomb(Vector2(bomb_radius * cos(angle_offset + ccw * 11*PI/6), bomb_radius * -sin(angle_offset + ccw * 11*PI/6)), 0.75, 3.25, 6)
 	
 	var link3: BombLink = create_bomb_link(bomb5, bomb6)
 	
@@ -259,14 +267,14 @@ func pattern_star():
 	const bomb_radius = 208
 	
 	#bomb1
-	create_numeric_bomb(Vector2(bomb_radius * cos(player_angle),bomb_radius*sin(player_angle)), 1.0, 3.0, 1)
+	create_numeric_bomb(Vector2(bomb_radius * cos(player_angle),bomb_radius*sin(player_angle)), 0.75, 3.25, 1)
 	#bomb2
-	create_numeric_bomb(Vector2(bomb_radius*cos(player_angle+4*PI/5),bomb_radius*sin(player_angle+4*PI/5)), 1.0, 3.0, 2)
+	create_numeric_bomb(Vector2(bomb_radius*cos(player_angle+4*PI/5),bomb_radius*sin(player_angle+4*PI/5)), 0.75, 3.25, 2)
 	#bomb3
-	create_numeric_bomb(Vector2(bomb_radius*cos(player_angle+8*PI/5),bomb_radius*sin(player_angle+8*PI/5)), 1.0, 3.0, 3)
+	create_numeric_bomb(Vector2(bomb_radius*cos(player_angle+8*PI/5),bomb_radius*sin(player_angle+8*PI/5)), 0.75, 3.25, 3)
 	#bomb4
-	create_numeric_bomb(Vector2(bomb_radius*cos(player_angle+2*PI/5),bomb_radius*sin(player_angle+2*PI/5)), 1.0, 3.0, 4)
-	var bomb5: NumericBomb = create_numeric_bomb(Vector2(bomb_radius*cos(player_angle+6*PI/5),bomb_radius*sin(player_angle+6*PI/5)), 1.0, 3.0, 5)
+	create_numeric_bomb(Vector2(bomb_radius*cos(player_angle+2*PI/5),bomb_radius*sin(player_angle+2*PI/5)), 0.75, 3.25, 4)
+	var bomb5: NumericBomb = create_numeric_bomb(Vector2(bomb_radius*cos(player_angle+6*PI/5),bomb_radius*sin(player_angle+6*PI/5)), 0.75, 3.25, 5)
 
 	bomb5.connect("no_lower_value_bomb_exists",Callable(self,"pattern_star_end"))
 
@@ -303,10 +311,10 @@ func pattern_random_link():
 	var vector = [pattern_random_link_auto_rotate(0+correction), pattern_random_link_auto_rotate(PI/2+correction), pattern_random_link_auto_rotate(PI+correction), pattern_random_link_auto_rotate(3*PI/2+correction)]
 	var bombs = []
 	
-	bombs.append(create_numeric_bomb(vector[0], 1.0, 3.0, 1))
-	bombs.append(create_numeric_bomb(vector[order[0]], 1.0, 3.0, 2))
-	bombs.append(create_numeric_bomb(vector[order[1]], 1.0, 3.0, 3))
-	bombs.append(create_numeric_bomb(vector[order[2]], 1.0, 3.0, 4))
+	bombs.append(create_numeric_bomb(vector[0], 0.75, 3.25, 1))
+	bombs.append(create_numeric_bomb(vector[order[0]], 0.75, 3.25, 2))
+	bombs.append(create_numeric_bomb(vector[order[1]], 0.75, 3.25, 3))
+	bombs.append(create_numeric_bomb(vector[order[2]], 0.75, 3.25, 4))
 	create_bomb_link(bombs[0], bombs[1])
 	create_bomb_link(bombs[2], bombs[3])
 	
@@ -414,13 +422,16 @@ func pattern_numeric_inversion():
 	
 	var player_normalized: Vector2 = PlayingFieldInterface.get_player_position().normalized()
 	
-	var bomb1: NumericBomb = create_numeric_bomb(DIST * sqrt(3) * player_normalized.rotated(deg_to_rad(60)), 1.0, 3.0, 1)
-	var bomb2: NumericBomb = create_numeric_bomb(DIST * player_normalized.rotated(deg_to_rad(120)), 1.0, 3.0, 2)
+	if pattern_count < 16 or randi() % 2:
+		create_numeric_bomb(DIST * sqrt(3) * player_normalized.rotated(deg_to_rad(60)), 0.75, 3.25, 1)
+	else:
+		create_numeric_bomb(DIST * sqrt(3) * player_normalized.rotated(deg_to_rad(-60)), 0.75, 3.25, 1)
+	var bomb2: NumericBomb = create_numeric_bomb(DIST * player_normalized.rotated(deg_to_rad(120)), 0.75, 3.25, 2)
 	var bomb3: Bomb
 	if PlayingFieldInterface.get_rotation_speed() != 0:
-		bomb3 = create_rotationinversion_bomb(DIST * player_normalized.rotated(deg_to_rad(240)), 1.0, 3.0)
+		bomb3 = create_rotationinversion_bomb(DIST * player_normalized.rotated(deg_to_rad(240)), 0.75, 3.25)
 	else:
-		bomb3 = create_normal_bomb(DIST * player_normalized.rotated(deg_to_rad(240)), 1.0, 3.0)
+		bomb3 = create_normal_bomb(DIST * player_normalized.rotated(deg_to_rad(240)), 0.75, 3.25)
 	var link: BombLink = create_bomb_link(bomb2, bomb3)
 	
 	link.connect("both_bombs_removed", Callable(self, "pattern_numeric_inversion_end"))
@@ -451,7 +462,7 @@ func pattern_speed_and_rotation():
 	const bomb_radius = 64
 	
 	var bomb1: NumericBomb = create_numeric_bomb(Vector2(2 * bomb_radius * cos(player_angle), 2 * bomb_radius * sin(player_angle)),0.5,3.5,1)
-	var bomb2: RotationSpeedUpBomb = create_rotationspeedup_bomb(Vector2(bomb_radius * cos(player_angle), bomb_radius * sin(player_angle)),0.5,3.5,speedup_value)
+	var bomb2: RotationSpeedUpBomb = create_rotationspeedup_bomb(Vector2(bomb_radius * cos(player_angle), bomb_radius * sin(player_angle)),0.5,3.5,speedup_value * 2.0)
 	
 	create_bomb_link(bomb1,bomb2)
 	
@@ -558,7 +569,7 @@ func pattern_diamond():
 	pattern_start_time = PlayingFieldInterface.get_playing_time()
 	
 	pattern_diamond_bomb_count = 4
-	var angle_offset: float = randf() if pattern_start_time > 30.0 else PlayingFieldInterface.get_player_position().angle()
+	var angle_offset: float = randf() if pattern_count > 16 else PlayingFieldInterface.get_player_position().angle()
 	var normal_bomb_list: Array[NormalBomb]
 	
 	const CIRCLE_FIELD_RADIUS = 256
@@ -595,10 +606,19 @@ func pattern_twisted_numeric():
 	
 	var end_bomb: NumericBomb
 	
-	end_bomb = create_numeric_bomb(PlayingFieldInterface.get_player_position() * -144.0 / 240.0, 1.0, 3.0 ,4)
-	create_numeric_bomb(PlayingFieldInterface.get_player_position() * -48.0 / 240.0, 1.0, 3.0, 2)
-	create_numeric_bomb(PlayingFieldInterface.get_player_position() * 48.0 / 240.0, 1.0, 3.0, 1)
-	create_numeric_bomb(PlayingFieldInterface.get_player_position() * 144.0 / 240.0, 1.0, 3.0, 3)
+	if pattern_count < 16 or randi() % 2:
+		end_bomb = create_numeric_bomb(PlayingFieldInterface.get_player_position() * -144.0 / 240.0, 0.75, 3.25 ,4)
+		create_numeric_bomb(PlayingFieldInterface.get_player_position() * 144.0 / 240.0, 0.75, 3.25, 3)
+	else:
+		end_bomb = create_numeric_bomb(PlayingFieldInterface.get_player_position() * 144.0 / 240.0, 0.75, 3.25 ,4)
+		create_numeric_bomb(PlayingFieldInterface.get_player_position() * -144.0 / 240.0, 0.75, 3.25, 3)
+	
+	if pattern_count < 16 or randi() % 2:
+		create_numeric_bomb(PlayingFieldInterface.get_player_position() * -48.0 / 240.0, 0.75, 3.25, 2)
+		create_numeric_bomb(PlayingFieldInterface.get_player_position() * 48.0 / 240.0, 0.75, 3.25, 1)
+	else:
+		create_numeric_bomb(PlayingFieldInterface.get_player_position() * 48.0 / 240.0, 0.75, 3.25, 2)
+		create_numeric_bomb(PlayingFieldInterface.get_player_position() * -48.0 / 240.0, 0.75, 3.25, 1)
 	
 	end_bomb.connect("player_body_entered", Callable(self, "pattern_twisted_numeric_end"))
 
@@ -660,13 +680,13 @@ func pattern_numeric_choice():
 	
 	if rand == 0:
 		for i in range(8):
-			var bomb: NumericBomb = create_numeric_bomb(player_position.rotated(rotation_box[i%4]) * 208.0 / 240.0, 0.5, 1.0, i+1)
+			var bomb: NumericBomb = create_numeric_bomb(player_position.rotated(rotation_box[i%4]) * 208.0 / 240.0, 0.3, 1.2, i+1)
 			if i == 7:
 				bomb.connect("player_body_entered",Callable(self,"pattern_numeric_choice_end"))
 			await get_tree().create_timer(0.375).timeout
 	else:
 		for i in range(8):
-			var bomb: NumericBomb = create_numeric_bomb(player_position.rotated(rotation_inv_box[i%4]) * 208.0 / 240.0, 0.5, 1.0, i+1)
+			var bomb: NumericBomb = create_numeric_bomb(player_position.rotated(rotation_inv_box[i%4]) * 208.0 / 240.0, 0.3, 1.2, i+1)
 			if i == 7:
 				bomb.connect("player_body_entered",Callable(self,"pattern_numeric_choice_end"))
 			await get_tree().create_timer(0.375).timeout
@@ -770,14 +790,16 @@ func pattern_369():
 	var angle_offset: float = PlayingFieldInterface.get_player_position().angle()
 	for i in range(1, 9):
 		if i % 3 != 0:
-			create_numeric_bomb(Vector2(208 * cos(angle_offset + i * PI/4.0), 208 * sin(angle_offset + i * PI/4.0)), 0.5, 1.5, i)
+			create_numeric_bomb(Vector2(208 * cos(angle_offset + i * PI/4.0), 208 * sin(angle_offset + i * PI/4.0)), 0.4, 1.6, i)
+			if pattern_count > 16:
+				create_hazard_bomb(Vector2(208 * cos(angle_offset + i * PI/4.0+PI), 208 * sin(angle_offset + i * PI/4.0+PI)), 0.4, 1.6)
 		else:
-			create_hazard_bomb(Vector2(208 * cos(angle_offset + i * PI/4.0), 208 * sin(angle_offset + i * PI/4.0)), 0.5, 1.5)
-			create_numeric_bomb(Vector2(208 * cos(angle_offset + i * PI/4.0+PI), 208 * sin(angle_offset + i * PI/4.0+PI)), 0.5, 1.5, i)
+			create_hazard_bomb(Vector2(208 * cos(angle_offset + i * PI/4.0), 208 * sin(angle_offset + i * PI/4.0)), 0.4, 1.6)
+			create_numeric_bomb(Vector2(208 * cos(angle_offset + i * PI/4.0+PI), 208 * sin(angle_offset + i * PI/4.0+PI)), 0.4, 1.6, i)
 		await get_tree().create_timer(0.5).timeout
 	var end_bomb: NumericBomb
-	create_hazard_bomb(Vector2(208 * cos(angle_offset + 9 * PI/4.0), 208 * sin(angle_offset + 9 * PI/4.0)), 0.5, 1.5)
-	end_bomb = create_numeric_bomb(Vector2(208 * cos(angle_offset + 9 * PI/4.0+PI), 208 * sin(angle_offset + 9 * PI/4.0+PI)), 0.5, 1.5, 9)
+	create_hazard_bomb(Vector2(208 * cos(angle_offset + 9 * PI/4.0), 208 * sin(angle_offset + 9 * PI/4.0)), 0.4, 1.6)
+	end_bomb = create_numeric_bomb(Vector2(208 * cos(angle_offset + 9 * PI/4.0+PI), 208 * sin(angle_offset + 9 * PI/4.0+PI)), 0.4, 1.6, 9)
 	end_bomb.connect("no_lower_value_bomb_exists", Callable(self, "pattern_369_end"))
 
 func pattern_369_end():
