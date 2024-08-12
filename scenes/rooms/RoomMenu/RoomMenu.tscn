@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=3 uid="uid://bdrilkeb2s5n0"]
+[gd_scene load_steps=40 format=3 uid="uid://bdrilkeb2s5n0"]
 
 [ext_resource type="Script" path="res://scenes/rooms/RoomMenu/RoomMenu.gd" id="1_sshbl"]
 [ext_resource type="PackedScene" uid="uid://ccay8yrm25adk" path="res://scenes/rooms/RoomPlayingFields/RoomCircle.tscn" id="2_2e64d"]
@@ -27,6 +27,8 @@
 [ext_resource type="AudioStream" uid="uid://dl56qa7pijbom" path="res://audio/bgm/fast_bgm.wav" id="25_r03bj"]
 [ext_resource type="Texture2D" uid="uid://7ed2eanqanvm" path="res://scenes/ui/ColoredPanelTexture.svg" id="26_8kqfa"]
 [ext_resource type="Texture2D" uid="uid://cv60tqgqvgob" path="res://images/option.png" id="26_bsu3u"]
+[ext_resource type="Script" path="res://scenes/rooms/RoomMenu/BgmSlider.gd" id="28_agem7"]
+[ext_resource type="Script" path="res://scenes/rooms/RoomMenu/SfxSlider.gd" id="29_p7uuc"]
 
 [sub_resource type="Resource" id="Resource_u5uqr"]
 script = ExtResource("15_rr3yb")
@@ -110,6 +112,7 @@ unique_name_in_owner = true
 [node name="SoundBank" type="Node" parent="."]
 script = ExtResource("14_oop3p")
 label = "sfx_menu"
+bus = "SFX"
 events = Array[ExtResource("15_rr3yb")]([SubResource("Resource_u5uqr"), SubResource("Resource_45hgn"), SubResource("Resource_bq31y")])
 
 [node name="UIContainerSkewed" type="CanvasLayer" parent="."]
@@ -325,6 +328,7 @@ text = "START"
 [node name="MusicBank" type="Node" parent="."]
 script = ExtResource("22_cviuo")
 label = "bgm_RM"
+bus = "BGM"
 tracks = Array[ExtResource("23_v74bq")]([SubResource("Resource_lcarn")])
 
 [node name="UIContainerUnskewed" type="CanvasLayer" parent="."]
@@ -413,17 +417,22 @@ custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 max_value = 2.0
 step = 0.001
+script = ExtResource("28_agem7")
+bus_name = "BGM"
 
 [node name="Sfx" type="Label" parent="UIContainerUnskewed/Option/Panel/VBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 25
-text = "MUSIC VOLUME"
+text = "SOUND EFFECT VOLUME
+"
 
 [node name="SfxSlider" type="HSlider" parent="UIContainerUnskewed/Option/Panel/VBoxContainer"]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 max_value = 2.0
 step = 0.001
+script = ExtResource("29_p7uuc")
+bus_name = "SFX"
 
 [connection signal="pressed" from="UIContainerSkewed/Start" to="." method="start_stage"]
 [connection signal="pressed" from="UIContainerUnskewed/OptionButton" to="." method="_on_option_button_pressed"]
