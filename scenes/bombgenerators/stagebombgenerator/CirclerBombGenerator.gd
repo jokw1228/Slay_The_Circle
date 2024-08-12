@@ -112,7 +112,7 @@ func pattern_wall_timing_auto_rotate(angle):
 ###############################
 # pattern_scattered_hazards start
 # made by Jaeyong
-const pattern_scattered_hazards_playing_time = 2.5
+const pattern_scattered_hazards_playing_time = 3.5
 var pattern_scattered_hazards_bomb_count: int
 
 func pattern_scattered_hazards():
@@ -125,10 +125,11 @@ func pattern_scattered_hazards():
 		player_pos_normalized = Vector2(1,0)
 	
 	for i in (8):
-		create_hazard_bomb(player_pos_normalized.rotated(PI/4 * i).rotated(3 * PI/8) * 256 ,0.25,2.25)
+		create_hazard_bomb(player_pos_normalized.rotated(PI/4 * i).rotated(3 * PI/8) * (256 - 32) ,0.25,3.25)
 	
+	var rotation_offset: float = randf_range(0, PI/6)
 	for i in (3):
-		var bomb: NormalBomb = create_normal_bomb(player_pos_normalized.rotated(PI/3 * i * 2).rotated(PI/4) * 84 ,0.5, 2)
+		var bomb: NormalBomb = create_normal_bomb(player_pos_normalized.rotated(PI/3 * i * 2).rotated(rotation_offset) * 64 ,0.5, 3)
 		bomb.connect("player_body_entered", Callable(self, "pattern_scattered_hazards_end"))
 	
 func pattern_scattered_hazards_end():
