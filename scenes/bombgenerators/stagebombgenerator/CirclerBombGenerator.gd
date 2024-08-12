@@ -222,21 +222,18 @@ func pattern_random_shape_random(pattern: int, randomrotation: float):
 # pattern_random_rotation block start
 # made by jinhyun
 
-var pattern_random_rotation_timer: float
-var pattern_random_rotation_timer_tween: Tween
+const pattern_random_rotation_playing_time = 6.7
+
 var original_rotation_amount: float = 0
 
 func pattern_random_rotation():
 	PlayingFieldInterface.set_theme_color(Color.VIOLET)
+	
+	pattern_start_time = PlayingFieldInterface.get_playing_time()
+	
 	original_rotation_amount = PlayingFieldInterface.current_PlayingField_node.PlayingFieldCamera_node.rotation_amount
-	print(original_rotation_amount)
 	
 	PlayingFieldInterface.rotation_stop()
-	pattern_random_rotation_timer = 2.0
-	if pattern_random_rotation_timer_tween != null:
-		pattern_random_rotation_timer_tween.kill()
-	pattern_random_rotation_timer_tween = get_tree().create_tween()
-	pattern_random_rotation_timer_tween.tween_property(self,"pattern_random_rotation_timer",0.0,2.0)
 	
 	var player_position: Vector2
 	var rand: int
@@ -285,13 +282,12 @@ func pattern_random_rotation():
 				await get_tree().create_timer(0.2).timeout
 			PlayingFieldInterface.rotation_stop()
 	
-	if is_inside_tree():
-		await get_tree().create_timer(0.5).timeout
-	var bomb = create_rotationspeedup_bomb(Vector2(0, 0), 0.3, 3, original_rotation_amount)
+	var bomb = create_rotationspeedup_bomb(Vector2(0, 0), 0.3, 0.7, original_rotation_amount)
 	bomb.connect("player_body_entered",Callable(self,"pattern_random_rotation_end"))
 
 func pattern_random_rotation_end():
-	PlayingFieldInterface.add_playing_time(pattern_random_rotation_timer)
+	await PlayingFieldInterface.player_grounded
+	PlayingFieldInterface.set_playing_time(pattern_start_time + pattern_random_rotation_playing_time / Engine.time_scale)
 	pattern_shuffle_and_draw()
 	
 # pattern_random_rotation end
