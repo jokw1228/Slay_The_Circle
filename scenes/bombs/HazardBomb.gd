@@ -18,6 +18,12 @@ func _on_warning_timer_warning_timeout():
 	modulate.a = 1.0
 	CollisionShape2D_node.disabled = false
 
+func exploded(): # (override) hazard bomb explosion effect
+	var inst: BombExplodedEffect = BombExplodedEffect.create(global_position)
+	inst.get_node("BrightModulator").queue_free()
+	inst.modulate = Color.RED
+	get_tree().current_scene.add_child( inst )
+
 func hazard_bomb_ended_effect():
 	get_tree().current_scene.add_child( HazardBombEndedEffect.create(global_position) )
 
