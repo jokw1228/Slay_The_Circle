@@ -65,8 +65,6 @@ func pattern_wall_timing():
 	
 	pattern_wall_timing_bomb_count = 4
 	pattern_wall_timing_pos_nor = PlayingFieldInterface.get_player_position().normalized()
-	if (pattern_wall_timing_pos_nor == Vector2(0,0)):
-		pattern_wall_timing_pos_nor = Vector2(1,0)
 	pattern_wall_timing_angle = pattern_wall_timing_pos_nor.angle()
 
 	var bomb1 = create_normal_bomb(pattern_wall_timing_auto_rotate(PI /4), 0.25, 2.75)
@@ -81,19 +79,24 @@ func pattern_wall_timing():
 	bomb4.connect("player_body_entered", Callable(self, "pattern_wall_timing_end"))
 	create_bomb_link(bomb3, bomb4)
 	
-	for i in (4):
-		create_hazard_bomb(pattern_wall_timing_pos_nor.rotated(PI/2) * 256 * i/4, 0.5, 0.5)
-		create_hazard_bomb(pattern_wall_timing_pos_nor.rotated(PI/2) * 256 * -i/4, 0.5, 0.5)
+	create_hazard_bomb(Vector2.ZERO, 0.5, 0.5)
+	for i in [1,2,3]:
+		create_hazard_bomb(pattern_wall_timing_pos_nor.rotated(PI/2) * (256) * i/4, 0.5, 0.5)
+		create_hazard_bomb(pattern_wall_timing_pos_nor.rotated(PI/2) * (256) * -i/4, 0.5, 0.5)
 	
 	await get_tree().create_timer(1.0).timeout
-	for i in (4):
-		create_hazard_bomb(pattern_wall_timing_pos_nor.rotated(PI/2) * 256 * i/4, 0.5, 0.5)
-		create_hazard_bomb(pattern_wall_timing_pos_nor.rotated(PI/2) * 256 * -i/4, 0.5, 0.5)
+	
+	create_hazard_bomb(Vector2.ZERO, 0.5, 0.5)
+	for i in [1,2,3]:
+		create_hazard_bomb(pattern_wall_timing_pos_nor.rotated(PI/2) * (256) * i/4, 0.5, 0.5)
+		create_hazard_bomb(pattern_wall_timing_pos_nor.rotated(PI/2) * (256) * -i/4, 0.5, 0.5)
 	
 	await get_tree().create_timer(1.0).timeout
-	for i in (4):
-		create_hazard_bomb(pattern_wall_timing_pos_nor.rotated(PI/2) * 256 * i/4, 0.5, 0.5)
-		create_hazard_bomb(pattern_wall_timing_pos_nor.rotated(PI/2) * 256 * -i/4, 0.5, 0.5)
+	
+	create_hazard_bomb(Vector2.ZERO, 0.5, 0.5)
+	for i in [1,2,3]:
+		create_hazard_bomb(pattern_wall_timing_pos_nor.rotated(PI/2) * (256) * i/4, 0.5, 0.5)
+		create_hazard_bomb(pattern_wall_timing_pos_nor.rotated(PI/2) * (256) * -i/4, 0.5, 0.5)
 
 func pattern_wall_timing_end():
 	pattern_wall_timing_bomb_count -= 1
