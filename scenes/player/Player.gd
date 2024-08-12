@@ -57,7 +57,7 @@ func _movement_queue_proccessing():
 		const speed = 2048.0
 		velocity = (position_to_go - position).normalized() * speed
 		shooted.emit(velocity) # shooted signal emit
-		var d = position_to_go - position
+		var d: Vector2 = position_to_go - position
 		var distance: float = sqrt(d.x * d.x + d.y * d.y)
 		var timer: SceneTreeTimer = get_tree().create_timer(distance / speed)
 		

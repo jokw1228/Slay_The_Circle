@@ -25,7 +25,7 @@ func make_partial_collision_polygon(radian: float):
 	var inst: CollisionPolygon2D = CollisionPolygon2D.new()
 	var list: PackedVector2Array = []
 	# make a circle shape
-	const NUMBER_OF_POINTS = 256
+	const NUMBER_OF_POINTS = 128
 	const INNER_OFFSET = 0
 	const OUTER_OFFSET = 32
 	for i in range(NUMBER_OF_POINTS):
