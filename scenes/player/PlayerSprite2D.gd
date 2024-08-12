@@ -1,8 +1,5 @@
 extends AnimatedSprite2D
 
-@export var Player_node: Player
-@export var PlayerRayCast2D: RayCast2D
-
 var ready_to_shoot: bool = false
 var ready_to_land: bool = false
 
@@ -16,8 +13,8 @@ func _on_player_grounded():
 	ready_to_land = true
 	ready_to_shoot = false
 
-func _on_player_shooted():
-	rotation = PlayerRayCast2D.rotation
+func _on_player_shooted(player_velocity: Vector2):
+	rotation = player_velocity.angle()
 	offset.x = 0
 	play_backwards("laser_landing")
 	ready_to_shoot = true
@@ -29,7 +26,7 @@ func _on_animation_finished():
 		play("laser")
 		ready_to_shoot = false
 	elif ready_to_land == true:
-		rotation = Player_node.position.angle()
+		rotation = global_position.angle()
 		offset.x = -32
 		play("landed")
 		ready_to_land = false
