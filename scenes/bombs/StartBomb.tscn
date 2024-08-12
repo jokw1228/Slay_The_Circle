@@ -36,6 +36,7 @@ texture = ExtResource("4_ryl6g")
 [node name="SoundBank" type="Node" parent="."]
 script = ExtResource("5_3cyy8")
 label = "sfx_S_bomb"
+bus = "SFX"
 events = Array[ExtResource("6_cg20x")]([SubResource("Resource_ist51")])
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

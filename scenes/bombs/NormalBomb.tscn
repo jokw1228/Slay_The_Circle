@@ -39,6 +39,7 @@ disabled = true
 [node name="SoundBank" type="Node" parent="."]
 script = ExtResource("3_8xxje")
 label = "sfx_Nor_bomb"
+bus = "SFX"
 events = Array[ExtResource("4_d5lvo")]([SubResource("Resource_kd5wo")])
 
 [node name="NormalSprite" type="Sprite2D" parent="."]

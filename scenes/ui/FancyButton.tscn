@@ -180,6 +180,7 @@ wait_time = 2.0
 [node name="SoundBank" type="Node" parent="."]
 script = ExtResource("2_jfm63")
 label = "sfx_fancy_button"
+bus = "SFX"
 events = Array[ExtResource("3_7gwtw")]([SubResource("Resource_c47sr")])
 
 [connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

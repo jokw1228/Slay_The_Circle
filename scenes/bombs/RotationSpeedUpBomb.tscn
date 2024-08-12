@@ -41,6 +41,7 @@ texture = ExtResource("3_1xipd")
 [node name="SoundBank" type="Node" parent="."]
 script = ExtResource("4_vtf52")
 label = "sfx_RSU_bomb"
+bus = "SFX"
 events = Array[ExtResource("5_jwm7d")]([SubResource("Resource_purij")])
 
 [node name="BrightModulator" parent="." instance=ExtResource("8_djtpj")]

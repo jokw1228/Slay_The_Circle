@@ -1,7 +1,7 @@
 [gd_scene load_steps=20 format=3 uid="uid://dntg6argh8n3n"]
 
 [ext_resource type="Script" path="res://scenes/playingfield/PlayingField.gd" id="1_ed5yp"]
-[ext_resource type="PackedScene" uid="uid://cn7ttflmrmpth" path="res://scenes/playingfield/PlayingFieldCamera.tscn" id="2_xhkow"]
+[ext_resource type="PackedScene" uid="uid://cn7ttflmrmpth" path="res://scenes/playingfield/PlayingfieldCamera.tscn" id="2_xhkow"]
 [ext_resource type="PackedScene" uid="uid://csx6yjkvpfqcy" path="res://scenes/background/BackGroundDeSterrennacht.tscn" id="3_0edn4"]
 [ext_resource type="PackedScene" uid="uid://dl4bge564bur" path="res://scenes/playingfield/PlayingFieldUI.tscn" id="3_7mvnn"]
 [ext_resource type="PackedScene" uid="uid://bp1nuspdeitey" path="res://scenes/background/BackGroundEffect.tscn" id="4_f42c7"]
@@ -13,8 +13,8 @@
 [ext_resource type="Script" path="res://addons/resonate/music_manager/music_bank.gd" id="10_awu3q"]
 [ext_resource type="Script" path="res://addons/resonate/music_manager/music_track_resource.gd" id="11_itom1"]
 [ext_resource type="Script" path="res://addons/resonate/music_manager/music_stem_resource.gd" id="12_nuc5t"]
-[ext_resource type="AudioStream" uid="uid://b6e1eky101rdb" path="res://audio/bgm/STC_on_game.wav" id="16_x4wtu"]
-[ext_resource type="AudioStream" uid="uid://bad8301bjdxhm" path="res://audio/bgm/STC_dead.wav" id="17_ibtlf"]
+[ext_resource type="AudioStream" uid="uid://87ar0gay8klk" path="res://audio/bgm/STC_on_game_ver2.wav" id="14_5lwlu"]
+[ext_resource type="AudioStream" uid="uid://ccmijyfmn8w65" path="res://audio/bgm/STC_dead_ver2.wav" id="15_v5tlw"]
 
 [sub_resource type="Resource" id="Resource_x54bq"]
 script = ExtResource("8_g3bnd")
@@ -29,14 +29,14 @@ script = ExtResource("12_nuc5t")
 name = "on_game"
 enabled = true
 volume = 0.0
-stream = ExtResource("16_x4wtu")
+stream = ExtResource("14_5lwlu")
 
 [sub_resource type="Resource" id="Resource_fw2jh"]
 script = ExtResource("12_nuc5t")
 name = "dead"
 enabled = true
 volume = 0.0
-stream = ExtResource("17_ibtlf")
+stream = ExtResource("15_v5tlw")
 
 [sub_resource type="Resource" id="Resource_jkvr2"]
 script = ExtResource("11_itom1")
@@ -67,19 +67,21 @@ CircleField_node = NodePath("CircleField")
 [node name="SoundBank" type="Node" parent="."]
 script = ExtResource("7_lhgfl")
 label = "sfx_PF"
+bus = "SFX"
 events = Array[ExtResource("8_g3bnd")]([SubResource("Resource_x54bq")])
 
 [node name="MusicBank" type="Node" parent="."]
 script = ExtResource("10_awu3q")
 label = "bgm_PF"
+bus = "BGM"
 tracks = Array[ExtResource("11_itom1")]([SubResource("Resource_jkvr2")])
 
 [connection signal="game_over" from="." to="BackGroundEffect" method="game_over_reset"]
 [connection signal="game_over" from="." to="PlayingFieldCamera" method="rotation_stop"]
-[connection signal="game_over" from="." to="PlayingFieldCamera" method="zoom_transition"]
 [connection signal="game_over" from="." to="PlayingFieldCamera" method="gameover_position_transition"]
-[connection signal="game_over" from="." to="CircleField" method="stop_reverb_effect"]
+[connection signal="game_over" from="." to="PlayingFieldCamera" method="zoom_transition"]
 [connection signal="game_over" from="." to="CircleField" method="create_game_over_effect"]
+[connection signal="game_over" from="." to="CircleField" method="stop_reverb_effect"]
 [connection signal="game_over" from="." to="PlayingFieldUI" method="close_Playing_and_open_Stopped"]
 [connection signal="game_ready" from="." to="CircleField" method="create_game_ready_effect"]
 [connection signal="game_start" from="." to="PlayingFieldCamera" method="rotation_reset"]
