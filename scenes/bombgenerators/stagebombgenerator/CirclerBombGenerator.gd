@@ -341,7 +341,7 @@ func pattern_maze():
 		create_hazard_bomb(player_mul + perpendicular * (i-3.1) * 64, 0.1, 2.3)
 		create_hazard_bomb(-(player_mul + perpendicular * (i-3.1) * 64), 0.1, 2.3)
 	
-	var bomb = create_normal_bomb(-player_position * 0.8, 0.1, 2.3)
+	var bomb = create_normal_bomb(-player_position * (256-32) / (256-16), 0.1, 2.3)
 	bomb.connect("player_body_entered", Callable(self, "pattern_maze_end"))
 
 func pattern_maze_end():
