@@ -20,7 +20,7 @@ func select_circler():
 	circler.emit()
 
 func select_circlest():
-	PlayingFieldInterface.set_theme_color(Color.MEDIUM_AQUAMARINE)
+	PlayingFieldInterface.set_theme_color(Color.ORANGE_RED)
 	PlayingFieldInterface.set_theme_bright(0)
 	room_menu.select_stage(2)
 	circlest.emit()

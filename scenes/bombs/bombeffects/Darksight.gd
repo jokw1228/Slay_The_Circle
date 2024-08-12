@@ -12,7 +12,7 @@ func _ready():
 
 var tween_fade_in: Tween
 func fade_in():
-	const fade_time = 0.5
+	const fade_time = 1
 	tween_fade_in = get_tree().create_tween()
 	tween_fade_in.tween_property(self, "color", Color.BLACK, fade_time)
 

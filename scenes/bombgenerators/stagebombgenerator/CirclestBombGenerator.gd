@@ -5,12 +5,16 @@ var pattern_list: Array[Callable]
 
 var pattern_start_time: float
 
+var color_down : Color = Color.ORANGE_RED
+
+var rotation_on : int = 20
+
 func _ready():
 	pattern_list_initialization()
 	
 	await Utils.timer(1.0) # game start time offset
-	
-	pattern_shuffle_and_draw()
+	PlayingFieldInterface.set_theme_color(Color.RED)
+	pattern_cat_wheel()
 
 func pattern_list_initialization():
 	pattern_list.append(Callable(self, "pattern_cat_wheel"))
@@ -23,14 +27,23 @@ func pattern_list_initialization():
 	pattern_list.append(Callable(self, "pattern_moving_link"))
 	pattern_list.append(Callable(self, "pattern_shuffle_game"))
 	pattern_list.append(Callable(self, "pattern_timing_return"))
-	pattern_list.append(Callable(self, "pattern_rotation")) 
+	#pattern_list.append(Callable(self, "pattern_rotation")) 
 	pattern_list.append(Callable(self, "pattern_trickery"))
 	pattern_list.append(Callable(self, "pattern_darksight"))
 
 func pattern_shuffle_and_draw():
-	randomize()
-	var random_index: int = randi() % pattern_list.size()
-	pattern_list[random_index].call()
+	if PlayingFieldInterface.get_playing_time()>30:
+		pattern_list.erase(pattern_cat_wheel) # 시간 날먹할 수 있는 패턴 삭제
+	if PlayingFieldInterface.get_playing_time()>rotation_on:
+		pattern_rotation()
+		rotation_on+=20
+	else:
+		randomize()
+		var random_index: int = randi() % pattern_list.size()
+		pattern_list[random_index].call()
+	if color_down.r >0.4:
+		color_down.r -= 0.05
+		PlayingFieldInterface.set_theme_color(color_down)
 
 func _process(delta):
 	pattern_moving_link_process(delta)
@@ -41,7 +54,9 @@ func _process(delta):
 # made by Jo Kangwoo
 
 func pattern_cat_wheel():
-	PlayingFieldInterface.set_theme_color(Color.DEEP_SKY_BLUE)
+	 # -> circler(움직이는 폭탄 존재, 난이도가 그리 어렵지 않음)
+	 # 수정사항 : 색상 DEEP_SKY_BLUE -> RED
+	#PlayingFieldInterface.set_theme_color(Color.RED)
 	
 	var player_position: Vector2 = PlayingFieldInterface.get_player_position()
 	var angle_start: float = player_position.angle() * -1
@@ -67,7 +82,9 @@ func pattern_cat_wheel():
 	const rest_time = 0.5
 	await get_tree().create_timer(warning_time + bomb_time + rest_time).timeout
 	center.queue_free()
+	pattern_list.erase(pattern_cat_wheel)
 	pattern_shuffle_and_draw()
+	pattern_list.append(pattern_cat_wheel)
 
 # pattern_cat_wheel end
 ###############################
@@ -79,8 +96,10 @@ func pattern_cat_wheel():
 # Hyper에서 normal 사이에 hazard 끼워 넣으면 재미있을 듯
 # 마지막 폭탄 일찍 종료 안하면 0.5초 쯤 길어짐
 # 이렇게 짧은 친구들도 일찍 종료 걸어야 할까?
+# 수정사항 : grounded 시그널 삭제, await 으로 변경
+# player 가 가만히 있을 시 다음 패턴이 생성되지 않아 꼼수의 가능성 존재
 func pattern_fruitninja():
-	PlayingFieldInterface.set_theme_color(Color.HOT_PINK)
+	#PlayingFieldInterface.set_theme_color(Color.ORANGE_RED)
 
 	var timer = get_tree().create_timer(4.0)
 
@@ -98,12 +117,14 @@ func pattern_fruitninja():
 
 		if i == 4: # last bomb
 			bomb.connect("player_body_entered", func ():	
-				await PlayingFieldInterface.player_grounded
+				await Utils.timer(0.7)
 				for rigidbody in rigidbodies:
 					rigidbody.queue_free()
 				
 				PlayingFieldInterface.add_playing_time(timer.time_left)
+				pattern_list.erase(pattern_fruitninja)
 				pattern_shuffle_and_draw()
+				pattern_list.append(pattern_fruitninja)
 			)
 		await Utils.timer(0.7)
 # pattern_fruitninja block end
@@ -112,8 +133,9 @@ func pattern_fruitninja():
 ###############################
 # pattern_windmill block start
 # made by Seonghyeon
+# 수정사항 X
 func pattern_windmill():
-	PlayingFieldInterface.set_theme_color(Color.HOT_PINK)
+	#PlayingFieldInterface.set_theme_color(Color.HOT_PINK)
 	const DIST: float = 70
 
 	var rotator: Node2D = Node2D.new()
@@ -133,13 +155,16 @@ func pattern_windmill():
 
 	await Utils.timer(3)
 	rotator.queue_free()
+	pattern_list.erase(pattern_windmill)
 	pattern_shuffle_and_draw()
+	pattern_list.append(pattern_windmill)
 # pattern_windmill block end
 ###############################
 
 ###############################
 # pattern_rain block start
 # made by Seonghyeon
+# 수정사항 : hazard bomb drop 시 trans_set_ease_in 추가
 func pattern_rain():
 	PlayingFieldInterface.set_theme_color(Color.HOT_PINK)
  
@@ -147,7 +172,9 @@ func pattern_rain():
 	pattern_rain_spawn_bomb()
 
 	await Utils.timer(5.5)
+	pattern_list.erase(pattern_rain)
 	pattern_shuffle_and_draw()
+	pattern_list.append(pattern_rain)
  
 func pattern_rain_spawn_drop():
 	for i in range(6):
@@ -176,7 +203,7 @@ func pattern_rain_bomb():
 	pos.x *= direction
 	var bomb: NormalBomb = create_normal_bomb(pos, 1, 2)
 	await Utils.timer(1)
-	Utils.tween(Tween.TRANS_LINEAR).tween_property(bomb, "global_position", Vector2(-pos.x, pos.y), 2)
+	Utils.tween(Tween.TRANS_LINEAR).tween_property(bomb, "global_position", Vector2(-pos.x, pos.y), 2).set_trans(Tween.EASE_IN)
 	
 # patter_rain block end
 ###############################
@@ -184,6 +211,7 @@ func pattern_rain_bomb():
 ###############################
 # pattern_hazard_wave block start
 # made by Jaeyong
+# 수정사항 X
 func pattern_hazard_wave():
 	var random: float = randf_range(0,2)
 	var spawn: int = 1 if random >= 1 else -1
@@ -202,8 +230,10 @@ func pattern_hazard_wave():
 		
 	await Utils.timer(1.25)
 
+	pattern_list.erase(pattern_hazard_wave)
 	pattern_shuffle_and_draw()
-
+	pattern_list.append(pattern_hazard_wave)
+	
 func pattern_hazard_wave_acceleration(num: int,rigidbody: Array[RigidBody2D], ac: int):
 	for i in (50):
 			rigidbody[num].linear_velocity += Vector2(ac * i,0)
@@ -215,7 +245,8 @@ func pattern_hazard_wave_acceleration(num: int,rigidbody: Array[RigidBody2D], ac
 ###############################
 # pattern_rotate_timing block start
 # made by kiyong
-
+# 잠재적 수정사항 : 판정을 좀 더 관대하게 하는 건 어떨까요
+# circler 정도로 난이도 하락 예상됩니다
 var pattern_rotate_timing_bomb: Array[Node2D]
 var pattern_rotate_timing_direction = [0,0,0,0,0,0]
 const pattern_rotate_timing_rotation_speed = 260
@@ -226,7 +257,7 @@ signal pattern_rotate_timing_end_signal
 const pattern_rotate_timing_playing_time = 2
 
 func pattern_rotate_timing():
-	PlayingFieldInterface.set_theme_color(Color.AQUAMARINE)
+	#PlayingFieldInterface.set_theme_color(Color.AQUAMARINE)
 	pattern_start_time = PlayingFieldInterface.get_playing_time()
 	pattern_rotate_timing_bomb.clear()
 	const p6sp = 85
@@ -262,7 +293,9 @@ func pattern_rotate_timing_end():
 		if is_instance_valid(node):
 			node.queue_free()
 	PlayingFieldInterface.set_playing_time(pattern_start_time + (pattern_rotate_timing_playing_time) / Engine.time_scale)
+	pattern_list.erase(pattern_rotate_timing)
 	pattern_shuffle_and_draw()
+	pattern_list.append(pattern_rotate_timing)
 
 # pattern_rotate_timing block end
 ###############################
@@ -270,7 +303,7 @@ func pattern_rotate_timing_end():
 ###############################
 # pattern_survive_random_slay block start
 # made by kiyong
-
+# 잠재적 수정사항 : normal bomb 개수 늘리는 것 어떨까요
 var pattern_survive_random_slay_hazard: Array[Node2D]
 var pattern_survive_random_slay_bombs: Array[Node2D]
 signal pattern_survive_random_slay_end_signal
@@ -279,7 +312,7 @@ var pattern_survive_random_slay_direction: Array = [0, 0, 0]
 const pattern_survive_random_slay_playing_time = 4.2
 
 func pattern_survive_random_slay():
-	PlayingFieldInterface.set_theme_color(Color.AQUAMARINE)
+	#PlayingFieldInterface.set_theme_color(Color.AQUAMARINE)
 	pattern_start_time = PlayingFieldInterface.get_playing_time()
 	
 	pattern_survive_random_slay_hazard.clear()
@@ -342,7 +375,9 @@ func pattern_survive_random_slay_end():
 			node.queue_free()
 	
 	PlayingFieldInterface.set_playing_time(pattern_start_time + (pattern_survive_random_slay_playing_time) / Engine.time_scale)
+	pattern_list.erase(pattern_survive_random_slay)
 	pattern_shuffle_and_draw()
+	pattern_list.append(pattern_survive_random_slay)
 
 # pattern_survive_random_slay block end
 ###############################
@@ -350,7 +385,7 @@ func pattern_survive_random_slay_end():
 ###############################
 # pattern_moving_link block start
 # made by kiyong
-
+# 수정사항 : hazard bomb 생성 위치 조정
 var pattern_moving_link_playing_time = 2.25
 var pattern_moving_link_bomb: Array[Node2D]
 var pattern_moving_link_hazard: Array[Node2D]
@@ -361,9 +396,10 @@ var pattern_moving_link_bomb_dir_changed = [false, false]
 var pattern_moving_link_active: bool = false
 
 func pattern_moving_link():
-	PlayingFieldInterface.set_theme_color(Color.AQUAMARINE)
+	#PlayingFieldInterface.set_theme_color(Color.AQUAMARINE)
 	pattern_start_time = PlayingFieldInterface.get_playing_time()
 	var player_position: Vector2 = PlayingFieldInterface.get_player_position()
+	const hazard_inst_circle_radius = 160
 	
 	pattern_moving_link_active = false
 	pattern_moving_link_bomb.clear()
@@ -371,10 +407,10 @@ func pattern_moving_link():
 	pattern_moving_link_bomb_direction = [(player_position.rotated(PI/2)).normalized(), -(player_position.rotated(PI/2)).normalized()]
 	pattern_moving_link_bomb_dir_changed = [false, false]
 
-	pattern_moving_link_hazard.append(create_hazard_bomb(pattern_moving_link_autorotate(180, 60), 0.25, 2))
-	pattern_moving_link_hazard.append(create_hazard_bomb(pattern_moving_link_autorotate(-180, 60), 0.25, 2))
-	pattern_moving_link_hazard.append(create_hazard_bomb(pattern_moving_link_autorotate(180, -60), 0.25, 2))
-	pattern_moving_link_hazard.append(create_hazard_bomb(pattern_moving_link_autorotate(-180, -60), 0.25, 2))
+	pattern_moving_link_hazard.append(create_hazard_bomb(pattern_moving_link_autorotate(hazard_inst_circle_radius * cos(PI/4), hazard_inst_circle_radius * sin(PI/4)), 0.25, 2))
+	pattern_moving_link_hazard.append(create_hazard_bomb(pattern_moving_link_autorotate(hazard_inst_circle_radius * cos(3*PI/4), hazard_inst_circle_radius * sin(3*PI/4)), 0.25, 2))
+	pattern_moving_link_hazard.append(create_hazard_bomb(pattern_moving_link_autorotate(hazard_inst_circle_radius * cos(5*PI/4), hazard_inst_circle_radius * sin(5*PI/4)), 0.25, 2))
+	pattern_moving_link_hazard.append(create_hazard_bomb(pattern_moving_link_autorotate(hazard_inst_circle_radius * cos(7*PI/4), hazard_inst_circle_radius * sin(7*PI/4)), 0.25, 2))
 	pattern_moving_link_bomb.append(create_normal_bomb(pattern_moving_link_autorotate(0, 40), 0.25, 2))
 	pattern_moving_link_bomb.append(create_normal_bomb(pattern_moving_link_autorotate(0, -40), 0.25, 2))
 	var link = create_bomb_link(pattern_moving_link_bomb[0], pattern_moving_link_bomb[1])
@@ -409,7 +445,9 @@ func pattern_moving_link_end():
 		if is_instance_valid(node):
 			node.queue_free()
 	PlayingFieldInterface.set_playing_time(pattern_start_time + (pattern_moving_link_playing_time) / Engine.time_scale)
+	pattern_list.erase(pattern_moving_link)
 	pattern_shuffle_and_draw()
+	pattern_list.append(pattern_moving_link)
 
 # pattern_moving_link block end
 ###############################
@@ -417,7 +455,7 @@ func pattern_moving_link_end():
 ###############################
 # pattern_shuffle_game block start
 # made by kiyong
-
+# 수정사항 : 종료 시 타이머 소폭 증가 -> 난이도 소폭 하향
 var pattern_shuffle_game_bombs: Array[Node2D]
 var pattern_shuffle_game_real_bomb: Bomb
 var pattern_shuffle_game_moving: bool = false
@@ -440,7 +478,7 @@ func pattern_shuffle_game():
 		calculation += 0.3
 	
 	pattern_shuffle_game_speed_increasing = 3.3
-	PlayingFieldInterface.set_theme_color(Color.AQUAMARINE)
+	#PlayingFieldInterface.set_theme_color(Color.AQUAMARINE)
 	pattern_shuffle_game_bombs.clear()
 	pattern_shuffle_game_moving = false
 
@@ -477,9 +515,11 @@ func pattern_shuffle_game():
 	# pattern_shuffle_game_bombs[real_bomb_position].position = Vector2(1000, 1000)
 	# pattern_shuffle_game_real_bomb.position = pattern_shuffle_game_const_position[pattern_shuffle_game_bomb_pos[real_bomb_position]-1]
 	var bomb = create_normal_bomb(pattern_shuffle_game_const_position[pattern_shuffle_game_bomb_pos[real_bomb_position]-1], 0, 0.1)
-	await Utils.timer(0.3)
+	await Utils.timer(0.6)
 	
+	pattern_list.erase(pattern_shuffle_game)
 	pattern_shuffle_and_draw()
+	pattern_list.append(pattern_shuffle_game)
 
 func pattern_shuffle_game_random(pattern: int):
 	match pattern:
@@ -523,9 +563,11 @@ func pattern_shuffle_game_process(delta):
 ###############################
 # pattern_timing_return block start
 # made by jinhyun
-
+# player 가 땅을 연속적으로 클릭하는 이상한 행동을 보이면 
+# 뒤 패턴이 바로 생성되는 버그 존재정
+# -> 코드 수정, 원 코드 일단은 살려놓았음
 func pattern_timing_return():
-	PlayingFieldInterface.set_theme_color(Color.VIOLET)
+	#PlayingFieldInterface.set_theme_color(Color.VIOLET)
 	var player_position: Vector2
 	var player_position_shift: Vector2
 	
@@ -538,25 +580,35 @@ func pattern_timing_return():
 	create_hazard_bomb(player_position.rotated(2*PI/3) * 0.7, 0.5, 1.45)
 	create_hazard_bomb(player_position.rotated(-2*PI/3) * 0.7, 0.5, 1.45)
 	
-	create_normal_bomb(Vector2(0, 0), 0.5, 1.6)
+	var bomb : NormalBomb = create_normal_bomb(Vector2(0, 0), 0.5, 1.6)
 	create_hazard_bomb(Vector2(0, 0), 0.5, 1.35)
 	
 	await get_tree().create_timer(1).timeout
 	player_position = PlayingFieldInterface.get_player_position()
-	var lasting_bool: bool = true
+	bomb.connect("player_body_entered", Callable(self, "make_linear_bombs"))
 	
-	while lasting_bool:
-		player_position_shift = PlayingFieldInterface.get_player_position()
-		if player_position != player_position_shift:
-			player_position = player_position_shift
-			lasting_bool = false
-			for i in range(6):
-				create_normal_bomb(player_position * 0.3 * (i-3), 0.05, 1 - i*0.1)
-				await get_tree().create_timer(0.025).timeout
-		await get_tree().create_timer(0.02).timeout
-	
+func make_linear_bombs():
+	var player_position = PlayingFieldInterface.get_player_position()
+	for i in range(6):
+		create_normal_bomb(player_position * 0.3 * (i-3), 0.05, 1 - i*0.1)
+		await get_tree().create_timer(0.015).timeout
+	await get_tree().create_timer(0.02).timeout
+	#var lasting_bool: bool = true
+	#
+	#while lasting_bool:
+		#player_position_shift = PlayingFieldInterface.get_player_position()
+		#if player_position != player_position_shift:
+			#player_position = player_position_shift
+			#lasting_bool = false
+			
+			#for i in range(6):
+				#create_normal_bomb(player_position * 0.3 * (i-3), 0.05, 1 - i*0.1)
+				#await get_tree().create_timer(0.025).timeout
+		#await get_tree().create_timer(0.02).timeout
 	await get_tree().create_timer(1).timeout
+	pattern_list.erase(pattern_timing_return)
 	pattern_shuffle_and_draw()
+	pattern_list.append(pattern_timing_return)
 	
 # pattern_timing_return end
 ###############################
@@ -567,16 +619,17 @@ func pattern_timing_return():
 
 #회전 필요할 때 쉬어가는 코너. bomb exploded 되는 속도가 빨라서
 #circlest 나 hyper 혹은 일정 시간이 지난 후 사용하면 좋을 듯합니다 
-
+# rotation pattern 중 쉬운 난이도에 속함 -> 자주 등장하게 조정..?
 const pattern_rotation_playing_time = 2.3
 
 func pattern_rotation():
 	pattern_start_time = PlayingFieldInterface.get_playing_time()
-	PlayingFieldInterface.set_theme_color(Color.BISQUE)
-	var bomb_rotation: RotationSpeedUpBomb = create_rotationspeedup_bomb(Vector2(0, 0), 0.5, 1.8, 0.03)
+	#PlayingFieldInterface.set_theme_color(Color.BISQUE)
+	var bomb_rotation: RotationSpeedUpBomb = create_rotationspeedup_bomb(Vector2(0, 0), 0.5, 1.8, 0.06)
 	bomb_rotation.connect("player_body_entered", Callable(self, "pattern_rotation_end"))
 	
 func pattern_rotation_end():
+	await PlayingFieldInterface.player_grounded
 	PlayingFieldInterface.set_playing_time(pattern_start_time + (pattern_rotation_playing_time) / Engine.time_scale)
 	pattern_shuffle_and_draw()
 	
@@ -590,38 +643,42 @@ func pattern_rotation_end():
 # life is gamble
 # 일정 시간이 지난 후 (60초 정도?) 플레이어를 억까시키고 싶을때
 # 사용하면 좋을 듯합니다 
-
-const pattern_trickery_playing_time = 3.5
+# 수정사항 : bomb timer 소폭 감소
+# 잠재적 수정사항 : 난이도 circle 로 들어가도 될 정도의 쉬운 난이도
+# indicator 도입으로 인하여 난이도 대폭 하향
+const pattern_trickery_playing_time = 3
 
 func pattern_trickery():
 	pattern_start_time = PlayingFieldInterface.get_playing_time()
-	PlayingFieldInterface.set_theme_color(Color.BISQUE)
+	#PlayingFieldInterface.set_theme_color(Color.BISQUE)
 	
 	var num_rng = RandomNumberGenerator.new()
 	num_rng.randomize()
-	var trick_num = num_rng.randi_range(1,100)
+	var trick_num = num_rng.randi_range(1,3)
 	
-	var bomb1: NormalBomb = create_normal_bomb(Vector2(-144, 0), 0.5, 2.0)
-	var bomb2: NormalBomb = create_normal_bomb(Vector2(0, 0), 0.5, 2.0)
-	var bomb3: NormalBomb = create_normal_bomb(Vector2(144, 0), 0.5, 2.0)
-	var bomb4: NumericBomb = create_numeric_bomb(Vector2(-144, -64), 0.5, 2, trick_num%3 + 1)
-	var bomb5: NumericBomb = create_numeric_bomb(Vector2(0, -64), 0.5, 2, (trick_num + 2)%3 + 1)
-	var bomb6: NumericBomb = create_numeric_bomb(Vector2(144, -64), 0.5, 2, (trick_num + 1)%3 + 1)
-	var last_bomb: NumericBomb = create_numeric_bomb(Vector2(0, -192), 2.5, 1, 4)
+	var bomb1: NormalBomb = create_normal_bomb(Vector2(-144, 0), 0.3, 2.0)
+	var bomb2: NormalBomb = create_normal_bomb(Vector2(0, 0), 0.3, 2.0)
+	var bomb3: NormalBomb = create_normal_bomb(Vector2(144, 0), 0.3, 2.0)
+	var bomb4: NumericBomb = create_numeric_bomb(Vector2(-144, -64), 0.3, 2, trick_num%3 + 1)
+	var bomb5: NumericBomb = create_numeric_bomb(Vector2(0, -64), 0.3, 2, (trick_num + 2)%3 + 1)
+	var bomb6: NumericBomb = create_numeric_bomb(Vector2(144, -64), 0.3, 2, (trick_num + 1)%3 + 1)
+	var last_bomb: NumericBomb = create_numeric_bomb(Vector2(0, -192), 2, 1, 4)
 	
 	var tween1_position_change = get_tree().create_tween()
 	var tween2_position_change = get_tree().create_tween()
 	var tween3_position_change = get_tree().create_tween()
-	tween1_position_change.tween_property(bomb4, "position", Vector2(-144,0), 0.5)
-	tween2_position_change.tween_property(bomb5, "position", Vector2(0,0), 0.5)
-	tween3_position_change.tween_property(bomb6, "position", Vector2(144,0), 0.5)
+	tween1_position_change.tween_property(bomb4, "position", Vector2(-144,0), 0.3)
+	tween2_position_change.tween_property(bomb5, "position", Vector2(0,0), 0.3)
+	tween3_position_change.tween_property(bomb6, "position", Vector2(144,0), 0.3)
 	
 	last_bomb.connect("player_body_entered", Callable(self, "pattern_trickery_end"))
 	
 func pattern_trickery_end():
 	await PlayingFieldInterface.player_grounded
 	PlayingFieldInterface.set_playing_time(pattern_start_time + (pattern_trickery_playing_time) / Engine.time_scale)
+	pattern_list.erase(pattern_trickery)
 	pattern_shuffle_and_draw()
+	pattern_list.append(pattern_trickery)
 	
 #pattern_trickery block end
 ###############################
@@ -632,25 +689,30 @@ func pattern_trickery_end():
 
 #캐릭터 위치 정도는 기억하시죠?
 #당황시킬 수 있기에 circlest 정도 잡는 게 좋을 것 같습니다 
-
-const pattern_darksight_playing_time = 6
+# 수정사항 : darksight fade_in time 소폭 증가, numeric bomb 추가
+const pattern_darksight_playing_time = 6.75
 
 var pattern_darksight_darksight_node: Darksight
 
 func pattern_darksight():
-	pattern_start_time = PlayingFieldInterface.get_playing_time()	
+	pattern_start_time = PlayingFieldInterface.get_playing_time()
 	
-	var bomb1 : NumericBomb = create_numeric_bomb(Vector2(150,0), 0.4, 5.6, 1)
-	var bomb2 : NumericBomb = create_numeric_bomb(Vector2(-150,0), 0.4, 5.6, 2)
-	var bomb3 : NumericBomb = create_numeric_bomb(Vector2(0,150), 0.4, 5.6, 3)
-	var bomb4 : NumericBomb = create_numeric_bomb(Vector2(0,-150), 0.4, 5.6, 4)
+	var bomb1 : NumericBomb = create_numeric_bomb(Vector2(128,0), 1, 5, 1)
+	var bomb2 : NumericBomb = create_numeric_bomb(Vector2(-128,0), 1, 5, 2)
+	var bomb3 : NumericBomb = create_numeric_bomb(Vector2(0,128), 1, 5, 4)
+	var bomb4 : NumericBomb = create_numeric_bomb(Vector2(0,-128), 1, 5, 5)
+	
+	var ccw_x : int = 1 if randi()%2 == 1 else -1
+	var ccw_y : int = 1 if randi()%2 == 1 else -1
+	
+	var random_pos_numeric_bomb : NumericBomb = create_numeric_bomb(Vector2(ccw_x * 128, ccw_y * 128), 1, 5, 3)
 	
 	var link1 = create_bomb_link(bomb1, bomb2)
 	var link2 = create_bomb_link(bomb3, bomb4)
 	
 	link2.connect("both_bombs_removed", Callable(self, "pattern_darksight_end"))
 	
-	await get_tree().create_timer(0.5)
+	#await get_tree().create_timer(1)
 	pattern_darksight_darksight_node = Darksight.create()
 	add_child(pattern_darksight_darksight_node)
 	
@@ -658,8 +720,10 @@ func pattern_darksight_end():
 	pattern_darksight_darksight_node.fade_out()
 	await PlayingFieldInterface.player_grounded
 	PlayingFieldInterface.set_playing_time(pattern_start_time + (pattern_darksight_playing_time) / Engine.time_scale)
-	await get_tree().create_timer(0.5).timeout
+	await get_tree().create_timer(1).timeout
+	pattern_list.erase(pattern_darksight)
 	pattern_shuffle_and_draw()
+	pattern_list.append(pattern_darksight)
 	
 #pattern_darksight block end
 ###############################
