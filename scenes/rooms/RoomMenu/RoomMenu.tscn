@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://bdrilkeb2s5n0"]
+[gd_scene load_steps=38 format=3 uid="uid://bdrilkeb2s5n0"]
 
 [ext_resource type="Script" path="res://scenes/rooms/RoomMenu/RoomMenu.gd" id="1_sshbl"]
 [ext_resource type="PackedScene" uid="uid://ccay8yrm25adk" path="res://scenes/rooms/RoomPlayingFields/RoomCircle.tscn" id="2_2e64d"]
@@ -12,7 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://djvtf5t5jqw8u" path="res://scenes/bombgenerators/MenuBombGenerator.tscn" id="9_xjnco"]
 [ext_resource type="PackedScene" uid="uid://bhe55ocau21ot" path="res://scenes/player/Player.tscn" id="10_qy0n6"]
 [ext_resource type="PackedScene" uid="uid://s264e74phclm" path="res://scenes/playingfield/CircleField.tscn" id="11_s1pwc"]
-[ext_resource type="PackedScene" uid="uid://cn7ttflmrmpth" path="res://scenes/playingfield/PlayingFieldCamera.tscn" id="13_itguu"]
+[ext_resource type="PackedScene" uid="uid://cn7ttflmrmpth" path="res://scenes/playingfield/PlayingfieldCamera.tscn" id="13_itguu"]
 [ext_resource type="PackedScene" uid="uid://dp0cdsfw5ylxj" path="res://scenes/ui/FancyButton.tscn" id="13_yxsra"]
 [ext_resource type="Script" path="res://addons/resonate/sound_manager/sound_bank.gd" id="14_oop3p"]
 [ext_resource type="Script" path="res://addons/resonate/sound_manager/sound_event_resource.gd" id="15_rr3yb"]
@@ -25,6 +25,8 @@
 [ext_resource type="Script" path="res://addons/resonate/music_manager/music_track_resource.gd" id="23_v74bq"]
 [ext_resource type="Script" path="res://addons/resonate/music_manager/music_stem_resource.gd" id="24_h5epd"]
 [ext_resource type="AudioStream" uid="uid://dl56qa7pijbom" path="res://audio/bgm/fast_bgm.wav" id="25_r03bj"]
+[ext_resource type="Texture2D" uid="uid://7ed2eanqanvm" path="res://scenes/ui/ColoredPanelTexture.svg" id="26_8kqfa"]
+[ext_resource type="Texture2D" uid="uid://cv60tqgqvgob" path="res://images/option.png" id="26_bsu3u"]
 
 [sub_resource type="Resource" id="Resource_u5uqr"]
 script = ExtResource("15_rr3yb")
@@ -65,6 +67,22 @@ script = ExtResource("23_v74bq")
 name = "main_fast"
 bus = ""
 stems = Array[ExtResource("24_h5epd")]([SubResource("Resource_gy52r")])
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_u61x5"]
+texture = ExtResource("26_8kqfa")
+modulate_color = Color(0, 0.784314, 0.784314, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_v04t5"]
+texture = ExtResource("26_8kqfa")
+modulate_color = Color(0.705882, 0.784314, 1, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_3chji"]
+texture = ExtResource("26_8kqfa")
+modulate_color = Color(0.592157, 0, 0.196078, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_7nfj6"]
+texture = ExtResource("26_8kqfa")
+modulate_color = Color(0.392157, 0.392157, 0.392157, 1)
 
 [node name="RoomMenu" type="Node2D" node_paths=PackedStringArray("ui_container_ready", "camera", "reverb_effect_timer", "menu_bomb_generator")]
 script = ExtResource("1_sshbl")
@@ -309,7 +327,107 @@ script = ExtResource("22_cviuo")
 label = "bgm_RM"
 tracks = Array[ExtResource("23_v74bq")]([SubResource("Resource_lcarn")])
 
+[node name="UIContainerUnskewed" type="CanvasLayer" parent="."]
+
+[node name="OptionButton" type="Button" parent="UIContainerUnskewed"]
+unique_name_in_owner = true
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -130.0
+offset_top = 20.0
+offset_right = -50.0
+offset_bottom = 100.0
+grow_horizontal = 0
+theme_override_styles/normal = SubResource("StyleBoxTexture_u61x5")
+theme_override_styles/hover = SubResource("StyleBoxTexture_v04t5")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_3chji")
+
+[node name="TextureRect" type="TextureRect" parent="UIContainerUnskewed/OptionButton"]
+layout_mode = 0
+offset_left = 15.0
+offset_top = 15.0
+offset_right = 65.0
+offset_bottom = 65.0
+texture = ExtResource("26_bsu3u")
+expand_mode = 1
+
+[node name="Option" type="Control" parent="UIContainerUnskewed"]
+unique_name_in_owner = true
+layout_mode = 3
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -40.0
+offset_bottom = 40.0
+grow_horizontal = 0
+
+[node name="Panel" type="Panel" parent="UIContainerUnskewed/Option"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -550.0
+offset_bottom = 700.0
+grow_horizontal = 0
+theme_override_styles/panel = SubResource("StyleBoxTexture_7nfj6")
+
+[node name="Label" type="Label" parent="UIContainerUnskewed/Option/Panel"]
+layout_mode = 0
+offset_left = 30.0
+offset_top = 30.0
+offset_right = 360.0
+offset_bottom = 94.0
+theme_override_font_sizes/font_size = 50
+text = "OPTION"
+
+[node name="OptionQuit" type="Button" parent="UIContainerUnskewed/Option/Panel"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -170.0
+offset_top = 25.0
+offset_right = -20.0
+offset_bottom = 105.0
+grow_horizontal = 0
+theme_override_styles/normal = SubResource("StyleBoxTexture_u61x5")
+theme_override_styles/hover = SubResource("StyleBoxTexture_v04t5")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_3chji")
+text = "QUIT"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UIContainerUnskewed/Option/Panel"]
+layout_mode = 0
+offset_left = 30.0
+offset_top = 120.0
+offset_right = 530.0
+offset_bottom = 370.0
+
+[node name="Bgm" type="Label" parent="UIContainerUnskewed/Option/Panel/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 25
+text = "MUSIC VOLUME"
+
+[node name="BgmSlider" type="HSlider" parent="UIContainerUnskewed/Option/Panel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+max_value = 2.0
+step = 0.001
+
+[node name="Sfx" type="Label" parent="UIContainerUnskewed/Option/Panel/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 25
+text = "MUSIC VOLUME"
+
+[node name="SfxSlider" type="HSlider" parent="UIContainerUnskewed/Option/Panel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+max_value = 2.0
+step = 0.001
+
 [connection signal="pressed" from="UIContainerSkewed/Start" to="." method="start_stage"]
+[connection signal="pressed" from="UIContainerUnskewed/OptionButton" to="." method="_on_option_button_pressed"]
+[connection signal="pressed" from="UIContainerUnskewed/Option/Panel/OptionQuit" to="." method="_on_option_quit_pressed"]
 
 [editable path="Field/CircleField"]
 [editable path="UIContainerSkewed/Start"]

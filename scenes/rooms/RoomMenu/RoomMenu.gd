@@ -31,6 +31,8 @@ func _ready():
 	%Stage.visible = false
 	%Info.visible = false
 	%Start.visible = false
+	
+	%Option.visible = false
 
 func start_stage(): # A signal is connected by the select button.=
 	%ReadyStage.text = ["CIRCLE", "CIRCLER", "CIRCLEST",\
@@ -44,6 +46,8 @@ func start_stage(): # A signal is connected by the select button.=
 	Utils.tween().tween_property(%Stage, "position", %Stage.position + Vector2(-400, 0), 0.4)
 	Utils.tween().tween_property(%Info, "position", %Info.position + Vector2(400, 0), 0.4)
 	Utils.tween().tween_property(%Start, "position", %Start.position + Vector2(500, 0), 0.4)
+	
+	Utils.slide_out(%OptionButton, 400, Vector2.RIGHT, 0.6)
 	
 	# zoom in
 	Utils.tween().set_trans(Tween.TRANS_CIRC)\
@@ -131,3 +135,15 @@ func select_hyper():
 	
 	#하이퍼 선택 사운드
 	SoundManager.play("sfx_menu","h_select")
+
+	# 옵션 보이기
+func _on_option_button_pressed():
+	%Option.visible = true
+	Utils.slide_in(%Option, 800, Vector2.LEFT, 0.6)
+	SoundManager.play("sfx_menu","select")
+	
+	# 옵션 없애기
+func _on_option_quit_pressed():
+	Utils.slide_out(%Option, 800, Vector2.RIGHT, 0.6)
+	SoundManager.play("sfx_menu","select")
+
