@@ -22,18 +22,21 @@ func _ready():
 		await Utils.timer(15.0)
 
 func pattern_list_initialization():
+	'''
 	pattern_list.append(Callable(self, "pattern_wall_timing"))
 	pattern_list.append(Callable(self, "pattern_scattered_hazards"))
 	pattern_list.append(Callable(self, "pattern_random_shape"))
 	pattern_list.append(Callable(self, "pattern_random_rotation"))
 	pattern_list.append(Callable(self, "pattern_blocking"))
 	pattern_list.append(Callable(self, "pattern_maze"))
+	'''
 	pattern_list.append(Callable(self, "pattern_reactspeed_test")) 
+	'''
 	pattern_list.append(Callable(self, "pattern_link_free"))
 	pattern_list.append(Callable(self, "pattern_diamond_with_hazard_puzzled"))
 	pattern_list.append(Callable(self, "pattern_pizza"))
 	pattern_list.append(Callable(self, "pattern_narrow_road"))
-
+'''
 func levelup_list_initialization():
 	levelup_list.append(Callable(self, "pattern_inversion_speedup"))
 	levelup_list.append(Callable(self, "pattern_speed_and_rotation"))
@@ -360,22 +363,26 @@ func pattern_maze_end():
 #반응속도 테스트
 #핸드폰으로 하면 circler 정도일듯 
 
-const pattern_reactspeed_test_playing_time = 5
+#const pattern_reactspeed_test_playing_time = 5
 
 func pattern_reactspeed_test():
 	pattern_start_time = PlayingFieldInterface.get_playing_time()
 	PlayingFieldInterface.set_theme_color(Color.BISQUE)
+	var indicator: Indicator = Indicator.create()
+	add_child(indicator)
 	
-	await Utils.timer(0.4)
-	for i in range(10):
+	await Utils.timer(0.5)
+	for i in range(6):
 		randomize()
 		var which_bomb_decide_num: int = 1 if randi() % 3 else -1
 		if which_bomb_decide_num == 1:
-			var bomb : NormalBomb = create_normal_bomb(Vector2(0,0), 0.2, 0.4)
+			var bomb : NormalBomb = create_normal_bomb(Vector2(0,0), 0.2, 0.5)
 		else:
-			var bomb : HazardBomb = create_hazard_bomb(Vector2(0,0), 0.2, 0.4)
-		await Utils.timer(0.6)
+			var bomb : HazardBomb = create_hazard_bomb(Vector2(0,0), 0.2, 0.5)
+		await Utils.timer(0.7)
 	
+	indicator.queue_free()
+	await get_tree().create_timer(0.3)
 	pattern_shuffle_and_draw()
 	
 #pattern_reactspeed_test block end
