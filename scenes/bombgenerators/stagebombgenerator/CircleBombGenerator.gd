@@ -38,11 +38,11 @@ func pattern_list_initialization():
 	#pattern_list1.append(Callable(self, "pattern_diamond_with_hazard"))
 	
 	# circler
-	#pattern_list.append(Callable(self, "pattern_hazard_at_player_pos")) circler
-	#pattern_list.append(Callable(self, "pattern_321_go")) circler
-	#pattern_list.append(Callable(self, "pattern_timing")) circler
-	#pattern_list.append(Callable(self, "pattern_trafficlight")) circler
-	#pattern_list.append(Callable(self, "pattern_hide_in_hazard")) circler
+	#pattern_list.append(Callable(self, "pattern_hazard_at_player_pos")) #circler
+	#pattern_list.append(Callable(self, "pattern_321_go")) #circler
+	#pattern_list.append(Callable(self, "pattern_timing")) #circler
+	#pattern_list.append(Callable(self, "pattern_trafficlight")) #circler
+	#pattern_list.append(Callable(self, "pattern_hide_in_hazard")) #circler
 
 func pattern_shuffle_and_draw():
 	randomize()
@@ -64,7 +64,7 @@ func pattern_shuffle_and_draw():
 const pattern_numeric_center_then_link_playing_time = 4.0
 
 func pattern_numeric_center_then_link():
-	PlayingFieldInterface.set_theme_color(Color.DEEP_SKY_BLUE)
+	PlayingFieldInterface.set_theme_color(Color.AQUA)
 	
 	pattern_start_time = PlayingFieldInterface.get_playing_time()
 	
@@ -101,8 +101,8 @@ func pattern_hazard_at_player_pos():
 	
 	for i in range(0, 5):
 		player_position = PlayingFieldInterface.get_player_position()
-		create_hazard_bomb(player_position * 224 / 240, 0.75, 0.75)
-		create_hazard_bomb(-player_position * 224 / 240, 0.75, 0.75)
+		create_hazard_bomb(player_position * 208.0 / 240.0, 0.75, 0.75)
+		create_hazard_bomb(-player_position * 208.0 / 240.0, 0.75, 0.75)
 		await Utils.timer(0.75)
 	
 	await Utils.timer(0.75)
@@ -124,7 +124,7 @@ const pattern_inversion_speedup_playing_time = 4.0
 const pattern_inversion_speedup_rest_time = 0.5
 
 func pattern_inversion_speedup():
-	PlayingFieldInterface.set_theme_color(Color.DEEP_SKY_BLUE)
+	PlayingFieldInterface.set_theme_color(Color.BLUE)
 	
 	pattern_start_time = PlayingFieldInterface.get_playing_time()
 	
@@ -162,22 +162,23 @@ func pattern_321_go():
 	var player_position: Vector2 = PlayingFieldInterface.get_player_position()
 	const delta_time: float = 0.75
 	const time_offset: float = 0.2
+	const dist: float = 208.0 / 240.0
 	
-	create_hazard_bomb(player_position * -224 / 240,   2.0,   delta_time * 4 - time_offset)
+	create_hazard_bomb(player_position * -dist,   2.0,   delta_time * 4 - time_offset)
 	create_hazard_bomb(player_position * -0.5,   2.0,   delta_time - time_offset / 2.0)
 	create_hazard_bomb(Vector2.ZERO,   2.0,   delta_time * 2 - time_offset / 2.0)
 	create_hazard_bomb(player_position * 0.5,   2.0,   delta_time * 3 - time_offset / 2.0)
 	for i in range(1, 8):
 		if i % 2 == 0:
 			create_hazard_bomb(player_position.rotated(i * PI / 8.0) * 0.5,   2.0,   delta_time * 4)
-		create_hazard_bomb(player_position.rotated(i * PI / 8.0) * 224 / 240,   2.0,   delta_time * 4)
+		create_hazard_bomb(player_position.rotated(i * PI / 8.0) * dist,   2.0,   delta_time * 4)
 	for i in range(9, 16):
 		if i % 2 == 0:
 			create_hazard_bomb(player_position.rotated(i * PI / 8.0) * 0.5,   2.0,   delta_time * 4)
-		create_hazard_bomb(player_position.rotated(i * PI / 8.0) * 224 / 240,   2.0,   delta_time * 4)
+		create_hazard_bomb(player_position.rotated(i * PI / 8.0) * dist,   2.0,   delta_time * 4)
 	await Utils.timer(2.0)
 	
-	var last: HazardBomb = create_hazard_bomb(player_position * 224 / 240,   delta_time * 4,   time_offset)
+	var last: HazardBomb = create_hazard_bomb(player_position * dist,   delta_time * 4,   time_offset)
 	await Utils.timer(delta_time - time_offset / 2.0)
 	
 	create_numeric_bomb(player_position * -0.5,   0,   delta_time * 4,   3)
@@ -249,11 +250,13 @@ func pattern_numeric_triangle_with_link_end():
 const pattern_star_playing_time = 4.0
 
 func pattern_star():
+	PlayingFieldInterface.set_theme_color(Color.CORNFLOWER_BLUE)
+	
 	pattern_start_time = PlayingFieldInterface.get_playing_time()
 	
 	var player_position: Vector2 = PlayingFieldInterface.get_player_position()
 	var player_angle: float = player_position.angle()
-	const bomb_radius = 192
+	const bomb_radius = 208
 	
 	#bomb1
 	create_numeric_bomb(Vector2(bomb_radius * cos(player_angle),bomb_radius*sin(player_angle)), 1.0, 3.0, 1)
@@ -286,7 +289,7 @@ var pattern_random_link_player_angle: float
 const pattern_random_link_bomb_dist = 128
 
 func pattern_random_link():
-	PlayingFieldInterface.set_theme_color(Color.AQUAMARINE)
+	PlayingFieldInterface.set_theme_color(Color.DARK_CYAN)
 	
 	pattern_start_time = PlayingFieldInterface.get_playing_time()
 	
@@ -403,7 +406,7 @@ func pattern_trafficlight():
 const pattern_numeric_inversion_playing_time = 4.0
 
 func pattern_numeric_inversion():
-	PlayingFieldInterface.set_theme_color(Color.HOT_PINK)
+	PlayingFieldInterface.set_theme_color(Color.DARK_TURQUOISE)
 	
 	pattern_start_time = PlayingFieldInterface.get_playing_time()
 	
@@ -438,6 +441,8 @@ const pattern_speed_and_rotation_playing_time = 4.0
 const pattern_speed_and_rotation_rest_time = 0.5
 
 func pattern_speed_and_rotation():
+	PlayingFieldInterface.set_theme_color(Color.BLUE)
+	
 	pattern_start_time = PlayingFieldInterface.get_playing_time()
 	
 	var player_position: Vector2 = PlayingFieldInterface.get_player_position()
@@ -445,13 +450,13 @@ func pattern_speed_and_rotation():
 	var speedup_value: float = 0.2 if pattern_count < 20 else 0.1
 	const bomb_radius = 64
 	
-	var bomb1: NumericBomb = create_numeric_bomb(Vector2(2 * bomb_radius * cos(player_angle), 2 * bomb_radius * sin(player_angle)),1.0,3.0,1)
-	var bomb2: RotationSpeedUpBomb = create_rotationspeedup_bomb(Vector2(bomb_radius * cos(player_angle), bomb_radius * sin(player_angle)),1.0,3.0,speedup_value)
+	var bomb1: NumericBomb = create_numeric_bomb(Vector2(2 * bomb_radius * cos(player_angle), 2 * bomb_radius * sin(player_angle)),0.5,3.5,1)
+	var bomb2: RotationSpeedUpBomb = create_rotationspeedup_bomb(Vector2(bomb_radius * cos(player_angle), bomb_radius * sin(player_angle)),0.5,3.5,speedup_value)
 	
 	create_bomb_link(bomb1,bomb2)
 	
-	var bomb3: GameSpeedUpBomb = create_gamespeedup_bomb(Vector2(bomb_radius * cos(player_angle+PI), bomb_radius * sin(player_angle+PI)),1.0,3.0,speedup_value)
-	var bomb4: NumericBomb = create_numeric_bomb(Vector2(2 * bomb_radius * cos(player_angle+PI), 2 * bomb_radius * sin(player_angle+PI)),1.0,3.0,2)
+	var bomb3: GameSpeedUpBomb = create_gamespeedup_bomb(Vector2(bomb_radius * cos(player_angle+PI), bomb_radius * sin(player_angle+PI)),0.5,3.5,speedup_value)
+	var bomb4: NumericBomb = create_numeric_bomb(Vector2(2 * bomb_radius * cos(player_angle+PI), 2 * bomb_radius * sin(player_angle+PI)),0.5,3.5,2)
 	
 	var link2: BombLink = create_bomb_link(bomb3,bomb4)
 	
@@ -474,6 +479,8 @@ const pattern_roll_playing_time = 3.0
 var pattern_roll_bomb_count: int
 
 func pattern_roll():
+	PlayingFieldInterface.set_theme_color(Color.DARK_BLUE)
+	
 	pattern_start_time = PlayingFieldInterface.get_playing_time()
 	
 	var angle_offset: float = PlayingFieldInterface.get_player_position().angle()
@@ -546,6 +553,8 @@ const pattern_diamond_playing_time = 3
 var pattern_diamond_bomb_count: int
 
 func pattern_diamond():
+	PlayingFieldInterface.set_theme_color(Color.DODGER_BLUE)
+	
 	pattern_start_time = PlayingFieldInterface.get_playing_time()
 	
 	pattern_diamond_bomb_count = 4
@@ -580,14 +589,16 @@ func pattern_diamond_end():
 const pattern_twisted_numeric_playing_time = 4.0
 
 func pattern_twisted_numeric():
+	PlayingFieldInterface.set_theme_color(Color.LIGHT_SKY_BLUE)
+	
 	pattern_start_time = PlayingFieldInterface.get_playing_time()
 	
 	var end_bomb: NumericBomb
 	
-	end_bomb = create_numeric_bomb(PlayingFieldInterface.get_player_position() * -144 / 240, 1.0, 3.0 ,4)
-	create_numeric_bomb(PlayingFieldInterface.get_player_position() * -48 / 240, 1.0, 3.0, 2)
-	create_numeric_bomb(PlayingFieldInterface.get_player_position() * 48 / 240, 1.0, 3.0, 1)
-	create_numeric_bomb(PlayingFieldInterface.get_player_position() * 144 / 240, 1.0, 3.0, 3)
+	end_bomb = create_numeric_bomb(PlayingFieldInterface.get_player_position() * -144.0 / 240.0, 1.0, 3.0 ,4)
+	create_numeric_bomb(PlayingFieldInterface.get_player_position() * -48.0 / 240.0, 1.0, 3.0, 2)
+	create_numeric_bomb(PlayingFieldInterface.get_player_position() * 48.0 / 240.0, 1.0, 3.0, 1)
+	create_numeric_bomb(PlayingFieldInterface.get_player_position() * 144.0 / 240.0, 1.0, 3.0, 3)
 	
 	end_bomb.connect("player_body_entered", Callable(self, "pattern_twisted_numeric_end"))
 
@@ -607,7 +618,7 @@ const pattern_spiral_playing_time = 5.5
 var pattern_spiral_bomb_count: int
 
 func pattern_spiral():
-	PlayingFieldInterface.set_theme_color(Color.VIOLET)
+	PlayingFieldInterface.set_theme_color(Color.MEDIUM_BLUE)
 	
 	pattern_start_time = PlayingFieldInterface.get_playing_time()
 	
@@ -636,7 +647,7 @@ func pattern_spiral_end():
 const pattern_numeric_choice_playing_time = 4.125
 
 func pattern_numeric_choice():
-	PlayingFieldInterface.set_theme_color(Color.VIOLET)
+	PlayingFieldInterface.set_theme_color(Color.ROYAL_BLUE)
 	
 	pattern_start_time = PlayingFieldInterface.get_playing_time()
 	
@@ -649,13 +660,13 @@ func pattern_numeric_choice():
 	
 	if rand == 0:
 		for i in range(8):
-			var bomb: NumericBomb = create_numeric_bomb(player_position.rotated(rotation_box[i%4]) * 208 / 240, 0.5, 1.0, i+1)
+			var bomb: NumericBomb = create_numeric_bomb(player_position.rotated(rotation_box[i%4]) * 208.0 / 240.0, 0.5, 1.0, i+1)
 			if i == 7:
 				bomb.connect("player_body_entered",Callable(self,"pattern_numeric_choice_end"))
 			await get_tree().create_timer(0.375).timeout
 	else:
 		for i in range(8):
-			var bomb: NumericBomb = create_numeric_bomb(player_position.rotated(rotation_inv_box[i%4]) * 208 / 240, 0.5, 1.0, i+1)
+			var bomb: NumericBomb = create_numeric_bomb(player_position.rotated(rotation_inv_box[i%4]) * 208.0 / 240.0, 0.5, 1.0, i+1)
 			if i == 7:
 				bomb.connect("player_body_entered",Callable(self,"pattern_numeric_choice_end"))
 			await get_tree().create_timer(0.375).timeout
@@ -722,7 +733,7 @@ func pattern_hide_in_hazard_end():
 const pattern_diamond_with_hazard_playing_time = 3.0
 
 func pattern_diamond_with_hazard():
-	PlayingFieldInterface.set_theme_color(Color.ORANGE)
+	PlayingFieldInterface.set_theme_color(Color.NAVY_BLUE)
 	
 	pattern_start_time = PlayingFieldInterface.get_playing_time()
 	var player_position: Vector2 = PlayingFieldInterface.get_player_position()
@@ -752,7 +763,7 @@ func pattern_diamond_with_hazard_end():
 const pattern_369_playing_time = 6.0
 
 func pattern_369():
-	PlayingFieldInterface.set_theme_color(Color.ORANGE)
+	PlayingFieldInterface.set_theme_color(Color.STEEL_BLUE)
 	
 	pattern_start_time = PlayingFieldInterface.get_playing_time()
 	
@@ -788,7 +799,7 @@ const pattern_colosseum_playing_time = 3.0
 var pattern_colosseum_bomb_count: int
 
 func pattern_colosseum():
-	PlayingFieldInterface.set_theme_color(Color.ORANGE)
+	PlayingFieldInterface.set_theme_color(Color.MIDNIGHT_BLUE)
 	
 	pattern_start_time = PlayingFieldInterface.get_playing_time()
 	var player_position: Vector2 = PlayingFieldInterface.get_player_position()
