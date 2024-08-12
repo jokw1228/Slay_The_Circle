@@ -88,15 +88,21 @@ func select_stage(difficulty: int):
 		0:
 			high_score = SaveFileManager.circle_record
 			%InfoLabel2.text = "HARD"
+			%InfoLabel2.modulate = Color(1,1,0,1)
 			%InfoLabel3.text = "SIMPLE!"
+			%InfoLabel3.modulate = Color.CHOCOLATE
 		1:
 			high_score = SaveFileManager.circler_record
 			%InfoLabel2.text = "HARDER"
+			%InfoLabel2.modulate = Color(1,0.8,0,1)
 			%InfoLabel3.text = "HARZARD!!"
+			%InfoLabel3.modulate = Color.DEEP_SKY_BLUE
 		2:
 			high_score = SaveFileManager.circlest_record
 			%InfoLabel2.text = "HARDEST"
+			%InfoLabel2.modulate = Color(1,0.6,0,1)
 			%InfoLabel3.text = "MOVING!!!"
+			%InfoLabel3.modulate = Color.AQUAMARINE
 	%InfoLabel1.text = str(high_score)
 	
 	Utils.slide_in(%Info, 400, Vector2.LEFT, 0.4)
@@ -121,15 +127,21 @@ func select_hyper():
 		3:
 			high_score = SaveFileManager.hypercircle_record
 			%InfoLabel2.text = "F**K"
+			%InfoLabel2.modulate = Color(1,0.4,0,1)
 			%InfoLabel3.text = "..."
+			%InfoLabel3.modulate = Color.CHOCOLATE
 		4:
 			high_score = SaveFileManager.hypercircler_record
 			%InfoLabel2.text = "F**KER"
+			%InfoLabel2.modulate = Color(1,0.2,0,1)
 			%InfoLabel3.text = "..?"
+			%InfoLabel3.modulate = Color.DEEP_SKY_BLUE
 		5:
 			high_score = SaveFileManager.hypercirclest_record
 			%InfoLabel2.text = "F**KEST"
+			%InfoLabel2.modulate = Color(1,0,0,1)
 			%InfoLabel3.text = "..!"
+			%InfoLabel3.modulate = Color.AQUAMARINE
 	%InfoLabel1.text = str(high_score)
 	Utils.slide_in(%Info, 400, Vector2.LEFT, 0.4)
 	
