@@ -150,12 +150,14 @@ func select_hyper():
 
 	# 옵션 보이기
 func _on_option_button_pressed():
+	PlayingFieldInterface.disable_player_input()
 	%Option.visible = true
 	Utils.slide_in(%Option, 800, Vector2.LEFT, 0.6)
 	SoundManager.play("sfx_menu","select")
 	
 	# 옵션 없애기
 func _on_option_quit_pressed():
+	PlayingFieldInterface.enable_player_input()
 	Utils.slide_out(%Option, 800, Vector2.RIGHT, 0.6)
 	SoundManager.play("sfx_menu","select")
 
