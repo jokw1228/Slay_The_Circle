@@ -1,13 +1,9 @@
 extends BombGenerator
 class_name CircleBombGenerator
 
-#var pattern_list: Array[Callable] # legacy code
-var levelup_list: Array[Callable] # legacy code
-
 var pattern_start_time: float
 var pattern_count: int = 0 # lecacy code
 
-var prev_pattern_index: int = -1 # legacy code
 var prev_timescale: float = Engine.time_scale
 
 var stage_phase: int = 0
@@ -15,10 +11,11 @@ const stage_phase_length = 15.0
 var pattern_dict: Dictionary = {}
 
 func _ready():
+	PlayingFieldInterface.set_theme_color(Color.DEEP_SKY_BLUE)
+	PlayingFieldInterface.set_theme_bright(0)
+	
 	pattern_list_initialization()
-	
 	await Utils.timer(1.0) # game start time offset
-	
 	pattern_shuffle_and_draw()
 
 func pattern_list_initialization():
@@ -29,34 +26,38 @@ func pattern_list_initialization():
 		"pattern_random_link" = 2.0,
 		"pattern_diamond" = 2.0
 	}
-	'''
-	pattern_list.append(Callable(self, "pattern_numeric_center_then_link")) # phase 0
-	pattern_list.append(Callable(self, "pattern_numeric_triangle_with_link")) # phase 0
-	pattern_list.append(Callable(self, "pattern_star")) # phase 0
-	pattern_list.append(Callable(self, "pattern_random_link")) # phase 0
-	pattern_list.append(Callable(self, "pattern_diamond")) # phase 0
-	
-	pattern_list.append(Callable(self, "pattern_numeric_inversion"))
-	pattern_list.append(Callable(self, "pattern_twisted_numeric"))
-	pattern_list.append(Callable(self, "pattern_spiral")) # phase 1
-	pattern_list.append(Callable(self, "pattern_numeric_choice"))
-	pattern_list.append(Callable(self, "pattern_369")) # phase 2
-	
-	levelup_list.append(Callable(self, "pattern_inversion_speedup"))
-	levelup_list.append(Callable(self, "pattern_speed_and_rotation"))
-	
-	# difficult patterns
-	pattern_list.append(Callable(self, "pattern_roll")) # phase 1
-	pattern_list.append(Callable(self, "pattern_colosseum")) # phase 1
-	pattern_list.append(Callable(self, "pattern_diamond_with_hazard")) # phase 1
-	'''
+'''
+phase 0
+
+"pattern_numeric_center_then_link" = 2.0,
+"pattern_numeric_triangle_with_link" = 2.0,
+"pattern_star" = 2.0,
+"pattern_random_link" = 2.0,
+"pattern_diamond" = 2.0
+
+phase 1
+
+"pattern_roll" = 1.0,
+"pattern_colosseum" = 1.0,
+"pattern_diamond_with_hazard" = 1.0,
+"pattern_spiral" = 1.0
+
+phase 2
+
+"pattern_369" = 1.0,
+"pattern_numeric_choice" = 1.0,
+"pattern_twisted_numeric" = 1.0
+
+phase 3
+
+"pattern_numeric_inversion" = 3.0
+'''
 
 func pattern_shuffle_and_draw():
 	var current_time: float = PlayingFieldInterface.get_playing_time()
 	if (stage_phase + 1) * stage_phase_length > current_time:
 		choose_random_pattern()
 	else:
-		stage_phase += 1
 		choose_level_up_pattern()
 
 func choose_random_pattern():
@@ -80,7 +81,7 @@ func choose_random_pattern():
 
 func choose_level_up_pattern():
 	match stage_phase:
-		1:
+		0:
 			var pattern_dict_to_merge: Dictionary = {
 				"pattern_roll" = 1.0,
 				"pattern_colosseum" = 1.0,
@@ -88,21 +89,61 @@ func choose_level_up_pattern():
 				"pattern_spiral" = 1.0
 			}
 			pattern_dict.merge(pattern_dict_to_merge)
+			pattern_level_up_phase_0()
+			stage_phase += 1
+		1:
+			var pattern_dict_to_merge: Dictionary = {
+				"pattern_369" = 1.0,
+				"pattern_numeric_choice" = 1.0,
+				"pattern_twisted_numeric" = 1.0
+			}
+			pattern_dict.merge(pattern_dict_to_merge)
 			pattern_level_up_phase_1()
+			stage_phase += 1
 		2:
 			var pattern_dict_to_merge: Dictionary = {
-				"pattern_369" = 1.0
+				"pattern_numeric_inversion" = 3.0
 			}
 			pattern_dict.merge(pattern_dict_to_merge)
 			pattern_level_up_phase_2()
+			stage_phase += 1
+		3:
+			pattern_level_up_phase_3()
+			stage_phase += 1
+		4:
+			pattern_level_up_phase_4()
 
 ##############################################################
 # level up block start
 ##############################################################
 
 ###############################
-# pattern_level_up_phase_1
+# pattern_level_up_phase_0 start
 # Game Speed Up
+
+const pattern_level_up_phase_0_playing_time = 2.5
+
+func pattern_level_up_phase_0():
+	PlayingFieldInterface.set_theme_color(Color.WHITE)
+	
+	pattern_start_time = PlayingFieldInterface.get_playing_time()
+	prev_timescale = Engine.time_scale
+	
+	var bomb: GameSpeedUpBomb = create_gamespeedup_bomb(Vector2.ZERO, 0.25, 1.75, 0.1)
+	
+	await bomb.tree_exited
+	await get_tree().create_timer(0.5) # rest time
+	
+	PlayingFieldInterface.set_playing_time(pattern_start_time + pattern_level_up_phase_0_playing_time / prev_timescale)
+	pattern_shuffle_and_draw()
+	
+
+# pattern_level_up_phase_0 end
+###############################
+
+###############################
+# pattern_level_up_phase_1 start
+# Rotation Speed Up
 
 const pattern_level_up_phase_1_playing_time = 2.5
 
@@ -110,23 +151,21 @@ func pattern_level_up_phase_1():
 	PlayingFieldInterface.set_theme_color(Color.WHITE)
 	
 	pattern_start_time = PlayingFieldInterface.get_playing_time()
-	prev_timescale = Engine.time_scale
 	
-	var bomb: GameSpeedUpBomb = create_gamespeedup_bomb(Vector2.ZERO, 0.5, 1.5, 0.1)
+	var bomb: RotationSpeedUpBomb = create_rotationspeedup_bomb(Vector2.ZERO, 0.25, 1.75, 0.2)
 	
 	await bomb.tree_exited
 	await get_tree().create_timer(0.5) # rest time
 	
-	PlayingFieldInterface.set_playing_time(pattern_start_time + pattern_level_up_phase_1_playing_time / prev_timescale)
+	PlayingFieldInterface.set_playing_time(pattern_start_time + pattern_level_up_phase_1_playing_time / Engine.time_scale)
 	pattern_shuffle_and_draw()
-	
 
-# pattern_random_link block end
+# pattern_level_up_phase_1 end
 ###############################
 
 ###############################
-# pattern_level_up_phase_2
-# Rotation Speed Up
+# pattern_level_up_phase_2 start
+# Game Speed Up + Rotation Inversion
 
 const pattern_level_up_phase_2_playing_time = 2.5
 
@@ -136,17 +175,72 @@ func pattern_level_up_phase_2():
 	pattern_start_time = PlayingFieldInterface.get_playing_time()
 	prev_timescale = Engine.time_scale
 	
-	var bomb: RotationSpeedUpBomb = create_rotationspeedup_bomb(Vector2.ZERO, 0.5, 1.5, 0.2)
+	var player_angle: float = PlayingFieldInterface.get_player_position().angle()
+	const dist = 64
+	var bomb1: GameSpeedUpBomb = create_gamespeedup_bomb(dist * Vector2(cos(player_angle), sin(player_angle)), 0.25, 1.75, 0.1)
+	var bomb2: RotationInversionBomb = create_rotationinversion_bomb(-dist * Vector2(cos(player_angle), sin(player_angle)), 0.25, 1.75)
+	var link: BombLink = create_bomb_link(bomb1, bomb2)
 	
-	await bomb.tree_exited
+	await link.both_bombs_removed
+	await PlayingFieldInterface.player_grounded
 	await get_tree().create_timer(0.5) # rest time
 	
 	PlayingFieldInterface.set_playing_time(pattern_start_time + pattern_level_up_phase_2_playing_time / prev_timescale)
 	pattern_shuffle_and_draw()
-	
 
-# pattern_random_link block end
+# pattern_level_up_phase_2 end
 ###############################
+
+###############################
+# pattern_level_up_phase_3 start
+# Game Speed Up + Rotation Inversion + Rotation Speed Up
+
+const pattern_level_up_phase_3_playing_time = 2.5
+
+func pattern_level_up_phase_3():
+	PlayingFieldInterface.set_theme_color(Color.BLACK)
+	PlayingFieldInterface.set_theme_bright(1)
+	
+	pattern_start_time = PlayingFieldInterface.get_playing_time()
+	prev_timescale = Engine.time_scale
+	
+	var player_angle: float = PlayingFieldInterface.get_player_position().angle()
+	const dist = 64
+	create_rotationspeedup_bomb(Vector2.ZERO, 0.25, 1.75, 0.2)
+	var bomb1: GameSpeedUpBomb = create_gamespeedup_bomb(dist * Vector2(cos(player_angle), sin(player_angle)), 0.25, 1.75, 0.1)
+	var bomb2: RotationInversionBomb = create_rotationinversion_bomb(-dist * Vector2(cos(player_angle), sin(player_angle)), 0.25, 1.75)
+	var link: BombLink = create_bomb_link(bomb1, bomb2)
+	
+	await link.both_bombs_removed
+	await PlayingFieldInterface.player_grounded
+	await get_tree().create_timer(0.5) # rest time
+	
+	PlayingFieldInterface.set_playing_time(pattern_start_time + pattern_level_up_phase_3_playing_time / prev_timescale)
+	pattern_shuffle_and_draw()
+
+# pattern_level_up_phase_3 end
+###############################
+
+###############################
+# pattern_level_up_phase_4 start
+# Rotation Inversion (infinitely repeated)
+
+const pattern_level_up_phase_4_playing_time = 2.5
+
+func pattern_level_up_phase_4():
+	PlayingFieldInterface.set_theme_color(Color.WHITE)
+	
+	pattern_start_time = PlayingFieldInterface.get_playing_time()
+	
+	var bomb: RotationInversionBomb = create_rotationinversion_bomb(Vector2.ZERO, 0.25, 1.75)
+	
+	await bomb.tree_exited
+	await get_tree().create_timer(0.5) # rest time
+	
+	PlayingFieldInterface.set_playing_time(pattern_start_time + pattern_level_up_phase_4_playing_time / Engine.time_scale)
+	pattern_shuffle_and_draw()
+
+# pattern_level_up_phase_4 end
 
 ##############################################################
 # level up block end
@@ -582,6 +676,82 @@ func pattern_369_end():
 # pattern_369 block end
 ###############################
 
+###############################
+# pattern_numeric_choice block start
+# made by jinhyun
+
+const pattern_numeric_choice_playing_time = 4.125
+
+func pattern_numeric_choice():
+	PlayingFieldInterface.set_theme_color(Color.ROYAL_BLUE)
+	
+	pattern_start_time = PlayingFieldInterface.get_playing_time()
+	
+	var player_position: Vector2 = PlayingFieldInterface.get_player_position()
+	var rotation_box: Array = [PI/2, PI, -PI/2, 0]
+	var rotation_inv_box: Array = [-PI/2, PI, PI/2, 0]
+	
+	randomize()
+	var rand: int = randi() % 2
+	
+	if rand == 0:
+		for i in range(8):
+			var bomb: NumericBomb = create_numeric_bomb(player_position.rotated(rotation_box[i%4]) * 208.0 / 240.0, 0.3, 1.2, i+1)
+			if i == 7:
+				bomb.connect("player_body_entered",Callable(self,"pattern_numeric_choice_end"))
+			await get_tree().create_timer(0.375).timeout
+	else:
+		for i in range(8):
+			var bomb: NumericBomb = create_numeric_bomb(player_position.rotated(rotation_inv_box[i%4]) * 208.0 / 240.0, 0.3, 1.2, i+1)
+			if i == 7:
+				bomb.connect("player_body_entered",Callable(self,"pattern_numeric_choice_end"))
+			await get_tree().create_timer(0.375).timeout
+
+func pattern_numeric_choice_end():
+	await PlayingFieldInterface.player_grounded
+	PlayingFieldInterface.set_playing_time(pattern_start_time + (pattern_numeric_choice_playing_time) / Engine.time_scale)
+	pattern_shuffle_and_draw()
+	
+# pattern_numeric_choice end
+###############################
+
+###############################
+# pattern_twisted_numeric block start
+# made by Jaeyong
+
+const pattern_twisted_numeric_playing_time = 4.0
+
+func pattern_twisted_numeric():
+	PlayingFieldInterface.set_theme_color(Color.LIGHT_SKY_BLUE)
+	
+	pattern_start_time = PlayingFieldInterface.get_playing_time()
+	
+	var end_bomb: NumericBomb
+	
+	if pattern_count < 16 or randi() % 2:
+		end_bomb = create_numeric_bomb(PlayingFieldInterface.get_player_position() * -144.0 / 240.0, 0.75, 3.25 ,4)
+		create_numeric_bomb(PlayingFieldInterface.get_player_position() * 144.0 / 240.0, 0.75, 3.25, 3)
+	else:
+		end_bomb = create_numeric_bomb(PlayingFieldInterface.get_player_position() * 144.0 / 240.0, 0.75, 3.25 ,4)
+		create_numeric_bomb(PlayingFieldInterface.get_player_position() * -144.0 / 240.0, 0.75, 3.25, 3)
+	
+	if pattern_count < 16 or randi() % 2:
+		create_numeric_bomb(PlayingFieldInterface.get_player_position() * -48.0 / 240.0, 0.75, 3.25, 2)
+		create_numeric_bomb(PlayingFieldInterface.get_player_position() * 48.0 / 240.0, 0.75, 3.25, 1)
+	else:
+		create_numeric_bomb(PlayingFieldInterface.get_player_position() * 48.0 / 240.0, 0.75, 3.25, 2)
+		create_numeric_bomb(PlayingFieldInterface.get_player_position() * -48.0 / 240.0, 0.75, 3.25, 1)
+	
+	end_bomb.connect("player_body_entered", Callable(self, "pattern_twisted_numeric_end"))
+
+func pattern_twisted_numeric_end():
+	await PlayingFieldInterface.player_grounded
+	PlayingFieldInterface.set_playing_time(pattern_start_time + (pattern_twisted_numeric_playing_time) / Engine.time_scale)
+	pattern_shuffle_and_draw()
+
+# pattern_twisted_numeric block end
+###############################
+
 ##############################################################
 # stage phase 2 block end
 ##############################################################
@@ -590,37 +760,9 @@ func pattern_369_end():
 
 
 
-###############################
-# pattern_inversion_speedup block start
-# made by Lee Jinwoong
-
-const pattern_inversion_speedup_playing_time = 2.5
-const pattern_inversion_speedup_rest_time = 0.5
-
-func pattern_inversion_speedup():
-	PlayingFieldInterface.set_theme_color(Color.BLUE)
-	
-	pattern_start_time = PlayingFieldInterface.get_playing_time()
-	
-	var player_position: Vector2 = PlayingFieldInterface.get_player_position()
-	var speedup_value: float = 0.2 if pattern_count < 20 else 0.1
-	
-	create_rotationinversion_bomb(Vector2.ZERO, 0.75, 3.25)
-	var bomb1: RotationSpeedUpBomb = create_rotationspeedup_bomb(player_position.rotated(PI / 2.0) * 0.5, 0.25, 2.25, speedup_value * 2.0)
-	var bomb2: GameSpeedUpBomb = create_gamespeedup_bomb(player_position.rotated(PI / -2.0) * 0.5, 0.25, 2.25, speedup_value)
-	var link: BombLink = create_bomb_link(bomb1, bomb2)
-	
-	link.connect("both_bombs_removed", Callable(self, "pattern_inversion_speedup_end"))
-
-func pattern_inversion_speedup_end():
-	await PlayingFieldInterface.player_grounded
-	PlayingFieldInterface.set_playing_time(pattern_start_time + (pattern_inversion_speedup_playing_time) / prev_timescale)
-	prev_timescale = Engine.time_scale
-	await Utils.timer(pattern_inversion_speedup_rest_time)
-	pattern_shuffle_and_draw()
-
-# pattern_inversion_speedup block end
-###############################
+##############################################################
+# stage phase 3 block start
+##############################################################
 
 ###############################
 # pattern_numeric_inversion block start
@@ -661,116 +803,6 @@ func pattern_numeric_inversion_end():
 # pattern_numeric_inversion block end
 ###############################
 
-###############################
-# pattern_speed_and_roation block start
-# made by jooyoung
-
-const pattern_speed_and_rotation_playing_time = 4.0
-const pattern_speed_and_rotation_rest_time = 0.5
-
-func pattern_speed_and_rotation():
-	PlayingFieldInterface.set_theme_color(Color.BLUE)
-	
-	pattern_start_time = PlayingFieldInterface.get_playing_time()
-	
-	var player_position: Vector2 = PlayingFieldInterface.get_player_position()
-	var player_angle: float = player_position.angle()
-	var speedup_value: float = 0.2 if pattern_count < 20 else 0.1
-	const bomb_radius = 64
-	
-	var bomb1: NumericBomb = create_numeric_bomb(Vector2(2 * bomb_radius * cos(player_angle), 2 * bomb_radius * sin(player_angle)),0.5,3.5,1)
-	var bomb2: RotationSpeedUpBomb = create_rotationspeedup_bomb(Vector2(bomb_radius * cos(player_angle), bomb_radius * sin(player_angle)),0.5,3.5,speedup_value * 2.0)
-	
-	create_bomb_link(bomb1,bomb2)
-	
-	var bomb3: GameSpeedUpBomb = create_gamespeedup_bomb(Vector2(bomb_radius * cos(player_angle+PI), bomb_radius * sin(player_angle+PI)),0.5,3.5,speedup_value)
-	var bomb4: NumericBomb = create_numeric_bomb(Vector2(2 * bomb_radius * cos(player_angle+PI), 2 * bomb_radius * sin(player_angle+PI)),0.5,3.5,2)
-	
-	var link2: BombLink = create_bomb_link(bomb3,bomb4)
-	
-	link2.connect("both_bombs_removed",Callable(self,"pattern_speed_and_roation_end"))
-
-func pattern_speed_and_roation_end():
-	PlayingFieldInterface.set_playing_time(pattern_start_time + (pattern_speed_and_rotation_playing_time) / prev_timescale)
-	prev_timescale = Engine.time_scale
-	await get_tree().create_timer(pattern_speed_and_rotation_rest_time).timeout
-	pattern_shuffle_and_draw()
-	
-#pattern_speed_and_roation end
-###############################
-
-###############################
-# pattern_twisted_numeric block start
-# made by Jaeyong
-
-const pattern_twisted_numeric_playing_time = 4.0
-
-func pattern_twisted_numeric():
-	PlayingFieldInterface.set_theme_color(Color.LIGHT_SKY_BLUE)
-	
-	pattern_start_time = PlayingFieldInterface.get_playing_time()
-	
-	var end_bomb: NumericBomb
-	
-	if pattern_count < 16 or randi() % 2:
-		end_bomb = create_numeric_bomb(PlayingFieldInterface.get_player_position() * -144.0 / 240.0, 0.75, 3.25 ,4)
-		create_numeric_bomb(PlayingFieldInterface.get_player_position() * 144.0 / 240.0, 0.75, 3.25, 3)
-	else:
-		end_bomb = create_numeric_bomb(PlayingFieldInterface.get_player_position() * 144.0 / 240.0, 0.75, 3.25 ,4)
-		create_numeric_bomb(PlayingFieldInterface.get_player_position() * -144.0 / 240.0, 0.75, 3.25, 3)
-	
-	if pattern_count < 16 or randi() % 2:
-		create_numeric_bomb(PlayingFieldInterface.get_player_position() * -48.0 / 240.0, 0.75, 3.25, 2)
-		create_numeric_bomb(PlayingFieldInterface.get_player_position() * 48.0 / 240.0, 0.75, 3.25, 1)
-	else:
-		create_numeric_bomb(PlayingFieldInterface.get_player_position() * 48.0 / 240.0, 0.75, 3.25, 2)
-		create_numeric_bomb(PlayingFieldInterface.get_player_position() * -48.0 / 240.0, 0.75, 3.25, 1)
-	
-	end_bomb.connect("player_body_entered", Callable(self, "pattern_twisted_numeric_end"))
-
-func pattern_twisted_numeric_end():
-	await PlayingFieldInterface.player_grounded
-	PlayingFieldInterface.set_playing_time(pattern_start_time + (pattern_twisted_numeric_playing_time) / Engine.time_scale)
-	pattern_shuffle_and_draw()
-
-# pattern_fast_numeric block end
-###############################
-
-###############################
-# pattern_numeric_choice block start
-# made by jinhyun
-
-const pattern_numeric_choice_playing_time = 4.125
-
-func pattern_numeric_choice():
-	PlayingFieldInterface.set_theme_color(Color.ROYAL_BLUE)
-	
-	pattern_start_time = PlayingFieldInterface.get_playing_time()
-	
-	var player_position: Vector2 = PlayingFieldInterface.get_player_position()
-	var rotation_box: Array = [PI/2, PI, -PI/2, 0]
-	var rotation_inv_box: Array = [-PI/2, PI, PI/2, 0]
-	
-	randomize()
-	var rand: int = randi() % 2
-	
-	if rand == 0:
-		for i in range(8):
-			var bomb: NumericBomb = create_numeric_bomb(player_position.rotated(rotation_box[i%4]) * 208.0 / 240.0, 0.3, 1.2, i+1)
-			if i == 7:
-				bomb.connect("player_body_entered",Callable(self,"pattern_numeric_choice_end"))
-			await get_tree().create_timer(0.375).timeout
-	else:
-		for i in range(8):
-			var bomb: NumericBomb = create_numeric_bomb(player_position.rotated(rotation_inv_box[i%4]) * 208.0 / 240.0, 0.3, 1.2, i+1)
-			if i == 7:
-				bomb.connect("player_body_entered",Callable(self,"pattern_numeric_choice_end"))
-			await get_tree().create_timer(0.375).timeout
-
-func pattern_numeric_choice_end():
-	await PlayingFieldInterface.player_grounded
-	PlayingFieldInterface.set_playing_time(pattern_start_time + (pattern_numeric_choice_playing_time) / Engine.time_scale)
-	pattern_shuffle_and_draw()
-	
-# pattern_numeric_choice end
-###############################
+##############################################################
+# stage phase 3 block end
+##############################################################
