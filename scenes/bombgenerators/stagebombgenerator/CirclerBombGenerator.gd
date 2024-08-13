@@ -61,6 +61,7 @@ var pattern_wall_timing_angle: float
 const pattern_wall_timing_bomb_dist = 136
 
 func pattern_wall_timing():
+	PlayingFieldInterface.set_theme_color(Color.WEB_PURPLE)
 	pattern_start_time = PlayingFieldInterface.get_playing_time()
 	
 	pattern_wall_timing_bomb_count = 4
@@ -119,13 +120,13 @@ const pattern_scattered_hazards_playing_time = 3.5
 var pattern_scattered_hazards_bomb_count: int
 
 func pattern_scattered_hazards():
+	PlayingFieldInterface.set_theme_color(Color.VIOLET)
+	
 	var left_bomb = 3
 	pattern_scattered_hazards_bomb_count = 3
 	pattern_start_time = PlayingFieldInterface.get_playing_time()
 	
 	var player_pos_normalized = PlayingFieldInterface.get_player_position().normalized()
-	if (player_pos_normalized == Vector2(0,0)):
-		player_pos_normalized = Vector2(1,0)
 	
 	for i in (8):
 		create_hazard_bomb(player_pos_normalized.rotated(PI/4 * i).rotated(3 * PI/8) * (256 - 32) ,0.25,3.25)
@@ -151,7 +152,8 @@ func pattern_scattered_hazards_end():
 # made by kiyong
 
 func pattern_random_shape():
-	PlayingFieldInterface.set_theme_color(Color.AQUAMARINE)
+	PlayingFieldInterface.set_theme_color(Color.REBECCA_PURPLE)
+	
 	const pattern_time = 1.2
 	
 	await Utils.timer(0.3)
@@ -316,6 +318,7 @@ func pattern_blocking():
 
 func pattern_blocking_end():
 	get_tree().call_group("group_hazard_bomb", "early_eliminate")
+	await PlayingFieldInterface.player_grounded
 	PlayingFieldInterface.set_playing_time(pattern_start_time + (pattern_blocking_playing_time) / Engine.time_scale)
 	pattern_shuffle_and_draw()
 	
@@ -364,7 +367,7 @@ func pattern_maze_end():
 
 func pattern_reactspeed_test():
 	pattern_start_time = PlayingFieldInterface.get_playing_time()
-	PlayingFieldInterface.set_theme_color(Color.BISQUE)
+	PlayingFieldInterface.set_theme_color(Color.DARK_MAGENTA)
 	var indicator: Indicator = Indicator.create()
 	add_child(indicator)
 	
@@ -399,7 +402,7 @@ var pattern_link_free_between_bomb3: HazardBomb
 
 func pattern_link_free():
 	pattern_start_time = PlayingFieldInterface.get_playing_time()
-	PlayingFieldInterface.set_theme_color(Color.BISQUE)
+	PlayingFieldInterface.set_theme_color(Color.DARK_ORCHID)
 	
 	var player_position: Vector2 = PlayingFieldInterface.get_player_position()
 	var angle_offset: float = player_position.angle() * -1
@@ -465,7 +468,7 @@ func pattern_link_free_end():
 const pattern_diamond_with_hazard_puzzled_playing_time = 3.5
 
 func pattern_diamond_with_hazard_puzzled():
-	PlayingFieldInterface.set_theme_color(Color.ORANGE)
+	PlayingFieldInterface.set_theme_color(Color.PLUM)
 	
 	pattern_start_time = PlayingFieldInterface.get_playing_time()
 	var player_position: Vector2 = PlayingFieldInterface.get_player_position()
@@ -497,7 +500,7 @@ const pattern_pizza_playing_time = 3
 
 func pattern_pizza():
 	pattern_start_time = PlayingFieldInterface.get_playing_time()
-	PlayingFieldInterface.set_theme_color(Color.ORANGE)
+	PlayingFieldInterface.set_theme_color(Color.VIOLET)
 	
 	var player_position: Vector2 = PlayingFieldInterface.get_player_position()
 	var player_angle: float = player_position.angle()

@@ -90,19 +90,19 @@ func select_stage(difficulty: int):
 			%InfoLabel2.text = "HARD"
 			%InfoLabel2.modulate = Color(1,1,0,1)
 			%InfoLabel3.text = "SIMPLE!"
-			%InfoLabel3.modulate = Color.CHOCOLATE
+			%InfoLabel3.modulate = Color.DEEP_SKY_BLUE
 		1:
 			high_score = SaveFileManager.circler_record
 			%InfoLabel2.text = "HARDER"
 			%InfoLabel2.modulate = Color(1,0.8,0,1)
 			%InfoLabel3.text = "HARZARD!!"
-			%InfoLabel3.modulate = Color.DEEP_SKY_BLUE
+			%InfoLabel3.modulate = Color.MEDIUM_PURPLE
 		2:
 			high_score = SaveFileManager.circlest_record
 			%InfoLabel2.text = "HARDEST"
 			%InfoLabel2.modulate = Color(1,0.6,0,1)
 			%InfoLabel3.text = "MOVING!!!"
-			%InfoLabel3.modulate = Color.AQUAMARINE
+			%InfoLabel3.modulate = Color.ORANGE_RED
 	%InfoLabel1.text = str(high_score)
 	
 	Utils.slide_in(%Info, 400, Vector2.LEFT, 0.4)
