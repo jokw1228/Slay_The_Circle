@@ -33,9 +33,9 @@ func pattern_list_initialization():
 	levelup_list.append(Callable(self, "pattern_speed_and_rotation"))
 	
 	# difficult patterns
-	#pattern_list1.append(Callable(self, "pattern_roll"))
-	#pattern_list1.append(Callable(self, "pattern_colosseum"))
-	#pattern_list1.append(Callable(self, "pattern_diamond_with_hazard"))
+	#pattern_list.append(Callable(self, "pattern_roll"))
+	#pattern_list.append(Callable(self, "pattern_colosseum"))
+	#pattern_list.append(Callable(self, "pattern_diamond_with_hazard"))
 	
 	# circler
 	#pattern_list.append(Callable(self, "pattern_hazard_at_player_pos")) #circler
@@ -91,37 +91,6 @@ func pattern_numeric_center_then_link_end():
 ###############################
 
 ###############################
-# pattern_hazard_at_player_pos block start
-# made by Lee Jinwoong
-
-const pattern_hazard_at_player_pos_playing_time = 4.5
-
-func pattern_hazard_at_player_pos():
-	PlayingFieldInterface.set_theme_color(Color.DEEP_SKY_BLUE)
-	
-	pattern_start_time = PlayingFieldInterface.get_playing_time()
-	
-	var player_position: Vector2
-	const bomb_radius: Vector2 = Vector2(32, 32)
-	
-	for i in range(0, 5):
-		player_position = PlayingFieldInterface.get_player_position()
-		create_hazard_bomb(player_position * 208.0 / 240.0, 0.75, 0.75)
-		create_hazard_bomb(-player_position * 208.0 / 240.0, 0.75, 0.75)
-		await Utils.timer(0.75)
-	
-	await Utils.timer(0.75)
-	
-	pattern_hazard_at_player_pos_end()
-
-func pattern_hazard_at_player_pos_end():
-	PlayingFieldInterface.set_playing_time(pattern_start_time + (pattern_hazard_at_player_pos_playing_time) / Engine.time_scale)
-	pattern_shuffle_and_draw()
-
-# pattern_hazard_at_player_pos block end
-###############################
-
-###############################
 # pattern_inversion_speedup block start
 # made by Lee Jinwoong
 
@@ -151,55 +120,6 @@ func pattern_inversion_speedup_end():
 	pattern_shuffle_and_draw()
 
 # pattern_inversion_speedup block end
-###############################
-
-###############################
-# pattern_321_go block start
-# made by Lee Jinwoong
-
-const pattern_321_go_playing_time = 5.2 # 2.0 + delta_time * 4 + time_offset
-
-func pattern_321_go():
-	PlayingFieldInterface.set_theme_color(Color.CRIMSON)
-	
-	pattern_start_time = PlayingFieldInterface.get_playing_time()
-	
-	var player_position: Vector2 = PlayingFieldInterface.get_player_position()
-	const delta_time: float = 0.75
-	const time_offset: float = 0.2
-	const dist: float = 208.0 / 240.0
-	
-	create_hazard_bomb(player_position * -dist,   2.0,   delta_time * 4 - time_offset)
-	create_hazard_bomb(player_position * -0.5,   2.0,   delta_time - time_offset / 2.0)
-	create_hazard_bomb(Vector2.ZERO,   2.0,   delta_time * 2 - time_offset / 2.0)
-	create_hazard_bomb(player_position * 0.5,   2.0,   delta_time * 3 - time_offset / 2.0)
-	for i in range(1, 8):
-		if i % 2 == 0:
-			create_hazard_bomb(player_position.rotated(i * PI / 8.0) * 0.5,   2.0,   delta_time * 4)
-		create_hazard_bomb(player_position.rotated(i * PI / 8.0) * dist,   2.0,   delta_time * 4)
-	for i in range(9, 16):
-		if i % 2 == 0:
-			create_hazard_bomb(player_position.rotated(i * PI / 8.0) * 0.5,   2.0,   delta_time * 4)
-		create_hazard_bomb(player_position.rotated(i * PI / 8.0) * dist,   2.0,   delta_time * 4)
-	await Utils.timer(2.0)
-	
-	var last: HazardBomb = create_hazard_bomb(player_position * dist,   delta_time * 4,   time_offset)
-	await Utils.timer(delta_time - time_offset / 2.0)
-	
-	create_numeric_bomb(player_position * -0.5,   0,   delta_time * 4,   3)
-	await Utils.timer(delta_time)
-	create_numeric_bomb(Vector2.ZERO,   0,   delta_time * 3,   2)
-	await Utils.timer(delta_time)
-	create_numeric_bomb(player_position * 0.5,   0,   delta_time * 2,   1)
-	await Utils.timer(delta_time + time_offset * 3.0 / 2.0)
-	
-	pattern_321_go_end()
-
-func pattern_321_go_end():
-	#PlayingFieldInterface.set_playing_time(pattern_start_time + (pattern_pattern_321_go_end_playing_time) / Engine.time_scale)
-	pattern_shuffle_and_draw()
-
-# pattern_321_go block end
 ###############################
 
 ###############################
@@ -329,80 +249,6 @@ func pattern_random_link_end():
 	pattern_shuffle_and_draw()
 
 # pattern_random_link block end
-###############################
-
-###############################
-# pattern_timing block start
-# made by Seonghyeon
-const pattern_timing_playing_time = 2.3
-
-func pattern_timing():
-	PlayingFieldInterface.set_theme_color(Color.HOT_PINK)
-	
-	pattern_start_time = PlayingFieldInterface.get_playing_time()
-	
-	const SIZE = 96
-	var randomness: float = randf_range(0, 60)
-	create_hazard_bomb(SIZE * Vector2.LEFT.rotated(deg_to_rad(randomness + 60)), 0.8, 10)
-	create_hazard_bomb(SIZE * Vector2.LEFT.rotated(deg_to_rad(randomness + 120)), 0.8, 10)
-	create_hazard_bomb(SIZE * Vector2.LEFT.rotated(deg_to_rad(randomness + 240)), 0.8, 10)
-	create_hazard_bomb(SIZE * Vector2.LEFT.rotated(deg_to_rad(randomness + 300)), 0.8, 10)
-	create_hazard_bomb(SIZE * Vector2.LEFT.rotated(deg_to_rad(randomness + 0)), 0.8, 1.2)
-	create_hazard_bomb(SIZE * Vector2.LEFT.rotated(deg_to_rad(randomness + 180)), 0.8, 1.2)
-	var bomb: NormalBomb = create_normal_bomb(Vector2.ZERO, 0.8, 1.5)
-	bomb.connect("player_body_entered", Callable(self, "pattern_timing_end"))
-
-func pattern_timing_end():
-	await PlayingFieldInterface.player_grounded
-	get_tree().call_group("group_hazard_bomb", "early_eliminate")
-	PlayingFieldInterface.set_playing_time(pattern_start_time + (pattern_timing_playing_time) / Engine.time_scale)
-	pattern_shuffle_and_draw()
-# pattern_timing block end
-###############################
-
-###############################
-# pattern_trafficlight block start
-# made by Seonghyeon
-func pattern_trafficlight():
-	PlayingFieldInterface.set_theme_color(Color.HOT_PINK)
-
-	const DIST: float = 96
-	const UNIT: float = 0.5
-	const START: float = 1
-	const WARNING: float = 0.5
-
-	var rotator: Node2D = Node2D.new()
-	add_child(rotator)
-
-	var rotation_value: float = PlayingFieldInterface.get_player_position().angle() + 3*PI/2
-
-	create_hazard_bomb((Vector2.LEFT * DIST * 2).rotated(rotation_value), WARNING, START + UNIT * 1)
-	create_hazard_bomb((Vector2.LEFT * DIST * 1).rotated(rotation_value), WARNING, START + UNIT * 2)
-	create_hazard_bomb((Vector2.ZERO).rotated(rotation_value), WARNING, START + UNIT * 3)
-	create_hazard_bomb((Vector2.RIGHT * DIST * 1).rotated(rotation_value), WARNING, START + UNIT * 4)
-	create_hazard_bomb((Vector2.RIGHT * DIST * 2).rotated(rotation_value), WARNING, START + UNIT * 5)
-
-	await Utils.timer(WARNING + START - UNIT)
-	create_normal_bomb((Vector2.LEFT * DIST * 2).rotated(rotation_value), 2 * UNIT, UNIT)
-	await Utils.timer(UNIT)
-	create_normal_bomb((Vector2.LEFT * DIST * 1).rotated(rotation_value), 2 * UNIT, UNIT)
-	await Utils.timer(UNIT)
-	create_normal_bomb((Vector2.ZERO).rotated(rotation_value), 2 * UNIT, UNIT)
-	await Utils.timer(UNIT)
-	create_normal_bomb((Vector2.RIGHT * DIST * 1).rotated(rotation_value), 2 * UNIT, UNIT)
-	create_hazard_bomb((Vector2.LEFT * DIST * 2).rotated(rotation_value), 0, UNIT * 4)
-	await Utils.timer(UNIT)
-	create_normal_bomb((Vector2.RIGHT * DIST * 2).rotated(rotation_value), 2 * UNIT, UNIT)
-	create_hazard_bomb((Vector2.LEFT * DIST * 1).rotated(rotation_value), 0, UNIT * 3)
-	await Utils.timer(UNIT)
-	create_hazard_bomb((Vector2.ZERO).rotated(rotation_value), 0, UNIT * 2)
-	await Utils.timer(UNIT)
-	create_hazard_bomb((Vector2.RIGHT * DIST * 1).rotated(rotation_value), 0, UNIT * 1)
-	
-	await Utils.timer(3 * UNIT)
-
-	pattern_shuffle_and_draw()
-# pattern_trafficlight block end
 ###############################
 
 ###############################
@@ -697,53 +543,6 @@ func pattern_numeric_choice_end():
 	pattern_shuffle_and_draw()
 	
 # pattern_numeric_choice end
-###############################
-
-###############################
-# pattern_hide_in_hazard block start
-# made by seokhee
-
-#위험하다고 피하는 건 좋지 않아요
-#circle 정도의 쉬?운 난이도
-
-const pattern_hide_in_hazard_playing_time = 6.75
-var bomb_count = 0
-
-func pattern_hide_in_hazard():
-	pattern_start_time = PlayingFieldInterface.get_playing_time()
-	PlayingFieldInterface.set_theme_color(Color.BISQUE)
-	
-	var player_position: Vector2 = PlayingFieldInterface.get_player_position()
-	var angle_offset: float = player_position.angle() * -1
-	
-	const CIRCLE_FIELD_RADIUS = 256
-	var bomb_radius: float = CIRCLE_FIELD_RADIUS * sqrt(3) / 3
-	
-	var ccw: float = 1 if randi() % 2 else -1
-	
-	var bomb1: NumericBomb = create_numeric_bomb(Vector2(bomb_radius * cos(angle_offset + ccw * PI/6), bomb_radius * -sin(angle_offset + ccw * PI/6)), 0.75, 6, 1)
-	var bomb2: NumericBomb = create_numeric_bomb(Vector2(bomb_radius * cos(angle_offset + ccw * PI/2), bomb_radius * -sin(angle_offset + ccw * PI/2)), 0.75, 6, 2)
-	
-	var bomb3: NumericBomb = create_numeric_bomb(Vector2(bomb_radius * cos(angle_offset + ccw * 5*PI/6), bomb_radius * -sin(angle_offset + ccw * 5*PI/6)), 0.75, 6, 3)
-	var bomb4: NumericBomb = create_numeric_bomb(Vector2(bomb_radius * cos(angle_offset + ccw * 7*PI/6), bomb_radius * -sin(angle_offset + ccw * 7*PI/6)), 0.75, 6, 4)
-	
-	var bomb5: NumericBomb = create_numeric_bomb(Vector2(bomb_radius * cos(angle_offset + ccw * 3*PI/2), bomb_radius * -sin(angle_offset + ccw * 3*PI/2)), 0.75, 6, 5)
-	var bomb6: NumericBomb = create_numeric_bomb(Vector2(bomb_radius * cos(angle_offset + ccw * 11*PI/6), bomb_radius * -sin(angle_offset + ccw * 11*PI/6)), 0.75, 6, 6)
-	
-	bomb6.connect("player_body_entered", Callable(self, "pattern_hide_in_hazard_end"))
-	
-	for i in range(3):
-		for j in range(6):
-			var bomb : HazardBomb = create_hazard_bomb(Vector2(bomb_radius * cos(angle_offset + ccw * (2*j-1)*PI/6), bomb_radius * -sin(angle_offset + ccw * (2*j-1)*PI/6)), 0.75, 1)
-		await Utils.timer(1.75)
-
-func pattern_hide_in_hazard_end():
-	get_tree().call_group("group_hazard_bomb", "early_eliminate")
-	await PlayingFieldInterface.player_grounded
-	PlayingFieldInterface.set_playing_time(pattern_start_time + (pattern_hide_in_hazard_playing_time) / Engine.time_scale)
-	pattern_shuffle_and_draw()
-	
-#pattern_hide_in_hazard block end
 ###############################
 
 ###############################
