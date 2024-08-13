@@ -56,7 +56,7 @@ func _process(delta):
 func pattern_cat_wheel():
 	 # -> circler(움직이는 폭탄 존재, 난이도가 그리 어렵지 않음)
 	 # 수정사항 : 색상 DEEP_SKY_BLUE -> RED
-	#PlayingFieldInterface.set_theme_color(Color.RED)
+	PlayingFieldInterface.set_theme_color(Color.RED)
 	
 	var player_position: Vector2 = PlayingFieldInterface.get_player_position()
 	var angle_start: float = player_position.angle() * -1
@@ -69,10 +69,10 @@ func pattern_cat_wheel():
 	
 	const number_of_hazard_bombs = 20
 	const warning_time = 0.5
-	const bomb_time = 4.5
+	const bomb_time = 3.0
 	var ccw: float = 1 if randi() % 2 else -1
 	for i in range(number_of_hazard_bombs):
-		if i >= 5 and i <= number_of_hazard_bombs - 2:
+		if i >= 5 and i <= number_of_hazard_bombs:
 			var inst: HazardBomb = HazardBomb.create(Vector2(bomb_radius * cos(angle_start + i * (ccw * (2*PI) / number_of_hazard_bombs)), bomb_radius * -sin(angle_start + i * (ccw * (2*PI) / number_of_hazard_bombs))), warning_time, bomb_time)
 			center.add_child(inst)
 	
