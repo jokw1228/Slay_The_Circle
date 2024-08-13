@@ -2,8 +2,6 @@ extends BombGenerator
 class_name CircleBombGenerator
 
 var pattern_start_time: float
-var pattern_count: int = 0 # lecacy code
-
 var prev_timescale: float = Engine.time_scale
 
 var stage_phase: int = 0
@@ -15,7 +13,7 @@ func _ready():
 	PlayingFieldInterface.set_theme_bright(0)
 	
 	pattern_list_initialization()
-	await Utils.timer(1.0) # game start time offset
+	await get_tree().create_timer(1.0) # game start time offset
 	pattern_shuffle_and_draw()
 
 func pattern_list_initialization():
@@ -268,7 +266,7 @@ func pattern_numeric_center_then_link():
 	var bomb2: NumericBomb = create_numeric_bomb(player_position * 0.5, 0.25, 2.25, 3)
 	var link: BombLink = create_bomb_link(bomb1, bomb2)
 	
-	if pattern_count > 16:
+	if stage_phase >= 4:
 		create_hazard_bomb(player_position.rotated(PI / 2.0) * 208.0 / 240.0, 0.25, 2.25)
 		create_hazard_bomb(player_position.rotated(PI / -2.0) * 208.0 / 240.0, 0.25, 2.25)
 	
@@ -302,7 +300,7 @@ func pattern_numeric_triangle_with_link():
 	
 	var ccw: float = 1 if randi() % 2 else -1
 	
-	if pattern_count > 16:
+	if stage_phase >= 4:
 		angle_offset += PI / -3.0 if ccw == 1 else PI / 3.0
 		
 	var bomb1: NumericBomb = create_numeric_bomb(Vector2(bomb_radius * cos(angle_offset + ccw * PI/6), bomb_radius * -sin(angle_offset + ccw * PI/6)), 0.25, 2.25, 1)
@@ -421,7 +419,7 @@ func pattern_diamond():
 	pattern_start_time = PlayingFieldInterface.get_playing_time()
 	
 	pattern_diamond_bomb_count = 4
-	var angle_offset: float = randf() if pattern_count > 16 else PlayingFieldInterface.get_player_position().angle()
+	var angle_offset: float = randf() if stage_phase >= 4 else PlayingFieldInterface.get_player_position().angle()
 	var normal_bomb_list: Array[NormalBomb]
 	
 	const CIRCLE_FIELD_RADIUS = 256
@@ -652,7 +650,7 @@ func pattern_369():
 	for i in range(1, 9):
 		if i % 3 != 0:
 			create_numeric_bomb(Vector2(208 * cos(angle_offset + i * PI/4.0), 208 * sin(angle_offset + i * PI/4.0)), 0.4, 1.6, i)
-			if pattern_count > 16:
+			if stage_phase >= 4:
 				create_hazard_bomb(Vector2(208 * cos(angle_offset + i * PI/4.0+PI), 208 * sin(angle_offset + i * PI/4.0+PI)), 0.4, 1.6)
 		else:
 			create_hazard_bomb(Vector2(208 * cos(angle_offset + i * PI/4.0), 208 * sin(angle_offset + i * PI/4.0)), 0.4, 1.6)
@@ -724,14 +722,14 @@ func pattern_twisted_numeric():
 	
 	var end_bomb: NumericBomb
 	
-	if pattern_count < 16 or randi() % 2:
+	if stage_phase < 4:
 		end_bomb = create_numeric_bomb(PlayingFieldInterface.get_player_position() * -144.0 / 240.0, 0.75, 3.25 ,4)
 		create_numeric_bomb(PlayingFieldInterface.get_player_position() * 144.0 / 240.0, 0.75, 3.25, 3)
 	else:
 		end_bomb = create_numeric_bomb(PlayingFieldInterface.get_player_position() * 144.0 / 240.0, 0.75, 3.25 ,4)
 		create_numeric_bomb(PlayingFieldInterface.get_player_position() * -144.0 / 240.0, 0.75, 3.25, 3)
 	
-	if pattern_count < 16 or randi() % 2:
+	if stage_phase < 4:
 		create_numeric_bomb(PlayingFieldInterface.get_player_position() * -48.0 / 240.0, 0.75, 3.25, 2)
 		create_numeric_bomb(PlayingFieldInterface.get_player_position() * 48.0 / 240.0, 0.75, 3.25, 1)
 	else:
