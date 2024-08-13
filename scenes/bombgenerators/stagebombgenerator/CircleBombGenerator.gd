@@ -13,7 +13,7 @@ func _ready():
 	PlayingFieldInterface.set_theme_bright(0)
 	
 	pattern_list_initialization()
-	await get_tree().create_timer(1.0) # game start time offset
+	await get_tree().create_timer(1.0).timeout # game start time offset
 	pattern_shuffle_and_draw()
 
 func pattern_list_initialization():
