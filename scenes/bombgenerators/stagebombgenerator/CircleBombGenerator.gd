@@ -11,7 +11,7 @@ var prev_pattern_index: int = -1 # legacy code
 var prev_timescale: float = Engine.time_scale
 
 var stage_phase: int = 0
-const stage_phase_length = 20.0
+const stage_phase_length = 15.0
 var pattern_dict: Dictionary = {}
 
 func _ready():
@@ -23,11 +23,11 @@ func _ready():
 
 func pattern_list_initialization():
 	pattern_dict = {
-		"pattern_numeric_center_then_link" = 1.0,
-		"pattern_numeric_triangle_with_link" = 1.0,
-		"pattern_star" = 1.0,
-		"pattern_random_link" = 1.0,
-		"pattern_diamond" = 1.0
+		"pattern_numeric_center_then_link" = 2.0,
+		"pattern_numeric_triangle_with_link" = 2.0,
+		"pattern_star" = 2.0,
+		"pattern_random_link" = 2.0,
+		"pattern_diamond" = 2.0
 	}
 	'''
 	pattern_list.append(Callable(self, "pattern_numeric_center_then_link")) # phase 0
@@ -38,17 +38,17 @@ func pattern_list_initialization():
 	
 	pattern_list.append(Callable(self, "pattern_numeric_inversion"))
 	pattern_list.append(Callable(self, "pattern_twisted_numeric"))
-	pattern_list.append(Callable(self, "pattern_spiral"))
+	pattern_list.append(Callable(self, "pattern_spiral")) # phase 1
 	pattern_list.append(Callable(self, "pattern_numeric_choice"))
-	pattern_list.append(Callable(self, "pattern_369"))
+	pattern_list.append(Callable(self, "pattern_369")) # phase 2
 	
 	levelup_list.append(Callable(self, "pattern_inversion_speedup"))
 	levelup_list.append(Callable(self, "pattern_speed_and_rotation"))
 	
 	# difficult patterns
-	pattern_list.append(Callable(self, "pattern_roll"))
-	pattern_list.append(Callable(self, "pattern_colosseum"))
-	pattern_list.append(Callable(self, "pattern_diamond_with_hazard"))
+	pattern_list.append(Callable(self, "pattern_roll")) # phase 1
+	pattern_list.append(Callable(self, "pattern_colosseum")) # phase 1
+	pattern_list.append(Callable(self, "pattern_diamond_with_hazard")) # phase 1
 	'''
 
 func pattern_shuffle_and_draw():
@@ -81,7 +81,20 @@ func choose_random_pattern():
 func choose_level_up_pattern():
 	match stage_phase:
 		1:
+			var pattern_dict_to_merge: Dictionary = {
+				"pattern_roll" = 1.0,
+				"pattern_colosseum" = 1.0,
+				"pattern_diamond_with_hazard" = 1.0,
+				"pattern_spiral" = 1.0
+			}
+			pattern_dict.merge(pattern_dict_to_merge)
 			pattern_level_up_phase_1()
+		2:
+			var pattern_dict_to_merge: Dictionary = {
+				"pattern_369" = 1.0
+			}
+			pattern_dict.merge(pattern_dict_to_merge)
+			pattern_level_up_phase_2()
 
 ##############################################################
 # level up block start
@@ -89,7 +102,7 @@ func choose_level_up_pattern():
 
 ###############################
 # pattern_level_up_phase_1
-# GameSpeedUp
+# Game Speed Up
 
 const pattern_level_up_phase_1_playing_time = 2.5
 
@@ -111,9 +124,37 @@ func pattern_level_up_phase_1():
 # pattern_random_link block end
 ###############################
 
+###############################
+# pattern_level_up_phase_2
+# Rotation Speed Up
+
+const pattern_level_up_phase_2_playing_time = 2.5
+
+func pattern_level_up_phase_2():
+	PlayingFieldInterface.set_theme_color(Color.WHITE)
+	
+	pattern_start_time = PlayingFieldInterface.get_playing_time()
+	prev_timescale = Engine.time_scale
+	
+	var bomb: RotationSpeedUpBomb = create_rotationspeedup_bomb(Vector2.ZERO, 0.5, 1.5, 0.2)
+	
+	await bomb.tree_exited
+	await get_tree().create_timer(0.5) # rest time
+	
+	PlayingFieldInterface.set_playing_time(pattern_start_time + pattern_level_up_phase_2_playing_time / prev_timescale)
+	pattern_shuffle_and_draw()
+	
+
+# pattern_random_link block end
+###############################
+
 ##############################################################
 # level up block end
 ##############################################################
+
+
+
+
 
 ##############################################################
 # stage phase 0 block start
@@ -319,9 +360,235 @@ func pattern_diamond_end():
 ##############################################################
 
 
+
+
+
 ##############################################################
 # stage phase 1 block start
 ##############################################################
+
+###############################
+# pattern_roll block start
+# made by Jaeyong
+
+const pattern_roll_playing_time = 3.0
+var pattern_roll_bomb_count: int
+
+func pattern_roll():
+	PlayingFieldInterface.set_theme_color(Color.DARK_BLUE)
+	
+	pattern_start_time = PlayingFieldInterface.get_playing_time()
+	
+	var angle_offset: float = PlayingFieldInterface.get_player_position().angle()
+	var rng = RandomNumberGenerator.new()
+	rng.randomize()
+	
+	var hazard_line: int = rng.randi_range(1,4)
+	if hazard_line == 4:
+		hazard_line = 2 #가운데 나오는 비율을 더 많이 주고 싶어서...
+	
+	pattern_roll_bomb_count = 10 if hazard_line == 2 else 11
+	var bomb_list: Array[NormalBomb]
+
+	for i in (3):
+		var bomb: NormalBomb = create_normal_bomb(Vector2(96 * i,192 - 96 * i).rotated(angle_offset - PI/2), 0.2, 2.4)
+		bomb.connect("player_body_entered", Callable(self, "pattern_roll_end"))
+	await get_tree().create_timer(0.1).timeout
+	
+	
+	if hazard_line == 1:
+		create_hazard_bomb(Vector2(96, 0).rotated(angle_offset - PI/2), 0.2, 2.4)
+		create_hazard_bomb(Vector2(0, 96).rotated(angle_offset - PI/2), 0.2, 2.4)
+	else :
+		for i in (2):
+			var bomb: NormalBomb = create_normal_bomb(Vector2(96 - 96 * i,96 * i).rotated(angle_offset - PI/2), 0.2, 2.4)
+			bomb.connect("player_body_entered", Callable(self, "pattern_roll_end"))
+	await get_tree().create_timer(0.1).timeout
+
+	
+	if hazard_line == 2:
+		create_hazard_bomb(Vector2(-96, 96).rotated(angle_offset - PI/2), 0.2, 2.4)
+		create_hazard_bomb(Vector2(0, 0).rotated(angle_offset - PI/2), 0.2, 2.4)
+		create_hazard_bomb(Vector2(96, -96).rotated(angle_offset - PI/2), 0.2, 2.4)
+	else :		
+		for i in (3):
+			var bomb: NormalBomb = create_normal_bomb(Vector2(-96 + 96 * i, 96 - 96 * i).rotated(angle_offset - PI/2), 0.2, 2.4)
+			bomb.connect("player_body_entered", Callable(self, "pattern_roll_end"))
+	await get_tree().create_timer(0.1).timeout
+		
+		
+	if hazard_line == 3:
+		create_hazard_bomb(Vector2(-96, 0).rotated(angle_offset - PI/2), 0.2, 2.4)
+		create_hazard_bomb(Vector2(0, -96).rotated(angle_offset - PI/2), 0.2, 2.4)
+	else :
+		for i in (2):
+			var bomb: NormalBomb = create_normal_bomb(Vector2(-96 + 96 * i,- 96 * i).rotated(angle_offset - PI/2), 0.2, 2.4)
+			bomb.connect("player_body_entered", Callable(self, "pattern_roll_end"))
+	await get_tree().create_timer(0.1).timeout
+	
+	for i in (3):
+		var bomb: NormalBomb = create_normal_bomb(Vector2(-96 * i, -192 + 96 * i).rotated(angle_offset - PI/2), 0.2, 2.4)
+		bomb.connect("player_body_entered", Callable(self, "pattern_roll_end"))
+
+func pattern_roll_end():
+	pattern_roll_bomb_count -= 1
+	if pattern_roll_bomb_count == 0:
+		get_tree().call_group("group_hazard_bomb", "early_eliminate")
+		await PlayingFieldInterface.player_grounded
+		PlayingFieldInterface.set_playing_time(pattern_start_time + (pattern_roll_playing_time) / Engine.time_scale)
+		pattern_shuffle_and_draw()
+	
+# pattern_roll block end
+###############################
+
+###############################
+# pattern_colosseum block start
+# made by Bae Sekang
+
+const pattern_colosseum_playing_time = 3.0
+var pattern_colosseum_bomb_count: int
+
+func pattern_colosseum():
+	PlayingFieldInterface.set_theme_color(Color.MIDNIGHT_BLUE)
+	
+	pattern_start_time = PlayingFieldInterface.get_playing_time()
+	var player_position: Vector2 = PlayingFieldInterface.get_player_position()
+	var player_angle: float = player_position.angle()
+	var player_angle2: float = player_position.angle() * -1
+	var bomb_radius = 72
+	
+	pattern_colosseum_bomb_count = 6
+	for i in range(0,12):
+		if i%2==0:
+			var bomb: NormalBomb = create_normal_bomb(Vector2(1.5*bomb_radius*cos(player_angle+i*PI/6),1.5*bomb_radius*sin(player_angle+i*PI/6)), 0.5, 2.5)
+			bomb.connect("player_body_entered", Callable(self,"pattern_colosseum_end"))
+		else:
+			create_hazard_bomb(Vector2(2.1*bomb_radius*cos(player_angle+i*PI/6),2.1*bomb_radius*sin(player_angle+i*PI/6)), 0.5, 2.5)
+	
+func pattern_colosseum_end():
+	pattern_colosseum_bomb_count -= 1
+	if pattern_colosseum_bomb_count == 0:
+		get_tree().call_group("group_hazard_bomb", "early_eliminate")
+		await PlayingFieldInterface.player_grounded
+		PlayingFieldInterface.set_playing_time(pattern_start_time + (pattern_colosseum_playing_time) / Engine.time_scale)
+		pattern_shuffle_and_draw()
+	
+# pattern_colosseum block end
+###############################
+
+###############################
+# pattern_numeric_diamond_with_hazard block start
+# made by Bae Sekang
+
+const pattern_diamond_with_hazard_playing_time = 3.0
+
+func pattern_diamond_with_hazard():
+	PlayingFieldInterface.set_theme_color(Color.NAVY_BLUE)
+	
+	pattern_start_time = PlayingFieldInterface.get_playing_time()
+	var player_position: Vector2 = PlayingFieldInterface.get_player_position()
+	var player_angle: float = player_position.angle()
+	var player_angle2: float = player_position.angle() * -1
+	var bomb_radius = 64
+	create_hazard_bomb(Vector2(0,0), 0.5, 2.5)
+	create_numeric_bomb(Vector2(2*bomb_radius*cos(player_angle+4*PI/2),2*bomb_radius*sin(player_angle+4*PI/2)), 0.5, 2.5, 1)
+	create_numeric_bomb(Vector2(2*bomb_radius*cos(player_angle+1*PI/2),2*bomb_radius*sin(player_angle+1*PI/2)), 0.5, 2.5, 2)
+	create_numeric_bomb(Vector2(2*bomb_radius*cos(player_angle+2*PI/2),2*bomb_radius*sin(player_angle+2*PI/2)), 0.5, 2.5, 3)
+	var bomb: NumericBomb = create_numeric_bomb(Vector2(2*bomb_radius*cos(player_angle+3*PI/2),2*bomb_radius*sin(player_angle+3*PI/2)), 0.5, 2.5, 4)
+	bomb.connect("no_lower_value_bomb_exists", Callable(self, "pattern_diamond_with_hazard_end"))
+
+func pattern_diamond_with_hazard_end():
+	await PlayingFieldInterface.player_grounded
+	PlayingFieldInterface.set_playing_time(pattern_start_time + (pattern_diamond_with_hazard_playing_time) / Engine.time_scale)
+	pattern_shuffle_and_draw()
+	
+# pattern_diamond_with_hazard block end
+###############################
+
+###############################
+# pattern_spiral block start
+# made by jinhyun
+
+const pattern_spiral_playing_time = 5.5
+var pattern_spiral_bomb_count: int
+
+func pattern_spiral():
+	PlayingFieldInterface.set_theme_color(Color.MEDIUM_BLUE)
+	
+	pattern_start_time = PlayingFieldInterface.get_playing_time()
+	
+	var init_position: Vector2 = Vector2.UP
+	
+	pattern_spiral_bomb_count = 16
+	for i in range(16):
+		var bomb: NormalBomb = create_normal_bomb(init_position.rotated(i*PI/3) * (i+1) * 14, 0.3, 3.7)
+		bomb.connect("player_body_entered",Callable(self,"pattern_spiral_end"))
+		await get_tree().create_timer(0.1).timeout
+
+func pattern_spiral_end():
+	pattern_spiral_bomb_count -= 1
+	if pattern_spiral_bomb_count == 0:
+		await PlayingFieldInterface.player_grounded
+		PlayingFieldInterface.set_playing_time(pattern_start_time + (pattern_spiral_playing_time) / Engine.time_scale)
+		pattern_shuffle_and_draw()
+	
+# pattern_spiral end
+###############################
+
+##############################################################
+# stage phase 1 block end
+##############################################################
+
+
+
+
+
+##############################################################
+# stage phase 2 block start
+##############################################################
+
+###############################
+# pattern_369 block start
+# made by Bae Sekang
+
+const pattern_369_playing_time = 6.0
+
+func pattern_369():
+	PlayingFieldInterface.set_theme_color(Color.STEEL_BLUE)
+	
+	pattern_start_time = PlayingFieldInterface.get_playing_time()
+	
+	var angle_offset: float = PlayingFieldInterface.get_player_position().angle()
+	for i in range(1, 9):
+		if i % 3 != 0:
+			create_numeric_bomb(Vector2(208 * cos(angle_offset + i * PI/4.0), 208 * sin(angle_offset + i * PI/4.0)), 0.4, 1.6, i)
+			if pattern_count > 16:
+				create_hazard_bomb(Vector2(208 * cos(angle_offset + i * PI/4.0+PI), 208 * sin(angle_offset + i * PI/4.0+PI)), 0.4, 1.6)
+		else:
+			create_hazard_bomb(Vector2(208 * cos(angle_offset + i * PI/4.0), 208 * sin(angle_offset + i * PI/4.0)), 0.4, 1.6)
+			create_numeric_bomb(Vector2(208 * cos(angle_offset + i * PI/4.0+PI), 208 * sin(angle_offset + i * PI/4.0+PI)), 0.4, 1.6, i)
+		await get_tree().create_timer(0.5).timeout
+	var end_bomb: NumericBomb
+	create_hazard_bomb(Vector2(208 * cos(angle_offset + 9 * PI/4.0), 208 * sin(angle_offset + 9 * PI/4.0)), 0.4, 1.6)
+	end_bomb = create_numeric_bomb(Vector2(208 * cos(angle_offset + 9 * PI/4.0+PI), 208 * sin(angle_offset + 9 * PI/4.0+PI)), 0.4, 1.6, 9)
+	end_bomb.connect("no_lower_value_bomb_exists", Callable(self, "pattern_369_end"))
+
+func pattern_369_end():
+	get_tree().call_group("group_hazard_bomb", "early_eliminate")
+	await PlayingFieldInterface.player_grounded
+	PlayingFieldInterface.set_playing_time(pattern_start_time + (pattern_369_playing_time) / Engine.time_scale)
+	pattern_shuffle_and_draw()
+	
+# pattern_369 block end
+###############################
+
+##############################################################
+# stage phase 2 block end
+##############################################################
+
+
+
+
 
 ###############################
 # pattern_inversion_speedup block start
@@ -433,80 +700,6 @@ func pattern_speed_and_roation_end():
 ###############################
 
 ###############################
-# pattern_roll block start
-# made by Jaeyong
-
-const pattern_roll_playing_time = 3.0
-var pattern_roll_bomb_count: int
-
-func pattern_roll():
-	PlayingFieldInterface.set_theme_color(Color.DARK_BLUE)
-	
-	pattern_start_time = PlayingFieldInterface.get_playing_time()
-	
-	var angle_offset: float = PlayingFieldInterface.get_player_position().angle()
-	var rng = RandomNumberGenerator.new()
-	rng.randomize()
-	
-	var hazard_line: int = rng.randi_range(1,4)
-	if hazard_line == 4:
-		hazard_line = 2 #가운데 나오는 비율을 더 많이 주고 싶어서...
-	
-	pattern_roll_bomb_count = 10 if hazard_line == 2 else 11
-	var bomb_list: Array[NormalBomb]
-
-	for i in (3):
-		var bomb: NormalBomb = create_normal_bomb(Vector2(96 * i,192 - 96 * i).rotated(angle_offset - PI/2), 0.2, 2.4)
-		bomb.connect("player_body_entered", Callable(self, "pattern_roll_end"))
-	await get_tree().create_timer(0.1).timeout
-	
-	
-	if hazard_line == 1:
-		create_hazard_bomb(Vector2(96, 0).rotated(angle_offset - PI/2), 0.2, 2.4)
-		create_hazard_bomb(Vector2(0, 96).rotated(angle_offset - PI/2), 0.2, 2.4)
-	else :
-		for i in (2):
-			var bomb: NormalBomb = create_normal_bomb(Vector2(96 - 96 * i,96 * i).rotated(angle_offset - PI/2), 0.2, 2.4)
-			bomb.connect("player_body_entered", Callable(self, "pattern_roll_end"))
-	await get_tree().create_timer(0.1).timeout
-
-	
-	if hazard_line == 2:
-		create_hazard_bomb(Vector2(-96, 96).rotated(angle_offset - PI/2), 0.2, 2.4)
-		create_hazard_bomb(Vector2(0, 0).rotated(angle_offset - PI/2), 0.2, 2.4)
-		create_hazard_bomb(Vector2(96, -96).rotated(angle_offset - PI/2), 0.2, 2.4)
-	else :		
-		for i in (3):
-			var bomb: NormalBomb = create_normal_bomb(Vector2(-96 + 96 * i, 96 - 96 * i).rotated(angle_offset - PI/2), 0.2, 2.4)
-			bomb.connect("player_body_entered", Callable(self, "pattern_roll_end"))
-	await get_tree().create_timer(0.1).timeout
-		
-		
-	if hazard_line == 3:
-		create_hazard_bomb(Vector2(-96, 0).rotated(angle_offset - PI/2), 0.2, 2.4)
-		create_hazard_bomb(Vector2(0, -96).rotated(angle_offset - PI/2), 0.2, 2.4)
-	else :
-		for i in (2):
-			var bomb: NormalBomb = create_normal_bomb(Vector2(-96 + 96 * i,- 96 * i).rotated(angle_offset - PI/2), 0.2, 2.4)
-			bomb.connect("player_body_entered", Callable(self, "pattern_roll_end"))
-	await get_tree().create_timer(0.1).timeout
-	
-	for i in (3):
-		var bomb: NormalBomb = create_normal_bomb(Vector2(-96 * i, -192 + 96 * i).rotated(angle_offset - PI/2), 0.2, 2.4)
-		bomb.connect("player_body_entered", Callable(self, "pattern_roll_end"))
-
-func pattern_roll_end():
-	pattern_roll_bomb_count -= 1
-	if pattern_roll_bomb_count == 0:
-		get_tree().call_group("group_hazard_bomb", "early_eliminate")
-		await PlayingFieldInterface.player_grounded
-		PlayingFieldInterface.set_playing_time(pattern_start_time + (pattern_roll_playing_time) / Engine.time_scale)
-		pattern_shuffle_and_draw()
-	
-# pattern_roll block end
-###############################
-
-###############################
 # pattern_twisted_numeric block start
 # made by Jaeyong
 
@@ -541,36 +734,6 @@ func pattern_twisted_numeric_end():
 	pattern_shuffle_and_draw()
 
 # pattern_fast_numeric block end
-###############################
-
-###############################
-# pattern_spiral block start
-# made by jinhyun
-
-const pattern_spiral_playing_time = 5.5
-var pattern_spiral_bomb_count: int
-
-func pattern_spiral():
-	PlayingFieldInterface.set_theme_color(Color.MEDIUM_BLUE)
-	
-	pattern_start_time = PlayingFieldInterface.get_playing_time()
-	
-	var init_position: Vector2 = Vector2.UP
-	
-	pattern_spiral_bomb_count = 16
-	for i in range(16):
-		var bomb: NormalBomb = create_normal_bomb(init_position.rotated(i*PI/3) * (i+1) * 14, 0.3, 3.7)
-		bomb.connect("player_body_entered",Callable(self,"pattern_spiral_end"))
-		await get_tree().create_timer(0.1).timeout
-
-func pattern_spiral_end():
-	pattern_spiral_bomb_count -= 1
-	if pattern_spiral_bomb_count == 0:
-		await PlayingFieldInterface.player_grounded
-		PlayingFieldInterface.set_playing_time(pattern_start_time + (pattern_spiral_playing_time) / Engine.time_scale)
-		pattern_shuffle_and_draw()
-	
-# pattern_spiral end
 ###############################
 
 ###############################
@@ -610,104 +773,4 @@ func pattern_numeric_choice_end():
 	pattern_shuffle_and_draw()
 	
 # pattern_numeric_choice end
-###############################
-
-###############################
-# pattern_numeric_diamond_with_hazard block start
-# made by Bae Sekang
-
-const pattern_diamond_with_hazard_playing_time = 3.0
-
-func pattern_diamond_with_hazard():
-	PlayingFieldInterface.set_theme_color(Color.NAVY_BLUE)
-	
-	pattern_start_time = PlayingFieldInterface.get_playing_time()
-	var player_position: Vector2 = PlayingFieldInterface.get_player_position()
-	var player_angle: float = player_position.angle()
-	var player_angle2: float = player_position.angle() * -1
-	var bomb_radius = 64
-	create_hazard_bomb(Vector2(0,0), 0.5, 2.5)
-	create_numeric_bomb(Vector2(2*bomb_radius*cos(player_angle+4*PI/2),2*bomb_radius*sin(player_angle+4*PI/2)), 0.5, 2.5, 1)
-	create_numeric_bomb(Vector2(2*bomb_radius*cos(player_angle+1*PI/2),2*bomb_radius*sin(player_angle+1*PI/2)), 0.5, 2.5, 2)
-	create_numeric_bomb(Vector2(2*bomb_radius*cos(player_angle+2*PI/2),2*bomb_radius*sin(player_angle+2*PI/2)), 0.5, 2.5, 3)
-	var bomb: NumericBomb = create_numeric_bomb(Vector2(2*bomb_radius*cos(player_angle+3*PI/2),2*bomb_radius*sin(player_angle+3*PI/2)), 0.5, 2.5, 4)
-	bomb.connect("no_lower_value_bomb_exists", Callable(self, "pattern_diamond_with_hazard_end"))
-
-func pattern_diamond_with_hazard_end():
-	await PlayingFieldInterface.player_grounded
-	PlayingFieldInterface.set_playing_time(pattern_start_time + (pattern_diamond_with_hazard_playing_time) / Engine.time_scale)
-	pattern_shuffle_and_draw()
-	
-# pattern_diamond_with_hazard block end
-###############################
-
-
-###############################
-# pattern_369 block start
-# made by Bae Sekang
-
-const pattern_369_playing_time = 6.0
-
-func pattern_369():
-	PlayingFieldInterface.set_theme_color(Color.STEEL_BLUE)
-	
-	pattern_start_time = PlayingFieldInterface.get_playing_time()
-	
-	var angle_offset: float = PlayingFieldInterface.get_player_position().angle()
-	for i in range(1, 9):
-		if i % 3 != 0:
-			create_numeric_bomb(Vector2(208 * cos(angle_offset + i * PI/4.0), 208 * sin(angle_offset + i * PI/4.0)), 0.4, 1.6, i)
-			if pattern_count > 16:
-				create_hazard_bomb(Vector2(208 * cos(angle_offset + i * PI/4.0+PI), 208 * sin(angle_offset + i * PI/4.0+PI)), 0.4, 1.6)
-		else:
-			create_hazard_bomb(Vector2(208 * cos(angle_offset + i * PI/4.0), 208 * sin(angle_offset + i * PI/4.0)), 0.4, 1.6)
-			create_numeric_bomb(Vector2(208 * cos(angle_offset + i * PI/4.0+PI), 208 * sin(angle_offset + i * PI/4.0+PI)), 0.4, 1.6, i)
-		await get_tree().create_timer(0.5).timeout
-	var end_bomb: NumericBomb
-	create_hazard_bomb(Vector2(208 * cos(angle_offset + 9 * PI/4.0), 208 * sin(angle_offset + 9 * PI/4.0)), 0.4, 1.6)
-	end_bomb = create_numeric_bomb(Vector2(208 * cos(angle_offset + 9 * PI/4.0+PI), 208 * sin(angle_offset + 9 * PI/4.0+PI)), 0.4, 1.6, 9)
-	end_bomb.connect("no_lower_value_bomb_exists", Callable(self, "pattern_369_end"))
-
-func pattern_369_end():
-	get_tree().call_group("group_hazard_bomb", "early_eliminate")
-	await PlayingFieldInterface.player_grounded
-	PlayingFieldInterface.set_playing_time(pattern_start_time + (pattern_369_playing_time) / Engine.time_scale)
-	pattern_shuffle_and_draw()
-	
-# pattern_369 block end
-###############################
-
-###############################
-# pattern_colosseum block start
-# made by Bae Sekang
-
-const pattern_colosseum_playing_time = 3.0
-var pattern_colosseum_bomb_count: int
-
-func pattern_colosseum():
-	PlayingFieldInterface.set_theme_color(Color.MIDNIGHT_BLUE)
-	
-	pattern_start_time = PlayingFieldInterface.get_playing_time()
-	var player_position: Vector2 = PlayingFieldInterface.get_player_position()
-	var player_angle: float = player_position.angle()
-	var player_angle2: float = player_position.angle() * -1
-	var bomb_radius = 72
-	
-	pattern_colosseum_bomb_count = 6
-	for i in range(0,12):
-		if i%2==0:
-			var bomb: NormalBomb = create_normal_bomb(Vector2(1.5*bomb_radius*cos(player_angle+i*PI/6),1.5*bomb_radius*sin(player_angle+i*PI/6)), 0.5, 2.5)
-			bomb.connect("player_body_entered", Callable(self,"pattern_colosseum_end"))
-		else:
-			create_hazard_bomb(Vector2(2.1*bomb_radius*cos(player_angle+i*PI/6),2.1*bomb_radius*sin(player_angle+i*PI/6)), 0.5, 2.5)
-	
-func pattern_colosseum_end():
-	pattern_colosseum_bomb_count -= 1
-	if pattern_colosseum_bomb_count == 0:
-		get_tree().call_group("group_hazard_bomb", "early_eliminate")
-		await PlayingFieldInterface.player_grounded
-		PlayingFieldInterface.set_playing_time(pattern_start_time + (pattern_colosseum_playing_time) / Engine.time_scale)
-		pattern_shuffle_and_draw()
-	
-# pattern_colosseum block end
 ###############################
