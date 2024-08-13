@@ -532,7 +532,7 @@ func pattern_pizza_end():
 const pattern_narrow_road_playing_time = 3.0
 
 func pattern_narrow_road():
-	PlayingFieldInterface.set_theme_color(Color.ORANGE)
+	PlayingFieldInterface.set_theme_color(Color.VIOLET)
 	
 	pattern_start_time = PlayingFieldInterface.get_playing_time()
 	

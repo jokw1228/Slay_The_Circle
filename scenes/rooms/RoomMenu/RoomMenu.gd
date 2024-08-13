@@ -129,19 +129,16 @@ func select_hyper():
 			%InfoLabel2.text = "F**K"
 			%InfoLabel2.modulate = Color(1,0.4,0,1)
 			%InfoLabel3.text = "..."
-			%InfoLabel3.modulate = Color.CHOCOLATE
 		4:
 			high_score = SaveFileManager.hypercircler_record
 			%InfoLabel2.text = "F**KER"
 			%InfoLabel2.modulate = Color(1,0.2,0,1)
 			%InfoLabel3.text = "..?"
-			%InfoLabel3.modulate = Color.DEEP_SKY_BLUE
 		5:
 			high_score = SaveFileManager.hypercirclest_record
 			%InfoLabel2.text = "F**KEST"
 			%InfoLabel2.modulate = Color(1,0,0,1)
 			%InfoLabel3.text = "..!"
-			%InfoLabel3.modulate = Color.AQUAMARINE
 	%InfoLabel1.text = str(high_score)
 	Utils.slide_in(%Info, 400, Vector2.LEFT, 0.4)
 	
