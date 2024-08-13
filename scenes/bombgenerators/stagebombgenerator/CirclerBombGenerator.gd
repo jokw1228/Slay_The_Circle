@@ -130,7 +130,7 @@ func pattern_scattered_hazards():
 	for i in (8):
 		create_hazard_bomb(player_pos_normalized.rotated(PI/4 * i).rotated(3 * PI/8) * (256 - 32) ,0.25,3.25)
 	
-	var rotation_offset: float = randf_range(0, PI/6)
+	var rotation_offset: float = randf_range(0, PI*2/3)
 	for i in (3):
 		var bomb: NormalBomb = create_normal_bomb(player_pos_normalized.rotated(PI/3 * i * 2).rotated(rotation_offset) * 64 ,0.5, 3)
 		bomb.connect("player_body_entered", Callable(self, "pattern_scattered_hazards_end"))
@@ -392,7 +392,7 @@ func pattern_reactspeed_test():
 #링크를 구하기 위해선 기다림도 필요한 법..
 #컴퓨터 기준으로 개어려워서 circlest 정도일 듯
 
-const pattern_link_free_playing_time = 5
+const pattern_link_free_playing_time = 5.5
 
 var pattern_link_free_between_bomb2: HazardBomb
 var pattern_link_free_between_bomb3: HazardBomb
@@ -416,7 +416,7 @@ func pattern_link_free():
 	link1.connect("both_bombs_removed", Callable(self, "pattern_link_free_link1_slayed"))
 	
 	var between_bomb1: HazardBomb = create_hazard_bomb((bomb1.position + bomb2.position) / 2, 0.5, 1.5)
-	between_bomb1.add_child(Indicator.new())
+	between_bomb1.add_child(Indicator.create())
 	
 	var bomb3: NormalBomb = create_normal_bomb(Vector2(bomb_radius * cos(angle_offset + ccw * 5*PI/6), bomb_radius * -sin(angle_offset + ccw * 5*PI/6)), 3, 0.75)
 	var bomb4: NormalBomb = create_normal_bomb(Vector2(bomb_radius * cos(angle_offset + ccw * 7*PI/6), bomb_radius * -sin(angle_offset + ccw * 7*PI/6)), 3, 0.75)
@@ -437,18 +437,18 @@ func pattern_link_free():
 	
 	await Utils.timer(4.0)
 	
-	var bomb7: NormalBomb = create_normal_bomb(144*Vector2(cos(angle_offset), -sin(angle_offset)), 0.5, 0.5)
-	var bomb8: NormalBomb = create_normal_bomb(-144*Vector2(cos(angle_offset), -sin(angle_offset)), 0.5, 0.5)
+	var bomb7: NormalBomb = create_normal_bomb(144*Vector2(cos(angle_offset), -sin(angle_offset)), 0.5, 1.0)
+	var bomb8: NormalBomb = create_normal_bomb(-144*Vector2(cos(angle_offset), -sin(angle_offset)), 0.5, 1.0)
 	
 	var main_link = create_bomb_link(bomb7, bomb8)
 	
 	main_link.connect("both_bombs_removed", Callable(self, "pattern_link_free_end"))
 
 func pattern_link_free_link1_slayed():
-	pattern_link_free_between_bomb2.add_child(Indicator.new())
+	pattern_link_free_between_bomb2.add_child(Indicator.create())
 	
 func pattern_link_free_link2_slayed():
-	pattern_link_free_between_bomb3.add_child(Indicator.new())
+	pattern_link_free_between_bomb3.add_child(Indicator.create())
 
 func pattern_link_free_end():
 	await PlayingFieldInterface.player_grounded
