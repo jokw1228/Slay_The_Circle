@@ -5,15 +5,13 @@ var pattern_list: Array[Callable]
 
 var pattern_start_time: float
 
-var color_down : Color = Color.ORANGE_RED
-
 var rotation_on : int = 20
 
 func _ready():
 	pattern_list_initialization()
 	
 	await Utils.timer(1.0) # game start time offset
-	PlayingFieldInterface.set_theme_color(Color.RED)
+	
 	pattern_cat_wheel()
 
 func pattern_list_initialization():
@@ -41,9 +39,6 @@ func pattern_shuffle_and_draw():
 		randomize()
 		var random_index: int = randi() % pattern_list.size()
 		pattern_list[random_index].call()
-	if color_down.r >0.4:
-		color_down.r -= 0.05
-		PlayingFieldInterface.set_theme_color(color_down)
 
 func _process(delta):
 	pattern_moving_link_process(delta)

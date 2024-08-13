@@ -33,16 +33,9 @@ func pattern_list_initialization():
 	levelup_list.append(Callable(self, "pattern_speed_and_rotation"))
 	
 	# difficult patterns
-	#pattern_list.append(Callable(self, "pattern_roll"))
-	#pattern_list.append(Callable(self, "pattern_colosseum"))
-	#pattern_list.append(Callable(self, "pattern_diamond_with_hazard"))
-	
-	# circler
-	#pattern_list.append(Callable(self, "pattern_hazard_at_player_pos")) #circler
-	#pattern_list.append(Callable(self, "pattern_321_go")) #circler
-	#pattern_list.append(Callable(self, "pattern_timing")) #circler
-	#pattern_list.append(Callable(self, "pattern_trafficlight")) #circler
-	#pattern_list.append(Callable(self, "pattern_hide_in_hazard")) #circler
+	pattern_list.append(Callable(self, "pattern_roll"))
+	pattern_list.append(Callable(self, "pattern_colosseum"))
+	pattern_list.append(Callable(self, "pattern_diamond_with_hazard"))
 
 func pattern_shuffle_and_draw():
 	randomize()
@@ -610,8 +603,6 @@ func pattern_369_end():
 # pattern_369 block end
 ###############################
 
-
-
 ###############################
 # pattern_colosseum block start
 # made by Bae Sekang
@@ -632,13 +623,14 @@ func pattern_colosseum():
 	for i in range(0,12):
 		if i%2==0:
 			var bomb: NormalBomb = create_normal_bomb(Vector2(1.5*bomb_radius*cos(player_angle+i*PI/6),1.5*bomb_radius*sin(player_angle+i*PI/6)), 0.5, 2.5)
-			bomb.connect("player_body_entered",Callable(self,"pattern_colosseum_end"))
+			bomb.connect("player_body_entered", Callable(self,"pattern_colosseum_end"))
 		else:
 			create_hazard_bomb(Vector2(2.1*bomb_radius*cos(player_angle+i*PI/6),2.1*bomb_radius*sin(player_angle+i*PI/6)), 0.5, 2.5)
 	
 func pattern_colosseum_end():
 	pattern_colosseum_bomb_count -= 1
 	if pattern_colosseum_bomb_count == 0:
+		get_tree().call_group("group_hazard_bomb", "early_eliminate")
 		await PlayingFieldInterface.player_grounded
 		PlayingFieldInterface.set_playing_time(pattern_start_time + (pattern_colosseum_playing_time) / Engine.time_scale)
 		pattern_shuffle_and_draw()
