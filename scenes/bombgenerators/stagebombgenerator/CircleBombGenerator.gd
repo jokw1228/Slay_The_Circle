@@ -59,6 +59,7 @@ func pattern_shuffle_and_draw():
 		choose_random_pattern()
 	else:
 		choose_level_up_pattern()
+		stage_phase += 1
 
 func choose_random_pattern():
 	randomize()
@@ -80,38 +81,33 @@ func choose_random_pattern():
 	Callable(self, pattern_dict_keys[pattern_index] ).call()
 
 func choose_level_up_pattern():
-	match stage_phase:
-		0:
-			var pattern_dict_to_merge: Dictionary = {
-				"pattern_roll" = 1.0,
-				"pattern_colosseum" = 1.0,
-				"pattern_diamond_with_hazard" = 1.0,
-				"pattern_spiral" = 1.0
-			}
-			pattern_dict.merge(pattern_dict_to_merge)
-			pattern_level_up_phase_0()
-			stage_phase += 1
-		1:
-			var pattern_dict_to_merge: Dictionary = {
-				"pattern_369" = 1.0,
-				"pattern_numeric_choice" = 1.0,
-				"pattern_twisted_numeric" = 1.0
-			}
-			pattern_dict.merge(pattern_dict_to_merge)
-			pattern_level_up_phase_1()
-			stage_phase += 1
-		2:
-			var pattern_dict_to_merge: Dictionary = {
-				"pattern_numeric_inversion" = 3.0
-			}
-			pattern_dict.merge(pattern_dict_to_merge)
-			pattern_level_up_phase_2()
-			stage_phase += 1
-		3:
-			pattern_level_up_phase_3()
-			stage_phase += 1
-		4:
-			pattern_level_up_phase_4()
+	if stage_phase == 0:
+		var pattern_dict_to_merge: Dictionary = {
+			"pattern_roll" = 1.0,
+			"pattern_colosseum" = 1.0,
+			"pattern_diamond_with_hazard" = 1.0,
+			"pattern_spiral" = 1.0
+		}
+		pattern_dict.merge(pattern_dict_to_merge)
+		pattern_level_up_phase_0()
+	elif stage_phase == 1:
+		var pattern_dict_to_merge: Dictionary = {
+			"pattern_369" = 1.0,
+			"pattern_numeric_choice" = 1.0,
+			"pattern_twisted_numeric" = 1.0
+		}
+		pattern_dict.merge(pattern_dict_to_merge)
+		pattern_level_up_phase_1()
+	elif stage_phase == 2:
+		var pattern_dict_to_merge: Dictionary = {
+			"pattern_numeric_inversion" = 3.0
+		}
+		pattern_dict.merge(pattern_dict_to_merge)
+		pattern_level_up_phase_2()
+	elif stage_phase == 3:
+		pattern_level_up_phase_3()
+	elif stage_phase >= 4:
+		pattern_level_up_phase_4() # infinitely repeated
 
 ##############################################################
 # level up block start
@@ -176,7 +172,7 @@ func pattern_level_up_phase_2():
 	prev_timescale = Engine.time_scale
 	
 	var player_angle: float = PlayingFieldInterface.get_player_position().angle()
-	const dist = 64
+	const dist = 96
 	var bomb1: GameSpeedUpBomb = create_gamespeedup_bomb(dist * Vector2(cos(player_angle), sin(player_angle)), 0.25, 1.75, 0.1)
 	var bomb2: RotationInversionBomb = create_rotationinversion_bomb(-dist * Vector2(cos(player_angle), sin(player_angle)), 0.25, 1.75)
 	var link: BombLink = create_bomb_link(bomb1, bomb2)
@@ -205,7 +201,7 @@ func pattern_level_up_phase_3():
 	prev_timescale = Engine.time_scale
 	
 	var player_angle: float = PlayingFieldInterface.get_player_position().angle()
-	const dist = 64
+	const dist = 160
 	create_rotationspeedup_bomb(Vector2.ZERO, 0.25, 1.75, 0.2)
 	var bomb1: GameSpeedUpBomb = create_gamespeedup_bomb(dist * Vector2(cos(player_angle), sin(player_angle)), 0.25, 1.75, 0.1)
 	var bomb2: RotationInversionBomb = create_rotationinversion_bomb(-dist * Vector2(cos(player_angle), sin(player_angle)), 0.25, 1.75)
@@ -228,7 +224,7 @@ func pattern_level_up_phase_3():
 const pattern_level_up_phase_4_playing_time = 2.5
 
 func pattern_level_up_phase_4():
-	PlayingFieldInterface.set_theme_color(Color.WHITE)
+	PlayingFieldInterface.set_theme_color(Color.BLACK)
 	
 	pattern_start_time = PlayingFieldInterface.get_playing_time()
 	
