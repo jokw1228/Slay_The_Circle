@@ -1,14 +1,18 @@
 extends BombGenerator
 class_name CircleBombGenerator
 
-var pattern_list: Array[Callable]
-var levelup_list: Array[Callable]
+#var pattern_list: Array[Callable] # legacy code
+var levelup_list: Array[Callable] # legacy code
 
 var pattern_start_time: float
-var pattern_count: int = 0
+var pattern_count: int = 0 # lecacy code
 
-var prev_pattern_index: int = -1
+var prev_pattern_index: int = -1 # legacy code
 var prev_timescale: float = Engine.time_scale
+
+var stage_phase: int = 0
+const stage_phase_length = 20.0
+var pattern_dict: Dictionary = {}
 
 func _ready():
 	pattern_list_initialization()
@@ -18,12 +22,21 @@ func _ready():
 	pattern_shuffle_and_draw()
 
 func pattern_list_initialization():
-	pattern_list.append(Callable(self, "pattern_numeric_center_then_link"))
-	pattern_list.append(Callable(self, "pattern_numeric_triangle_with_link"))
-	pattern_list.append(Callable(self, "pattern_star"))
-	pattern_list.append(Callable(self, "pattern_random_link"))
+	pattern_dict = {
+		"pattern_numeric_center_then_link" = 1.0,
+		"pattern_numeric_triangle_with_link" = 1.0,
+		"pattern_star" = 1.0,
+		"pattern_random_link" = 1.0,
+		"pattern_diamond" = 1.0
+	}
+	'''
+	pattern_list.append(Callable(self, "pattern_numeric_center_then_link")) # phase 0
+	pattern_list.append(Callable(self, "pattern_numeric_triangle_with_link")) # phase 0
+	pattern_list.append(Callable(self, "pattern_star")) # phase 0
+	pattern_list.append(Callable(self, "pattern_random_link")) # phase 0
+	pattern_list.append(Callable(self, "pattern_diamond")) # phase 0
+	
 	pattern_list.append(Callable(self, "pattern_numeric_inversion"))
-	pattern_list.append(Callable(self, "pattern_diamond"))
 	pattern_list.append(Callable(self, "pattern_twisted_numeric"))
 	pattern_list.append(Callable(self, "pattern_spiral"))
 	pattern_list.append(Callable(self, "pattern_numeric_choice"))
@@ -36,9 +49,27 @@ func pattern_list_initialization():
 	pattern_list.append(Callable(self, "pattern_roll"))
 	pattern_list.append(Callable(self, "pattern_colosseum"))
 	pattern_list.append(Callable(self, "pattern_diamond_with_hazard"))
+	'''
 
 func pattern_shuffle_and_draw():
 	randomize()
+	
+	var weight_sum: float = 0.0
+	for i: float in pattern_dict.values():
+		weight_sum += i
+	var remaining_weight: float = randf_range(0, weight_sum)
+	
+	var pattern_index = 0
+	var pattern_dict_keys: Array = pattern_dict.keys()
+	for i: String in pattern_dict_keys:
+		if remaining_weight >= pattern_dict[i]:
+			pattern_index += 1
+			remaining_weight -= pattern_dict[i]
+		else:
+			break
+	
+	Callable(self, pattern_dict_keys[pattern_index] ).call()
+	'''
 	pattern_count += 1
 	if pattern_count % 4 != 0 or Engine.time_scale >= 2.0:
 		var random_index: int = randi() % pattern_list.size()
@@ -49,6 +80,7 @@ func pattern_shuffle_and_draw():
 	else:
 		var random_index: int = randi() % levelup_list.size()
 		levelup_list[random_index].call()
+	'''
 
 ###############################
 # pattern_numeric_center_then_link block start
