@@ -444,8 +444,12 @@ func pattern_diamond():
 	pattern_start_time = PlayingFieldInterface.get_playing_time()
 	
 	pattern_diamond_bomb_count = 4
-	var angle_offset: float = randf() if stage_phase >= 4 else PlayingFieldInterface.get_player_position().angle()
-	var normal_bomb_list: Array[NormalBomb]
+	
+	var player_direction: Vector2 = PlayingFieldInterface.get_player_position().normalized()
+	
+	# HYPER MODE
+	if stage_phase >= 4:
+		player_direction = player_direction.rotated(randf())
 	
 	const CIRCLE_FIELD_RADIUS = 256
 	
@@ -453,9 +457,10 @@ func pattern_diamond():
 	const hazard_radius = CIRCLE_FIELD_RADIUS - 144
 	
 	for i in range(4):
-		var bomb: NormalBomb = create_normal_bomb(Vector2(normal_radius * cos(angle_offset + i * PI/2), normal_radius * sin(angle_offset + i * PI/2)), 0.25, 2.25)
+		var bomb: NormalBomb = create_normal_bomb(normal_radius * player_direction, 0.25, 2.25)
 		bomb.connect("player_body_entered", Callable(self, "pattern_diamond_end"))
-		create_hazard_bomb(Vector2(hazard_radius * cos(angle_offset + i * PI/2), hazard_radius * sin(angle_offset + i * PI/2)), 0.25, 2.25)
+		create_hazard_bomb(hazard_radius * player_direction, 0.25, 2.25)
+		player_direction = player_direction.rotated(PI/2)
 
 func pattern_diamond_end():
 	pattern_diamond_bomb_count -= 1
