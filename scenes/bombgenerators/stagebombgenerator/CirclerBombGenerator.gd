@@ -18,23 +18,24 @@ func _ready():
 
 func pattern_list_initialization():
 	pattern_dict = {
-		"pattern_wall_timing" = 1.0,
-		"pattern_scattered_hazards" = 1.0,
-		"pattern_random_shape" = 1.0,
-		"pattern_random_rotation" = 1.0,
-		"pattern_blocking" = 1.0,
-		"pattern_maze" = 1.0,
-		"pattern_reactspeed_test" = 1.0,
-		"pattern_link_free" = 1.0,
-		"pattern_diamond_with_hazard_puzzled" = 1.0,
-		"pattern_pizza" = 1.0,
-		"pattern_narrow_road" = 1.0,
+		"pattern_diamond_with_hazard_puzzled" = 2.0,
+		"pattern_maze" = 2.0,
+		"pattern_narrow_road" = 2.0,
+		"pattern_blocking" = 2.0,
+		"pattern_scattered_hazards" = 2.0,
 		
-		"pattern_hazard_at_player_pos" = 1.0,
-		"pattern_321_go" = 1.0,
-		"pattern_timing" = 1.0,
-		"pattern_trafficlight" = 1.0,
-		"pattern_hide_in_hazard" = 1.0
+		"pattern_hide_in_hazard" = 0.0,
+		"pattern_wall_timing" = 0.0,
+		"pattern_random_shape" = 0.0,
+		"pattern_pizza" = 0.0,
+		
+		"pattern_hazard_at_player_pos" = 0.0,
+		"pattern_321_go" = 0.0,
+		"pattern_reactspeed_test" = 0.0,
+		"pattern_link_free" = 0.0,
+		
+		"pattern_timing" = 0.0,
+		"pattern_trafficlight" = 0.0
 	}
 
 func pattern_shuffle_and_draw():
@@ -67,16 +68,26 @@ func choose_random_pattern():
 func choose_level_up_pattern():
 	if stage_phase == 0:
 		var pattern_dict_to_merge: Dictionary = {
+			"pattern_hide_in_hazard" = 1.0,
+			"pattern_wall_timing" = 1.0,
+			"pattern_random_shape" = 1.0,
+			"pattern_pizza" = 1.0
 		}
 		pattern_dict.merge(pattern_dict_to_merge, true)
 		pattern_level_up_phase_0()
 	elif stage_phase == 1:
 		var pattern_dict_to_merge: Dictionary = {
+			"pattern_hazard_at_player_pos" = 1.0,
+			"pattern_321_go" = 1.0,
+			"pattern_reactspeed_test" = 1.0,
+			"pattern_link_free" = 1.0
 		}
 		pattern_dict.merge(pattern_dict_to_merge, true)
 		pattern_level_up_phase_1()
 	elif stage_phase == 2:
 		var pattern_dict_to_merge: Dictionary = {
+			"pattern_timing" = 1.0,
+			"pattern_trafficlight" = 1.0
 		}
 		pattern_dict.merge(pattern_dict_to_merge, true)
 		pattern_level_up_phase_2()
@@ -395,81 +406,6 @@ func pattern_random_shape_random(pattern: int, randomrotation: float):
 				rotation_value += PI / 2.5
 
 # pattern_random_shape block end
-###############################
-
-###############################
-# pattern_random_rotation block start
-# made by jinhyun
-
-const pattern_random_rotation_playing_time = 6.7
-
-var original_rotation_amount: float = 0
-
-func pattern_random_rotation():
-	PlayingFieldInterface.set_theme_color(Color.VIOLET)
-	
-	pattern_start_time = PlayingFieldInterface.get_playing_time()
-	
-	original_rotation_amount = PlayingFieldInterface.current_PlayingField_node.PlayingFieldCamera_node.rotation_amount
-	
-	PlayingFieldInterface.rotation_stop()
-	
-	var player_position: Vector2
-	var rand: int
-	var bomb1: Bomb
-	
-	randomize()
-	player_position = PlayingFieldInterface.get_player_position()
-	rand = randi() % 2
-	if rand == 0:
-		bomb1 = create_rotationspeedup_bomb(player_position.rotated(PI/2) * 0.6, 0.2, 0.8, 4*PI)
-		await bomb1.tree_exited
-		
-		if is_inside_tree():
-			await get_tree().create_timer(0.2).timeout
-		PlayingFieldInterface.rotation_stop()
-	else:
-		bomb1 = create_rotationspeedup_bomb(player_position.rotated(-PI/2) * 0.6, 0.2, 0.8, 4*PI)
-		await bomb1.tree_exited
-		
-		if is_inside_tree():
-			await get_tree().create_timer(0.2).timeout
-		PlayingFieldInterface.rotation_stop()
-	
-	for i in range(5):
-		player_position = PlayingFieldInterface.get_player_position()
-		rand = randi() % 3
-		if rand == 0:
-			bomb1 = create_rotationspeedup_bomb(player_position.rotated(PI/2) * 0.6, 0.2, 0.5, 4*PI)
-			await bomb1.tree_exited
-			
-			if is_inside_tree():
-				await get_tree().create_timer(0.2).timeout
-			PlayingFieldInterface.rotation_stop()
-		elif rand == 1:
-			bomb1 = create_rotationspeedup_bomb(player_position * -0.6, 0.2, 0.5, 4*PI)
-			await bomb1.tree_exited
-			
-			if is_inside_tree():
-				await get_tree().create_timer(0.2).timeout
-			PlayingFieldInterface.rotation_stop()
-		else:
-			bomb1 = create_rotationspeedup_bomb(player_position.rotated(-PI/2) * 0.6, 0.2, 0.5, 4*PI)
-			await bomb1.tree_exited
-			
-			if is_inside_tree():
-				await get_tree().create_timer(0.2).timeout
-			PlayingFieldInterface.rotation_stop()
-	
-	var bomb = create_rotationspeedup_bomb(Vector2(0, 0), 0.3, 0.7, original_rotation_amount)
-	bomb.connect("player_body_entered",Callable(self,"pattern_random_rotation_end"))
-
-func pattern_random_rotation_end():
-	await PlayingFieldInterface.player_grounded
-	PlayingFieldInterface.set_playing_time(pattern_start_time + pattern_random_rotation_playing_time / Engine.time_scale)
-	pattern_shuffle_and_draw()
-	
-# pattern_random_rotation end
 ###############################
 
 ###############################
