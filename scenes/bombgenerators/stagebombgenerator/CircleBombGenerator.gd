@@ -374,9 +374,13 @@ func pattern_star():
 	create_numeric_bomb(Vector2(bomb_radius*cos(player_angle+4*PI/5),bomb_radius*sin(player_angle+4*PI/5)), 0.25, 2.25, 2)
 	create_numeric_bomb(Vector2(bomb_radius*cos(player_angle+8*PI/5),bomb_radius*sin(player_angle+8*PI/5)), 0.25, 2.25, 3)
 	create_numeric_bomb(Vector2(bomb_radius*cos(player_angle+2*PI/5),bomb_radius*sin(player_angle+2*PI/5)), 0.25, 2.25, 4)
-	var bomb5: NumericBomb = create_numeric_bomb(Vector2(bomb_radius*cos(player_angle+6*PI/5),bomb_radius*sin(player_angle+6*PI/5)), 0.25, 2.25, 5)
-
-	bomb5.connect("no_lower_value_bomb_exists",Callable(self,"pattern_star_end"))
+	var bomb_end: NumericBomb = create_numeric_bomb(Vector2(bomb_radius*cos(player_angle+6*PI/5),bomb_radius*sin(player_angle+6*PI/5)), 0.25, 2.25, 5)
+	
+	# HYPER MODE
+	if stage_phase >= 4:
+		bomb_end = create_numeric_bomb(Vector2.ZERO, 0.25, 2.25, 6)
+	
+	bomb_end.connect("no_lower_value_bomb_exists",Callable(self,"pattern_star_end"))
 
 func pattern_star_end():
 	await PlayingFieldInterface.player_grounded
