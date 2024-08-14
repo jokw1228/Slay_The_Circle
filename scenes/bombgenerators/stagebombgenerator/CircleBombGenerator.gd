@@ -118,6 +118,10 @@ func choose_level_up_pattern():
 	elif stage_phase >= 4:
 		pattern_level_up_phase_4() # infinitely repeated
 
+
+
+
+
 ##############################################################
 # level up block start
 ##############################################################

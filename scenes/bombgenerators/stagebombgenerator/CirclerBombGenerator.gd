@@ -85,6 +85,10 @@ func choose_level_up_pattern():
 	elif stage_phase >= 4:
 		pattern_level_up_phase_4() # infinitely repeated
 
+
+
+
+
 ##############################################################
 # level up block start
 ##############################################################
@@ -277,7 +281,7 @@ func pattern_wall_timing_end():
 	if pattern_wall_timing_bomb_count == 0:
 		get_tree().call_group("group_hazard_bomb", "early_eliminate")
 		await PlayingFieldInterface.player_grounded
-		PlayingFieldInterface.set_playing_time(pattern_start_time + (pattern_wall_timing_playing_time) / Engine.time_scale)
+		PlayingFieldInterface.set_playing_time(pattern_start_time + pattern_wall_timing_playing_time / Engine.time_scale)
 		pattern_shuffle_and_draw()
 
 func pattern_wall_timing_auto_rotate(angle):
@@ -314,7 +318,7 @@ func pattern_scattered_hazards_end():
 	if pattern_scattered_hazards_bomb_count == 0:
 		get_tree().call_group("group_hazard_bomb", "early_eliminate")
 		await PlayingFieldInterface.player_grounded
-		PlayingFieldInterface.set_playing_time(pattern_start_time + (pattern_scattered_hazards_playing_time) / Engine.time_scale)
+		PlayingFieldInterface.set_playing_time(pattern_start_time + pattern_scattered_hazards_playing_time / Engine.time_scale)
 		pattern_shuffle_and_draw()
 
 # pattern_scattered_hazards block end
@@ -492,7 +496,7 @@ func pattern_blocking():
 func pattern_blocking_end():
 	get_tree().call_group("group_hazard_bomb", "early_eliminate")
 	await PlayingFieldInterface.player_grounded
-	PlayingFieldInterface.set_playing_time(pattern_start_time + (pattern_blocking_playing_time) / Engine.time_scale)
+	PlayingFieldInterface.set_playing_time(pattern_start_time + pattern_blocking_playing_time / Engine.time_scale)
 	pattern_shuffle_and_draw()
 	
 # pattern_blocking end
@@ -523,7 +527,7 @@ func pattern_maze():
 func pattern_maze_end():
 	get_tree().call_group("group_hazard_bomb", "early_eliminate")
 	await PlayingFieldInterface.player_grounded
-	PlayingFieldInterface.set_playing_time(pattern_start_time + (pattern_maze_playing_time) / Engine.time_scale)
+	PlayingFieldInterface.set_playing_time(pattern_start_time + pattern_maze_playing_time / Engine.time_scale)
 	pattern_shuffle_and_draw()
 	
 # pattern_maze end
@@ -628,7 +632,7 @@ func pattern_link_free_link2_slayed():
 
 func pattern_link_free_end():
 	await PlayingFieldInterface.player_grounded
-	PlayingFieldInterface.set_playing_time(pattern_start_time + (pattern_link_free_playing_time) / Engine.time_scale)
+	PlayingFieldInterface.set_playing_time(pattern_start_time + pattern_link_free_playing_time / Engine.time_scale)
 	pattern_shuffle_and_draw()
 	
 #pattern_link_free block end
@@ -659,7 +663,7 @@ func pattern_diamond_with_hazard_puzzled():
 func pattern_diamond_with_hazard_puzzled_end():
 	get_tree().call_group("group_hazard_bomb", "early_eliminate")
 	await PlayingFieldInterface.player_grounded
-	PlayingFieldInterface.set_playing_time(pattern_start_time + (pattern_diamond_with_hazard_puzzled_playing_time) / Engine.time_scale)
+	PlayingFieldInterface.set_playing_time(pattern_start_time + pattern_diamond_with_hazard_puzzled_playing_time / Engine.time_scale)
 	pattern_shuffle_and_draw()
 	
 # pattern_diamond_with_hazard_puzzled block end
@@ -692,7 +696,7 @@ func pattern_pizza():
 
 func pattern_pizza_end():
 	await PlayingFieldInterface.player_grounded
-	PlayingFieldInterface.set_playing_time(pattern_start_time + (pattern_pizza_playing_time) / Engine.time_scale)
+	PlayingFieldInterface.set_playing_time(pattern_start_time + pattern_pizza_playing_time / Engine.time_scale)
 	pattern_shuffle_and_draw()
 	
 # pattern_pizza block end
@@ -737,7 +741,7 @@ func pattern_narrow_road():
 func pattern_narrow_road_end():
 	get_tree().call_group("group_hazard_bomb", "early_eliminate")
 	await PlayingFieldInterface.player_grounded
-	PlayingFieldInterface.set_playing_time(pattern_start_time + (pattern_narrow_road_playing_time) / Engine.time_scale)
+	PlayingFieldInterface.set_playing_time(pattern_start_time + pattern_narrow_road_playing_time / Engine.time_scale)
 	pattern_shuffle_and_draw()
 	
 # pattern_narrow_road block end
@@ -768,7 +772,7 @@ func pattern_hazard_at_player_pos():
 	pattern_hazard_at_player_pos_end()
 
 func pattern_hazard_at_player_pos_end():
-	PlayingFieldInterface.set_playing_time(pattern_start_time + (pattern_hazard_at_player_pos_playing_time) / Engine.time_scale)
+	PlayingFieldInterface.set_playing_time(pattern_start_time + pattern_hazard_at_player_pos_playing_time / Engine.time_scale)
 	pattern_shuffle_and_draw()
 
 # pattern_hazard_at_player_pos block end
@@ -817,7 +821,7 @@ func pattern_321_go():
 	pattern_321_go_end()
 
 func pattern_321_go_end():
-	#PlayingFieldInterface.set_playing_time(pattern_start_time + (pattern_pattern_321_go_end_playing_time) / Engine.time_scale)
+	#PlayingFieldInterface.set_playing_time(pattern_start_time + pattern_pattern_321_go_end_playing_time / Engine.time_scale)
 	pattern_shuffle_and_draw()
 
 # pattern_321_go block end
@@ -847,7 +851,7 @@ func pattern_timing():
 func pattern_timing_end():
 	await PlayingFieldInterface.player_grounded
 	get_tree().call_group("group_hazard_bomb", "early_eliminate")
-	PlayingFieldInterface.set_playing_time(pattern_start_time + (pattern_timing_playing_time) / Engine.time_scale)
+	PlayingFieldInterface.set_playing_time(pattern_start_time + pattern_timing_playing_time / Engine.time_scale)
 	pattern_shuffle_and_draw()
 # pattern_timing block end
 ###############################
@@ -938,7 +942,7 @@ func pattern_hide_in_hazard():
 func pattern_hide_in_hazard_end():
 	get_tree().call_group("group_hazard_bomb", "early_eliminate")
 	await PlayingFieldInterface.player_grounded
-	PlayingFieldInterface.set_playing_time(pattern_start_time + (pattern_hide_in_hazard_playing_time) / Engine.time_scale)
+	PlayingFieldInterface.set_playing_time(pattern_start_time + pattern_hide_in_hazard_playing_time / Engine.time_scale)
 	pattern_shuffle_and_draw()
 	
 #pattern_hide_in_hazard block end
