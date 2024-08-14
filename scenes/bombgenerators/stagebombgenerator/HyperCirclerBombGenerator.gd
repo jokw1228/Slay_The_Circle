@@ -1,30 +1,35 @@
-extends BombGenerator
+extends CirclerBombGenerator
 class_name HyperCirclerBombGenerator
 
-var pattern_list: Array[Callable]
-
-func _ready():
+func _ready(): # override
+	PlayingFieldInterface.set_theme_color(Color.MEDIUM_PURPLE)
+	PlayingFieldInterface.set_theme_bright(1)
+	
+	stage_phase = 4
+	PlayingFieldInterface.game_speed_up(0.45)
+	PlayingFieldInterface.rotation_speed_up(0.6)
+	
 	pattern_list_initialization()
-	
-	await Utils.timer(1.0) # game start time offset
-	
+	await get_tree().create_timer(1.0).timeout # game start time offset
 	pattern_shuffle_and_draw()
 
 func pattern_list_initialization():
-	pattern_list.append(Callable(self, "pattern_test_1"))
-
-func pattern_shuffle_and_draw():
-	randomize()
-	var random_index: int = randi() % pattern_list.size()
-	pattern_list[random_index].call()
-	
-
-###############################
-# pattern_test_1 block start
-
-func pattern_test_1():
-	await Utils.timer(0.1) # do nothing
-	pattern_shuffle_and_draw()
-
-# pattern_test_1 block end
-###############################
+	pattern_dict = {
+		"pattern_wall_timing" = 1.0,
+		"pattern_scattered_hazards" = 1.0,
+		"pattern_random_shape" = 1.0,
+		"pattern_random_rotation" = 1.0,
+		"pattern_blocking" = 1.0,
+		"pattern_maze" = 1.0,
+		"pattern_reactspeed_test" = 1.0,
+		"pattern_link_free" = 1.0,
+		"pattern_diamond_with_hazard_puzzled" = 1.0,
+		"pattern_pizza" = 1.0,
+		"pattern_narrow_road" = 1.0,
+		
+		"pattern_hazard_at_player_pos" = 1.0,
+		"pattern_321_go" = 1.0,
+		"pattern_timing" = 1.0,
+		"pattern_trafficlight" = 1.0,
+		"pattern_hide_in_hazard" = 1.0
+	}
