@@ -50,6 +50,9 @@ func _ready():
 
 	await Utils.timer(0.5)
 	start_credit_roll()
+	
+	#음악 트는 코드입니다. 혹시몰라서 넣어놨습니다...
+	MusicManager.play("bgm_RC","main_slow",0,1)
 
 func start_credit_roll():
 	if current_index == -1:

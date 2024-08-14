@@ -12,7 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://djvtf5t5jqw8u" path="res://scenes/bombgenerators/MenuBombGenerator.tscn" id="9_xjnco"]
 [ext_resource type="PackedScene" uid="uid://bhe55ocau21ot" path="res://scenes/player/Player.tscn" id="10_qy0n6"]
 [ext_resource type="PackedScene" uid="uid://s264e74phclm" path="res://scenes/playingfield/CircleField.tscn" id="11_s1pwc"]
-[ext_resource type="PackedScene" uid="uid://cn7ttflmrmpth" path="res://scenes/playingfield/PlayingFieldCamera.tscn" id="13_itguu"]
+[ext_resource type="PackedScene" uid="uid://cn7ttflmrmpth" path="res://scenes/playingfield/PlayingfieldCamera.tscn" id="13_itguu"]
 [ext_resource type="PackedScene" uid="uid://dp0cdsfw5ylxj" path="res://scenes/ui/FancyButton.tscn" id="13_yxsra"]
 [ext_resource type="Script" path="res://addons/resonate/sound_manager/sound_bank.gd" id="14_oop3p"]
 [ext_resource type="Script" path="res://addons/resonate/sound_manager/sound_event_resource.gd" id="15_rr3yb"]
@@ -400,6 +400,25 @@ theme_override_styles/hover = SubResource("StyleBoxTexture_v04t5")
 theme_override_styles/pressed = SubResource("StyleBoxTexture_3chji")
 text = "QUIT"
 
+[node name="ToCredit" type="Button" parent="UIContainerUnskewed/Option/Panel"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -220.0
+offset_top = -151.0
+offset_right = -20.0
+offset_bottom = -71.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_styles/normal = SubResource("StyleBoxTexture_u61x5")
+theme_override_styles/hover = SubResource("StyleBoxTexture_v04t5")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_3chji")
+text = "CREDIT
+"
+
 [node name="VBoxContainer" type="VBoxContainer" parent="UIContainerUnskewed/Option/Panel"]
 layout_mode = 0
 offset_left = 30.0
@@ -437,6 +456,7 @@ bus_name = "SFX"
 [connection signal="pressed" from="UIContainerSkewed/Start" to="." method="start_stage"]
 [connection signal="pressed" from="UIContainerUnskewed/OptionButton" to="." method="_on_option_button_pressed"]
 [connection signal="pressed" from="UIContainerUnskewed/Option/Panel/OptionQuit" to="." method="_on_option_quit_pressed"]
+[connection signal="pressed" from="UIContainerUnskewed/Option/Panel/ToCredit" to="." method="_on_to_credit_pressed"]
 
 [editable path="Field/CircleField"]
 [editable path="UIContainerSkewed/Start"]
