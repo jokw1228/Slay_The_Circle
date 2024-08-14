@@ -1,30 +1,34 @@
-extends BombGenerator
+extends CircleBombGenerator
 class_name HyperCircleBombGenerator
 
-var pattern_list: Array[Callable]
-
-func _ready():
+func _ready(): # override
+	PlayingFieldInterface.set_theme_color(Color.DEEP_SKY_BLUE)
+	PlayingFieldInterface.set_theme_bright(1)
+	
+	stage_phase = 4
+	PlayingFieldInterface.game_speed_up(0.45)
+	PlayingFieldInterface.rotation_speed_up(0.6)
+	
 	pattern_list_initialization()
-	
-	await Utils.timer(1.0) # game start time offset
-	
+	await get_tree().create_timer(1.0).timeout # game start time offset
 	pattern_shuffle_and_draw()
 
-func pattern_list_initialization():
-	pattern_list.append(Callable(self, "pattern_test_1"))
-
-func pattern_shuffle_and_draw():
-	randomize()
-	var random_index: int = randi() % pattern_list.size()
-	pattern_list[random_index].call()
-	
-
-###############################
-# pattern_test_1 block start
-
-func pattern_test_1():
-	await Utils.timer(0.1) # do nothing
-	pattern_shuffle_and_draw()
-
-# pattern_test_1 block end
-###############################
+func pattern_list_initialization(): # override
+	pattern_dict = {
+		"pattern_numeric_center_then_link" = 2.0,
+		"pattern_numeric_triangle_with_link" = 2.0,
+		"pattern_star" = 2.0,
+		"pattern_random_link" = 2.0,
+		"pattern_diamond" = 2.0,
+		
+		"pattern_twisted_numeric" = 1.0,
+		"pattern_numeric_choice" = 1.0,
+		"pattern_369" = 1.0,
+		
+		"pattern_spiral" = 1.0,
+		"pattern_roll" = 1.0,
+		"pattern_diamond_with_hazard" = 1.0,
+		"pattern_colosseum" = 1.0,
+		
+		"pattern_numeric_inversion" = 3.0
+	}
