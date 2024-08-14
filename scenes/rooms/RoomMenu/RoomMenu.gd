@@ -1,6 +1,8 @@
 extends Node2D
 class_name RoomMenu
 
+var RoomCredit_room = "res://scenes/rooms/RoomCredit/RoomCredit.tscn"
+
 # 0: Cicle, 1: Circler, 2: Circlest, 3: Hyper Circle, 4: Hyper Circler, 5: Hyper Circlest
 @export var room_to_go: Array[PackedScene]
 @export var playing_field: PlayingField
@@ -158,3 +160,7 @@ func _on_option_quit_pressed():
 	Utils.slide_out(%Option, 800, Vector2.RIGHT, 0.6)
 	SoundManager.play("sfx_menu","select")
 
+func _on_to_credit_pressed():
+	SoundManager.play("sfx_menu","select")
+	MusicManager.stop(0)
+	get_tree().change_scene_to_file(RoomCredit_room)
