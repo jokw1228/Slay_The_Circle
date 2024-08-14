@@ -32,4 +32,3 @@ func pattern_list_initialization(): # override
 		
 		"pattern_numeric_inversion" = 3.0
 	}
-	pattern_dict={"pattern_star" = 1.0}

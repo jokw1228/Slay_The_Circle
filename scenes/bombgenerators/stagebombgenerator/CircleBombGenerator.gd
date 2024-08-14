@@ -726,16 +726,26 @@ func pattern_diamond_with_hazard():
 	PlayingFieldInterface.set_theme_color(Color.NAVY_BLUE)
 	
 	pattern_start_time = PlayingFieldInterface.get_playing_time()
-	var player_position: Vector2 = PlayingFieldInterface.get_player_position()
-	var player_angle: float = player_position.angle()
-	var player_angle2: float = player_position.angle() * -1
-	var bomb_radius = 64
-	create_hazard_bomb(Vector2(0,0), 0.5, 2.5)
-	create_numeric_bomb(Vector2(2*bomb_radius*cos(player_angle+4*PI/2),2*bomb_radius*sin(player_angle+4*PI/2)), 0.5, 2.5, 1)
-	create_numeric_bomb(Vector2(2*bomb_radius*cos(player_angle+1*PI/2),2*bomb_radius*sin(player_angle+1*PI/2)), 0.5, 2.5, 2)
-	create_numeric_bomb(Vector2(2*bomb_radius*cos(player_angle+2*PI/2),2*bomb_radius*sin(player_angle+2*PI/2)), 0.5, 2.5, 3)
+	
+	create_hazard_bomb(Vector2(0,0), 0.25, 2.75)
+	
+	const bomb_position_length = 128
+	var bomb_position: Vector2 = bomb_position_length * PlayingFieldInterface.get_player_position().normalized()
+	
+	var bomb_end: NumericBomb
+	for i: int in range(4):
+		bomb_end = create_numeric_bomb(bomb_position, 0.25, 2.75, i+1)
+		bomb_position = bomb_position.rotated(PI/2)
+	
+	bomb_end.connect("no_lower_value_bomb_exists", Callable(self, "pattern_diamond_with_hazard_end"))
+	'''
+	create_hazard_bomb(Vector2(0,0), 0.25, 2.75)
+	create_numeric_bomb(Vector2(2*bomb_radius*cos(player_angle+4*PI/2),2*bomb_radius*sin(player_angle+4*PI/2)), 0.25, 2.75, 1)
+	create_numeric_bomb(Vector2(2*bomb_radius*cos(player_angle+1*PI/2),2*bomb_radius*sin(player_angle+1*PI/2)), 0.25, 2.75, 2)
+	create_numeric_bomb(Vector2(2*bomb_radius*cos(player_angle+2*PI/2),2*bomb_radius*sin(player_angle+2*PI/2)), 0.25, 2.75, 3)
 	var bomb: NumericBomb = create_numeric_bomb(Vector2(2*bomb_radius*cos(player_angle+3*PI/2),2*bomb_radius*sin(player_angle+3*PI/2)), 0.5, 2.5, 4)
 	bomb.connect("no_lower_value_bomb_exists", Callable(self, "pattern_diamond_with_hazard_end"))
+	'''
 
 func pattern_diamond_with_hazard_end():
 	get_tree().call_group("group_hazard_bomb", "early_eliminate")
