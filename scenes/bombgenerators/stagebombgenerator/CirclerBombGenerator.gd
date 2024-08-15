@@ -721,13 +721,23 @@ func pattern_hazard_at_player_pos():
 	
 	pattern_start_time = PlayingFieldInterface.get_playing_time()
 	
-	var player_position: Vector2
-	const bomb_radius: Vector2 = Vector2(32, 32)
+	var bomb_position: Vector2
 	
 	for i in range(0, 5):
-		player_position = PlayingFieldInterface.get_player_position()
-		create_hazard_bomb(player_position * 208.0 / 240.0, 0.75, 0.75)
-		create_hazard_bomb(-player_position * 208.0 / 240.0, 0.75, 0.75)
+		const CIRCLE_FIELD_RADIUS = 256
+		const bomb_radius = 32
+		bomb_position = (CIRCLE_FIELD_RADIUS - bomb_radius) * PlayingFieldInterface.get_player_position().normalized()
+		create_hazard_bomb(bomb_position, 0.75, 0.75)
+		create_hazard_bomb(-bomb_position, 0.75, 0.75)
+		
+		# HYPER MODE
+		if stage_phase >= 4:
+			const rotation_offset = PI/12
+			create_hazard_bomb(bomb_position.rotated(rotation_offset), 0.75, 0.75)
+			create_hazard_bomb(bomb_position.rotated(-rotation_offset), 0.75, 0.75)
+			create_hazard_bomb(-bomb_position.rotated(rotation_offset), 0.75, 0.75)
+			create_hazard_bomb(-bomb_position.rotated(-rotation_offset), 0.75, 0.75)
+		
 		await Utils.timer(0.75)
 	
 	await Utils.timer(0.75)
