@@ -381,7 +381,7 @@ func pattern_narrow_road_end():
 # pattern_blocking block start
 # made by jinhyun
 
-const pattern_blocking_playing_time = 2.3
+const pattern_blocking_playing_time = 2.5
 
 func pattern_blocking():
 	PlayingFieldInterface.set_theme_color(Color.VIOLET)
@@ -390,10 +390,10 @@ func pattern_blocking():
 	var player_position: Vector2 = PlayingFieldInterface.get_player_position()
 	
 	for i in range(9):
-		create_hazard_bomb(player_position.rotated((i-4)*PI/8) * 0.6, 0.2, 2)
+		create_hazard_bomb(player_position.rotated((i-4)*PI/8) * 0.6, 0.1, 2.4)
 	
-	var bomb1 = create_normal_bomb(player_position.rotated(3.0*PI/4.0) * 0.6, 0.1, 2)
-	var bomb2 = create_normal_bomb(player_position.rotated(-3.0*PI/4.0) * 0.6, 0.1, 2)
+	var bomb1 = create_normal_bomb(player_position.rotated(3.0*PI/4.0) * 0.6, 0.1, 2.4)
+	var bomb2 = create_normal_bomb(player_position.rotated(-3.0*PI/4.0) * 0.6, 0.1, 2.4)
 	var link = create_bomb_link(bomb1, bomb2)
 	
 	link.connect("both_bombs_removed", Callable(self, "pattern_blocking_end"))
