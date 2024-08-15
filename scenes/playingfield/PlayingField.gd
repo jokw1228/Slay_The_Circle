@@ -56,7 +56,8 @@ func stop_PlayingField(bomb_position: Vector2):
 		
 		PlayingFieldInterface.game_speed_reset()
 		
-		SoundManager.play("sfx_PF","explosion")
+		# 게임오버 목소리.... 게임에 안어울리면 주석처리 해주십시오...
+		SoundManager.play("sfx_PF","game_over")
 		MusicManager.enable_stem("dead",0.5)
 		MusicManager.disable_stem("on_game",0.5)
 		
@@ -89,10 +90,6 @@ func rotation_stop():
 
 func get_playing_time() -> float:
 	return playing_time
-
-func add_playing_time(time_to_add: float): # legacy code
-	if playing == true:
-		playing_time += time_to_add / Engine.time_scale
 
 func set_playing_time(time_to_set: float):
 	if playing == true:

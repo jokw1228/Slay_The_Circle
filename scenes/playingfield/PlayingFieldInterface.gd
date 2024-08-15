@@ -66,9 +66,6 @@ func get_player_position() -> Vector2:
 func get_playing_time():
 	return get_PlayingField_node().get_playing_time()
 
-func add_playing_time(time_to_add: float): # legacy code
-	get_PlayingField_node().add_playing_time(time_to_add)
-
 func set_playing_time(time_to_set: float):
 	get_PlayingField_node().set_playing_time(time_to_set)
 

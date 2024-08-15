@@ -22,3 +22,7 @@ func slayed():
 	super()
 	
 	SoundManager.play("sfx_Nor_bomb","slay")
+
+func exploded():
+	SoundManager.play("sfx_Nor_bomb","explosion")
+	super()

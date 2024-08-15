@@ -15,21 +15,22 @@ func _ready(): # override
 
 func pattern_list_initialization():
 	pattern_dict = {
+		"pattern_diamond_with_hazard_puzzled" = 2.0,
+		"pattern_maze" = 2.0,
+		"pattern_narrow_road" = 2.0,
+		"pattern_blocking" = 2.0,
+		"pattern_scattered_hazards" = 2.0,
+		
+		"pattern_hide_in_hazard" = 1.0,
 		"pattern_wall_timing" = 1.0,
-		"pattern_scattered_hazards" = 1.0,
 		"pattern_random_shape" = 1.0,
-		"pattern_random_rotation" = 1.0,
-		"pattern_blocking" = 1.0,
-		"pattern_maze" = 1.0,
-		"pattern_reactspeed_test" = 1.0,
-		"pattern_link_free" = 1.0,
-		"pattern_diamond_with_hazard_puzzled" = 1.0,
 		"pattern_pizza" = 1.0,
-		"pattern_narrow_road" = 1.0,
 		
 		"pattern_hazard_at_player_pos" = 1.0,
 		"pattern_321_go" = 1.0,
+		"pattern_reactspeed_test" = 1.0,
+		"pattern_link_free" = 1.0,
+		
 		"pattern_timing" = 1.0,
-		"pattern_trafficlight" = 1.0,
-		"pattern_hide_in_hazard" = 1.0
+		"pattern_trafficlight" = 1.0
 	}

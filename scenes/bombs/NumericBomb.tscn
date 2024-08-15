@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://dug1fwwbjaopa"]
+[gd_scene load_steps=14 format=3 uid="uid://dug1fwwbjaopa"]
 
 [ext_resource type="Script" path="res://scenes/bombs/NumericBomb.gd" id="1_lkrkc"]
 [ext_resource type="FontFile" uid="uid://bn71j2rajnbrn" path="res://fonts/bump-it-up.ttf" id="2_mftcv"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://ltvbulh18nft" path="res://scenes/bombs/WarningTimer.tscn" id="4_i8np4"]
 [ext_resource type="Script" path="res://addons/resonate/sound_manager/sound_event_resource.gd" id="4_pmjfd"]
 [ext_resource type="AudioStream" uid="uid://c352772ve0yuk" path="res://audio/sfx/slice_3.wav" id="5_7r5w0"]
+[ext_resource type="AudioStream" uid="uid://cdk204qcjn0hb" path="res://audio/sfx/explosion_5.wav" id="8_jjild"]
 [ext_resource type="PackedScene" uid="uid://b6vb4gmrkuugo" path="res://scenes/bombs/bombeffects/BrightModulator.tscn" id="8_r1127"]
 [ext_resource type="PackedScene" uid="uid://b5bt215x185hg" path="res://scenes/bombs/bombeffects/Indicator.tscn" id="8_tpps7"]
 
@@ -20,6 +21,14 @@ bus = ""
 volume = 0.0
 pitch = 1.0
 streams = Array[AudioStream]([ExtResource("5_7r5w0")])
+
+[sub_resource type="Resource" id="Resource_j3a7r"]
+script = ExtResource("4_pmjfd")
+name = "explosion"
+bus = ""
+volume = 0.0
+pitch = 1.0
+streams = Array[AudioStream]([ExtResource("8_jjild")])
 
 [node name="NumericBomb" type="Area2D" node_paths=PackedStringArray("CollisionShape2D_node", "BombTimer_node", "WarningTimer_node", "Indicator_node") groups=["group_numeric_bomb"]]
 modulate = Color(1, 1, 1, 0.12549)
@@ -55,7 +64,7 @@ vertical_alignment = 1
 script = ExtResource("3_awam2")
 label = "sfx_Num_bomb"
 bus = "SFX"
-events = Array[ExtResource("4_pmjfd")]([SubResource("Resource_ue2f5")])
+events = Array[ExtResource("4_pmjfd")]([SubResource("Resource_ue2f5"), SubResource("Resource_j3a7r")])
 
 [node name="Indicator" parent="." instance=ExtResource("8_tpps7")]
 visible = false

@@ -26,3 +26,7 @@ func slayed():
 	super()
 	
 	SoundManager.play("sfx_RSU_bomb","slay")
+
+func exploded():
+	SoundManager.play("sfx_RSU_bomb","explosion")
+	super()

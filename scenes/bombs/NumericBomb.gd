@@ -54,3 +54,8 @@ func has_smaller_id_numeric_bomb():
 		if bomb.id < id:
 			return true
 	return false
+	
+func exploded():
+	SoundManager.play("sfx_Num_bomb","explosion")
+	super()
+
