@@ -308,22 +308,27 @@ func pattern_diamond_with_hazard_puzzled_end():
 # pattern_maze block start
 # made by jinhyun
 
-const pattern_maze_playing_time = 2.5
+const pattern_maze_playing_time = 1.75
 
 func pattern_maze():
 	PlayingFieldInterface.set_theme_color(Color.VIOLET)
 	pattern_start_time = PlayingFieldInterface.get_playing_time()
 	
 	var player_position: Vector2 = PlayingFieldInterface.get_player_position()
-	var player_mul =  player_position * 0.35
-	var magnitude = player_mul.length()
+	var player_mul: Vector2 =  player_position * 0.35
+	var magnitude: float = player_mul.length()
 	var perpendicular = Vector2(-player_mul.y / magnitude, player_mul.x / magnitude)
 	
-	for i in range(5):
-		create_hazard_bomb(player_mul + perpendicular * (i-3.1) * 64, 0.1, 2.3)
-		create_hazard_bomb(-(player_mul + perpendicular * (i-3.1) * 64), 0.1, 2.3)
+	for i in range(4):
+		create_hazard_bomb(player_mul + perpendicular * (i-3.0) * 64, 0.1, 1.65)
+		create_hazard_bomb(-(player_mul + perpendicular * (i-3.0) * 64), 0.1, 1.65)
 	
-	var bomb = create_normal_bomb(-player_position * (256-32) / (256-16), 0.1, 2.3)
+	# HYPER MODE
+	if stage_phase >= 4:
+		create_hazard_bomb(player_mul + perpendicular * (1) * 64, 0.1, 1.65)
+		create_hazard_bomb(-(player_mul + perpendicular * (1) * 64), 0.1, 1.65)
+	
+	var bomb = create_normal_bomb(-player_position * (256-32) / (256-16), 0.1, 1.65)
 	bomb.connect("player_body_entered", Callable(self, "pattern_maze_end"))
 
 func pattern_maze_end():
