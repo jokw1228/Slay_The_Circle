@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://1ohs6nj2dm33"]
+[gd_scene load_steps=13 format=3 uid="uid://1ohs6nj2dm33"]
 
 [ext_resource type="Script" path="res://scenes/bombs/RotationSpeedUpBomb.gd" id="1_07mff"]
 [ext_resource type="Texture2D" uid="uid://d2gno2lcf63pb" path="res://images/bomb/sprite_rotation_speed_up.svg" id="3_1xipd"]
@@ -8,6 +8,7 @@
 [ext_resource type="Script" path="res://addons/resonate/sound_manager/sound_event_resource.gd" id="5_jwm7d"]
 [ext_resource type="AudioStream" uid="uid://c352772ve0yuk" path="res://audio/sfx/slice_3.wav" id="6_op5bq"]
 [ext_resource type="PackedScene" uid="uid://b6vb4gmrkuugo" path="res://scenes/bombs/bombeffects/BrightModulator.tscn" id="8_djtpj"]
+[ext_resource type="AudioStream" uid="uid://cdk204qcjn0hb" path="res://audio/sfx/explosion_5.wav" id="8_txrxd"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_unecs"]
 radius = 32.0
@@ -19,6 +20,14 @@ bus = ""
 volume = 0.0
 pitch = 1.0
 streams = Array[AudioStream]([ExtResource("6_op5bq")])
+
+[sub_resource type="Resource" id="Resource_g3ecd"]
+script = ExtResource("5_jwm7d")
+name = "explosion"
+bus = ""
+volume = 0.0
+pitch = 1.0
+streams = Array[AudioStream]([ExtResource("8_txrxd")])
 
 [node name="RotationSpeedUpBomb" type="Area2D" node_paths=PackedStringArray("CollisionShape2D_node", "BombTimer_node", "WarningTimer_node")]
 modulate = Color(1, 1, 1, 0.12549)
@@ -42,7 +51,7 @@ texture = ExtResource("3_1xipd")
 script = ExtResource("4_vtf52")
 label = "sfx_RSU_bomb"
 bus = "SFX"
-events = Array[ExtResource("5_jwm7d")]([SubResource("Resource_purij")])
+events = Array[ExtResource("5_jwm7d")]([SubResource("Resource_purij"), SubResource("Resource_g3ecd")])
 
 [node name="BrightModulator" parent="." instance=ExtResource("8_djtpj")]
 

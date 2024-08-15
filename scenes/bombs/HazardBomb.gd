@@ -23,6 +23,8 @@ func exploded(): # (override) hazard bomb explosion effect
 	inst.get_node("BrightModulator").queue_free()
 	inst.modulate = Color.RED
 	get_tree().current_scene.add_child( inst )
+	
+	SoundManager.play("sfx_H_bomb","explosion")
 
 func hazard_bomb_ended_effect():
 	get_tree().current_scene.add_child( HazardBombEndedEffect.create(global_position) )

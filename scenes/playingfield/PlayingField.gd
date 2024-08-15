@@ -56,7 +56,7 @@ func stop_PlayingField(bomb_position: Vector2):
 		
 		PlayingFieldInterface.game_speed_reset()
 		
-		SoundManager.play("sfx_PF","explosion")
+		#SoundManager.play("sfx_PF","explosion")
 		MusicManager.enable_stem("dead",0.5)
 		MusicManager.disable_stem("on_game",0.5)
 		
