@@ -1,13 +1,26 @@
-[gd_scene load_steps=11 format=3 uid="uid://c0s4jvu7qncps"]
+[gd_scene load_steps=15 format=3 uid="uid://c0s4jvu7qncps"]
 
 [ext_resource type="Script" path="res://scenes/rooms/RoomCredit/RoomCredit.gd" id="1_axwsh"]
 [ext_resource type="Texture2D" uid="uid://cpd50aakmwjtm" path="res://images/creditroom/CreditRoom.svg" id="2_f4n2x"]
 [ext_resource type="Texture2D" uid="uid://mxfswu8da8vp" path="res://images/player/sprite_player_landed.png" id="3_4ytvs"]
 [ext_resource type="Texture2D" uid="uid://cevkho0emy0yl" path="res://images/logo/sprite_cat_and_dog.png" id="4_hae08"]
+[ext_resource type="Texture2D" uid="uid://7ed2eanqanvm" path="res://scenes/ui/ColoredPanelTexture.svg" id="5_11on3"]
 [ext_resource type="Script" path="res://addons/resonate/music_manager/music_bank.gd" id="5_84rmu"]
 [ext_resource type="Script" path="res://addons/resonate/music_manager/music_track_resource.gd" id="6_apfmj"]
 [ext_resource type="Script" path="res://addons/resonate/music_manager/music_stem_resource.gd" id="7_3225x"]
 [ext_resource type="AudioStream" uid="uid://c3v8s1j06a2nn" path="res://audio/bgm/slow_bgm.wav" id="8_l8wmo"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_g6swl"]
+texture = ExtResource("5_11on3")
+modulate_color = Color(0, 0.784314, 0.784314, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_628fd"]
+texture = ExtResource("5_11on3")
+modulate_color = Color(0.705882, 0.784314, 1, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_yinoi"]
+texture = ExtResource("5_11on3")
+modulate_color = Color(0.592157, 0, 0.196078, 1)
 
 [sub_resource type="Resource" id="Resource_cdhbd"]
 script = ExtResource("7_3225x")
@@ -94,7 +107,27 @@ scale = Vector2(0.12045, 0.11964)
 skew = -0.0211478
 texture = ExtResource("4_hae08")
 
+[node name="ToCredit" type="Button" parent="CanvasLayer"]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -217.0
+offset_top = -99.0
+offset_right = -17.0
+offset_bottom = -19.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_styles/normal = SubResource("StyleBoxTexture_g6swl")
+theme_override_styles/hover = SubResource("StyleBoxTexture_628fd")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_yinoi")
+text = "MENU
+"
+
 [node name="MusicBank" type="Node" parent="."]
 script = ExtResource("5_84rmu")
 label = "bgm_RC"
 tracks = Array[ExtResource("6_apfmj")]([SubResource("Resource_idjpf")])
+
+[connection signal="pressed" from="CanvasLayer/ToCredit" to="." method="_on_to_credit_pressed"]

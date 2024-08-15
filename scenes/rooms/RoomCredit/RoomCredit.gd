@@ -1,18 +1,20 @@
 extends Control
 
+var RoomMenu_room = "res://scenes/rooms/RoomMenu/RoomMenu.tscn"
+
 @export var credits: Array = [
 	["Team", "Slay The Circle(STC)"],
 	["Korea University", "CAT&DOG"],
-	["조강우", "Team Leader\n\nPlanning\n\nPM\n\nProgrammer\n\nGraphic Designer"],
-	["이진웅", "Programmer\n\nLevel Manager"],
-	["강근호", "Programmer\n\nLevel Designer"],
-	["박주영", "Programmer\n\nGraphic Designer"],
-	["정성현", "Programmer\n\nGraphic Designer"],
-	["김기용", "Programmer\n\nLevel Manager"],
-	["김진현", "Programmer\n\nLevel Designer"],
-	["배세강", "Programmer\n\nLevel Designer"],
-	["홍석희", "Programmer\n\nLevel Manager"],
-	["박재용", "Programmer\n\nSound Designer"],
+	["Jo Kangwoo", "Team Leader\n\nPlanning\n\nPM\n\nProgrammer\n\nGraphic Designer"],
+	["Lee Jinwoong", "Programmer\n\nLevel Manager"],
+	["Kang Geunho", "Programmer\n\nLevel Designer"],
+	["Park jooyoung", "Programmer\n\nGraphic Designer"],
+	["Jeong Seonghyeon", "Programmer\n\nGraphic Designer"],
+	["Kim Kiyong", "Programmer\n\nLevel Manager"],
+	["Kim Jinhyun", "Programmer\n\nLevel Designer"],
+	["Bae Sekang", "Programmer\n\nLevel Designer"],
+	["Hong Seokhee", "Programmer\n\nLevel Manager"],
+	["Park Jaeyong", "Programmer\n\nSound Designer"],
 ]
 
 @export var role_label: Label
@@ -150,3 +152,7 @@ func on_name_tween_finished():
 		role_label.visible = true
 		name_label.visible = true
 		start_credit_roll()
+
+
+func _on_to_credit_pressed():
+	get_tree().change_scene_to_file(RoomMenu_room)
