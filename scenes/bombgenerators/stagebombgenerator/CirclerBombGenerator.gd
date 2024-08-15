@@ -36,6 +36,7 @@ func pattern_list_initialization():
 		"pattern_timing" = 0.0,
 		"pattern_trafficlight" = 0.0
 	}
+	pattern_dict = {"pattern_timing" = 0.0}
 '''
 phase 0
 
@@ -844,7 +845,7 @@ func pattern_reactspeed_test():
 ###############################
 # pattern_timing block start
 # made by Seonghyeon
-const pattern_timing_playing_time = 2.3
+const pattern_timing_playing_time = 2.25
 
 func pattern_timing():
 	PlayingFieldInterface.set_theme_color(Color.HOT_PINK)
@@ -853,13 +854,13 @@ func pattern_timing():
 	
 	const SIZE = 96
 	var randomness: float = randf_range(0, 60)
-	create_hazard_bomb(SIZE * Vector2.LEFT.rotated(deg_to_rad(randomness + 60)), 0.8, 10)
-	create_hazard_bomb(SIZE * Vector2.LEFT.rotated(deg_to_rad(randomness + 120)), 0.8, 10)
-	create_hazard_bomb(SIZE * Vector2.LEFT.rotated(deg_to_rad(randomness + 240)), 0.8, 10)
-	create_hazard_bomb(SIZE * Vector2.LEFT.rotated(deg_to_rad(randomness + 300)), 0.8, 10)
-	create_hazard_bomb(SIZE * Vector2.LEFT.rotated(deg_to_rad(randomness + 0)), 0.8, 1.2)
-	create_hazard_bomb(SIZE * Vector2.LEFT.rotated(deg_to_rad(randomness + 180)), 0.8, 1.2)
-	var bomb: NormalBomb = create_normal_bomb(Vector2.ZERO, 0.8, 1.5)
+	create_hazard_bomb(SIZE * Vector2.LEFT.rotated(deg_to_rad(randomness + 60)), 0.75, 10)
+	create_hazard_bomb(SIZE * Vector2.LEFT.rotated(deg_to_rad(randomness + 120)), 0.75, 10)
+	create_hazard_bomb(SIZE * Vector2.LEFT.rotated(deg_to_rad(randomness + 240)), 0.75, 10)
+	create_hazard_bomb(SIZE * Vector2.LEFT.rotated(deg_to_rad(randomness + 300)), 0.75, 10)
+	create_hazard_bomb(SIZE * Vector2.LEFT.rotated(deg_to_rad(randomness + 0)), 0.75, 1.0)
+	create_hazard_bomb(SIZE * Vector2.LEFT.rotated(deg_to_rad(randomness + 180)), 0.75, 1.0)
+	var bomb: NormalBomb = create_normal_bomb(Vector2.ZERO, 0.75, 1.5)
 	bomb.connect("player_body_entered", Callable(self, "pattern_timing_end"))
 
 func pattern_timing_end():
