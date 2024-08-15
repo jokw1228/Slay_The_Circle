@@ -37,7 +37,6 @@ func pattern_list_initialization():
 		"pattern_timing" = 0.0,
 		"pattern_trafficlight" = 0.0
 	}
-	pattern_dict = {"pattern_narrow_road" = 1.0}
 '''
 phase 0
 
@@ -148,7 +147,7 @@ func pattern_level_up_phase_0():
 	var bomb: GameSpeedUpBomb = create_gamespeedup_bomb(Vector2.ZERO, 0.25, 1.75, 0.15)
 	
 	await bomb.tree_exited
-	await get_tree().create_timer(0.5).time_out # rest time
+	await get_tree().create_timer(0.5).timeout # rest time
 	
 	PlayingFieldInterface.set_playing_time(pattern_start_time + pattern_level_up_phase_0_playing_time / prev_timescale)
 	pattern_shuffle_and_draw()
@@ -344,30 +343,24 @@ func pattern_narrow_road():
 	
 	pattern_start_time = PlayingFieldInterface.get_playing_time()
 	
-	var player_position: Vector2 = PlayingFieldInterface.get_player_position()
-	var rng2 = RandomNumberGenerator.new()
-	var random_rotate = rng2.randi_range(0, 4)	
-	var player_angle: float = player_position.angle()
-	player_angle+=random_rotate*PI/2
-	var hazard1_angle: float = player_position.angle()+1*PI/5
-	var hazard2_angle: float = player_position.angle()-1*PI/5
-	var bomb_radius = 64
-	var length = 64
-	var bomb: NumericBomb
-	#var first_hazard1: HazardBomb = create_hazard_bomb(Vector2(2.4*bomb_radius*cos(player_angle+PI/5),2.4*bomb_radius*sin(player_angle+PI/5)),0,0)
-	#var first_hazard2: HazardBomb = create_hazard_bomb(Vector2(2.4*bomb_radius*cos(player_angle-PI/5),2.4*bomb_radius*sin(player_angle-PI/5)),0,0)
-	var first_numeric: NumericBomb = create_numeric_bomb(Vector2(2*bomb_radius*cos(player_angle+4*PI/2),2*bomb_radius*sin(player_angle+4*PI/2)),0.25,2.75,1)
-	#var first_hazard1_position = first_hazard1.position
-	#var first_hazard2_position = first_hazard2.position
-	var first_numeric_position = first_numeric.position
-	for t in range(1,5,1):
-		if t<4 :
-			create_hazard_bomb(Vector2(2.4*bomb_radius*cos(player_angle+PI/5),2.4*bomb_radius*sin(player_angle+PI/5))+t*Vector2(bomb_radius*cos(player_angle+PI),bomb_radius*sin(player_angle+PI)),0.25,2.75)
-			create_hazard_bomb(Vector2(2.4*bomb_radius*cos(player_angle-PI/5),2.4*bomb_radius*sin(player_angle-PI/5))+t*Vector2(bomb_radius*cos(player_angle+PI),bomb_radius*sin(player_angle+PI)),0.25,2.75)
-			create_numeric_bomb(first_numeric_position+t*Vector2(bomb_radius*cos(player_angle+PI),bomb_radius*sin(player_angle+PI)),0.25,2.75,t+1)
+	var player_direction: Vector2 = PlayingFieldInterface.get_player_position().normalized()
+	const bomb_diameter: float = 64.0
+	
 	var end_bomb: NumericBomb
-	end_bomb = create_numeric_bomb(first_numeric_position+4*Vector2(bomb_radius*cos(player_angle+PI),bomb_radius*sin(player_angle+PI)),0.25,2.75,5)
+	for i: int in range(5):
+		end_bomb = create_numeric_bomb((bomb_diameter * (i-2)) * player_direction, 0.25, 2.75, i+1)
 	end_bomb.connect("no_lower_value_bomb_exists", Callable(self, "pattern_narrow_road_end"))
+	
+	const hazard_bomb_clearance: float = bomb_diameter + 16
+	for i: int in range(3):
+		create_hazard_bomb((bomb_diameter * (i-1)) * player_direction + hazard_bomb_clearance * player_direction.rotated(PI/2), 0.25, 2.75)
+		create_hazard_bomb((bomb_diameter * (i-1)) * player_direction + hazard_bomb_clearance * player_direction.rotated(-PI/2), 0.25, 2.75)
+	
+	# HYPER MODE
+	if stage_phase >= 4:
+		const CIRCLE_FIELD_RADIUS = 256.0
+		create_hazard_bomb((CIRCLE_FIELD_RADIUS - 32) * player_direction.rotated(PI/2), 0.25, 2.75)
+		create_hazard_bomb((CIRCLE_FIELD_RADIUS - 32) * player_direction.rotated(-PI/2), 0.25, 2.75)
 
 func pattern_narrow_road_end():
 	get_tree().call_group("group_hazard_bomb", "early_eliminate")

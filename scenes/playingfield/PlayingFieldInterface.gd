@@ -63,7 +63,7 @@ func game_speed_reset():
 func get_player_position() -> Vector2:
 	return get_PlayingField_node().Player_node.now_position()
 
-func get_playing_time():
+func get_playing_time() -> float:
 	return get_PlayingField_node().get_playing_time()
 
 func set_playing_time(time_to_set: float):
