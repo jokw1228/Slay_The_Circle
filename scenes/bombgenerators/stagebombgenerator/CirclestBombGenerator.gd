@@ -34,7 +34,7 @@ func pattern_list_initialization():
 		"pattern_shuffle_game" = 0.0,
 		"pattern_darksight" = 0.0
 	}
-	pattern_dict = {"pattern_rotate_timing" = 1.0}
+	pattern_dict = {"pattern_trickery" = 1.0}
 '''
 phase 0
 
@@ -504,7 +504,7 @@ func pattern_rotate_timing_end():
 # 수정사항 : bomb timer 소폭 감소
 # 잠재적 수정사항 : 난이도 circle 로 들어가도 될 정도의 쉬운 난이도
 # indicator 도입으로 인하여 난이도 대폭 하향
-const pattern_trickery_playing_time = 3
+const pattern_trickery_playing_time = 2.0
 
 func pattern_trickery():
 	PlayingFieldInterface.set_theme_color(Color.BROWN)
@@ -515,23 +515,27 @@ func pattern_trickery():
 	num_rng.randomize()
 	var trick_num = num_rng.randi_range(1,3)
 	
-	var bomb1: NormalBomb = create_normal_bomb(Vector2(-144, 0), 0.3, 2.0)
-	var bomb2: NormalBomb = create_normal_bomb(Vector2(0, 0), 0.3, 2.0)
-	var bomb3: NormalBomb = create_normal_bomb(Vector2(144, 0), 0.3, 2.0)
-	var bomb4: NumericBomb = create_numeric_bomb(Vector2(-144, -64), 0.3, 2, trick_num%3 + 1)
-	var bomb5: NumericBomb = create_numeric_bomb(Vector2(0, -64), 0.3, 2, (trick_num + 2)%3 + 1)
-	var bomb6: NumericBomb = create_numeric_bomb(Vector2(144, -64), 0.3, 2, (trick_num + 1)%3 + 1)
-	var last_bomb: NumericBomb = create_numeric_bomb(Vector2(0, -192), 2, 1, 4)
+	const warning_time = 0.4
+	const bomb_time = 1.6
 	
-	var tween1_position_change = get_tree().create_tween()
-	var tween2_position_change = get_tree().create_tween()
-	var tween3_position_change = get_tree().create_tween()
-	tween1_position_change.tween_property(bomb4, "position", Vector2(-144,0), 0.3)
-	tween2_position_change.tween_property(bomb5, "position", Vector2(0,0), 0.3)
-	tween3_position_change.tween_property(bomb6, "position", Vector2(144,0), 0.3)
+	const position_x_offset = 128.0
+	const position_y_offset = 96.0
+	var player_angle: float = PlayingFieldInterface.get_player_position().angle()
 	
-	last_bomb.connect("player_body_entered", Callable(self, "pattern_trickery_end"))
-	
+	for i: int in range(3):
+		var normal_bomb: NormalBomb = create_normal_bomb( Vector2( ((i-1) * position_x_offset), 0 ).rotated(PI/2 + player_angle) , warning_time, bomb_time)
+		
+		var numeric_index: int = (trick_num + i) % 3 + 1
+		var numeric_bomb: NumericBomb = create_numeric_bomb( Vector2( ((i-1) * position_x_offset), position_y_offset ).rotated(PI/2 + player_angle) , warning_time, bomb_time, numeric_index)
+		
+		var tween_numeric_bomb_position = get_tree().create_tween()
+		tween_numeric_bomb_position.set_trans(Tween.TRANS_CUBIC)
+		tween_numeric_bomb_position.set_ease(Tween.EASE_IN)
+		tween_numeric_bomb_position.tween_property(numeric_bomb, "position", normal_bomb.position, warning_time)
+		
+		if numeric_index == 3:
+			numeric_bomb.connect("player_body_entered", Callable(self, "pattern_trickery_end"))
+
 func pattern_trickery_end():
 	await PlayingFieldInterface.player_grounded
 	PlayingFieldInterface.set_playing_time(pattern_start_time + pattern_trickery_playing_time / Engine.time_scale)

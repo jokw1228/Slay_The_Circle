@@ -31,4 +31,3 @@ func pattern_list_initialization():
 		"pattern_shuffle_game" = 1.0,
 		"pattern_darksight" = 1.0
 	}
-	pattern_dict = {"pattern_rotate_timing" = 1.0}
