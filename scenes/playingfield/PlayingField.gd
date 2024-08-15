@@ -56,7 +56,8 @@ func stop_PlayingField(bomb_position: Vector2):
 		
 		PlayingFieldInterface.game_speed_reset()
 		
-		#SoundManager.play("sfx_PF","explosion")
+		# 게임오버 목소리.... 게임에 안어울리면 주석처리 해주십시오...
+		SoundManager.play("sfx_PF","game_over")
 		MusicManager.enable_stem("dead",0.5)
 		MusicManager.disable_stem("on_game",0.5)
 		
