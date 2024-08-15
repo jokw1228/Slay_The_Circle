@@ -272,7 +272,7 @@ func pattern_level_up_phase_4():
 # pattern_numeric_diamond_with_hazard_puzzled block start
 # made by Bae Sekang
 
-const pattern_diamond_with_hazard_puzzled_playing_time = 2.5
+const pattern_diamond_with_hazard_puzzled_playing_time = 3.0
 
 func pattern_diamond_with_hazard_puzzled():
 	PlayingFieldInterface.set_theme_color(Color.PLUM)
@@ -282,15 +282,15 @@ func pattern_diamond_with_hazard_puzzled():
 	const bomb_position_length = 128
 	var bomb_position: Vector2 = bomb_position_length * PlayingFieldInterface.get_player_position().normalized().rotated(PI/4)
 	
-	create_hazard_bomb(Vector2.ZERO, 0.25, 2.25)
+	create_hazard_bomb(Vector2.ZERO, 0.25, 2.75)
 	
-	create_numeric_bomb(bomb_position, 0.25, 2.25, 1)
+	create_numeric_bomb(bomb_position, 0.25, 2.75, 1)
 	bomb_position = bomb_position.rotated(PI/2)
-	create_numeric_bomb(bomb_position, 0.25, 2.25, 3)
+	create_numeric_bomb(bomb_position, 0.25, 2.75, 3)
 	bomb_position = bomb_position.rotated(PI/2)
-	create_numeric_bomb(bomb_position, 0.25, 2.25, 2)
+	create_numeric_bomb(bomb_position, 0.25, 2.75, 2)
 	bomb_position = bomb_position.rotated(PI/2)
-	var bomb_end: NumericBomb = create_numeric_bomb(bomb_position, 0.25, 2.25, 4)
+	var bomb_end: NumericBomb = create_numeric_bomb(bomb_position, 0.25, 2.75, 4)
 	bomb_end.connect("no_lower_value_bomb_exists", Callable(self, "pattern_diamond_with_hazard_puzzled_end"))
 
 func pattern_diamond_with_hazard_puzzled_end():
@@ -422,8 +422,8 @@ func pattern_scattered_hazards():
 	
 	var player_pos_normalized = PlayingFieldInterface.get_player_position().normalized()
 	
-	for i in (8):
-		create_hazard_bomb(player_pos_normalized.rotated(PI/4 * i).rotated(3 * PI/8) * (256 - 32) ,0.25,3.25)
+	for i in (6):
+		create_hazard_bomb(player_pos_normalized.rotated(PI/3 * i).rotated(PI/4) * (256 - 32) ,0.25,3.25)
 	
 	var rotation_offset: float = randf_range(0, PI*2/3)
 	for i in (3):
