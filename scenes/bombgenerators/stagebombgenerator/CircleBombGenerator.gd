@@ -321,14 +321,13 @@ func pattern_numeric_triangle_with_link():
 			bomb_position = bomb_position.rotated(PI/3)
 		elif ccw == -1:
 			bomb_position = bomb_position.rotated(-PI/3)
-			
 	
 	bomb_position = bomb_position.rotated(bomb_position_rotation_amount / 2)
 	var bomb1: NumericBomb = create_numeric_bomb(bomb_position, 0.25, 2.25, 1)
 	bomb_position = bomb_position.rotated(bomb_position_rotation_amount)
 	var bomb2: NumericBomb = create_numeric_bomb(bomb_position, 0.25, 2.25, 2)
 	
-	var link1: BombLink = create_bomb_link(bomb1, bomb2)
+	create_bomb_link(bomb1, bomb2)
 	
 	bomb_position = bomb_position.rotated(bomb_position_rotation_amount)
 	var bomb3: NumericBomb = create_numeric_bomb(bomb_position, 0.25, 2.25, 3)

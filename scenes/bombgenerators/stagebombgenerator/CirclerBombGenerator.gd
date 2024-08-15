@@ -462,36 +462,63 @@ func pattern_scattered_hazards_end():
 #위험하다고 피하는 건 좋지 않아요
 #circle 정도의 쉬?운 난이도
 
-const pattern_hide_in_hazard_playing_time = 6.75
+const pattern_hide_in_hazard_playing_time = 4.25
+#3 * (hazard_bomb_time + hazard_warning_time) + hazard_warning_time
 var bomb_count = 0
 
 func pattern_hide_in_hazard():
-	pattern_start_time = PlayingFieldInterface.get_playing_time()
-	PlayingFieldInterface.set_theme_color(Color.BISQUE)
+	PlayingFieldInterface.set_theme_color(Color.DARK_VIOLET)
 	
-	var player_position: Vector2 = PlayingFieldInterface.get_player_position()
-	var angle_offset: float = player_position.angle() * -1
+	pattern_start_time = PlayingFieldInterface.get_playing_time()
+	
+	const hazard_warning_time = 0.5
+	const hazard_bomb_time = 0.75
+	const bomb_time = 3 * (hazard_bomb_time + hazard_warning_time)
 	
 	const CIRCLE_FIELD_RADIUS = 256
-	var bomb_radius: float = CIRCLE_FIELD_RADIUS * sqrt(3) / 3
+	const bomb_position_length: float = CIRCLE_FIELD_RADIUS * sqrt(3) / 3
 	
+	var bomb_position: Vector2 = bomb_position_length * PlayingFieldInterface.get_player_position().normalized()
 	var ccw: float = 1 if randi() % 2 else -1
+	var bomb_position_rotation_amount: float = PI/3 * ccw
 	
-	var bomb1: NumericBomb = create_numeric_bomb(Vector2(bomb_radius * cos(angle_offset + ccw * PI/6), bomb_radius * -sin(angle_offset + ccw * PI/6)), 0.75, 6, 1)
-	var bomb2: NumericBomb = create_numeric_bomb(Vector2(bomb_radius * cos(angle_offset + ccw * PI/2), bomb_radius * -sin(angle_offset + ccw * PI/2)), 0.75, 6, 2)
+	# HYPER MODE
+	if stage_phase >= 4:
+		if ccw == 1:
+			bomb_position = bomb_position.rotated(PI/3)
+		elif ccw == -1:
+			bomb_position = bomb_position.rotated(-PI/3)
 	
-	var bomb3: NumericBomb = create_numeric_bomb(Vector2(bomb_radius * cos(angle_offset + ccw * 5*PI/6), bomb_radius * -sin(angle_offset + ccw * 5*PI/6)), 0.75, 6, 3)
-	var bomb4: NumericBomb = create_numeric_bomb(Vector2(bomb_radius * cos(angle_offset + ccw * 7*PI/6), bomb_radius * -sin(angle_offset + ccw * 7*PI/6)), 0.75, 6, 4)
+	bomb_position = bomb_position.rotated(bomb_position_rotation_amount / 2)
+	var bomb1: NumericBomb = create_numeric_bomb(bomb_position, hazard_warning_time, bomb_time, 1)
+	bomb_position = bomb_position.rotated(bomb_position_rotation_amount)
+	var bomb2: NumericBomb = create_numeric_bomb(bomb_position, hazard_warning_time, bomb_time, 2)
 	
-	var bomb5: NumericBomb = create_numeric_bomb(Vector2(bomb_radius * cos(angle_offset + ccw * 3*PI/2), bomb_radius * -sin(angle_offset + ccw * 3*PI/2)), 0.75, 6, 5)
-	var bomb6: NumericBomb = create_numeric_bomb(Vector2(bomb_radius * cos(angle_offset + ccw * 11*PI/6), bomb_radius * -sin(angle_offset + ccw * 11*PI/6)), 0.75, 6, 6)
+	create_bomb_link(bomb1, bomb2)
 	
-	bomb6.connect("player_body_entered", Callable(self, "pattern_hide_in_hazard_end"))
+	bomb_position = bomb_position.rotated(bomb_position_rotation_amount)
+	var bomb3: NumericBomb = create_numeric_bomb(bomb_position, hazard_warning_time, bomb_time, 3)
+	bomb_position = bomb_position.rotated(bomb_position_rotation_amount)
+	var bomb4: NumericBomb = create_numeric_bomb(bomb_position, hazard_warning_time, bomb_time, 4)
 	
-	for i in range(3):
-		for j in range(6):
-			var bomb : HazardBomb = create_hazard_bomb(Vector2(bomb_radius * cos(angle_offset + ccw * (2*j-1)*PI/6), bomb_radius * -sin(angle_offset + ccw * (2*j-1)*PI/6)), 0.75, 1)
-		await Utils.timer(1.75)
+	create_bomb_link(bomb3, bomb4)
+	
+	bomb_position = bomb_position.rotated(bomb_position_rotation_amount)
+	var bomb5: NumericBomb = create_numeric_bomb(bomb_position, hazard_warning_time, bomb_time, 5)
+	bomb_position = bomb_position.rotated(bomb_position_rotation_amount)
+	var bomb6: NumericBomb = create_numeric_bomb(bomb_position, hazard_warning_time, bomb_time, 6)
+	bomb6.connect("no_lower_value_bomb_exists", Callable(self, "pattern_hide_in_hazard_end"))
+	
+	create_bomb_link(bomb5, bomb6)
+	
+	const hazard_position_length = bomb_position_length * cos(PI/6)
+	bomb_position = bomb_position.rotated(bomb_position_rotation_amount)
+	var hazard_position: Vector2 = hazard_position_length * bomb_position.normalized().rotated(PI/6 * ccw)
+	for i: int in range(3):
+		for j: int in range(3):
+			create_hazard_bomb(hazard_position, hazard_warning_time, hazard_bomb_time)
+			hazard_position = hazard_position.rotated(2*PI/3)
+		await get_tree().create_timer(hazard_warning_time + hazard_bomb_time).timeout
 
 func pattern_hide_in_hazard_end():
 	get_tree().call_group("group_hazard_bomb", "early_eliminate")
