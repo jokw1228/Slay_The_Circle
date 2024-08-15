@@ -37,6 +37,7 @@ func pattern_list_initialization():
 		"pattern_timing" = 0.0,
 		"pattern_trafficlight" = 0.0
 	}
+	pattern_dict = {"pattern_321_go" = 0.0}
 '''
 phase 0
 
@@ -755,31 +756,31 @@ func pattern_hazard_at_player_pos_end():
 # pattern_321_go block start
 # made by Lee Jinwoong
 
-const pattern_321_go_playing_time = 5.2 # 2.0 + delta_time * 4 + time_offset
-
 func pattern_321_go():
 	PlayingFieldInterface.set_theme_color(Color.CRIMSON)
 	
 	pattern_start_time = PlayingFieldInterface.get_playing_time()
 	
 	var player_position: Vector2 = PlayingFieldInterface.get_player_position()
+	
+	const hazard_warning_time = 0.5
 	const delta_time: float = 0.75
 	const time_offset: float = 0.2
 	const dist: float = 208.0 / 240.0
 	
-	create_hazard_bomb(player_position * -dist,   2.0,   delta_time * 4 - time_offset)
-	create_hazard_bomb(player_position * -0.5,   2.0,   delta_time - time_offset / 2.0)
-	create_hazard_bomb(Vector2.ZERO,   2.0,   delta_time * 2 - time_offset / 2.0)
-	create_hazard_bomb(player_position * 0.5,   2.0,   delta_time * 3 - time_offset / 2.0)
+	create_hazard_bomb(player_position * -dist,   hazard_warning_time,   delta_time * 4 - time_offset)
+	create_hazard_bomb(player_position * -0.5,   hazard_warning_time,   delta_time - time_offset / 2.0)
+	create_hazard_bomb(Vector2.ZERO,   hazard_warning_time,   delta_time * 2 - time_offset / 2.0)
+	create_hazard_bomb(player_position * 0.5,   hazard_warning_time,   delta_time * 3 - time_offset / 2.0)
 	for i in range(1, 8):
 		if i % 2 == 0:
-			create_hazard_bomb(player_position.rotated(i * PI / 8.0) * 0.5,   2.0,   delta_time * 4)
-		create_hazard_bomb(player_position.rotated(i * PI / 8.0) * dist,   2.0,   delta_time * 4)
+			create_hazard_bomb(player_position.rotated(i * PI / 8.0) * 0.5,   hazard_warning_time,   delta_time * 4)
+		create_hazard_bomb(player_position.rotated(i * PI / 8.0) * dist,   hazard_warning_time,   delta_time * 4)
 	for i in range(9, 16):
 		if i % 2 == 0:
-			create_hazard_bomb(player_position.rotated(i * PI / 8.0) * 0.5,   2.0,   delta_time * 4)
-		create_hazard_bomb(player_position.rotated(i * PI / 8.0) * dist,   2.0,   delta_time * 4)
-	await Utils.timer(2.0)
+			create_hazard_bomb(player_position.rotated(i * PI / 8.0) * 0.5,   hazard_warning_time,   delta_time * 4)
+		create_hazard_bomb(player_position.rotated(i * PI / 8.0) * dist,   hazard_warning_time,   delta_time * 4)
+	await Utils.timer(hazard_warning_time)
 	
 	var last: HazardBomb = create_hazard_bomb(player_position * dist,   delta_time * 4,   time_offset)
 	await Utils.timer(delta_time - time_offset / 2.0)
@@ -794,7 +795,6 @@ func pattern_321_go():
 	pattern_321_go_end()
 
 func pattern_321_go_end():
-	#PlayingFieldInterface.set_playing_time(pattern_start_time + pattern_pattern_321_go_end_playing_time / Engine.time_scale)
 	pattern_shuffle_and_draw()
 
 # pattern_321_go block end
