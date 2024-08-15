@@ -527,6 +527,8 @@ func pattern_trickery():
 		var numeric_index: int = (trick_num + i) % 3 + 1
 		var numeric_bomb: NumericBomb = create_numeric_bomb( Vector2( ((i-1) * position_x_offset), position_y_offset ).rotated(PI/2 + player_angle) , warning_time, bomb_time, numeric_index)
 		
+		numeric_bomb.Indicator_node.modulate.a = 0
+		
 		var tween_numeric_bomb_position = get_tree().create_tween()
 		tween_numeric_bomb_position.set_trans(Tween.TRANS_CUBIC)
 		tween_numeric_bomb_position.set_ease(Tween.EASE_IN)
