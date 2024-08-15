@@ -29,7 +29,6 @@ func pattern_list_initialization():
 		"pattern_hazard_at_player_pos" = 1.0,
 		"pattern_321_go" = 1.0,
 		"pattern_reactspeed_test" = 1.0,
-		"pattern_link_free" = 1.0,
 		
 		"pattern_timing" = 1.0,
 		"pattern_trafficlight" = 1.0

@@ -32,12 +32,10 @@ func pattern_list_initialization():
 		"pattern_hazard_at_player_pos" = 0.0,
 		"pattern_321_go" = 0.0,
 		"pattern_reactspeed_test" = 0.0,
-		"pattern_link_free" = 0.0,
 		
 		"pattern_timing" = 0.0,
 		"pattern_trafficlight" = 0.0
 	}
-	pattern_dict = {"pattern_321_go" = 0.0}
 '''
 phase 0
 
@@ -59,7 +57,6 @@ phase 2
 "pattern_hazard_at_player_pos" = 1.0,
 "pattern_321_go" = 1.0,
 "pattern_reactspeed_test" = 1.0,
-"pattern_link_free" = 1.0,
 
 phase 3
 
@@ -830,79 +827,6 @@ func pattern_reactspeed_test():
 	pattern_shuffle_and_draw()
 	
 #pattern_reactspeed_test block end
-###############################
-
-###############################
-# pattern_link_free block start
-# made by seokhee
-
-#링크를 구하기 위해선 기다림도 필요한 법..
-#컴퓨터 기준으로 개어려워서 circlest 정도일 듯
-
-const pattern_link_free_playing_time = 5.5
-
-var pattern_link_free_between_bomb2: HazardBomb
-var pattern_link_free_between_bomb3: HazardBomb
-
-func pattern_link_free():
-	pattern_start_time = PlayingFieldInterface.get_playing_time()
-	PlayingFieldInterface.set_theme_color(Color.DARK_ORCHID)
-	
-	var player_position: Vector2 = PlayingFieldInterface.get_player_position()
-	var angle_offset: float = player_position.angle() * -1
-	
-	const CIRCLE_FIELD_RADIUS = 256
-	var bomb_radius: float = CIRCLE_FIELD_RADIUS * sqrt(3) / 3
-	
-	var ccw: float = 1 if randi() % 2 else -1
-	
-	var bomb1: NormalBomb = create_normal_bomb(Vector2(bomb_radius * cos(angle_offset + ccw * PI/6), bomb_radius * -sin(angle_offset + ccw * PI/6)), 2, 0.75)
-	var bomb2: NormalBomb = create_normal_bomb(Vector2(bomb_radius * cos(angle_offset + ccw * PI/2), bomb_radius * -sin(angle_offset + ccw * PI/2)), 2, 0.75)
-	
-	var link1: BombLink = create_bomb_link(bomb1, bomb2)
-	link1.connect("both_bombs_removed", Callable(self, "pattern_link_free_link1_slayed"))
-	
-	var between_bomb1: HazardBomb = create_hazard_bomb((bomb1.position + bomb2.position) / 2, 0.5, 1.5)
-	between_bomb1.add_child(Indicator.create())
-	
-	var bomb3: NormalBomb = create_normal_bomb(Vector2(bomb_radius * cos(angle_offset + ccw * 5*PI/6), bomb_radius * -sin(angle_offset + ccw * 5*PI/6)), 3, 0.75)
-	var bomb4: NormalBomb = create_normal_bomb(Vector2(bomb_radius * cos(angle_offset + ccw * 7*PI/6), bomb_radius * -sin(angle_offset + ccw * 7*PI/6)), 3, 0.75)
-	
-	var link2: BombLink = create_bomb_link(bomb3, bomb4)
-	link2.connect("both_bombs_removed", Callable(self, "pattern_link_free_link2_slayed"))
-	
-	pattern_link_free_between_bomb2 = create_hazard_bomb((bomb3.position + bomb4.position) / 2, 0.5, 2.5)
-	
-	var bomb5: NormalBomb = create_normal_bomb(Vector2(bomb_radius * cos(angle_offset + ccw * 3*PI/2), bomb_radius * -sin(angle_offset + ccw * 3*PI/2)), 4, 0.75)
-	var bomb6: NormalBomb = create_normal_bomb(Vector2(bomb_radius * cos(angle_offset + ccw * 11*PI/6), bomb_radius * -sin(angle_offset + ccw * 11*PI/6)), 4, 0.75)
-	
-	create_bomb_link(bomb5, bomb6)
-	
-	pattern_link_free_between_bomb3 = create_hazard_bomb((bomb5.position + bomb6.position) / 2, 0.5, 3.5)
-	
-	var center_hazard_bomb: HazardBomb = create_hazard_bomb(Vector2(0,0), 0.5, 4.0)
-	
-	await Utils.timer(4.0)
-	
-	var bomb7: NormalBomb = create_normal_bomb(144*Vector2(cos(angle_offset), -sin(angle_offset)), 0.5, 1.0)
-	var bomb8: NormalBomb = create_normal_bomb(-144*Vector2(cos(angle_offset), -sin(angle_offset)), 0.5, 1.0)
-	
-	var main_link = create_bomb_link(bomb7, bomb8)
-	
-	main_link.connect("both_bombs_removed", Callable(self, "pattern_link_free_end"))
-
-func pattern_link_free_link1_slayed():
-	pattern_link_free_between_bomb2.add_child(Indicator.create())
-	
-func pattern_link_free_link2_slayed():
-	pattern_link_free_between_bomb3.add_child(Indicator.create())
-
-func pattern_link_free_end():
-	await PlayingFieldInterface.player_grounded
-	PlayingFieldInterface.set_playing_time(pattern_start_time + pattern_link_free_playing_time / Engine.time_scale)
-	pattern_shuffle_and_draw()
-	
-#pattern_link_free block end
 ###############################
 
 ##############################################################
