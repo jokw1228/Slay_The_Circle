@@ -33,3 +33,4 @@ func pattern_list_initialization():
 		"pattern_timing" = 1.0,
 		"pattern_trafficlight" = 1.0
 	}
+	pattern_dict = {"pattern_trafficlight" = 0.0}

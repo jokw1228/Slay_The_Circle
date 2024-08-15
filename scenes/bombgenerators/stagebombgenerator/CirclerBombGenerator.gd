@@ -36,7 +36,6 @@ func pattern_list_initialization():
 		"pattern_timing" = 0.0,
 		"pattern_trafficlight" = 0.0
 	}
-	pattern_dict = {"pattern_timing" = 0.0}
 '''
 phase 0
 
@@ -878,7 +877,7 @@ func pattern_trafficlight():
 	PlayingFieldInterface.set_theme_color(Color.HOT_PINK)
 
 	const DIST: float = 96
-	const UNIT: float = 0.5
+	const UNIT: float = 0.75
 	const START: float = 1
 	const WARNING: float = 0.5
 
