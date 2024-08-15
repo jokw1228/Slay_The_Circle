@@ -103,7 +103,7 @@ func pattern_level_up_phase_0():
 	var bomb: GameSpeedUpBomb = create_gamespeedup_bomb(Vector2.ZERO, 0.25, 1.75, 0.15)
 	
 	await bomb.tree_exited
-	await get_tree().create_timer(0.5) # rest time
+	await get_tree().create_timer(0.5).timeout # rest time
 	
 	PlayingFieldInterface.set_playing_time(pattern_start_time + pattern_level_up_phase_0_playing_time / prev_timescale)
 	pattern_shuffle_and_draw()
@@ -126,7 +126,7 @@ func pattern_level_up_phase_1():
 	var bomb: RotationSpeedUpBomb = create_rotationspeedup_bomb(Vector2.ZERO, 0.25, 1.75, 0.3)
 	
 	await bomb.tree_exited
-	await get_tree().create_timer(0.5) # rest time
+	await get_tree().create_timer(0.5).timeout # rest time
 	
 	PlayingFieldInterface.set_playing_time(pattern_start_time + pattern_level_up_phase_1_playing_time / Engine.time_scale)
 	pattern_shuffle_and_draw()
@@ -154,7 +154,7 @@ func pattern_level_up_phase_2():
 	
 	await link.both_bombs_removed
 	await PlayingFieldInterface.player_grounded
-	await get_tree().create_timer(0.5) # rest time
+	await get_tree().create_timer(0.5).timeout # rest time
 	
 	PlayingFieldInterface.set_playing_time(pattern_start_time + pattern_level_up_phase_2_playing_time / prev_timescale)
 	pattern_shuffle_and_draw()
@@ -177,14 +177,14 @@ func pattern_level_up_phase_3():
 	
 	var player_angle: float = PlayingFieldInterface.get_player_position().angle()
 	const dist = 160
-	create_rotationspeedup_bomb(Vector2.ZERO, 0.25, 1.75, 0.3)
+	create_rotationspeedup_bomb(Vector2.ZERO, 0.25, 1.75, 0.1)
 	var bomb1: GameSpeedUpBomb = create_gamespeedup_bomb(dist * Vector2(cos(player_angle), sin(player_angle)), 0.25, 1.75, 0.15)
 	var bomb2: RotationInversionBomb = create_rotationinversion_bomb(-dist * Vector2(cos(player_angle), sin(player_angle)), 0.25, 1.75)
 	var link: BombLink = create_bomb_link(bomb1, bomb2)
 	
 	await link.both_bombs_removed
 	await PlayingFieldInterface.player_grounded
-	await get_tree().create_timer(0.5) # rest time
+	await get_tree().create_timer(0.5).timeout # rest time
 	
 	PlayingFieldInterface.set_playing_time(pattern_start_time + pattern_level_up_phase_3_playing_time / prev_timescale)
 	pattern_shuffle_and_draw()
@@ -206,7 +206,7 @@ func pattern_level_up_phase_4():
 	var bomb: RotationInversionBomb = create_rotationinversion_bomb(Vector2.ZERO, 0.25, 1.25)
 	
 	await bomb.tree_exited
-	await get_tree().create_timer(0.5) # rest time
+	await get_tree().create_timer(0.5).timeout # rest time
 	
 	PlayingFieldInterface.set_playing_time(pattern_start_time + pattern_level_up_phase_4_playing_time / Engine.time_scale)
 	pattern_shuffle_and_draw()
