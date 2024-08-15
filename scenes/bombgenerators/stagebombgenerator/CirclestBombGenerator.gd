@@ -34,7 +34,6 @@ func pattern_list_initialization():
 		"pattern_shuffle_game" = 0.0,
 		"pattern_darksight" = 0.0
 	}
-	pattern_dict = {"pattern_trickery" = 1.0}
 '''
 phase 0
 
@@ -928,29 +927,29 @@ func pattern_shuffle_game_process(delta):
 #캐릭터 위치 정도는 기억하시죠?
 #당황시킬 수 있기에 circlest 정도 잡는 게 좋을 것 같습니다 
 # 수정사항 : darksight fade_in time 소폭 증가, numeric bomb 추가
-const pattern_darksight_playing_time = 6.75
+const pattern_darksight_playing_time = 4.5
 
 var pattern_darksight_darksight_node: Darksight
 
 func pattern_darksight():
 	pattern_start_time = PlayingFieldInterface.get_playing_time()
 	
-	var bomb1 : NumericBomb = create_numeric_bomb(Vector2(128,0), 1, 5, 1)
-	var bomb2 : NumericBomb = create_numeric_bomb(Vector2(-128,0), 1, 5, 2)
-	var bomb3 : NumericBomb = create_numeric_bomb(Vector2(0,128), 1, 5, 4)
-	var bomb4 : NumericBomb = create_numeric_bomb(Vector2(0,-128), 1, 5, 5)
+	const bomb_time = 3.0
+	const position_offset = 128.0
+	var x_dir: int = 1 if randi()%2 else -1
+	var y_dir: int = 1 if randi()%2 else -1
+	var angle_offset: float = randf()
 	
-	var ccw_x : int = 1 if randi()%2 == 1 else -1
-	var ccw_y : int = 1 if randi()%2 == 1 else -1
-	
-	var random_pos_numeric_bomb : NumericBomb = create_numeric_bomb(Vector2(ccw_x * 128, ccw_y * 128), 1, 5, 3)
+	var bomb1 : NumericBomb = create_numeric_bomb(Vector2(x_dir * position_offset, 0).rotated(angle_offset), 1, bomb_time, 1)
+	var bomb2 : NumericBomb = create_numeric_bomb(Vector2(-x_dir * position_offset, 0).rotated(angle_offset), 1, bomb_time, 2)
+	var bomb3 : NumericBomb = create_numeric_bomb(Vector2(0,y_dir * position_offset).rotated(angle_offset), 1, bomb_time, 3)
+	var bomb4 : NumericBomb = create_numeric_bomb(Vector2(0,-y_dir * position_offset).rotated(angle_offset), 1, bomb_time, 4)
 	
 	var link1 = create_bomb_link(bomb1, bomb2)
 	var link2 = create_bomb_link(bomb3, bomb4)
 	
 	link2.connect("both_bombs_removed", Callable(self, "pattern_darksight_end"))
 	
-	#await get_tree().create_timer(1)
 	pattern_darksight_darksight_node = Darksight.create()
 	add_child(pattern_darksight_darksight_node)
 	
@@ -958,7 +957,7 @@ func pattern_darksight_end():
 	pattern_darksight_darksight_node.fade_out()
 	await PlayingFieldInterface.player_grounded
 	PlayingFieldInterface.set_playing_time(pattern_start_time + pattern_darksight_playing_time / Engine.time_scale)
-	await get_tree().create_timer(1).timeout
+	await get_tree().create_timer(0.5).timeout
 	pattern_shuffle_and_draw()
 	
 #pattern_darksight block end
