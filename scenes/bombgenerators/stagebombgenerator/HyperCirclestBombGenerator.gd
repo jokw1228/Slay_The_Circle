@@ -15,16 +15,19 @@ func _ready(): # override
 
 func pattern_list_initialization():
 	pattern_dict = {
+		"pattern_moving_link" = 2.0,
+		"pattern_survive_random_slay" = 2.0,
+		"pattern_rotate_timing" = 2.0,
+		"pattern_trickery" = 2.0,
+		
 		"pattern_cat_wheel" = 1.0,
 		"pattern_fruitninja" = 1.0,
-		"pattern_windmill" = 1.0,
 		"pattern_rain" = 1.0,
+		
 		"pattern_hazard_wave" = 1.0,
-		"pattern_rotate_timing" = 1.0,
-		"pattern_survive_random_slay" = 1.0,
-		"pattern_moving_link" = 1.0,
-		"pattern_shuffle_game" = 1.0,
+		"pattern_windmill" = 1.0,
 		"pattern_timing_return" = 1.0,
-		"pattern_trickery" = 1.0,
+		
+		"pattern_shuffle_game" = 1.0,
 		"pattern_darksight" = 1.0
 	}
