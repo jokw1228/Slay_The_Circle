@@ -138,7 +138,7 @@ func pattern_level_up_phase_0():
 	pattern_start_time = PlayingFieldInterface.get_playing_time()
 	prev_timescale = Engine.time_scale
 	
-	var bomb: GameSpeedUpBomb = create_gamespeedup_bomb(Vector2.ZERO, 0.25, 1.75, 0.15)
+	var bomb: GameSpeedUpBomb = create_gamespeedup_bomb(Vector2.ZERO, 0.25, 1.75, 0.10)
 	
 	await bomb.tree_exited
 	await get_tree().create_timer(0.5).timeout # rest time
@@ -161,7 +161,7 @@ func pattern_level_up_phase_1():
 	
 	pattern_start_time = PlayingFieldInterface.get_playing_time()
 	
-	var bomb: RotationSpeedUpBomb = create_rotationspeedup_bomb(Vector2.ZERO, 0.25, 1.75, 0.3)
+	var bomb: RotationSpeedUpBomb = create_rotationspeedup_bomb(Vector2.ZERO, 0.25, 1.75, 0.4)
 	
 	await bomb.tree_exited
 	await get_tree().create_timer(0.5).timeout # rest time
@@ -184,10 +184,10 @@ func pattern_level_up_phase_2():
 	pattern_start_time = PlayingFieldInterface.get_playing_time()
 	prev_timescale = Engine.time_scale
 	
-	var player_angle: float = PlayingFieldInterface.get_player_position().angle()
+	var player_direction: Vector2 = PlayingFieldInterface.get_player_position().normalized()
 	const dist = 96
-	var bomb1: GameSpeedUpBomb = create_gamespeedup_bomb(dist * Vector2(cos(player_angle), sin(player_angle)), 0.25, 1.75, 0.15)
-	var bomb2: RotationInversionBomb = create_rotationinversion_bomb(-dist * Vector2(cos(player_angle), sin(player_angle)), 0.25, 1.75)
+	var bomb1: GameSpeedUpBomb = create_gamespeedup_bomb(dist * player_direction, 0.25, 1.75, 0.10)
+	var bomb2: RotationInversionBomb = create_rotationinversion_bomb(-dist * player_direction, 0.25, 1.75)
 	var link: BombLink = create_bomb_link(bomb1, bomb2)
 	
 	await link.both_bombs_removed
@@ -213,11 +213,11 @@ func pattern_level_up_phase_3():
 	pattern_start_time = PlayingFieldInterface.get_playing_time()
 	prev_timescale = Engine.time_scale
 	
-	var player_angle: float = PlayingFieldInterface.get_player_position().angle()
+	var player_direction: Vector2 = PlayingFieldInterface.get_player_position().normalized()
 	const dist = 160
-	create_rotationspeedup_bomb(Vector2.ZERO, 0.25, 1.75, 0.1)
-	var bomb1: GameSpeedUpBomb = create_gamespeedup_bomb(dist * Vector2(cos(player_angle), sin(player_angle)), 0.25, 1.75, 0.15)
-	var bomb2: RotationInversionBomb = create_rotationinversion_bomb(-dist * Vector2(cos(player_angle), sin(player_angle)), 0.25, 1.75)
+	create_rotationspeedup_bomb(Vector2.ZERO, 0.25, 1.75, 0.2)
+	var bomb1: GameSpeedUpBomb = create_gamespeedup_bomb(dist * player_direction, 0.25, 1.75, 0.05)
+	var bomb2: RotationInversionBomb = create_rotationinversion_bomb(-dist * player_direction, 0.25, 1.75)
 	var link: BombLink = create_bomb_link(bomb1, bomb2)
 	
 	await link.both_bombs_removed
@@ -800,7 +800,7 @@ func pattern_colosseum_end():
 
 # this was pattern_manyrotation
 
-const pattern_numeric_inversion_playing_time = 2.5
+const pattern_numeric_inversion_playing_time = 1.5
 
 func pattern_numeric_inversion():
 	PlayingFieldInterface.set_theme_color(Color.DARK_TURQUOISE)
@@ -811,9 +811,9 @@ func pattern_numeric_inversion():
 	
 	var player_normalized: Vector2 = PlayingFieldInterface.get_player_position().normalized()
 	
-	create_numeric_bomb(DIST * sqrt(3) * player_normalized.rotated(deg_to_rad(60)), 0.25, 2.25, 1)
-	var bomb2: NumericBomb = create_numeric_bomb(DIST * player_normalized.rotated(deg_to_rad(120)), 0.25, 2.25, 2)
-	var bomb3: RotationInversionBomb = create_rotationinversion_bomb(DIST * player_normalized.rotated(deg_to_rad(240)), 0.25, 2.25)
+	create_numeric_bomb(DIST * sqrt(3) * player_normalized.rotated(deg_to_rad(60)), 0.25, 1.25, 1)
+	var bomb2: NumericBomb = create_numeric_bomb(DIST * player_normalized.rotated(deg_to_rad(120)), 0.25, 1.25, 2)
+	var bomb3: RotationInversionBomb = create_rotationinversion_bomb(DIST * player_normalized.rotated(deg_to_rad(240)), 0.25, 1.25)
 	var link: BombLink = create_bomb_link(bomb2, bomb3)
 	
 	link.connect("both_bombs_removed", Callable(self, "pattern_numeric_inversion_end"))

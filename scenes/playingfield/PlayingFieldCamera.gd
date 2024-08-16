@@ -9,12 +9,10 @@ var rotation_direction = 1.0
 var bomb_position: Vector2 = Vector2(0, 0)
 
 func _ready():
-	#rotation_amount = PI / 4
 	GlitchEffect_node.visible = false
-	pass
 
 func _process(delta):
-	rotation += rotation_amount * rotation_direction * delta
+	rotation += rotation_amount * rotation_direction * delta / Engine.time_scale
 
 func rotation_speed_up(up: float):
 	rotation_amount += up
@@ -24,10 +22,6 @@ func rotation_inversion():
 
 func rotation_stop():
 	rotation_amount = 0
-	#await get_tree().create_timer(2.0).timeout
-	#rotation_transition()
-	#await get_tree().create_timer(0.4).timeout
-	#rotation_reset()
 
 func rotation_reset():
 	rotation = 0

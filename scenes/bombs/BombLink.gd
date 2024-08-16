@@ -1,6 +1,8 @@
 extends Node2D
 class_name BombLink
 
+const BombLink_scene = "res://scenes/bombs/BombLink.tscn"
+
 @export var ray_1to2: RayCast2D
 @export var ray_2to1: RayCast2D
 @export var Indicator_1to2: Indicator
@@ -19,6 +21,9 @@ var bomb2_last_position: Vector2
 
 var last_bright: float
 var last_color: Color
+
+static func create(bomb1_to_set: Bomb, bomb2_to_set: Bomb):
+	pass
 
 func set_child_bombs(b1: Bomb, b2: Bomb):
 	bomb1 = b1

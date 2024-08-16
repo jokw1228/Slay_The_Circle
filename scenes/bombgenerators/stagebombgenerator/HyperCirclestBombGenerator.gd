@@ -6,8 +6,8 @@ func _ready(): # override
 	PlayingFieldInterface.set_theme_bright(1)
 	
 	stage_phase = 4
-	PlayingFieldInterface.game_speed_up(0.45)
-	PlayingFieldInterface.rotation_speed_up(0.4)
+	PlayingFieldInterface.game_speed_up(0.25)
+	PlayingFieldInterface.rotation_speed_up(0.6)
 	
 	pattern_list_initialization()
 	await get_tree().create_timer(1.0).timeout # game start time offset
