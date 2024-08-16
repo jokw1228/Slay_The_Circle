@@ -17,6 +17,9 @@ var pattern_3_count_value: bool
 var pattern_4_count_value: bool
 
 func _ready():
+	PlayingFieldInterface.set_theme_bright(0)
+	PlayingFieldInterface.set_theme_color(Color.WHITE)
+	
 	tutorialtext.modulate = Color(1,1,1,0)
 	if tutorialtext.visible == false:
 		tutorialtext.visible = true
