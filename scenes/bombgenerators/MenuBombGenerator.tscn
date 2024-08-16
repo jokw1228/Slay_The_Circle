@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://djvtf5t5jqw8u"]
+[gd_scene load_steps=8 format=3 uid="uid://djvtf5t5jqw8u"]
 
 [ext_resource type="Script" path="res://scenes/bombgenerators/MenuBombGenerator.gd" id="1_hpx4g"]
 [ext_resource type="PackedScene" uid="uid://blnbiu221cwye" path="res://scenes/bombs/MenuBomb.tscn" id="2_105il"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://crs642dp8tqw7" path="res://images/bomb/sprite_menu_circle.svg" id="4_v6l65"]
 [ext_resource type="Texture2D" uid="uid://gfc0q8ljdy03" path="res://images/bomb/sprite_menu_circler.svg" id="5_bwpbq"]
 [ext_resource type="Texture2D" uid="uid://08leog74ub0o" path="res://images/bomb/sprite_menu_hyper.svg" id="6_dlnyq"]
+[ext_resource type="PackedScene" uid="uid://b6vb4gmrkuugo" path="res://scenes/bombs/bombeffects/BrightModulator.tscn" id="7_v1b46"]
 
 [node name="MenuBombGenerator" type="Node2D"]
 script = ExtResource("1_hpx4g")
@@ -31,18 +32,24 @@ offset_left = -191.0
 offset_top = 108.0
 offset_right = -67.0
 offset_bottom = 128.0
+theme_type_variation = &"NoShadow"
 theme_override_font_sizes/font_size = 14
 text = "CIRCLER"
 horizontal_alignment = 1
+
+[node name="BrightModulator" parent="Label" instance=ExtResource("7_v1b46")]
 
 [node name="Label2" type="Label" parent="."]
 offset_left = 61.0
 offset_top = 109.0
 offset_right = 202.0
 offset_bottom = 129.0
+theme_type_variation = &"NoShadow"
 theme_override_font_sizes/font_size = 14
 text = "CIRCLEST"
 horizontal_alignment = 1
+
+[node name="BrightModulator" parent="Label2" instance=ExtResource("7_v1b46")]
 
 [node name="Label3" type="Label" parent="."]
 anchors_preset = 15
@@ -54,9 +61,12 @@ offset_right = 57.0
 offset_bottom = -187.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_type_variation = &"NoShadow"
 theme_override_font_sizes/font_size = 14
 text = "CIRCLE"
 horizontal_alignment = 1
+
+[node name="BrightModulator" parent="Label3" instance=ExtResource("7_v1b46")]
 
 [connection signal="player_body_entered" from="MenuBomb" to="." method="select_circlest"]
 [connection signal="player_body_entered" from="MenuBomb2" to="." method="select_circle"]

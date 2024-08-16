@@ -12,7 +12,7 @@ func _on_body_entered(body):
 
 func slayed(): # bomb slayed effect
 	get_tree().current_scene.add_child( BombSlayedEffect.create(global_position, slayed_direction) )
-	get_tree().current_scene.add_child( SlayParticle.create(global_position) )
+	#get_tree().current_scene.add_child( SlayParticle.create(global_position) )
 
 func exploded(): # bomb explosion effect
 	get_tree().current_scene.add_child( BombExplodedEffect.create(global_position) )

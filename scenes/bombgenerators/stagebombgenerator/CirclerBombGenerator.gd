@@ -12,7 +12,7 @@ func _ready():
 	PlayingFieldInterface.set_theme_color(Color.MEDIUM_PURPLE)
 	PlayingFieldInterface.set_theme_bright(0)
 	
-	pattern_list_initialization()	
+	pattern_list_initialization()
 	await get_tree().create_timer(1.0).timeout
 	pattern_shuffle_and_draw()
 
