@@ -21,6 +21,3 @@ func _draw():
 
 func _process(_delta):
 	queue_redraw()
-
-func set_size(size_to_set: float): # legacy code
-	size = size_to_set

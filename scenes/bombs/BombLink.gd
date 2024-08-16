@@ -22,8 +22,10 @@ var bomb2_last_position: Vector2
 var last_bright: float
 var last_color: Color
 
-static func create(bomb1_to_set: Bomb, bomb2_to_set: Bomb):
-	pass
+static func create(bomb1_to_set: Bomb, bomb2_to_set: Bomb) -> BombLink:
+	var inst: BombLink = preload(BombLink_scene).instantiate() as BombLink
+	inst.set_child_bombs(bomb1_to_set, bomb2_to_set)
+	return inst
 
 func set_child_bombs(b1: Bomb, b2: Bomb):
 	bomb1 = b1

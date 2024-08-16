@@ -1,20 +1,16 @@
-[gd_scene load_steps=7 format=3 uid="uid://dkm0cd66gmgph"]
+[gd_scene load_steps=6 format=3 uid="uid://dkm0cd66gmgph"]
 
 [ext_resource type="PackedScene" uid="uid://bhe55ocau21ot" path="res://scenes/player/Player.tscn" id="1_cqulv"]
 [ext_resource type="Script" path="res://scenes/rooms/RoomTutorial/RoomTutorial.gd" id="1_gg83j"]
 [ext_resource type="PackedScene" uid="uid://s264e74phclm" path="res://scenes/playingfield/CircleField.tscn" id="1_ro01m"]
-[ext_resource type="Script" path="res://scenes/rooms/RoomTutorial/TutorialBombGenerator.gd" id="2_1582e"]
 [ext_resource type="FontFile" uid="uid://bn71j2rajnbrn" path="res://fonts/bump-it-up.ttf" id="6_go8x2"]
 [ext_resource type="PackedScene" uid="uid://csx6yjkvpfqcy" path="res://scenes/background/BackGroundDeSterrennacht.tscn" id="18_qqoh6"]
 
-[node name="RoomTutorial" type="Node2D"]
+[node name="RoomTutorial" type="Node2D" node_paths=PackedStringArray("Player_node", "tutorialtext", "explaintext")]
 script = ExtResource("1_gg83j")
-
-[node name="TutorialBombGenerator" type="Node2D" parent="." node_paths=PackedStringArray("Player_node", "tutorialtext", "explaintext")]
-script = ExtResource("2_1582e")
-Player_node = NodePath("../Player")
-tutorialtext = NodePath("../Tutorial")
-explaintext = NodePath("../ExplainBlock")
+Player_node = NodePath("Player")
+tutorialtext = NodePath("Tutorial")
+explaintext = NodePath("ExplainBlock")
 
 [node name="BackGroundDeSterrennacht" parent="." instance=ExtResource("18_qqoh6")]
 
@@ -53,5 +49,3 @@ theme_override_fonts/font = ExtResource("6_go8x2")
 theme_override_font_sizes/font_size = 22
 text = "hello"
 uppercase = true
-
-[connection signal="tutorial_end" from="TutorialBombGenerator" to="." method="_on_tutorial_bomb_generator_tutorial_end"]
