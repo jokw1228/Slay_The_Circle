@@ -161,6 +161,7 @@ func _on_option_quit_pressed():
 	SoundManager.play("sfx_menu","select")
 
 func _on_to_credit_pressed():
+	PlayingFieldInterface.enable_player_input()
 	SoundManager.play("sfx_menu","select")
 	MusicManager.stop(0)
 	get_tree().change_scene_to_file(RoomCredit_room)
