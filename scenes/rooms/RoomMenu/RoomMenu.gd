@@ -19,6 +19,8 @@ var stage_index: int = -1;
 
 const stage_index_maximum = 6
 
+var option_activated: bool = false
+
 func _ready():
 	PlayingFieldInterface.set_theme_color(Color.BLACK)
 	# BombGenerator는 런타임에 생성되므로 get_node()를 통해 가져온다.
@@ -36,6 +38,9 @@ func _ready():
 	%Start.visible = false
 	
 	%Option.visible = false
+	
+	get_tree().set_auto_accept_quit(false)
+	get_tree().set_quit_on_go_back(false)
 
 func start_stage(): # A signal is connected by the select button.=
 	%ReadyStage.text = ["CIRCLE", "CIRCLER", "CIRCLEST",\
@@ -152,12 +157,14 @@ func select_hyper():
 func _on_option_button_pressed():
 	PlayingFieldInterface.disable_player_input()
 	%Option.visible = true
+	option_activated = true
 	Utils.slide_in(%Option, 800, Vector2.LEFT, 0.6)
 	SoundManager.play("sfx_menu","select")
 	
 	# 옵션 없애기
 func _on_option_quit_pressed():
 	PlayingFieldInterface.enable_player_input()
+	option_activated = false
 	Utils.slide_out(%Option, 800, Vector2.RIGHT, 0.6)
 	SoundManager.play("sfx_menu","select")
 
@@ -172,3 +179,13 @@ func _on_to_tutorial_pressed():
 	SoundManager.play("sfx_menu","select")
 	MusicManager.stop(0)
 	get_tree().change_scene_to_file(RoomTutorial_room)
+
+func _on_exit_game_pressed():
+	get_tree().quit()
+
+func _notification(what):
+	if what == NOTIFICATION_WM_CLOSE_REQUEST or what == NOTIFICATION_WM_GO_BACK_REQUEST:
+		if option_activated:
+			_on_option_quit_pressed()
+		else:
+			_on_option_button_pressed()
