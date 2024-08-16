@@ -4,7 +4,7 @@ class_name HazardBombEndedEffect
 const HazardBombEndedEffect_scene = "res://scenes/bombs/bombeffects/HazardBombEndedEffect.tscn"
 
 static func create(position_to_set: Vector2) -> HazardBombEndedEffect:
-	var inst: HazardBombEndedEffect = preload(HazardBombEndedEffect_scene).instantiate() as HazardBombEndedEffect
+	var inst: HazardBombEndedEffect = load(HazardBombEndedEffect_scene).instantiate() as HazardBombEndedEffect
 	inst.position = position_to_set
 	return inst
 

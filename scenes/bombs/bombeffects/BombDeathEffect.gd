@@ -11,7 +11,7 @@ var elapsed_time: float = 0.0
 var angle_offset: float = 0.0
 
 static func create(angle_offset_to_set: float) -> BombDeathEffect:
-	var inst: BombDeathEffect = preload(BombDeathEffect_scene).instantiate() as BombDeathEffect
+	var inst: BombDeathEffect = load(BombDeathEffect_scene).instantiate() as BombDeathEffect
 	inst.angle_offset = angle_offset_to_set
 	return inst
 

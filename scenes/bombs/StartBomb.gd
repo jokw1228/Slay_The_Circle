@@ -8,7 +8,7 @@ const StartBomb_scene = "res://scenes/bombs/StartBomb.tscn"
 signal started
 
 static func create(position_to_set: Vector2, callable_to_connect: Callable) -> StartBomb:
-	var inst: StartBomb = preload(StartBomb_scene).instantiate() as StartBomb
+	var inst: StartBomb = load(StartBomb_scene).instantiate() as StartBomb
 	inst.position = position_to_set
 	inst.connect("started", callable_to_connect)
 	return inst

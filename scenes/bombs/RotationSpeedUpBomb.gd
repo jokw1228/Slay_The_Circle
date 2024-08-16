@@ -10,7 +10,7 @@ const RotationSpeedUpBomb_scene = "res://scenes/bombs/RotationSpeedUpBomb.tscn"
 @export var rotation_speed_up_value: float = 0.1
 
 static func create(position_to_set: Vector2, warning_time_to_set: float, bomb_time_to_set: float, rotation_speed_up_value_to_set: float) -> RotationSpeedUpBomb:
-	var bomb_inst: RotationSpeedUpBomb = preload(RotationSpeedUpBomb_scene).instantiate() as RotationSpeedUpBomb
+	var bomb_inst: RotationSpeedUpBomb = load(RotationSpeedUpBomb_scene).instantiate() as RotationSpeedUpBomb
 	bomb_inst.position = position_to_set
 	bomb_inst.BombTimer_node.set_time = bomb_time_to_set
 	bomb_inst.WarningTimer_node.set_time = warning_time_to_set

@@ -6,7 +6,7 @@ const Indicator_scene = "res://scenes/bombs/bombeffects/Indicator.tscn"
 @export var size: float = 32
 
 static func create(position_to_set: Vector2 = Vector2.ZERO, size_to_set: float = 32) -> Indicator:
-	var inst: Indicator = preload(Indicator_scene).instantiate() as Indicator
+	var inst: Indicator = load(Indicator_scene).instantiate() as Indicator
 	inst.position = position_to_set
 	inst.size = size_to_set
 	return inst

@@ -11,7 +11,7 @@ const max_scale = 2
 var elapsed_time: float = 0.0
 
 static func create(position_to_set: Vector2) -> BombExplodedEffect:
-	var inst: BombExplodedEffect = preload(BombExplodedEffect_scene).instantiate() as BombExplodedEffect
+	var inst: BombExplodedEffect = load(BombExplodedEffect_scene).instantiate() as BombExplodedEffect
 	inst.position = position_to_set
 	return inst
 
