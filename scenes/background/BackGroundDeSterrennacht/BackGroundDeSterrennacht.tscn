@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://csx6yjkvpfqcy"]
 
-[ext_resource type="Script" path="res://scenes/background/BackGroundDeSterrennacht.gd" id="1_cfddy"]
+[ext_resource type="Script" path="res://scenes/background/BackGroundDeSterrennacht/BackGroundDeSterrennacht.gd" id="1_cfddy"]
 
 [node name="BackGroundDeSterrennacht" type="Node2D" node_paths=PackedStringArray("BackGroundGray_node")]
 z_index = -30

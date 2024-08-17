@@ -1,10 +1,10 @@
 [gd_scene load_steps=6 format=3 uid="uid://dkm0cd66gmgph"]
 
-[ext_resource type="PackedScene" uid="uid://bhe55ocau21ot" path="res://scenes/player/Player.tscn" id="1_cqulv"]
+[ext_resource type="PackedScene" uid="uid://bhe55ocau21ot" path="res://scenes/playingfield/player/Player.tscn" id="1_cqulv"]
 [ext_resource type="Script" path="res://scenes/rooms/RoomTutorial/RoomTutorial.gd" id="1_gg83j"]
 [ext_resource type="PackedScene" uid="uid://s264e74phclm" path="res://scenes/playingfield/CircleField.tscn" id="1_ro01m"]
 [ext_resource type="FontFile" uid="uid://bn71j2rajnbrn" path="res://fonts/bump-it-up.ttf" id="6_go8x2"]
-[ext_resource type="PackedScene" uid="uid://csx6yjkvpfqcy" path="res://scenes/background/BackGroundDeSterrennacht.tscn" id="18_qqoh6"]
+[ext_resource type="PackedScene" uid="uid://csx6yjkvpfqcy" path="res://scenes/background/BackGroundDeSterrennacht/BackGroundDeSterrennacht.tscn" id="18_qqoh6"]
 
 [node name="RoomTutorial" type="Node2D" node_paths=PackedStringArray("Player_node", "tutorialtext", "explaintext")]
 script = ExtResource("1_gg83j")

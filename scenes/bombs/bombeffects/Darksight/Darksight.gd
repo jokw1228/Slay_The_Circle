@@ -1,11 +1,8 @@
 extends ColorRect
 class_name Darksight
 
-const Darksight_scene = "res://scenes/bombs/bombeffects/Darksight.tscn"
-
 static func create() -> Darksight:
-	var inst: Darksight = load(Darksight_scene).instantiate() as Darksight
-	return inst
+	return Darksight_creator.create()
 
 func _ready():
 	fade_in()
