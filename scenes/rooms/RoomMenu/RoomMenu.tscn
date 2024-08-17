@@ -1,4 +1,4 @@
-[gd_scene load_steps=42 format=3 uid="uid://bdrilkeb2s5n0"]
+[gd_scene load_steps=43 format=3 uid="uid://bdrilkeb2s5n0"]
 
 [ext_resource type="Script" path="res://scenes/rooms/RoomMenu/RoomMenu.gd" id="1_sshbl"]
 [ext_resource type="PackedScene" uid="uid://ccay8yrm25adk" path="res://scenes/rooms/RoomPlayingFields/RoomCircle.tscn" id="2_2e64d"]
@@ -88,6 +88,10 @@ texture = ExtResource("26_8kqfa")
 modulate_color = Color(0.392157, 0.392157, 0.392157, 1)
 
 [sub_resource type="Theme" id="Theme_c8pqb"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_qpa6l"]
+texture = ExtResource("26_8kqfa")
+modulate_color = Color(0.705882, 0, 0.235294, 1)
 
 [node name="RoomMenu" type="Node2D" node_paths=PackedStringArray("ui_container_ready", "camera", "reverb_effect_timer", "menu_bomb_generator")]
 script = ExtResource("1_sshbl")
@@ -421,10 +425,10 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -220.0
-offset_top = -151.0
-offset_right = -20.0
-offset_bottom = -71.0
+offset_left = -230.0
+offset_top = -261.0
+offset_right = -30.0
+offset_bottom = -181.0
 grow_horizontal = 0
 grow_vertical = 0
 theme_override_styles/normal = SubResource("StyleBoxTexture_u61x5")
@@ -441,15 +445,33 @@ anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = -520.0
-offset_top = -151.0
+offset_top = -261.0
 offset_right = -260.0
-offset_bottom = -71.0
+offset_bottom = -181.0
 grow_horizontal = 0
 grow_vertical = 0
 theme_override_styles/normal = SubResource("StyleBoxTexture_u61x5")
 theme_override_styles/hover = SubResource("StyleBoxTexture_v04t5")
 theme_override_styles/pressed = SubResource("StyleBoxTexture_3chji")
 text = "TUTORIAL"
+
+[node name="ExitGame" type="Button" parent="UIContainerUnskewed/Option/Panel"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -520.0
+offset_top = -151.0
+offset_right = -30.0
+offset_bottom = -71.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_styles/normal = SubResource("StyleBoxTexture_3chji")
+theme_override_styles/hover = SubResource("StyleBoxTexture_qpa6l")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_3chji")
+text = "EXIT GAME"
 
 [node name="VBoxContainer" type="VBoxContainer" parent="UIContainerUnskewed/Option/Panel"]
 layout_mode = 0
@@ -490,6 +512,7 @@ bus_name = "SFX"
 [connection signal="pressed" from="UIContainerUnskewed/Option/Panel/OptionQuit" to="." method="_on_option_quit_pressed"]
 [connection signal="pressed" from="UIContainerUnskewed/Option/Panel/ToCredit" to="." method="_on_to_credit_pressed"]
 [connection signal="pressed" from="UIContainerUnskewed/Option/Panel/ToTutorial" to="." method="_on_to_tutorial_pressed"]
+[connection signal="pressed" from="UIContainerUnskewed/Option/Panel/ExitGame" to="." method="_on_exit_game_pressed"]
 
 [editable path="Field/CircleField"]
 [editable path="UIContainerSkewed/Start"]
