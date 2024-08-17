@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://c0s4jvu7qncps"]
+[gd_scene load_steps=19 format=3 uid="uid://c0s4jvu7qncps"]
 
 [ext_resource type="Script" path="res://scenes/rooms/RoomCredit/RoomCredit.gd" id="1_axwsh"]
 [ext_resource type="Texture2D" uid="uid://cpd50aakmwjtm" path="res://images/creditroom/CreditRoom.svg" id="2_f4n2x"]
@@ -9,6 +9,9 @@
 [ext_resource type="Script" path="res://addons/resonate/music_manager/music_track_resource.gd" id="6_apfmj"]
 [ext_resource type="Script" path="res://addons/resonate/music_manager/music_stem_resource.gd" id="7_3225x"]
 [ext_resource type="AudioStream" uid="uid://c3v8s1j06a2nn" path="res://audio/bgm/slow_bgm.wav" id="8_l8wmo"]
+[ext_resource type="Script" path="res://addons/resonate/sound_manager/sound_bank.gd" id="10_cl5iy"]
+[ext_resource type="Script" path="res://addons/resonate/sound_manager/sound_event_resource.gd" id="11_dvn8g"]
+[ext_resource type="AudioStream" uid="uid://crh63lch80r4l" path="res://audio/sfx/select.wav" id="12_a5dof"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_g6swl"]
 texture = ExtResource("5_11on3")
@@ -34,6 +37,14 @@ script = ExtResource("6_apfmj")
 name = "main_slow"
 bus = ""
 stems = Array[ExtResource("7_3225x")]([SubResource("Resource_cdhbd")])
+
+[sub_resource type="Resource" id="Resource_ou5o0"]
+script = ExtResource("11_dvn8g")
+name = "select"
+bus = ""
+volume = 0.0
+pitch = 1.0
+streams = Array[AudioStream]([ExtResource("12_a5dof")])
 
 [node name="RoomCredit" type="Control" node_paths=PackedStringArray("role_label", "name_label", "logo_text")]
 layout_mode = 3
@@ -128,6 +139,13 @@ text = "MENU
 [node name="MusicBank" type="Node" parent="."]
 script = ExtResource("5_84rmu")
 label = "bgm_RC"
+bus = "BGM"
 tracks = Array[ExtResource("6_apfmj")]([SubResource("Resource_idjpf")])
+
+[node name="SoundBank" type="Node" parent="."]
+script = ExtResource("10_cl5iy")
+label = "sfx_RC"
+bus = "SFX"
+events = Array[ExtResource("11_dvn8g")]([SubResource("Resource_ou5o0")])
 
 [connection signal="pressed" from="CanvasLayer/ToCredit" to="." method="_on_to_credit_pressed"]
