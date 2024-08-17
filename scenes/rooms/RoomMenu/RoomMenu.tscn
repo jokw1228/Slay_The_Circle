@@ -1,4 +1,4 @@
-[gd_scene load_steps=40 format=3 uid="uid://bdrilkeb2s5n0"]
+[gd_scene load_steps=42 format=3 uid="uid://bdrilkeb2s5n0"]
 
 [ext_resource type="Script" path="res://scenes/rooms/RoomMenu/RoomMenu.gd" id="1_sshbl"]
 [ext_resource type="PackedScene" uid="uid://ccay8yrm25adk" path="res://scenes/rooms/RoomPlayingFields/RoomCircle.tscn" id="2_2e64d"]
@@ -27,6 +27,7 @@
 [ext_resource type="AudioStream" uid="uid://dl56qa7pijbom" path="res://audio/bgm/fast_bgm.wav" id="25_r03bj"]
 [ext_resource type="Texture2D" uid="uid://7ed2eanqanvm" path="res://scenes/ui/ColoredPanelTexture.svg" id="26_8kqfa"]
 [ext_resource type="Texture2D" uid="uid://cv60tqgqvgob" path="res://images/option.png" id="26_bsu3u"]
+[ext_resource type="Texture2D" uid="uid://c1nrj01k70rva" path="res://images/X.png" id="28_5yy81"]
 [ext_resource type="Script" path="res://scenes/rooms/RoomMenu/BgmSlider.gd" id="28_agem7"]
 [ext_resource type="Script" path="res://scenes/rooms/RoomMenu/SfxSlider.gd" id="29_p7uuc"]
 
@@ -85,6 +86,8 @@ modulate_color = Color(0.592157, 0, 0.196078, 1)
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_7nfj6"]
 texture = ExtResource("26_8kqfa")
 modulate_color = Color(0.392157, 0.392157, 0.392157, 1)
+
+[sub_resource type="Theme" id="Theme_c8pqb"]
 
 [node name="RoomMenu" type="Node2D" node_paths=PackedStringArray("ui_container_ready", "camera", "reverb_effect_timer", "menu_bomb_generator")]
 script = ExtResource("1_sshbl")
@@ -390,15 +393,26 @@ layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -170.0
-offset_top = 25.0
-offset_right = -20.0
-offset_bottom = 105.0
+offset_left = -130.0
+offset_top = 20.0
+offset_right = -50.0
+offset_bottom = 100.0
 grow_horizontal = 0
 theme_override_styles/normal = SubResource("StyleBoxTexture_u61x5")
 theme_override_styles/hover = SubResource("StyleBoxTexture_v04t5")
 theme_override_styles/pressed = SubResource("StyleBoxTexture_3chji")
-text = "QUIT"
+text = "
+"
+
+[node name="TextureRect" type="TextureRect" parent="UIContainerUnskewed/Option/Panel/OptionQuit"]
+layout_mode = 0
+offset_left = 15.0
+offset_top = 15.0
+offset_right = 65.0
+offset_bottom = 65.0
+theme = SubResource("Theme_c8pqb")
+texture = ExtResource("28_5yy81")
+expand_mode = 1
 
 [node name="ToCredit" type="Button" parent="UIContainerUnskewed/Option/Panel"]
 layout_mode = 1
