@@ -1,8 +1,6 @@
 extends Sprite2D
 class_name BombDeathEffect
 
-const BombDeathEffect_scene = "res://scenes/bombs/bombeffects/BombDeathEffect.tscn"
-
 const end_time = 0.6
 const max_radius = 64
 const max_angle = PI
@@ -11,9 +9,7 @@ var elapsed_time: float = 0.0
 var angle_offset: float = 0.0
 
 static func create(angle_offset_to_set: float) -> BombDeathEffect:
-	var inst: BombDeathEffect = load(BombDeathEffect_scene).instantiate() as BombDeathEffect
-	inst.angle_offset = angle_offset_to_set
-	return inst
+	return BombDeathEffect_creator.create(angle_offset_to_set)
 
 func _ready():
 	var tween_scale: Tween = get_tree().create_tween()

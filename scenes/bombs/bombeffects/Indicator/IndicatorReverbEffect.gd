@@ -1,17 +1,13 @@
 extends Node2D
 class_name IndicatorReverbEffect
 
-const IndicatorReverbEffect_scene = "res://scenes/bombs/bombeffects/IndicatorReverbEffect.tscn"
-
 var size: float = 32
 
 var color_alpha: float = 1.0
 var radius_to_draw: float
 
 static func create(size_to_set: float) -> IndicatorReverbEffect:
-	var inst: IndicatorReverbEffect = load(IndicatorReverbEffect_scene).instantiate() as IndicatorReverbEffect
-	inst.size = size_to_set
-	return inst
+	return IndicatorReverbEffect_creator.create(size_to_set)
 
 func _ready():
 	const delay = 1.2

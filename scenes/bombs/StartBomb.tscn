@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://scenes/bombs/StartBomb.gd" id="1_0384a"]
 [ext_resource type="Texture2D" uid="uid://cgn8ysntgw1a2" path="res://images/bomb/sprite_normal.svg" id="3_i43v8"]
-[ext_resource type="PackedScene" uid="uid://b6vb4gmrkuugo" path="res://scenes/bombs/bombeffects/BrightModulator.tscn" id="4_jqlx2"]
+[ext_resource type="PackedScene" uid="uid://b6vb4gmrkuugo" path="res://scenes/bombs/bombeffects/BrightModulator/BrightModulator.tscn" id="4_jqlx2"]
 [ext_resource type="Texture2D" uid="uid://idkeqjx3wkpe" path="res://images/bomb/sprite_restart.svg" id="4_ryl6g"]
 [ext_resource type="Script" path="res://addons/resonate/sound_manager/sound_bank.gd" id="5_3cyy8"]
 [ext_resource type="Script" path="res://addons/resonate/sound_manager/sound_event_resource.gd" id="6_cg20x"]

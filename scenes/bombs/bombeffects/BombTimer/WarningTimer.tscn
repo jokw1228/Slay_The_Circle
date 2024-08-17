@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://ltvbulh18nft"]
 
-[ext_resource type="Script" path="res://scenes/bombs/WarningTimer.gd" id="1_1p7sx"]
+[ext_resource type="Script" path="res://scenes/bombs/bombeffects/BombTimer/WarningTimer.gd" id="1_1p7sx"]
 [ext_resource type="Texture2D" uid="uid://baausxife2ayk" path="res://images/bomb/sprite_normal_outline.svg" id="1_cru2m"]
 
 [node name="WarningTimer" type="TextureProgressBar"]

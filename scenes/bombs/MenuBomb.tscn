@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://dq3v4l3j35key" path="res://scenes/bombs/Bomb.tscn" id="1_ssmcn"]
 [ext_resource type="Script" path="res://scenes/bombs/MenuBomb.gd" id="2_23n1h"]
 [ext_resource type="Texture2D" uid="uid://baausxife2ayk" path="res://images/bomb/sprite_normal_outline.svg" id="3_tpriv"]
-[ext_resource type="PackedScene" uid="uid://b6vb4gmrkuugo" path="res://scenes/bombs/bombeffects/BrightModulator.tscn" id="4_4g2mf"]
+[ext_resource type="PackedScene" uid="uid://b6vb4gmrkuugo" path="res://scenes/bombs/bombeffects/BrightModulator/BrightModulator.tscn" id="4_4g2mf"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_8hgk3"]
 radius = 32.0

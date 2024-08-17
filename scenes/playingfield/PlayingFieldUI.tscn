@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://scenes/playingfield/PlayingFieldUI.gd" id="1_4jlcl"]
 [ext_resource type="Texture2D" uid="uid://7ed2eanqanvm" path="res://scenes/ui/ColoredPanelTexture.svg" id="2_6hhks"]
-[ext_resource type="PackedScene" uid="uid://b6vb4gmrkuugo" path="res://scenes/bombs/bombeffects/BrightModulator.tscn" id="2_f8tx4"]
+[ext_resource type="PackedScene" uid="uid://b6vb4gmrkuugo" path="res://scenes/bombs/bombeffects/BrightModulator/BrightModulator.tscn" id="2_f8tx4"]
 [ext_resource type="PackedScene" uid="uid://dp0cdsfw5ylxj" path="res://scenes/ui/FancyButton.tscn" id="3_vlemy"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_gr0gd"]

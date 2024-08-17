@@ -3,13 +3,13 @@
 [ext_resource type="Script" path="res://scenes/bombs/NumericBomb/NumericBomb.gd" id="1_lkrkc"]
 [ext_resource type="FontFile" uid="uid://bn71j2rajnbrn" path="res://fonts/bump-it-up.ttf" id="2_mftcv"]
 [ext_resource type="Script" path="res://addons/resonate/sound_manager/sound_bank.gd" id="3_awam2"]
-[ext_resource type="PackedScene" uid="uid://dq81owitrvpew" path="res://scenes/bombs/BombTimer.tscn" id="4_c11ax"]
-[ext_resource type="PackedScene" uid="uid://ltvbulh18nft" path="res://scenes/bombs/WarningTimer.tscn" id="4_i8np4"]
+[ext_resource type="PackedScene" uid="uid://dq81owitrvpew" path="res://scenes/bombs/bombeffects/BombTimer/BombTimer.tscn" id="4_c11ax"]
+[ext_resource type="PackedScene" uid="uid://ltvbulh18nft" path="res://scenes/bombs/bombeffects/BombTimer/WarningTimer.tscn" id="4_i8np4"]
 [ext_resource type="Script" path="res://addons/resonate/sound_manager/sound_event_resource.gd" id="4_pmjfd"]
 [ext_resource type="AudioStream" uid="uid://c352772ve0yuk" path="res://audio/sfx/slice_3.wav" id="5_7r5w0"]
 [ext_resource type="AudioStream" uid="uid://cdk204qcjn0hb" path="res://audio/sfx/explosion_5.wav" id="8_jjild"]
-[ext_resource type="PackedScene" uid="uid://b6vb4gmrkuugo" path="res://scenes/bombs/bombeffects/BrightModulator.tscn" id="8_r1127"]
-[ext_resource type="PackedScene" uid="uid://b5bt215x185hg" path="res://scenes/bombs/bombeffects/Indicator.tscn" id="8_tpps7"]
+[ext_resource type="PackedScene" uid="uid://b6vb4gmrkuugo" path="res://scenes/bombs/bombeffects/BrightModulator/BrightModulator.tscn" id="8_r1127"]
+[ext_resource type="PackedScene" uid="uid://b5bt215x185hg" path="res://scenes/bombs/bombeffects/Indicator/Indicator.tscn" id="8_tpps7"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_51k8f"]
 radius = 32.0
