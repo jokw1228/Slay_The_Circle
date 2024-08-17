@@ -1,6 +1,6 @@
 [gd_scene load_steps=10 format=3 uid="uid://cs2ukp0c0vi80"]
 
-[ext_resource type="Script" path="res://scenes/bombs/bombeffects/SlayParticle.gd" id="1_so7lb"]
+[ext_resource type="Script" path="res://scenes/bombs/bombeffects/BombSlayedEffect/SlayParticle.gd" id="1_so7lb"]
 [ext_resource type="PackedScene" uid="uid://b6vb4gmrkuugo" path="res://scenes/bombs/bombeffects/BrightModulator/BrightModulator.tscn" id="2_8vdbt"]
 
 [sub_resource type="Gradient" id="Gradient_ukrbu"]
