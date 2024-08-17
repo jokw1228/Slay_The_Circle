@@ -1,18 +1,12 @@
 extends Bomb
 class_name RotationInversionBomb
 
-const RotationInversionBomb_scene = "res://scenes/bombs/RotationInversionBomb.tscn"
-
 @export var CollisionShape2D_node: CollisionShape2D
 @export var BombTimer_node: BombTimer
 @export var WarningTimer_node: WarningTimer
 
 static func create(position_to_set: Vector2, warning_time_to_set: float, bomb_time_to_set: float) -> RotationInversionBomb:
-	var bomb_inst: RotationInversionBomb = load(RotationInversionBomb_scene).instantiate() as RotationInversionBomb
-	bomb_inst.position = position_to_set
-	bomb_inst.BombTimer_node.set_time = bomb_time_to_set
-	bomb_inst.WarningTimer_node.set_time = warning_time_to_set
-	return bomb_inst
+	return RotationInversionBomb_creator.create(position_to_set, warning_time_to_set, bomb_time_to_set)
 
 func _on_warning_timer_warning_timeout():
 	modulate.a = 1.0

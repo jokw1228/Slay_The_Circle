@@ -1,6 +1,6 @@
 [gd_scene load_steps=13 format=3 uid="uid://bd65ne6jxvojv"]
 
-[ext_resource type="Script" path="res://scenes/bombs/RotationInversionBomb.gd" id="1_u7xat"]
+[ext_resource type="Script" path="res://scenes/bombs/RotationInversionBomb/RotationInversionBomb.gd" id="1_u7xat"]
 [ext_resource type="PackedScene" uid="uid://dq81owitrvpew" path="res://scenes/bombs/BombTimer.tscn" id="2_ix5n8"]
 [ext_resource type="Texture2D" uid="uid://df7din20kvgkf" path="res://images/bomb/sprite_rotation_inversion.svg" id="3_5tknd"]
 [ext_resource type="PackedScene" uid="uid://ltvbulh18nft" path="res://scenes/bombs/WarningTimer.tscn" id="3_y3tj0"]

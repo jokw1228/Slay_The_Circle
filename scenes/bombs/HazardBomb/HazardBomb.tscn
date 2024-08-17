@@ -1,6 +1,6 @@
 [gd_scene load_steps=11 format=3 uid="uid://cux2tpymcx5ny"]
 
-[ext_resource type="Script" path="res://scenes/bombs/HazardBomb.gd" id="1_wklac"]
+[ext_resource type="Script" path="res://scenes/bombs/HazardBomb/HazardBomb.gd" id="1_wklac"]
 [ext_resource type="PackedScene" uid="uid://dq81owitrvpew" path="res://scenes/bombs/BombTimer.tscn" id="2_xj2gr"]
 [ext_resource type="Texture2D" uid="uid://b3xqa1yf5olkc" path="res://images/bomb/sprite_hazard.svg" id="5_3ijwn"]
 [ext_resource type="Texture2D" uid="uid://1esd5uit6qlp" path="res://images/bomb/sprite_hazard_outline.svg" id="5_qnof4"]
@@ -52,8 +52,8 @@ events = Array[ExtResource("7_wya48")]([SubResource("Resource_vqqta")])
 [connection signal="player_body_entered" from="." to="." method="game_over"]
 [connection signal="player_body_entered" from="." to="." method="exploded"]
 [connection signal="player_body_entered" from="." to="." method="slayed"]
-[connection signal="bomb_timeout" from="BombTimer" to="." method="hazard_bomb_ended_effect"]
 [connection signal="bomb_timeout" from="BombTimer" to="." method="queue_free"]
+[connection signal="bomb_timeout" from="BombTimer" to="." method="hazard_bomb_ended_effect"]
 [connection signal="warning_timeout" from="WarningTimer" to="." method="_on_warning_timer_warning_timeout"]
 [connection signal="warning_timeout" from="WarningTimer" to="BombTimer" method="bomb_timer_start"]
 

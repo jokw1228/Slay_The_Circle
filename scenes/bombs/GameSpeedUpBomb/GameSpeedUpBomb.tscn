@@ -1,6 +1,6 @@
 [gd_scene load_steps=13 format=3 uid="uid://cr4l7m2i6dxl"]
 
-[ext_resource type="Script" path="res://scenes/bombs/GameSpeedUpBomb.gd" id="1_xqi0c"]
+[ext_resource type="Script" path="res://scenes/bombs/GameSpeedUpBomb/GameSpeedUpBomb.gd" id="1_xqi0c"]
 [ext_resource type="PackedScene" uid="uid://dq81owitrvpew" path="res://scenes/bombs/BombTimer.tscn" id="2_iykik"]
 [ext_resource type="Texture2D" uid="uid://8jgfkfsth1pj" path="res://images/bomb/sprite_game_speed_up.svg" id="3_8og0e"]
 [ext_resource type="PackedScene" uid="uid://ltvbulh18nft" path="res://scenes/bombs/WarningTimer.tscn" id="3_giwto"]
@@ -56,10 +56,10 @@ events = Array[ExtResource("5_2780o")]([SubResource("Resource_37u8r"), SubResour
 [node name="BrightModulator" parent="." instance=ExtResource("8_5svdm")]
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
-[connection signal="player_body_entered" from="." to="." method="queue_free"]
 [connection signal="player_body_entered" from="." to="." method="slayed"]
-[connection signal="bomb_timeout" from="BombTimer" to="." method="queue_free"]
+[connection signal="player_body_entered" from="." to="." method="queue_free"]
 [connection signal="bomb_timeout" from="BombTimer" to="." method="game_over"]
 [connection signal="bomb_timeout" from="BombTimer" to="." method="exploded"]
+[connection signal="bomb_timeout" from="BombTimer" to="." method="queue_free"]
 [connection signal="warning_timeout" from="WarningTimer" to="." method="_on_warning_timer_warning_timeout"]
 [connection signal="warning_timeout" from="WarningTimer" to="BombTimer" method="bomb_timer_start"]

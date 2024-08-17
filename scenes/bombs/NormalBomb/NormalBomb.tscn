@@ -1,6 +1,6 @@
 [gd_scene load_steps=13 format=3 uid="uid://bj78l3upa26ik"]
 
-[ext_resource type="Script" path="res://scenes/bombs/NormalBomb.gd" id="1_d5v6f"]
+[ext_resource type="Script" path="res://scenes/bombs/NormalBomb/NormalBomb.gd" id="1_d5v6f"]
 [ext_resource type="PackedScene" uid="uid://dq81owitrvpew" path="res://scenes/bombs/BombTimer.tscn" id="2_yellt"]
 [ext_resource type="Script" path="res://addons/resonate/sound_manager/sound_bank.gd" id="3_8xxje"]
 [ext_resource type="PackedScene" uid="uid://ltvbulh18nft" path="res://scenes/bombs/WarningTimer.tscn" id="3_s4471"]
@@ -57,10 +57,10 @@ texture = ExtResource("7_kse0o")
 [node name="BrightModulator" parent="." instance=ExtResource("8_uumic")]
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
-[connection signal="player_body_entered" from="." to="." method="queue_free"]
 [connection signal="player_body_entered" from="." to="." method="slayed"]
-[connection signal="bomb_timeout" from="BombTimer" to="." method="queue_free"]
+[connection signal="player_body_entered" from="." to="." method="queue_free"]
 [connection signal="bomb_timeout" from="BombTimer" to="." method="game_over"]
 [connection signal="bomb_timeout" from="BombTimer" to="." method="exploded"]
+[connection signal="bomb_timeout" from="BombTimer" to="." method="queue_free"]
 [connection signal="warning_timeout" from="WarningTimer" to="." method="_on_warning_timer_warning_timeout"]
 [connection signal="warning_timeout" from="WarningTimer" to="BombTimer" method="bomb_timer_start"]

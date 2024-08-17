@@ -1,8 +1,6 @@
 extends Bomb
 class_name NumericBomb
 
-const NumericBomb_scene = "res://scenes/bombs/NumericBomb.tscn"
-
 signal lower_value_bomb_exists
 signal no_lower_value_bomb_exists
 
@@ -14,12 +12,7 @@ var id: int = 0
 @export var Indicator_node: Indicator
 
 static func create(position_to_set: Vector2, warning_time_to_set: float, bomb_time_to_set: float, id_to_set: int) -> NumericBomb:
-	var bomb_inst: NumericBomb = load(NumericBomb_scene).instantiate() as NumericBomb
-	bomb_inst.position = position_to_set
-	bomb_inst.BombTimer_node.set_time = bomb_time_to_set
-	bomb_inst.WarningTimer_node.set_time = warning_time_to_set
-	bomb_inst.id = id_to_set
-	return bomb_inst
+	return NumericBomb_creator.create(position_to_set, warning_time_to_set, bomb_time_to_set, id_to_set)
 
 func _on_warning_timer_warning_timeout():
 	modulate.a = 1.0
