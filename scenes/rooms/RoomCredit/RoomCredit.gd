@@ -155,4 +155,6 @@ func on_name_tween_finished():
 
 
 func _on_to_credit_pressed():
+	SoundManager.play("sfx_RC","select")
 	get_tree().change_scene_to_file(RoomMenu_room)
+
