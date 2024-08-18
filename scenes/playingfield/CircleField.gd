@@ -94,6 +94,7 @@ func create_game_over_effect():
 	tween_alpha.tween_property(inst, "color_to_draw", Color.TRANSPARENT, faded_delay)
 
 func create_game_ready_effect():
+	const time_to_wave = 0.2
 	const time_to_scale = 0.3
 	
 	var inst = CircleFieldEffect_scene.instantiate()
@@ -101,7 +102,7 @@ func create_game_ready_effect():
 	var animation_player = BackgroundEffect_node.get_node("WaveAnimation")
 	animation_player.play("MoveWaveIn")
 	
-	await get_tree().create_timer(time_to_scale).timeout
+	await get_tree().create_timer(time_to_wave).timeout
 	BackgroundEffect_node.hide()
 	
 	inst.survival_time = time_to_scale

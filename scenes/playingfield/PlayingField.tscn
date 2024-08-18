@@ -78,8 +78,8 @@ tracks = Array[ExtResource("11_itom1")]([SubResource("Resource_jkvr2")])
 
 [connection signal="game_over" from="." to="BackGroundEffect" method="game_over_reset"]
 [connection signal="game_over" from="." to="PlayingFieldCamera" method="rotation_stop"]
-[connection signal="game_over" from="." to="PlayingFieldCamera" method="gameover_position_transition"]
 [connection signal="game_over" from="." to="PlayingFieldCamera" method="zoom_transition"]
+[connection signal="game_over" from="." to="PlayingFieldCamera" method="gameover_position_transition"]
 [connection signal="game_over" from="." to="CircleField" method="stop_reverb_effect"]
 [connection signal="game_over" from="." to="CircleField" method="create_game_over_effect"]
 [connection signal="game_over" from="." to="PlayingFieldUI" method="close_Playing_and_open_Stopped"]

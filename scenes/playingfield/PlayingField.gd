@@ -62,9 +62,9 @@ func stop_PlayingField(bomb_position: Vector2):
 		MusicManager.disable_stem("on_game",0.5)
 		
 		# Create a StartBomb
-		await get_tree().create_timer(2.3).timeout
+		await get_tree().create_timer(1.8).timeout
 		emit_signal("game_ready")
-		await get_tree().create_timer(0.6).timeout
+		await get_tree().create_timer(0.55).timeout
 		add_child(StartBomb.create(Vector2.ZERO, Callable(self, "start_PlayingField")) )
 
 # Logic for BombLink
