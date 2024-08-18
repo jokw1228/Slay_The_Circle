@@ -237,25 +237,28 @@ func pattern_level_up_phase_5():
 # pattern_numeric_diamond_with_hazard_puzzled block start
 # made by Bae Sekang
 
-const pattern_diamond_with_hazard_puzzled_playing_time = 3.0
+const pattern_diamond_with_hazard_puzzled_playing_time = 3.5
 
 func pattern_diamond_with_hazard_puzzled():
 	PlayingFieldInterface.set_theme_color(Color.PLUM)
 	
 	pattern_start_time = PlayingFieldInterface.get_playing_time()
 	
+	const warning_time = 0.25
+	const bomb_time = 3.25
+	
 	const bomb_position_length = 128
 	var bomb_position: Vector2 = bomb_position_length * PlayingFieldInterface.get_player_position().normalized().rotated(PI/4)
 	
-	create_hazard_bomb(Vector2.ZERO, 0.25, 2.75)
+	create_hazard_bomb(Vector2.ZERO, warning_time, bomb_time)
 	
-	create_numeric_bomb(bomb_position, 0.25, 2.75, 1)
+	create_numeric_bomb(bomb_position, warning_time, bomb_time, 1)
 	bomb_position = bomb_position.rotated(PI/2)
-	create_numeric_bomb(bomb_position, 0.25, 2.75, 3)
+	create_numeric_bomb(bomb_position, warning_time, bomb_time, 3)
 	bomb_position = bomb_position.rotated(PI/2)
-	create_numeric_bomb(bomb_position, 0.25, 2.75, 2)
+	create_numeric_bomb(bomb_position, warning_time, bomb_time, 2)
 	bomb_position = bomb_position.rotated(PI/2)
-	var bomb_end: NumericBomb = create_numeric_bomb(bomb_position, 0.25, 2.75, 4)
+	var bomb_end: NumericBomb = create_numeric_bomb(bomb_position, warning_time, bomb_time, 4)
 	bomb_end.connect("no_lower_value_bomb_exists", Callable(self, "pattern_diamond_with_hazard_puzzled_end"))
 
 func pattern_diamond_with_hazard_puzzled_end():
@@ -271,11 +274,15 @@ func pattern_diamond_with_hazard_puzzled_end():
 # pattern_maze block start
 # made by jinhyun
 
-const pattern_maze_playing_time = 1.75
+const pattern_maze_playing_time = 2.5
 
 func pattern_maze():
 	PlayingFieldInterface.set_theme_color(Color.VIOLET)
+	
 	pattern_start_time = PlayingFieldInterface.get_playing_time()
+	
+	const warning_time = 0.1
+	const bomb_time = 2.4
 	
 	var player_position: Vector2 = PlayingFieldInterface.get_player_position()
 	var player_mul: Vector2 =  player_position * 0.35
@@ -283,15 +290,15 @@ func pattern_maze():
 	var perpendicular = Vector2(-player_mul.y / magnitude, player_mul.x / magnitude)
 	
 	for i in range(4):
-		create_hazard_bomb(player_mul + perpendicular * (i-3.0) * 64, 0.1, 1.65)
-		create_hazard_bomb(-(player_mul + perpendicular * (i-3.0) * 64), 0.1, 1.65)
+		create_hazard_bomb(player_mul + perpendicular * (i-3.0) * 64, warning_time, bomb_time)
+		create_hazard_bomb(-(player_mul + perpendicular * (i-3.0) * 64), warning_time, bomb_time)
 	
 	# HYPER MODE
 	if stage_phase >= 4:
-		create_hazard_bomb(player_mul + perpendicular * (1) * 64, 0.1, 1.65)
-		create_hazard_bomb(-(player_mul + perpendicular * (1) * 64), 0.1, 1.65)
+		create_hazard_bomb(player_mul + perpendicular * (1) * 64, warning_time, bomb_time)
+		create_hazard_bomb(-(player_mul + perpendicular * (1) * 64), warning_time, bomb_time)
 	
-	var bomb = create_normal_bomb(-player_position * (256-32) / (256-16), 0.1, 1.65)
+	var bomb = create_normal_bomb(-player_position * (256-32) / (256-16), warning_time, bomb_time)
 	bomb.connect("player_body_entered", Callable(self, "pattern_maze_end"))
 
 func pattern_maze_end():
@@ -307,31 +314,34 @@ func pattern_maze_end():
 # pattern_narrow_road block start
 # made by Bae Sekang
 
-const pattern_narrow_road_playing_time = 3.0
+const pattern_narrow_road_playing_time = 3.25
 
 func pattern_narrow_road():
 	PlayingFieldInterface.set_theme_color(Color.VIOLET)
 	
 	pattern_start_time = PlayingFieldInterface.get_playing_time()
 	
+	const warning_time = 0.1
+	const bomb_time = 3.15
+	
 	var player_direction: Vector2 = PlayingFieldInterface.get_player_position().normalized()
 	const bomb_diameter: float = 64.0
 	
 	var end_bomb: NumericBomb
 	for i: int in range(5):
-		end_bomb = create_numeric_bomb((bomb_diameter * (i-2)) * player_direction, 0.25, 2.75, i+1)
+		end_bomb = create_numeric_bomb((bomb_diameter * (i-2)) * player_direction, warning_time, bomb_time, i+1)
 	end_bomb.connect("no_lower_value_bomb_exists", Callable(self, "pattern_narrow_road_end"))
 	
 	const hazard_bomb_clearance: float = bomb_diameter + 16
 	for i: int in range(3):
-		create_hazard_bomb((bomb_diameter * (i-1)) * player_direction + hazard_bomb_clearance * player_direction.rotated(PI/2), 0.25, 2.75)
-		create_hazard_bomb((bomb_diameter * (i-1)) * player_direction + hazard_bomb_clearance * player_direction.rotated(-PI/2), 0.25, 2.75)
+		create_hazard_bomb((bomb_diameter * (i-1)) * player_direction + hazard_bomb_clearance * player_direction.rotated(PI/2), warning_time, bomb_time)
+		create_hazard_bomb((bomb_diameter * (i-1)) * player_direction + hazard_bomb_clearance * player_direction.rotated(-PI/2), warning_time, bomb_time)
 	
 	# HYPER MODE
 	if stage_phase >= 4:
 		const CIRCLE_FIELD_RADIUS = 256.0
-		create_hazard_bomb((CIRCLE_FIELD_RADIUS - 32) * player_direction.rotated(PI/2), 0.25, 2.75)
-		create_hazard_bomb((CIRCLE_FIELD_RADIUS - 32) * player_direction.rotated(-PI/2), 0.25, 2.75)
+		create_hazard_bomb((CIRCLE_FIELD_RADIUS - 32) * player_direction.rotated(PI/2), warning_time, bomb_time)
+		create_hazard_bomb((CIRCLE_FIELD_RADIUS - 32) * player_direction.rotated(-PI/2), warning_time, bomb_time)
 
 func pattern_narrow_road_end():
 	get_tree().call_group("group_hazard_bomb", "early_eliminate")
@@ -346,7 +356,7 @@ func pattern_narrow_road_end():
 # pattern_blocking block start
 # made by jinhyun
 
-const pattern_blocking_playing_time = 2.5
+const pattern_blocking_playing_time = 3.0
 
 func pattern_blocking():
 	PlayingFieldInterface.set_theme_color(Color.VIOLET)
@@ -354,11 +364,14 @@ func pattern_blocking():
 	
 	var player_position: Vector2 = PlayingFieldInterface.get_player_position()
 	
-	for i in range(9):
-		create_hazard_bomb(player_position.rotated((i-4)*PI/8) * 0.6, 0.1, 2.4)
+	const warning_time = 0.1
+	const bomb_time = 2.9
 	
-	var bomb1 = create_normal_bomb(player_position.rotated(3.0*PI/4.0) * 0.6, 0.1, 2.4)
-	var bomb2 = create_normal_bomb(player_position.rotated(-3.0*PI/4.0) * 0.6, 0.1, 2.4)
+	for i in range(9):
+		create_hazard_bomb(player_position.rotated((i-4)*PI/8) * 0.6, warning_time, bomb_time)
+	
+	var bomb1 = create_normal_bomb(player_position.rotated(3.0*PI/4.0) * 0.6, warning_time, bomb_time)
+	var bomb2 = create_normal_bomb(player_position.rotated(-3.0*PI/4.0) * 0.6, warning_time, bomb_time)
 	var link = create_bomb_link(bomb1, bomb2)
 	
 	link.connect("both_bombs_removed", Callable(self, "pattern_blocking_end"))
@@ -381,18 +394,22 @@ var pattern_scattered_hazards_bomb_count: int
 func pattern_scattered_hazards():
 	PlayingFieldInterface.set_theme_color(Color.VIOLET)
 	
+	pattern_start_time = PlayingFieldInterface.get_playing_time()
+	
+	const warning_time = 0.25
+	const bomb_time = 3.25
+	
 	var left_bomb = 3
 	pattern_scattered_hazards_bomb_count = 3
-	pattern_start_time = PlayingFieldInterface.get_playing_time()
 	
 	var player_pos_normalized = PlayingFieldInterface.get_player_position().normalized()
 	
 	for i in (6):
-		create_hazard_bomb(player_pos_normalized.rotated(PI/3 * i).rotated(PI/4) * (256 - 32) ,0.25,3.25)
+		create_hazard_bomb(player_pos_normalized.rotated(PI/3 * i).rotated(PI/4) * (256 - 32) , warning_time, bomb_time)
 	
 	var rotation_offset: float = randf_range(0, PI*2/3)
 	for i in (3):
-		var bomb: NormalBomb = create_normal_bomb(player_pos_normalized.rotated(PI/3 * i * 2).rotated(rotation_offset) * 64 ,0.5, 3)
+		var bomb: NormalBomb = create_normal_bomb(player_pos_normalized.rotated(PI/3 * i * 2).rotated(rotation_offset) * 64 , warning_time, bomb_time)
 		bomb.connect("player_body_entered", Callable(self, "pattern_scattered_hazards_end"))
 	
 func pattern_scattered_hazards_end():
@@ -425,8 +442,8 @@ func pattern_scattered_hazards_end():
 #위험하다고 피하는 건 좋지 않아요
 #circle 정도의 쉬?운 난이도
 
-const pattern_hide_in_hazard_playing_time = 4.25
-#3 * (hazard_bomb_time + hazard_warning_time) + hazard_warning_time
+const pattern_hide_in_hazard_playing_time = 5.0
+# 3 * (hazard_bomb_time + hazard_warning_time) + hazard_warning_time
 var bomb_count = 0
 
 func pattern_hide_in_hazard():
@@ -435,7 +452,7 @@ func pattern_hide_in_hazard():
 	pattern_start_time = PlayingFieldInterface.get_playing_time()
 	
 	const hazard_warning_time = 0.5
-	const hazard_bomb_time = 0.75
+	const hazard_bomb_time = 1.0
 	const bomb_time = 3 * (hazard_bomb_time + hazard_warning_time)
 	
 	const CIRCLE_FIELD_RADIUS = 256
@@ -632,25 +649,37 @@ func pattern_random_shape_random(pattern: int, randomrotation: float):
 # pattern_pizza block start
 # made by Bae Sekang
 
-const pattern_pizza_playing_time = 3
+const pattern_pizza_playing_time = 3.5
 
 func pattern_pizza():
-	pattern_start_time = PlayingFieldInterface.get_playing_time()
 	PlayingFieldInterface.set_theme_color(Color.VIOLET)
 	
-	var player_position: Vector2 = PlayingFieldInterface.get_player_position()
-	var player_angle: float = player_position.angle()
-	var bomb_radius = 220
+	pattern_start_time = PlayingFieldInterface.get_playing_time()
 	
-	var center_bomb = create_normal_bomb(Vector2(0,0), 0.5,2.5)
+	const warning_time = 0.25
+	const normal_bomb_time = 2.0
+	const slayable_time = 0.75
+	
+	var player_direction: Vector2 = PlayingFieldInterface.get_player_position().normalized()
+	const hazard_bomb_distance = 64
+	const normal_bomb_distance = 220
+	
+	var center_bomb: Bomb
+	# HYPER MODE
+	if stage_phase >= 4:
+		center_bomb = create_rotationinversion_bomb(Vector2(0, 0), warning_time, normal_bomb_time + slayable_time)
+	else:
+		center_bomb = create_normal_bomb(Vector2(0, 0), warning_time, normal_bomb_time + slayable_time)
 	
 	for i in range(6):
-		create_hazard_bomb(Vector2(64*cos(player_angle+i*PI/3),64*sin(player_angle+i*PI/3)),0.5,2)
+		create_hazard_bomb(hazard_bomb_distance * player_direction, warning_time, normal_bomb_time)
+		player_direction = player_direction.rotated(PI/3)
 	
 	for i in range(1, 25):
-		create_normal_bomb(Vector2(bomb_radius * cos(player_angle+i * PI/12.0), bomb_radius * sin(player_angle+i * PI/12.0)), 0.5, 2)
+		create_normal_bomb(normal_bomb_distance * player_direction, warning_time, normal_bomb_time)
+		player_direction = player_direction.rotated(PI/12)
 	
-	await Utils.timer(1.0)
+	await Utils.timer(1.0) # Player can't slay the center bomb at first!!
 	center_bomb.connect("player_body_entered",Callable(self,"pattern_pizza_end"))
 
 func pattern_pizza_end():
@@ -774,6 +803,7 @@ func pattern_321_go_end():
 func pattern_reactspeed_test():
 	pattern_start_time = PlayingFieldInterface.get_playing_time()
 	PlayingFieldInterface.set_theme_color(Color.DARK_MAGENTA)
+	
 	var indicator: Indicator = Indicator.create()
 	add_child(indicator)
 	
@@ -809,22 +839,26 @@ func pattern_reactspeed_test():
 ###############################
 # pattern_timing block start
 # made by Seonghyeon
-const pattern_timing_playing_time = 2.25
+const pattern_timing_playing_time = 2.75
 
 func pattern_timing():
 	PlayingFieldInterface.set_theme_color(Color.HOT_PINK)
 	
 	pattern_start_time = PlayingFieldInterface.get_playing_time()
 	
+	const warning_time = 0.75
+	const bomb_time = 1.0
+	const slayable_time = 1.0
+	
 	const SIZE = 96
 	var randomness: float = randf_range(0, 60)
-	create_hazard_bomb(SIZE * Vector2.LEFT.rotated(deg_to_rad(randomness + 60)), 0.75, 10)
-	create_hazard_bomb(SIZE * Vector2.LEFT.rotated(deg_to_rad(randomness + 120)), 0.75, 10)
-	create_hazard_bomb(SIZE * Vector2.LEFT.rotated(deg_to_rad(randomness + 240)), 0.75, 10)
-	create_hazard_bomb(SIZE * Vector2.LEFT.rotated(deg_to_rad(randomness + 300)), 0.75, 10)
-	create_hazard_bomb(SIZE * Vector2.LEFT.rotated(deg_to_rad(randomness + 0)), 0.75, 1.0)
-	create_hazard_bomb(SIZE * Vector2.LEFT.rotated(deg_to_rad(randomness + 180)), 0.75, 1.0)
-	var bomb: NormalBomb = create_normal_bomb(Vector2.ZERO, 0.75, 1.5)
+	create_hazard_bomb(SIZE * Vector2.LEFT.rotated(deg_to_rad(randomness + 60)), warning_time, 10)
+	create_hazard_bomb(SIZE * Vector2.LEFT.rotated(deg_to_rad(randomness + 120)), warning_time, 10)
+	create_hazard_bomb(SIZE * Vector2.LEFT.rotated(deg_to_rad(randomness + 240)), warning_time, 10)
+	create_hazard_bomb(SIZE * Vector2.LEFT.rotated(deg_to_rad(randomness + 300)), warning_time, 10)
+	create_hazard_bomb(SIZE * Vector2.LEFT.rotated(deg_to_rad(randomness + 0)), warning_time, bomb_time)
+	create_hazard_bomb(SIZE * Vector2.LEFT.rotated(deg_to_rad(randomness + 180)), warning_time, bomb_time)
+	var bomb: NormalBomb = create_normal_bomb(Vector2.ZERO, warning_time, bomb_time + slayable_time)
 	bomb.connect("player_body_entered", Callable(self, "pattern_timing_end"))
 
 func pattern_timing_end():
@@ -842,7 +876,7 @@ func pattern_trafficlight():
 	PlayingFieldInterface.set_theme_color(Color.HOT_PINK)
 
 	const DIST: float = 96
-	const UNIT: float = 0.75
+	const UNIT: float = 1.0
 	const START: float = 1
 	const WARNING: float = 0.5
 
