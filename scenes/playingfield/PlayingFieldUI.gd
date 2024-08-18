@@ -60,6 +60,7 @@ func close_Stopped_and_open_Playing():
 	if %InGameNewRecord.visible == false:
 		Utils.slide_in(Best_node, 140, Vector2.DOWN, 0.5)
 	await Utils.timer(0.1)
+	PlayingFieldInterface.set_playing_time(0)
 	Utils.slide_in(Time_node, 140, Vector2.DOWN, 0.8)
 
 func close_Playing_and_open_Stopped():

@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://scenes/rooms/RoomLogo/RoomLogo.gd" id="1_84w0l"]
 [ext_resource type="Shader" path="res://scenes/rooms/RoomLogo/KoreaUnivShader.gdshader" id="2_01f0g"]
-[ext_resource type="Texture2D" uid="uid://dwamqpd1wliun" path="res://images/logo/sprite_korea_univ.png" id="2_fa3al"]
+[ext_resource type="Texture2D" uid="uid://bq0ix6qeem2be" path="res://images/logo/sprite_korea_univ.svg" id="3_iyx7u"]
 [ext_resource type="Texture2D" uid="uid://cevkho0emy0yl" path="res://images/logo/sprite_cat_and_dog.png" id="3_q2osc"]
 [ext_resource type="Shader" path="res://scenes/rooms/RoomLogo/CatdogShader.gdshader" id="4_omaa6"]
 [ext_resource type="PackedScene" uid="uid://s264e74phclm" path="res://scenes/playingfield/CircleField.tscn" id="6_s0thw"]
@@ -36,7 +36,7 @@ z_index = 1
 material = SubResource("ShaderMaterial_1u3u5")
 position = Vector2(864, 324)
 scale = Vector2(0.9, 0.9)
-texture = ExtResource("2_fa3al")
+texture = ExtResource("3_iyx7u")
 
 [node name="Catdog" type="Sprite2D" parent="CanvasLayer"]
 show_behind_parent = true
