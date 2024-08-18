@@ -7,7 +7,7 @@
    viewBox="0 0 100 100"
    version="1.1"
    id="svg1"
-   inkscape:version="1.3 (0e150ed6c4, 2023-07-21)"
+   inkscape:version="1.2.2 (b0a8486541, 2022-12-01)"
    sodipodi:docname="PanelTexture.svg"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
@@ -24,14 +24,15 @@
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="mm"
      inkscape:zoom="1.4935729"
-     inkscape:cx="198.51726"
-     inkscape:cy="263.79696"
+     inkscape:cx="198.85203"
+     inkscape:cy="264.13173"
      inkscape:window-width="1920"
-     inkscape:window-height="1009"
-     inkscape:window-x="-8"
-     inkscape:window-y="-8"
+     inkscape:window-height="1048"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
      inkscape:window-maximized="1"
-     inkscape:current-layer="layer1" />
+     inkscape:current-layer="layer1"
+     showgrid="false" />
   <defs
      id="defs1" />
   <g
@@ -39,14 +40,14 @@
      inkscape:groupmode="layer"
      id="layer1">
     <rect
-       style="fill:#1c1c1c;fill-opacity:0.5;stroke-width:12.531;stroke-linecap:round;stroke-linejoin:round;paint-order:markers stroke fill"
+       style="fill:#252525;fill-opacity:0.64999998;stroke-width:12.531;stroke-linecap:round;stroke-linejoin:round;paint-order:markers stroke fill"
        id="rect2"
        width="100"
        height="60"
        x="-3.5527137e-15"
        y="0" />
     <rect
-       style="fill:#000000;fill-opacity:0.5;stroke-width:10.509;stroke-linecap:round;stroke-linejoin:round;paint-order:markers stroke fill"
+       style="fill:#000000;fill-opacity:0.64999998;stroke-width:10.509;stroke-linecap:round;stroke-linejoin:round;paint-order:markers stroke fill"
        id="rect3"
        width="100"
        height="40"
