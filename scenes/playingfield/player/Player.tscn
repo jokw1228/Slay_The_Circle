@@ -82,9 +82,10 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("PlayerRayCast2D_node")]
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("PlayerRayCast2D_node", "PlayerSprite2D_node")]
 script = ExtResource("1_udqk7")
 PlayerRayCast2D_node = NodePath("PlayerRayCast2D")
+PlayerSprite2D_node = NodePath("PlayerSprite2D")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_wtb3g")
