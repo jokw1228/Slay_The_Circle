@@ -40,12 +40,34 @@ func start_PlayingField():
 		
 		connect("game_over", Callable(BombGenerator_node, "queue_free"))
 		
-	if (MusicManager.is_playing("bgm_PF","playing_bgm")):
-		MusicManager.disable_stem("dead",0.5)
-		MusicManager.enable_stem("on_game",0.5)
-	else:
-		MusicManager.stop(0.5)
-		MusicManager.play("bgm_PF","playing_bgm",0.5,1)
+	if(PlayingFieldInterface.get_stage_index() == 0 || PlayingFieldInterface.get_stage_index() == 3):
+		#circle 음악 재생
+		if (MusicManager.is_playing("bgm_PF","playing_bgm")):
+			MusicManager.disable_stem("dead",0.5)
+			MusicManager.enable_stem("on_game",0.5)
+		else:
+			MusicManager.stop(0.5)
+			MusicManager.play("bgm_PF","playing_bgm",0.5,1)
+			
+	elif(PlayingFieldInterface.get_stage_index() == 1 || PlayingFieldInterface.get_stage_index() == 4):
+		#circler 음악 재생
+		if (MusicManager.is_playing("bgm_PF","playing_bgm_2")):
+			MusicManager.disable_stem("dead",0.5)
+			MusicManager.enable_stem("on_game",0.5)
+		else:
+			MusicManager.stop(0.5)
+			MusicManager.play("bgm_PF","playing_bgm_2",0.5,1)
+			
+	elif(PlayingFieldInterface.get_stage_index() == 2 || PlayingFieldInterface.get_stage_index() == 5):
+		#circlest 음악 재생
+		if (MusicManager.is_playing("bgm_PF","playing_bgm_3")):
+			MusicManager.disable_stem("dead",0.5)
+			MusicManager.enable_stem("on_game",0.5)
+		else:
+			MusicManager.stop(0.5)
+			MusicManager.play("bgm_PF","playing_bgm_3",0.5,1)
+
+
 
 func stop_PlayingField(bomb_position: Vector2):
 	if playing == true:
