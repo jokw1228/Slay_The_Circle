@@ -7,7 +7,7 @@
    viewBox="0 0 8.4666664 8.4666666"
    version="1.1"
    id="svg1"
-   inkscape:version="1.3.2 (091e20e, 2023-11-25, custom)"
+   inkscape:version="1.2.2 (b0a8486541, 2022-12-01)"
    sodipodi:docname="sprite_linked_indicator.svg"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
@@ -24,12 +24,12 @@
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="mm"
      inkscape:zoom="23.176431"
-     inkscape:cx="11.67134"
-     inkscape:cy="16.417541"
+     inkscape:cx="11.002557"
+     inkscape:cy="16.460688"
      inkscape:window-width="1920"
-     inkscape:window-height="1009"
-     inkscape:window-x="-8"
-     inkscape:window-y="-8"
+     inkscape:window-height="1048"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
      inkscape:window-maximized="1"
      inkscape:current-layer="layer1"
      showgrid="true">
@@ -70,7 +70,7 @@
        rx="3.7217727"
        ry="3.721771" />
     <path
-       style="fill:#ffffff;fill-opacity:0;stroke:#ffffff;stroke-width:1.05833;stroke-dasharray:none;stroke-opacity:1;paint-order:normal"
+       style="fill:#ffffff;fill-opacity:0;stroke:#242424;stroke-width:1.05833;stroke-dasharray:none;stroke-opacity:1;paint-order:normal"
        d="M 2.9879114,2.1166666 5.104578,4.2333333 2.9879114,6.35"
        id="path2"
        sodipodi:nodetypes="ccc" />
