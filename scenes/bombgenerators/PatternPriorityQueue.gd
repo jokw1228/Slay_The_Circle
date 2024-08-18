@@ -28,12 +28,10 @@ func heap_extract_min() -> Dictionary:
 func min_heapify(index: int):
 	var l: int = left(index)
 	var r: int = right(index)
-	var smallest_index: int
+	var smallest_index: int = index
 	if l < queue.size():
 		if queue[l]["pattern_value"] < queue[index]["pattern_value"]:
 			smallest_index = l
-		else:
-			smallest_index = index
 	if r < queue.size():
 		if queue[r]["pattern_value"] < queue[index]["pattern_value"]:
 			smallest_index = r
@@ -47,7 +45,7 @@ func heap_decrease_key(index: int, pattern_dict: Dictionary):
 	if queue[index]["pattern_value"] < pattern_dict["pattern_value"]:
 		return
 	queue[index]["pattern_value"] = pattern_dict["pattern_value"]
-	while index > 0 and queue[parent(index)]["pattern_value"] < queue[index]["pattern_value"]:
+	while index > 0 and queue[parent(index)]["pattern_value"] > queue[index]["pattern_value"]:
 		var tmp: Dictionary = queue[index]
 		queue[index] = queue[parent(index)]
 		queue[parent(index)] = tmp
