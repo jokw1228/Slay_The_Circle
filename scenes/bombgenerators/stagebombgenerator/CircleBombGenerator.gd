@@ -10,6 +10,7 @@ var pattern_queue: PatternPriorityQueue
 var pattern_weight: Dictionary = {}
 
 func _ready():
+	randomize()
 	PlayingFieldInterface.set_theme_color(Color.DEEP_SKY_BLUE)
 	PlayingFieldInterface.set_theme_bright(0)
 	

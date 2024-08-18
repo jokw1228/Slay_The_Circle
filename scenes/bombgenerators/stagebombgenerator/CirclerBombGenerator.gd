@@ -4,120 +4,85 @@ class_name CirclerBombGenerator
 var pattern_start_time: float
 var prev_timescale: float = Engine.time_scale
 
-var stage_phase: int = 0
-const stage_phase_length = 15.0
-var pattern_dict: Dictionary = {}
+var stage_phase: int = -1
+const stage_phase_length = 25.0
+var pattern_queue: PatternPriorityQueue
+var pattern_weight: Dictionary = {}
 
 func _ready():
+	randomize()
 	PlayingFieldInterface.set_theme_color(Color.MEDIUM_PURPLE)
 	PlayingFieldInterface.set_theme_bright(0)
 	
-	pattern_list_initialization()
-	await get_tree().create_timer(1.0).timeout
+	pattern_queue = PatternPriorityQueue.create()
+	set_pattern_weight()
+	await get_tree().create_timer(1.5).timeout # game start time offset
 	pattern_shuffle_and_draw()
 
-func pattern_list_initialization():
-	pattern_dict = {
-		"pattern_diamond_with_hazard_puzzled" = 2.0,
-		"pattern_maze" = 2.0,
-		"pattern_narrow_road" = 2.0,
-		"pattern_blocking" = 2.0,
-		"pattern_scattered_hazards" = 2.0,
+func set_pattern_weight():
+	pattern_weight = {
+		"pattern_diamond_with_hazard_puzzled" = 1.0,
+		"pattern_maze" = 1.0,
+		"pattern_narrow_road" = 1.0,
+		"pattern_blocking" = 1.0,
+		"pattern_scattered_hazards" = 1.0,
 		
-		"pattern_hide_in_hazard" = 0.0,
-		"pattern_wall_timing" = 0.0,
-		"pattern_random_shape" = 0.0,
-		"pattern_pizza" = 0.0,
+		"pattern_hide_in_hazard" = 2.0,
+		"pattern_wall_timing" = 2.0,
+		"pattern_random_shape" = 2.0,
+		"pattern_pizza" = 2.0,
 		
-		"pattern_hazard_at_player_pos" = 0.0,
-		"pattern_321_go" = 0.0,
-		"pattern_reactspeed_test" = 0.0,
+		"pattern_hazard_at_player_pos" = 3.0,
+		"pattern_321_go" = 3.0,
+		"pattern_reactspeed_test" = 3.0,
 		
-		"pattern_timing" = 0.0,
-		"pattern_trafficlight" = 0.0
+		"pattern_timing" = 3.0,
+		"pattern_trafficlight" = 3.0
 	}
-'''
-phase 0
-
-"pattern_diamond_with_hazard_puzzled" = 2.0,
-"pattern_maze" = 2.0,
-"pattern_narrow_road" = 2.0,
-"pattern_blocking" = 2.0,
-"pattern_scattered_hazards" = 2.0,
-
-phase 1
-
-"pattern_hide_in_hazard" = 1.0,
-"pattern_wall_timing" = 1.0,
-"pattern_random_shape" = 1.0,
-"pattern_pizza" = 1.0,
-
-phase 2
-
-"pattern_hazard_at_player_pos" = 1.0,
-"pattern_321_go" = 1.0,
-"pattern_reactspeed_test" = 1.0,
-
-phase 3
-
-"pattern_timing" = 1.0,
-"pattern_trafficlight" = 1.0
-'''
 
 func pattern_shuffle_and_draw():
 	var current_time: float = PlayingFieldInterface.get_playing_time()
-	if (stage_phase + 1) * stage_phase_length > current_time:
-		choose_random_pattern()
-	else:
-		choose_level_up_pattern()
+	if (stage_phase + 1) * stage_phase_length < current_time:
 		stage_phase += 1
+		choose_level_up_pattern()
+	else:
+		choose_random_pattern()
 
 func choose_random_pattern():
-	randomize()
-	
-	var weight_sum: float = 0.0
-	for i: float in pattern_dict.values():
-		weight_sum += i
-	var remaining_weight: float = randf_range(0, weight_sum)
-	
-	var pattern_index = 0
-	var pattern_dict_keys: Array = pattern_dict.keys()
-	for i: String in pattern_dict_keys:
-		if remaining_weight > pattern_dict[i]:
-			pattern_index += 1
-			remaining_weight -= pattern_dict[i]
-		else:
-			break
-	
-	Callable(self, pattern_dict_keys[pattern_index] ).call()
+	var popped: Dictionary = pattern_queue.heap_extract_min()
+	Callable(self, popped["pattern_key"]).call()
+	pattern_queue.min_heap_insert( \
+	{
+		"pattern_key" = popped["pattern_key"],
+		"pattern_value" = popped["pattern_value"] + pattern_weight[popped["pattern_key"]] + randf_range(-0.25*pattern_weight[popped["pattern_key"]], 0.25*pattern_weight[popped["pattern_key"]])
+	}
+	)
 
 func choose_level_up_pattern():
 	if stage_phase == 0:
-		var pattern_dict_to_merge: Dictionary = {
-			"pattern_hide_in_hazard" = 1.0,
-			"pattern_wall_timing" = 1.0,
-			"pattern_random_shape" = 1.0,
-			"pattern_pizza" = 1.0
-		}
-		pattern_dict.merge(pattern_dict_to_merge, true)
-		pattern_level_up_phase_0()
+		pattern_queue.min_heap_insert( { "pattern_key" = "pattern_diamond_with_hazard_puzzled", "pattern_value" = randf_range(-0.1, 0.0) } )
+		pattern_queue.min_heap_insert( { "pattern_key" = "pattern_maze", "pattern_value" = randf_range(-0.1, 0.0) } )
+		pattern_queue.min_heap_insert( { "pattern_key" = "pattern_narrow_road", "pattern_value" = randf_range(-0.1, 0.0) } )
+		pattern_queue.min_heap_insert( { "pattern_key" = "pattern_blocking", "pattern_value" = randf_range(-0.1, 0.0) } )
+		pattern_queue.min_heap_insert( { "pattern_key" = "pattern_scattered_hazards", "pattern_value" = randf_range(-0.1, 0.0) } )
+		pattern_shuffle_and_draw() # no level up pattern
 	elif stage_phase == 1:
-		var pattern_dict_to_merge: Dictionary = {
-			"pattern_hazard_at_player_pos" = 1.0,
-			"pattern_321_go" = 1.0,
-			"pattern_reactspeed_test" = 1.0,
-			"pattern_link_free" = 1.0
-		}
-		pattern_dict.merge(pattern_dict_to_merge, true)
+		var start_offset: float = pattern_queue.queue[0]["pattern_value"]
+		pattern_queue.min_heap_insert( { "pattern_key" = "pattern_hide_in_hazard", "pattern_value" = randf_range(-0.1, 0.0) + start_offset } )
+		pattern_queue.min_heap_insert( { "pattern_key" = "pattern_wall_timing", "pattern_value" = randf_range(-0.1, 0.0) + start_offset } )
+		pattern_queue.min_heap_insert( { "pattern_key" = "pattern_random_shape", "pattern_value" = randf_range(-0.1, 0.0) + start_offset } )
+		pattern_queue.min_heap_insert( { "pattern_key" = "pattern_pizza", "pattern_value" = randf_range(-0.1, 0.0) + start_offset } )
 		pattern_level_up_phase_1()
 	elif stage_phase == 2:
-		var pattern_dict_to_merge: Dictionary = {
-			"pattern_timing" = 1.0,
-			"pattern_trafficlight" = 1.0
-		}
-		pattern_dict.merge(pattern_dict_to_merge, true)
+		var start_offset: float = pattern_queue.queue[0]["pattern_value"]
+		pattern_queue.min_heap_insert( { "pattern_key" = "pattern_hazard_at_player_pos", "pattern_value" = randf_range(-0.1, 0.0) + start_offset } )
+		pattern_queue.min_heap_insert( { "pattern_key" = "pattern_321_go", "pattern_value" = randf_range(-0.1, 0.0) + start_offset } )
+		pattern_queue.min_heap_insert( { "pattern_key" = "pattern_reactspeed_test", "pattern_value" = randf_range(-0.1, 0.0) + start_offset } )
 		pattern_level_up_phase_2()
 	elif stage_phase == 3:
+		var start_offset: float = pattern_queue.queue[0]["pattern_value"]
+		pattern_queue.min_heap_insert( { "pattern_key" = "pattern_timing", "pattern_value" = randf_range(-0.1, 0.0) + start_offset } )
+		pattern_queue.min_heap_insert( { "pattern_key" = "pattern_trafficlight", "pattern_value" = randf_range(-0.1, 0.0) + start_offset } )
 		pattern_level_up_phase_3()
 	elif stage_phase >= 4:
 		pattern_level_up_phase_4() # infinitely repeated
@@ -131,12 +96,12 @@ func choose_level_up_pattern():
 ##############################################################
 
 ###############################
-# pattern_level_up_phase_0 start
+# pattern_level_up_phase_1 start
 # Game Speed Up
 
-const pattern_level_up_phase_0_playing_time = 2.5
+const pattern_level_up_phase_1_playing_time = 2.5
 
-func pattern_level_up_phase_0():
+func pattern_level_up_phase_1():
 	PlayingFieldInterface.set_theme_color(Color.WHITE)
 	
 	pattern_start_time = PlayingFieldInterface.get_playing_time()
@@ -147,20 +112,20 @@ func pattern_level_up_phase_0():
 	await bomb.tree_exited
 	await get_tree().create_timer(0.5).timeout # rest time
 	
-	PlayingFieldInterface.set_playing_time(pattern_start_time + pattern_level_up_phase_0_playing_time / prev_timescale)
+	PlayingFieldInterface.set_playing_time(pattern_start_time + pattern_level_up_phase_1_playing_time / prev_timescale)
 	pattern_shuffle_and_draw()
 	
 
-# pattern_level_up_phase_0 end
+# pattern_level_up_phase_1 end
 ###############################
 
 ###############################
-# pattern_level_up_phase_1 start
+# pattern_level_up_phase_2 start
 # Rotation Speed Up
 
-const pattern_level_up_phase_1_playing_time = 2.5
+const pattern_level_up_phase_2_playing_time = 2.5
 
-func pattern_level_up_phase_1():
+func pattern_level_up_phase_2():
 	PlayingFieldInterface.set_theme_color(Color.WHITE)
 	
 	pattern_start_time = PlayingFieldInterface.get_playing_time()
@@ -170,19 +135,19 @@ func pattern_level_up_phase_1():
 	await bomb.tree_exited
 	await get_tree().create_timer(0.5).timeout # rest time
 	
-	PlayingFieldInterface.set_playing_time(pattern_start_time + pattern_level_up_phase_1_playing_time / Engine.time_scale)
+	PlayingFieldInterface.set_playing_time(pattern_start_time + pattern_level_up_phase_2_playing_time / Engine.time_scale)
 	pattern_shuffle_and_draw()
 
-# pattern_level_up_phase_1 end
+# pattern_level_up_phase_2 end
 ###############################
 
 ###############################
-# pattern_level_up_phase_2 start
+# pattern_level_up_phase_3 start
 # Game Speed Up + Rotation Inversion
 
-const pattern_level_up_phase_2_playing_time = 2.5
+const pattern_level_up_phase_3_playing_time = 2.5
 
-func pattern_level_up_phase_2():
+func pattern_level_up_phase_3():
 	PlayingFieldInterface.set_theme_color(Color.WHITE)
 	
 	pattern_start_time = PlayingFieldInterface.get_playing_time()
@@ -198,19 +163,19 @@ func pattern_level_up_phase_2():
 	await PlayingFieldInterface.player_grounded
 	await get_tree().create_timer(0.5).timeout # rest time
 	
-	PlayingFieldInterface.set_playing_time(pattern_start_time + pattern_level_up_phase_2_playing_time / prev_timescale)
+	PlayingFieldInterface.set_playing_time(pattern_start_time + pattern_level_up_phase_3_playing_time / prev_timescale)
 	pattern_shuffle_and_draw()
 
-# pattern_level_up_phase_2 end
+# pattern_level_up_phase_3 end
 ###############################
 
 ###############################
-# pattern_level_up_phase_3 start
+# pattern_level_up_phase_4 start
 # Game Speed Up + Rotation Inversion + Rotation Speed Up
 
-const pattern_level_up_phase_3_playing_time = 2.5
+const pattern_level_up_phase_4_playing_time = 2.5
 
-func pattern_level_up_phase_3():
+func pattern_level_up_phase_4():
 	PlayingFieldInterface.set_theme_color(Color.BLACK)
 	PlayingFieldInterface.set_theme_bright(1)
 	
@@ -228,19 +193,19 @@ func pattern_level_up_phase_3():
 	await PlayingFieldInterface.player_grounded
 	await get_tree().create_timer(0.5).timeout # rest time
 	
-	PlayingFieldInterface.set_playing_time(pattern_start_time + pattern_level_up_phase_3_playing_time / prev_timescale)
+	PlayingFieldInterface.set_playing_time(pattern_start_time + pattern_level_up_phase_4_playing_time / prev_timescale)
 	pattern_shuffle_and_draw()
 
-# pattern_level_up_phase_3 end
+# pattern_level_up_phase_4 end
 ###############################
 
 ###############################
-# pattern_level_up_phase_4 start
+# pattern_level_up_phase_5 start
 # Rotation Inversion (infinitely repeated)
 
-const pattern_level_up_phase_4_playing_time = 2.0
+const pattern_level_up_phase_5_playing_time = 2.0
 
-func pattern_level_up_phase_4():
+func pattern_level_up_phase_5():
 	PlayingFieldInterface.set_theme_color(Color.BLACK)
 	
 	pattern_start_time = PlayingFieldInterface.get_playing_time()
@@ -250,10 +215,10 @@ func pattern_level_up_phase_4():
 	await bomb.tree_exited
 	await get_tree().create_timer(0.5).timeout # rest time
 	
-	PlayingFieldInterface.set_playing_time(pattern_start_time + pattern_level_up_phase_4_playing_time / Engine.time_scale)
+	PlayingFieldInterface.set_playing_time(pattern_start_time + pattern_level_up_phase_5_playing_time / Engine.time_scale)
 	pattern_shuffle_and_draw()
 
-# pattern_level_up_phase_4 end
+# pattern_level_up_phase_5 end
 ###############################
 
 ##############################################################

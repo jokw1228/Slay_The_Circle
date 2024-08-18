@@ -2,6 +2,7 @@ extends CircleBombGenerator
 class_name HyperCircleBombGenerator
 
 func _ready(): # override
+	randomize()
 	PlayingFieldInterface.set_theme_color(Color.DEEP_SKY_BLUE)
 	PlayingFieldInterface.set_theme_bright(1)
 	
