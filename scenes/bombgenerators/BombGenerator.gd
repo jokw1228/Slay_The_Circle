@@ -1,7 +1,8 @@
 extends Node2D
 class_name BombGenerator
 
-#var bomb_link :PackedScene = preload("res://scenes/bombs/BombLink.tscn")
+##########################
+# bomb_factory_pattern start
 
 func create_normal_bomb(bomb_position: Vector2, warning_time: float, bomb_time: float) -> NormalBomb:
 	var bomb_inst: NormalBomb = NormalBomb.create(bomb_position, warning_time, bomb_time)
@@ -34,6 +35,9 @@ func create_gamespeedup_bomb(bomb_position: Vector2, warning_time: float, bomb_t
 	return bomb_inst
 
 func create_bomb_link(bomb1: Bomb, bomb2: Bomb) -> BombLink:
-	var link: BombLink = BombLink.create(bomb1, bomb2)
-	self.call_deferred("add_child", link)
-	return link
+	var link_inst: BombLink = BombLink.create(bomb1, bomb2)
+	call_deferred("add_child", link_inst)
+	return link_inst
+
+# bomb_factory_pattern end
+##########################
