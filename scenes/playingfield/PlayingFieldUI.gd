@@ -36,8 +36,8 @@ func playing_time_updated(time: float):
 	Milliseconds_node.text = ".%02d" % milliseconds_value
 
 	if best_record == -1:
-		# stage_index가 RoomMenu에서는 0-index를 사용, SaveFileManager에서는 1-index를 사용
-		best_record = SaveFileManager.get_best_record(stage_index + 1)
+		# stage_index 0-index로 통일
+		best_record = SaveFileManager.get_best_record(stage_index)
 		%LabelBestSec.text = "%d" % floor(best_record)
 		%LabelBestMilli.text = ".%02d" % round((best_record - floor(best_record)) * 100)
 	if time > best_record and %InGameNewRecord.visible == false:
@@ -45,6 +45,9 @@ func playing_time_updated(time: float):
 		Best_node.visible = false
 
 func close_Stopped_and_open_Playing():
+	#해당 stage attempts 증가
+	SaveFileManager.attempts[stage_index] +=1
+	SaveFileManager.save_game()
 	#스타트 범브 터지면 gameover UI 들어가게
 	Utils.slide_out(%PanelGameOver, 800, Vector2.LEFT, 0.4)
 	Utils.slide_out(%PanelScore, 800, Vector2.RIGHT, 0.4)
@@ -80,8 +83,8 @@ func print_best_record():
 	#최고기록을 갱신한 경우 
 	if(current_record > best_record):
 		new_record_transition()
-		# stage_index가 RoomMenu에서는 0-index를 사용, SaveFileManager에서는 1-index를 사용
-		SaveFileManager.update_record(stage_index + 1,current_record)
+		# stage_index 0-index
+		SaveFileManager.update_record(stage_index,current_record)
 		is_new_record = true
 
 	best_record = -1

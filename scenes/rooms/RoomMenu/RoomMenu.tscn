@@ -12,7 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://djvtf5t5jqw8u" path="res://scenes/bombgenerators/MenuBombGenerator.tscn" id="9_xjnco"]
 [ext_resource type="PackedScene" uid="uid://bhe55ocau21ot" path="res://scenes/playingfield/player/Player.tscn" id="10_qy0n6"]
 [ext_resource type="PackedScene" uid="uid://s264e74phclm" path="res://scenes/playingfield/CircleField.tscn" id="11_s1pwc"]
-[ext_resource type="PackedScene" uid="uid://cn7ttflmrmpth" path="res://scenes/playingfield/PlayingfieldCamera.tscn" id="13_itguu"]
+[ext_resource type="PackedScene" uid="uid://cn7ttflmrmpth" path="res://scenes/playingfield/PlayingFieldCamera.tscn" id="13_itguu"]
 [ext_resource type="PackedScene" uid="uid://dp0cdsfw5ylxj" path="res://scenes/ui/FancyButton.tscn" id="13_yxsra"]
 [ext_resource type="Script" path="res://addons/resonate/sound_manager/sound_bank.gd" id="14_oop3p"]
 [ext_resource type="Script" path="res://addons/resonate/sound_manager/sound_event_resource.gd" id="15_rr3yb"]
@@ -237,7 +237,7 @@ text = "SAMPLE"
 custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
-text = "INFO"
+text = "ATTEMPTS"
 
 [node name="InfoLabel3" type="Label" parent="UIContainerSkewed/Info/VBoxContainer"]
 unique_name_in_owner = true

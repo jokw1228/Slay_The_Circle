@@ -94,22 +94,22 @@ func select_stage(difficulty: int):
 	var high_score: float
 	match stage_index:
 		0:
-			high_score = SaveFileManager.circle_record
+			high_score = SaveFileManager.records[0]
 			%InfoLabel2.text = "HARD"
 			%InfoLabel2.modulate = Color(1,1,0,1)
-			%InfoLabel3.text = "SIMPLE!"
+			%InfoLabel3.text = str(SaveFileManager.attempts[0])
 			%InfoLabel3.modulate = Color.DEEP_SKY_BLUE
 		1:
-			high_score = SaveFileManager.circler_record
+			high_score = SaveFileManager.records[1]
 			%InfoLabel2.text = "HARDER"
 			%InfoLabel2.modulate = Color(1,0.8,0,1)
-			%InfoLabel3.text = "HARZARD!!"
+			%InfoLabel3.text = str(SaveFileManager.attempts[1])
 			%InfoLabel3.modulate = Color.MEDIUM_PURPLE
 		2:
-			high_score = SaveFileManager.circlest_record
+			high_score = SaveFileManager.records[2]
 			%InfoLabel2.text = "HARDEST"
 			%InfoLabel2.modulate = Color(1,0.6,0,1)
-			%InfoLabel3.text = "MOVING!!!"
+			%InfoLabel3.text =  str(SaveFileManager.attempts[2])
 			%InfoLabel3.modulate = Color.ORANGE_RED
 	%InfoLabel1.text = str(high_score)
 	
@@ -133,20 +133,20 @@ func select_hyper():
 	var high_score: float
 	match stage_index:
 		3:
-			high_score = SaveFileManager.hypercircle_record
+			high_score = SaveFileManager.records[3]
 			%InfoLabel2.text = "F**K"
 			%InfoLabel2.modulate = Color(1,0.4,0,1)
-			%InfoLabel3.text = "..."
+			%InfoLabel3.text = str(SaveFileManager.attempts[3])
 		4:
-			high_score = SaveFileManager.hypercircler_record
+			high_score = SaveFileManager.records[4]
 			%InfoLabel2.text = "F**KER"
 			%InfoLabel2.modulate = Color(1,0.2,0,1)
-			%InfoLabel3.text = "..?"
+			%InfoLabel3.text = str(SaveFileManager.attempts[4])
 		5:
-			high_score = SaveFileManager.hypercirclest_record
+			high_score = SaveFileManager.records[5]
 			%InfoLabel2.text = "F**KEST"
 			%InfoLabel2.modulate = Color(1,0,0,1)
-			%InfoLabel3.text = "..!"
+			%InfoLabel3.text = str(SaveFileManager.attempts[5])
 	%InfoLabel1.text = str(high_score)
 	Utils.slide_in(%Info, 400, Vector2.LEFT, 0.4)
 	
