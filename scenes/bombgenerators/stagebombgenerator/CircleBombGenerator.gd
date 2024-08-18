@@ -15,7 +15,7 @@ func _ready():
 	
 	pattern_queue = PatternPriorityQueue.create()
 	set_pattern_weight()
-	await get_tree().create_timer(1.1).timeout # game start time offset
+	await get_tree().create_timer(1.5).timeout # game start time offset
 	pattern_shuffle_and_draw()
 
 func set_pattern_weight():
@@ -58,19 +58,31 @@ func choose_random_pattern():
 
 func choose_level_up_pattern():
 	if stage_phase == 0:
-		pattern_queue.min_heap_insert( { "pattern_key" = "pattern_numeric_center_then_link", "pattern_value" = randf_range(-0.1, 0.1) } )
-		pattern_queue.min_heap_insert( { "pattern_key" = "pattern_numeric_triangle_with_link", "pattern_value" = randf_range(-0.1, 0.1) } )
-		pattern_queue.min_heap_insert( { "pattern_key" = "pattern_star", "pattern_value" = randf_range(-0.1, 0.1) } )
-		pattern_queue.min_heap_insert( { "pattern_key" = "pattern_random_link", "pattern_value" = randf_range(-0.1, 0.1) } )
-		pattern_queue.min_heap_insert( { "pattern_key" = "pattern_diamond", "pattern_value" = randf_range(-0.1, 0.1) } )
+		pattern_queue.min_heap_insert( { "pattern_key" = "pattern_numeric_center_then_link", "pattern_value" = randf_range(-0.1, 0.0) } )
+		pattern_queue.min_heap_insert( { "pattern_key" = "pattern_numeric_triangle_with_link", "pattern_value" = randf_range(-0.1, 0.0) } )
+		pattern_queue.min_heap_insert( { "pattern_key" = "pattern_star", "pattern_value" = randf_range(-0.1, 0.0) } )
+		pattern_queue.min_heap_insert( { "pattern_key" = "pattern_random_link", "pattern_value" = randf_range(-0.1, 0.0) } )
+		pattern_queue.min_heap_insert( { "pattern_key" = "pattern_diamond", "pattern_value" = randf_range(-0.1, 0.0) } )
 		pattern_shuffle_and_draw() # no level up pattern
 	elif stage_phase == 1:
+		var start_offset: float = pattern_queue.queue[0]["pattern_value"]
+		pattern_queue.min_heap_insert( { "pattern_key" = "pattern_twisted_numeric", "pattern_value" = randf_range(-0.1, 0.0) + start_offset } )
+		pattern_queue.min_heap_insert( { "pattern_key" = "pattern_numeric_choice", "pattern_value" = randf_range(-0.1, 0.0) + start_offset } )
+		pattern_queue.min_heap_insert( { "pattern_key" = "pattern_369", "pattern_value" = randf_range(-0.1, 0.0) + start_offset } )
 		pattern_level_up_phase_1()
 	elif stage_phase == 2:
+		var start_offset: float = pattern_queue.queue[0]["pattern_value"]
+		pattern_queue.min_heap_insert( { "pattern_key" = "pattern_spiral", "pattern_value" = randf_range(-0.1, 0.0) + start_offset } )
+		pattern_queue.min_heap_insert( { "pattern_key" = "pattern_roll", "pattern_value" = randf_range(-0.1, 0.0) + start_offset } )
+		pattern_queue.min_heap_insert( { "pattern_key" = "pattern_diamond_with_hazard", "pattern_value" = randf_range(-0.1, 0.0) + start_offset } )
+		pattern_queue.min_heap_insert( { "pattern_key" = "pattern_colosseum", "pattern_value" = randf_range(-0.1, 0.0) + start_offset } )
 		pattern_level_up_phase_2()
 	elif stage_phase == 3:
+		var start_offset: float = pattern_queue.queue[0]["pattern_value"]
+		pattern_queue.min_heap_insert( { "pattern_key" = "pattern_numeric_inversion", "pattern_value" = randf_range(-0.1, 0.0) + start_offset } )
 		pattern_level_up_phase_3()
 	elif stage_phase >= 4:
+		# no pattern addition
 		pattern_level_up_phase_4() # infinitely repeated
 
 
@@ -271,7 +283,7 @@ func pattern_numeric_triangle_with_link():
 	var bomb_position_rotation_amount: float = PI/3 * ccw
 	
 	# HYPER MODE
-	if stage_phase >= 5:
+	if stage_phase >= 4:
 		if ccw == 1:
 			bomb_position = bomb_position.rotated(PI/3)
 		elif ccw == -1:
@@ -313,26 +325,28 @@ func pattern_numeric_triangle_with_link_end():
 # made by jooyoung
 
 #var pattern_star_start_time: float
-const pattern_star_playing_time = 2.5
+const pattern_star_playing_time = 3.0
 
 func pattern_star():
 	PlayingFieldInterface.set_theme_color(Color.CORNFLOWER_BLUE)
 	
 	pattern_start_time = PlayingFieldInterface.get_playing_time()
 	
-	var player_position: Vector2 = PlayingFieldInterface.get_player_position()
-	var player_angle: float = player_position.angle()
-	const bomb_radius = 208
+	const warning_time = 0.25
+	const bomb_time = 2.75
 	
-	create_numeric_bomb(Vector2(bomb_radius * cos(player_angle),bomb_radius*sin(player_angle)), 0.25, 2.25, 1)
-	create_numeric_bomb(Vector2(bomb_radius*cos(player_angle+4*PI/5),bomb_radius*sin(player_angle+4*PI/5)), 0.25, 2.25, 2)
-	create_numeric_bomb(Vector2(bomb_radius*cos(player_angle+8*PI/5),bomb_radius*sin(player_angle+8*PI/5)), 0.25, 2.25, 3)
-	create_numeric_bomb(Vector2(bomb_radius*cos(player_angle+2*PI/5),bomb_radius*sin(player_angle+2*PI/5)), 0.25, 2.25, 4)
-	var bomb_end: NumericBomb = create_numeric_bomb(Vector2(bomb_radius*cos(player_angle+6*PI/5),bomb_radius*sin(player_angle+6*PI/5)), 0.25, 2.25, 5)
+	const distance = 208.0
+	var bomb_position: Vector2 = PlayingFieldInterface.get_player_position().normalized() * distance
+	
+	create_numeric_bomb(bomb_position, warning_time, bomb_time, 1)
+	create_numeric_bomb(bomb_position.rotated(PI*4/5), warning_time, bomb_time, 2)
+	create_numeric_bomb(bomb_position.rotated(PI*8/5), warning_time, bomb_time, 3)
+	create_numeric_bomb(bomb_position.rotated(PI*2/5), warning_time, bomb_time, 4)
+	var bomb_end: NumericBomb = create_numeric_bomb(bomb_position.rotated(PI*6/5), warning_time, bomb_time, 5)
 	
 	# HYPER MODE
-	if stage_phase >= 5:
-		bomb_end = create_numeric_bomb(Vector2.ZERO, 0.25, 2.25, 6)
+	if stage_phase >= 4:
+		bomb_end = create_numeric_bomb(Vector2.ZERO, warning_time, bomb_time, 6)
 	
 	bomb_end.connect("no_lower_value_bomb_exists",Callable(self,"pattern_star_end"))
 
@@ -406,7 +420,7 @@ func pattern_diamond():
 	var player_direction: Vector2 = PlayingFieldInterface.get_player_position().normalized()
 	
 	# HYPER MODE
-	if stage_phase >= 5:
+	if stage_phase >= 4:
 		player_direction = player_direction.rotated(randf())
 	
 	const CIRCLE_FIELD_RADIUS = 256
