@@ -35,11 +35,15 @@ func set_child_bombs(b1: Bomb, b2: Bomb):
 	bomb2.player_body_entered.connect(on_bomb_slayed)
 	bomb1.add_child( LinkedMark.create() )
 	bomb2.add_child( LinkedMark.create() )
-	set_ray_cast()
+	
+	update_drawings()
 
 
 func set_ray_cast():
 	if bomb1 != null && bomb2 != null:
+		ray_1to2.enabled = true
+		ray_2to1.enabled = true
+		
 		ray_1to2.global_position = bomb1.global_position
 		ray_1to2.look_at(bomb2.global_position)
 		
@@ -54,10 +58,6 @@ func set_ray_cast():
 		ray_2to1.enabled = false
 		
 		queue_redraw()
-		
-		ray_1to2.enabled = true
-		ray_2to1.enabled = true
-		set_ray_cast()
 
 # connected to player_body_entered signal
 func on_bomb_slayed():
@@ -125,18 +125,38 @@ func _draw():
 	# display intersection point of link line and circle field
 	var ray_intersect: Vector2 = ray_1to2.get_collision_point()
 	if ray_intersect != Vector2.ZERO:
-		Indicator_1to2.position = ray_intersect
+		Indicator_1to2.visible = true
+		Indicator_1to2.global_position = ray_intersect
+		Indicator_1to2.look_at(bomb1.global_position)
+		Indicator_1to2.modulate = PlayingFieldInterface.get_theme_color()
 	
 	ray_intersect = ray_2to1.get_collision_point()
 	if ray_intersect != Vector2.ZERO:
-		Indicator_2to1.position = ray_intersect
-
-func _ready():
-	await get_tree().physics_frame
-	await get_tree().physics_frame
-	await get_tree().physics_frame
-	Indicator_1to2.visible = true
-	Indicator_2to1.visible = true
+		Indicator_2to1.visible = true
+		Indicator_2to1.global_position = ray_intersect
+		Indicator_2to1.look_at(bomb2.global_position)
+		Indicator_2to1.modulate = PlayingFieldInterface.get_theme_color()
 
 func _process(_delta):
+	update_drawings()
+	
+func update_drawings():
+	if num_child_bombs < 2:
+		Indicator_1to2.visible = false
+		Indicator_2to1.visible = false
+		return
+	if bomb1_last_position != null and bomb2_last_position != null\
+		and bomb1_last_position == bomb1.global_position\
+		and bomb2_last_position == bomb2.global_position\
+		and last_bright == PlayingFieldInterface.get_theme_bright()\
+		and last_color == PlayingFieldInterface.get_theme_color():
+			# print("%d bomblink redraw skipped" % Engine.get_frames_drawn())
+			return
+	
+	bomb1_last_position = bomb1.global_position
+	bomb2_last_position = bomb2.global_position
+	last_bright = PlayingFieldInterface.get_theme_bright()
+	last_color = PlayingFieldInterface.get_theme_color()
+	
+	set_ray_cast()
 	queue_redraw()
