@@ -15,7 +15,7 @@ var RoomTutorial_room = "res://scenes/rooms/RoomTutorial/RoomTutorial.tscn"
 
 # The index of the stage currently selected in the menu window
 # -1: not selected any stage
-var stage_index: int = -1;
+var stage_index: int = -1
 
 const stage_index_maximum = 6
 

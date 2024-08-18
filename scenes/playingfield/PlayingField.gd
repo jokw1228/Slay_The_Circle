@@ -65,7 +65,7 @@ func stop_PlayingField(bomb_position: Vector2):
 		await get_tree().create_timer(2.3).timeout
 		emit_signal("game_ready")
 		await get_tree().create_timer(0.6).timeout
-		add_child( StartBomb.create(Vector2.ZERO, Callable(self, "start_PlayingField")) )
+		add_child(StartBomb.create(Vector2.ZERO, Callable(self, "start_PlayingField")) )
 
 # Logic for BombLink
 func _on_player_grounded():
@@ -94,3 +94,7 @@ func get_playing_time() -> float:
 func set_playing_time(time_to_set: float):
 	if playing == true:
 		playing_time = time_to_set
+
+func set_player_position(position_to_set: Vector2):
+	Player_node.position = position_to_set
+	Player_node.movement_queue.push_back(position_to_set)

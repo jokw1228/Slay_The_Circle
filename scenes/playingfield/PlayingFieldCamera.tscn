@@ -11,14 +11,15 @@ shader_parameter/shake_speed = 7.0
 shader_parameter/shake_block_size = 30.5
 shader_parameter/shake_color_rate = 0.01
 
-[node name="PlayingFieldCamera" type="Camera2D" node_paths=PackedStringArray("GlitchEffect_node")]
+[node name="PlayingFieldCamera" type="Camera2D"]
 ignore_rotation = false
 script = ExtResource("1_7d4w7")
-GlitchEffect_node = NodePath("GlitchEffect")
 
 [node name="GlitchEffect" type="Node2D" parent="."]
+visible = false
 
 [node name="ColorRect" type="ColorRect" parent="GlitchEffect"]
+visible = false
 material = SubResource("ShaderMaterial_vbtli")
 offset_left = -124.0
 offset_top = -90.0

@@ -1,15 +1,15 @@
 extends Camera2D
 class_name PlayingFieldCamera
 
-@export var GlitchEffect_node: Node2D
-
+#@export var GlitchEffect_node: Node2D
+#@onready var playing_field_camera: Camera2D = $PlayingFieldCamera
 
 var rotation_amount: float = 0
-var rotation_direction = 1.0
+var rotation_direction: float = 1.0
 var bomb_position: Vector2 = Vector2(0, 0)
 
-func _ready():
-	GlitchEffect_node.visible = false
+#func _ready():
+	#GlitchEffect_node.visible = false
 
 func _process(delta):
 	rotation += rotation_amount * rotation_direction * delta / Engine.time_scale
@@ -18,16 +18,19 @@ func rotation_speed_up(up: float):
 	rotation_amount += up
 
 func rotation_inversion():
-	rotation_direction *= -1;
+	rotation_direction *= -1
 
 func rotation_stop():
 	rotation_amount = 0
 
 func rotation_reset():
-	rotation = 0
+	rotation = fmod(rotation, (2.0*PI))
+	var player_position = PlayingFieldInterface.get_player_position()
+	PlayingFieldInterface.set_player_position(player_position.rotated(-1*get_rotation()))
+	rotation = 0.0
 	rotation_direction = 1
 
-func zoom_transition():	
+func zoom_transition():
 	var tween1 = get_tree().create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_EXPO)
 	tween1.tween_property(self,"zoom",Vector2(2,2),0.25)
 	await get_tree().create_timer(1).timeout
