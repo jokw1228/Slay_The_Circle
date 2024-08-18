@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://dntg6argh8n3n"]
+[gd_scene load_steps=30 format=3 uid="uid://dntg6argh8n3n"]
 
 [ext_resource type="Script" path="res://scenes/playingfield/PlayingField.gd" id="1_ed5yp"]
 [ext_resource type="PackedScene" uid="uid://cn7ttflmrmpth" path="res://scenes/playingfield/PlayingFieldCamera.tscn" id="2_xhkow"]
@@ -11,6 +11,7 @@
 [ext_resource type="Script" path="res://addons/resonate/sound_manager/sound_event_resource.gd" id="8_g3bnd"]
 [ext_resource type="Script" path="res://addons/resonate/music_manager/music_bank.gd" id="10_awu3q"]
 [ext_resource type="AudioStream" uid="uid://bg13majb30ix4" path="res://audio/sfx/Gameover.wav" id="10_q4elk"]
+[ext_resource type="AudioStream" uid="uid://bv6256uxbdrbw" path="res://audio/sfx/Start.wav" id="11_eka1x"]
 [ext_resource type="Script" path="res://addons/resonate/music_manager/music_track_resource.gd" id="11_itom1"]
 [ext_resource type="Script" path="res://addons/resonate/music_manager/music_stem_resource.gd" id="12_nuc5t"]
 [ext_resource type="AudioStream" uid="uid://87ar0gay8klk" path="res://audio/bgm/STC_on_game_ver2.wav" id="14_5lwlu"]
@@ -25,6 +26,14 @@ bus = ""
 volume = 0.0
 pitch = 1.0
 streams = Array[AudioStream]([ExtResource("10_q4elk")])
+
+[sub_resource type="Resource" id="Resource_j56yg"]
+script = ExtResource("8_g3bnd")
+name = "start"
+bus = ""
+volume = 0.0
+pitch = 1.0
+streams = Array[AudioStream]([ExtResource("11_eka1x")])
 
 [sub_resource type="Resource" id="Resource_88oq6"]
 script = ExtResource("12_nuc5t")
@@ -110,7 +119,7 @@ CircleField_node = NodePath("CircleField")
 script = ExtResource("7_lhgfl")
 label = "sfx_PF"
 bus = "SFX"
-events = Array[ExtResource("8_g3bnd")]([SubResource("Resource_x54bq")])
+events = Array[ExtResource("8_g3bnd")]([SubResource("Resource_x54bq"), SubResource("Resource_j56yg")])
 
 [node name="MusicBank" type="Node" parent="."]
 script = ExtResource("10_awu3q")
@@ -120,10 +129,10 @@ tracks = Array[ExtResource("11_itom1")]([SubResource("Resource_jkvr2"), SubResou
 
 [connection signal="game_over" from="." to="BackGroundEffect" method="game_over_reset"]
 [connection signal="game_over" from="." to="PlayingFieldCamera" method="rotation_stop"]
-[connection signal="game_over" from="." to="PlayingFieldCamera" method="zoom_transition"]
 [connection signal="game_over" from="." to="PlayingFieldCamera" method="gameover_position_transition"]
-[connection signal="game_over" from="." to="CircleField" method="create_game_over_effect"]
+[connection signal="game_over" from="." to="PlayingFieldCamera" method="zoom_transition"]
 [connection signal="game_over" from="." to="CircleField" method="stop_reverb_effect"]
+[connection signal="game_over" from="." to="CircleField" method="create_game_over_effect"]
 [connection signal="game_over" from="." to="PlayingFieldUI" method="close_Playing_and_open_Stopped"]
 [connection signal="game_ready" from="." to="PlayingFieldCamera" method="rotation_reset"]
 [connection signal="game_ready" from="." to="CircleField" method="create_game_ready_effect"]

@@ -66,6 +66,9 @@ func start_PlayingField():
 		else:
 			MusicManager.stop(0.5)
 			MusicManager.play("bgm_PF","playing_bgm_3",0.5,1)
+			
+	#스타트 목소리..
+	SoundManager.play("sfx_PF","start")
 
 
 
