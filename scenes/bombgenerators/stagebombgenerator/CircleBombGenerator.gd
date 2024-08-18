@@ -547,17 +547,16 @@ func pattern_numeric_choice():
 		for i in range(8):
 			var bomb: NumericBomb = create_numeric_bomb(player_position.rotated(rotation_box[i%4]) * 208.0 / 240.0, 0.3, 1.2, i+1)
 			if i == 7:
-				bomb.connect("player_body_entered",Callable(self,"pattern_numeric_choice_end"))
+				bomb.connect("no_lower_value_bomb_exists",Callable(self,"pattern_numeric_choice_end"))
 			await get_tree().create_timer(0.375).timeout
 	else:
 		for i in range(8):
 			var bomb: NumericBomb = create_numeric_bomb(player_position.rotated(rotation_inv_box[i%4]) * 208.0 / 240.0, 0.3, 1.2, i+1)
 			if i == 7:
-				bomb.connect("player_body_entered",Callable(self,"pattern_numeric_choice_end"))
+				bomb.connect("no_lower_value_bomb_exists",Callable(self,"pattern_numeric_choice_end"))
 			await get_tree().create_timer(0.375).timeout
 
 func pattern_numeric_choice_end():
-	await PlayingFieldInterface.player_grounded
 	PlayingFieldInterface.set_playing_time(pattern_start_time + (pattern_numeric_choice_playing_time / Engine.time_scale))
 	pattern_shuffle_and_draw()
 	
