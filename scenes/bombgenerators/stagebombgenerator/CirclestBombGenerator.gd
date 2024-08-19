@@ -732,22 +732,17 @@ func pattern_timing_return():
 	
 func make_linear_bombs():
 	var player_position = PlayingFieldInterface.get_player_position()
-	for i in range(6):
-		create_normal_bomb(player_position * 0.3 * (i-3), 0.05, 1 - i*0.1)
-		await get_tree().create_timer(0.015).timeout
-	await get_tree().create_timer(0.02).timeout
-	#var lasting_bool: bool = true
-	#
-	#while lasting_bool:
-		#player_position_shift = PlayingFieldInterface.get_player_position()
-		#if player_position != player_position_shift:
-			#player_position = player_position_shift
-			#lasting_bool = false
-			
-			#for i in range(6):
-				#create_normal_bomb(player_position * 0.3 * (i-3), 0.05, 1 - i*0.1)
-				#await get_tree().create_timer(0.025).timeout
-		#await get_tree().create_timer(0.02).timeout
+	randomize()
+	if randi()%2 == 0:
+		for i in range(6):
+			create_normal_bomb(player_position * 0.3 * (i-3), 0.05, 1 - i*0.1)
+			await get_tree().create_timer(0.015).timeout
+		await get_tree().create_timer(0.02).timeout
+	else:
+		for i in range(6):
+			create_hazard_bomb(player_position * 0.3 * (i-3), 0.05, 1 - i*0.1)
+			await get_tree().create_timer(0.015).timeout
+		await get_tree().create_timer(0.02).timeout
 	await get_tree().create_timer(1).timeout
 	pattern_shuffle_and_draw()
 	
