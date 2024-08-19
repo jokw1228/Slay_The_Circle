@@ -14,10 +14,11 @@ func _ready():
 	PlayingFieldInterface.set_theme_color(Color.ORANGE_RED)
 	PlayingFieldInterface.set_theme_bright(0)
 	
-	pattern_queue = PatternPriorityQueue.create()
-	set_pattern_weight()
+	#pattern_queue = PatternPriorityQueue.create()
+	#set_pattern_weight()
 	await get_tree().create_timer(1.5).timeout # game start time offset
-	pattern_shuffle_and_draw()
+	#pattern_shuffle_and_draw()
+	pattern_darksight()
 
 func set_pattern_weight():
 	pattern_weight = {
@@ -466,8 +467,8 @@ func pattern_trickery():
 	num_rng.randomize()
 	var trick_num = num_rng.randi_range(1,3)
 	
-	const warning_time = 0.4
-	const bomb_time = 1.6
+	const warning_time = 0.7
+	const bomb_time = 1.3
 	
 	const position_x_offset = 128.0
 	const position_y_offset = 96.0
@@ -874,7 +875,7 @@ func pattern_shuffle_game_process(delta):
 #캐릭터 위치 정도는 기억하시죠?
 #당황시킬 수 있기에 circlest 정도 잡는 게 좋을 것 같습니다 
 # 수정사항 : darksight fade_in time 소폭 증가, numeric bomb 추가
-const pattern_darksight_playing_time = 4.5
+const pattern_darksight_playing_time = 4.8
 
 var pattern_darksight_darksight_node: Darksight
 
@@ -883,14 +884,14 @@ func pattern_darksight():
 	
 	const bomb_time = 3.0
 	const position_offset = 128.0
-	var x_dir: int = 1 if randi()%2 else -1
-	var y_dir: int = 1 if randi()%2 else -1
-	var angle_offset: float = randf()
+	#var x_dir: int = 1 if randi()%2 else -1
+	#var y_dir: int = 1 if randi()%2 else -1
+	var angle_offset: float = PlayingFieldInterface.get_player_position().angle()
 	
-	var bomb1 : NumericBomb = create_numeric_bomb(Vector2(x_dir * position_offset, 0).rotated(angle_offset), 1, bomb_time, 1)
-	var bomb2 : NumericBomb = create_numeric_bomb(Vector2(-x_dir * position_offset, 0).rotated(angle_offset), 1, bomb_time, 2)
-	var bomb3 : NumericBomb = create_numeric_bomb(Vector2(0,y_dir * position_offset).rotated(angle_offset), 1, bomb_time, 3)
-	var bomb4 : NumericBomb = create_numeric_bomb(Vector2(0,-y_dir * position_offset).rotated(angle_offset), 1, bomb_time, 4)
+	var bomb1 : NumericBomb = create_numeric_bomb(Vector2( position_offset, 0).rotated(angle_offset), 1.5, bomb_time, 1)
+	var bomb2 : NumericBomb = create_numeric_bomb(Vector2( -position_offset, 0).rotated(angle_offset), 1.5, bomb_time, 2)
+	var bomb3 : NumericBomb = create_numeric_bomb(Vector2(0, -position_offset).rotated(angle_offset), 1.5, bomb_time, 3)
+	var bomb4 : NumericBomb = create_numeric_bomb(Vector2(0, position_offset).rotated(angle_offset), 1.5, bomb_time, 4)
 	
 	var link1 = create_bomb_link(bomb1, bomb2)
 	var link2 = create_bomb_link(bomb3, bomb4)
