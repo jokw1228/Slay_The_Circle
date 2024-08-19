@@ -46,7 +46,7 @@ func pattern_shuffle_and_draw():
 		stage_phase += 1
 		choose_level_up_pattern()
 	else:
-		choose_random_pattern()
+		pattern_hazard_at_player_pos()
 
 func choose_random_pattern():
 	var popped: Dictionary = pattern_queue.heap_extract_min()
@@ -717,7 +717,7 @@ func pattern_pizza_end():
 # pattern_hazard_at_player_pos block start
 # made by Lee Jinwoong
 
-const pattern_hazard_at_player_pos_playing_time = 4.5
+const pattern_hazard_at_player_pos_playing_time = 4.75
 
 func pattern_hazard_at_player_pos():
 	PlayingFieldInterface.set_theme_color(Color.RED)
@@ -729,21 +729,22 @@ func pattern_hazard_at_player_pos():
 	for i in range(0, 5):
 		const CIRCLE_FIELD_RADIUS = 256
 		const bomb_radius = 32
+		const rotation_offset = PI/12
+		
 		bomb_position = (CIRCLE_FIELD_RADIUS - bomb_radius) * PlayingFieldInterface.get_player_position().normalized()
-		create_hazard_bomb(bomb_position, 0.75, 0.75)
-		create_hazard_bomb(-bomb_position, 0.75, 0.75)
+		create_hazard_bomb(bomb_position, 0.75, 1.0)
+		create_hazard_bomb(bomb_position.rotated(rotation_offset), 0.75, 1.0)
+		create_hazard_bomb(bomb_position.rotated(-rotation_offset), 0.75, 1.0)
 		
 		# HYPER MODE
 		if stage_phase >= 4:
-			const rotation_offset = PI/12
-			create_hazard_bomb(bomb_position.rotated(rotation_offset), 0.75, 0.75)
-			create_hazard_bomb(bomb_position.rotated(-rotation_offset), 0.75, 0.75)
-			create_hazard_bomb(-bomb_position.rotated(rotation_offset), 0.75, 0.75)
-			create_hazard_bomb(-bomb_position.rotated(-rotation_offset), 0.75, 0.75)
+			create_hazard_bomb(-bomb_position, 0.75, 1.0)
+			create_hazard_bomb(-bomb_position.rotated(rotation_offset), 0.75, 1.0)
+			create_hazard_bomb(-bomb_position.rotated(-rotation_offset), 0.75, 1.0)
 		
 		await Utils.timer(0.75)
 	
-	await Utils.timer(0.75)
+	await Utils.timer(1.0)
 	
 	pattern_hazard_at_player_pos_end()
 
