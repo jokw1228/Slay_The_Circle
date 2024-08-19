@@ -635,13 +635,17 @@ func pattern_spiral_end():
 # pattern_roll block start
 # made by Jaeyong
 
-const pattern_roll_playing_time = 3.5
+const pattern_roll_playing_time = 4.0 # 4 * next_wait_time + warning_time + bomb_time
 var pattern_roll_bomb_count: int
 
 func pattern_roll():
 	PlayingFieldInterface.set_theme_color(Color.DARK_BLUE)
 	
 	pattern_start_time = PlayingFieldInterface.get_playing_time()
+	
+	const warning_time = 0.2
+	const bomb_time = 3.4
+	const next_wait_time = 0.1
 	
 	var angle_offset: float = PlayingFieldInterface.get_player_position().angle()
 	var rng = RandomNumberGenerator.new()
@@ -655,43 +659,43 @@ func pattern_roll():
 	var bomb_list: Array[NormalBomb]
 
 	for i in (3):
-		var bomb: NormalBomb = create_normal_bomb(Vector2(96 * i,192 - 96 * i).rotated(angle_offset - PI/2), 0.2, 2.9)
+		var bomb: NormalBomb = create_normal_bomb(Vector2(96 * i,192 - 96 * i).rotated(angle_offset - PI/2), warning_time, bomb_time)
 		bomb.connect("player_body_entered", Callable(self, "pattern_roll_end"))
-	await get_tree().create_timer(0.1).timeout
+	await get_tree().create_timer(next_wait_time).timeout
 	
 	
 	if hazard_line == 1:
-		create_hazard_bomb(Vector2(96, 0).rotated(angle_offset - PI/2), 0.2, 2.9)
-		create_hazard_bomb(Vector2(0, 96).rotated(angle_offset - PI/2), 0.2, 2.9)
+		create_hazard_bomb(Vector2(96, 0).rotated(angle_offset - PI/2), warning_time, bomb_time)
+		create_hazard_bomb(Vector2(0, 96).rotated(angle_offset - PI/2), warning_time, bomb_time)
 	else :
 		for i in (2):
-			var bomb: NormalBomb = create_normal_bomb(Vector2(96 - 96 * i,96 * i).rotated(angle_offset - PI/2), 0.2, 2.9)
+			var bomb: NormalBomb = create_normal_bomb(Vector2(96 - 96 * i,96 * i).rotated(angle_offset - PI/2), warning_time, bomb_time)
 			bomb.connect("player_body_entered", Callable(self, "pattern_roll_end"))
-	await get_tree().create_timer(0.1).timeout
+	await get_tree().create_timer(next_wait_time).timeout
 
 	
 	if hazard_line == 2:
-		create_hazard_bomb(Vector2(-96, 96).rotated(angle_offset - PI/2), 0.2, 2.9)
-		create_hazard_bomb(Vector2(0, 0).rotated(angle_offset - PI/2), 0.2, 2.9)
-		create_hazard_bomb(Vector2(96, -96).rotated(angle_offset - PI/2), 0.2, 2.9)
-	else :		
+		create_hazard_bomb(Vector2(-96, 96).rotated(angle_offset - PI/2), warning_time, bomb_time)
+		create_hazard_bomb(Vector2(0, 0).rotated(angle_offset - PI/2), warning_time, bomb_time)
+		create_hazard_bomb(Vector2(96, -96).rotated(angle_offset - PI/2), warning_time, bomb_time)
+	else :
 		for i in (3):
-			var bomb: NormalBomb = create_normal_bomb(Vector2(-96 + 96 * i, 96 - 96 * i).rotated(angle_offset - PI/2), 0.2, 2.9)
+			var bomb: NormalBomb = create_normal_bomb(Vector2(-96 + 96 * i, 96 - 96 * i).rotated(angle_offset - PI/2), warning_time, bomb_time)
 			bomb.connect("player_body_entered", Callable(self, "pattern_roll_end"))
-	await get_tree().create_timer(0.1).timeout
+	await get_tree().create_timer(next_wait_time).timeout
 		
 		
 	if hazard_line == 3:
-		create_hazard_bomb(Vector2(-96, 0).rotated(angle_offset - PI/2), 0.2, 2.9)
-		create_hazard_bomb(Vector2(0, -96).rotated(angle_offset - PI/2), 0.2, 2.9)
+		create_hazard_bomb(Vector2(-96, 0).rotated(angle_offset - PI/2), warning_time, bomb_time)
+		create_hazard_bomb(Vector2(0, -96).rotated(angle_offset - PI/2), warning_time, bomb_time)
 	else :
 		for i in (2):
-			var bomb: NormalBomb = create_normal_bomb(Vector2(-96 + 96 * i,- 96 * i).rotated(angle_offset - PI/2), 0.2, 2.9)
+			var bomb: NormalBomb = create_normal_bomb(Vector2(-96 + 96 * i,- 96 * i).rotated(angle_offset - PI/2), warning_time, bomb_time)
 			bomb.connect("player_body_entered", Callable(self, "pattern_roll_end"))
-	await get_tree().create_timer(0.1).timeout
+	await get_tree().create_timer(next_wait_time).timeout
 	
 	for i in (3):
-		var bomb: NormalBomb = create_normal_bomb(Vector2(-96 * i, -192 + 96 * i).rotated(angle_offset - PI/2), 0.2, 2.9)
+		var bomb: NormalBomb = create_normal_bomb(Vector2(-96 * i, -192 + 96 * i).rotated(angle_offset - PI/2), warning_time, bomb_time)
 		bomb.connect("player_body_entered", Callable(self, "pattern_roll_end"))
 
 func pattern_roll_end():
