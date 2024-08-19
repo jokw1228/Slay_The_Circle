@@ -409,7 +409,7 @@ func pattern_scattered_hazards():
 	var player_pos_normalized = PlayingFieldInterface.get_player_position().normalized()
 	
 	for i in (6):
-		create_hazard_bomb(player_pos_normalized.rotated(PI/3 * i).rotated(PI/4) * (256 - 32) , warning_time, bomb_time)
+		create_hazard_bomb(player_pos_normalized.rotated(PI/3 * i).rotated(PI/6) * (256 - 32) , warning_time, bomb_time)
 	
 	var rotation_offset: float = randf_range(0, PI*2/3)
 	for i in (3):
