@@ -27,7 +27,7 @@ func pattern_shuffle_and_draw(): # override
 func set_hyper_pattern_queue():
 	pattern_queue.min_heap_insert( { "pattern_key" = "pattern_diamond_with_hazard_puzzled", "pattern_value" = randf_range(-0.1, 0.0) } )
 	pattern_queue.min_heap_insert( { "pattern_key" = "pattern_maze", "pattern_value" = randf_range(-0.1, 0.0) } )
-	pattern_queue.min_heap_insert( { "pattern_key" = "pattern_narrow_road", "pattern_value" = randf_range(-0.1, -0.1) } )
+	pattern_queue.min_heap_insert( { "pattern_key" = "pattern_narrow_road", "pattern_value" = randf_range(-0.1, 0.0) } )
 	pattern_queue.min_heap_insert( { "pattern_key" = "pattern_blocking", "pattern_value" = randf_range(-0.1, 0.0) } )
 	pattern_queue.min_heap_insert( { "pattern_key" = "pattern_scattered_hazards", "pattern_value" = randf_range(-0.1, 0.0) } )
 

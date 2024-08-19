@@ -343,9 +343,9 @@ func pattern_narrow_road():
 	
 	# HYPER MODE
 	if stage_phase >= 4:
-		const CIRCLE_FIELD_RADIUS = 256.0
-		create_hazard_bomb((CIRCLE_FIELD_RADIUS - 32) * player_direction.rotated(PI/2), warning_time, bomb_time)
-		create_hazard_bomb((CIRCLE_FIELD_RADIUS - 32) * player_direction.rotated(-PI/2), warning_time, bomb_time)
+		var coef: float = 1.0 if randi() % 2 else -1.0
+		for i: float in range(2):
+			create_hazard_bomb(((i+1) * bomb_diameter + hazard_bomb_clearance) * player_direction.rotated(coef*PI/2), warning_time, bomb_time)
 
 func pattern_narrow_road_end():
 	get_tree().call_group("group_hazard_bomb", "early_eliminate")
@@ -557,14 +557,14 @@ func pattern_wall_timing():
 	
 	await get_tree().create_timer(hazard_warning_time + hazard_bomb_time).timeout
 	
-	create_hazard_bomb(Vector2.ZERO, hazard_warning_time, 0.5)
+	create_hazard_bomb(Vector2.ZERO, hazard_warning_time, hazard_bomb_time)
 	for i: float in [1,2,3]:
 		create_hazard_bomb(pattern_wall_timing_pos_nor.rotated(PI/2) * (256) * i/4, hazard_warning_time, hazard_bomb_time)
 		create_hazard_bomb(pattern_wall_timing_pos_nor.rotated(PI/2) * (256) * -i/4, hazard_warning_time, hazard_bomb_time)
 	
 	await get_tree().create_timer(hazard_warning_time + hazard_bomb_time).timeout
 	
-	create_hazard_bomb(Vector2.ZERO, hazard_warning_time, 0.5)
+	create_hazard_bomb(Vector2.ZERO, hazard_warning_time, hazard_bomb_time)
 	for i: float in [1,2,3]:
 		create_hazard_bomb(pattern_wall_timing_pos_nor.rotated(PI/2) * (256) * i/4, hazard_warning_time, hazard_bomb_time)
 		create_hazard_bomb(pattern_wall_timing_pos_nor.rotated(PI/2) * (256) * -i/4, hazard_warning_time, hazard_bomb_time)
@@ -823,10 +823,10 @@ func pattern_reactspeed_test():
 		randomize()
 		var which_bomb_decide_num: int = 1 if randi() % 3 else -1
 		if which_bomb_decide_num == 1:
-			var bomb : NormalBomb = create_normal_bomb(Vector2(0,0), 0.2, 0.5)
+			var bomb : NormalBomb = create_normal_bomb(Vector2(0,0), 0.2, 0.8)
 		else:
-			var bomb : HazardBomb = create_hazard_bomb(Vector2(0,0), 0.2, 0.5)
-		await Utils.timer(0.7)
+			var bomb : HazardBomb = create_hazard_bomb(Vector2(0,0), 0.2, 0.8)
+		await Utils.timer(1.0)
 	
 	indicator.queue_free()
 	await get_tree().create_timer(0.3)
@@ -887,8 +887,8 @@ func pattern_trafficlight():
 	PlayingFieldInterface.set_theme_color(Color.HOT_PINK)
 
 	const DIST: float = 96
-	const UNIT: float = 1.0
-	const START: float = 1
+	const UNIT: float = 0.75
+	const START: float = 0.5
 	const WARNING: float = 0.5
 
 	var rotator: Node2D = Node2D.new()
