@@ -1,10 +1,23 @@
-[gd_scene load_steps=6 format=3 uid="uid://dkm0cd66gmgph"]
+[gd_scene load_steps=10 format=3 uid="uid://dkm0cd66gmgph"]
 
 [ext_resource type="PackedScene" uid="uid://bhe55ocau21ot" path="res://scenes/playingfield/player/Player.tscn" id="1_cqulv"]
 [ext_resource type="Script" path="res://scenes/rooms/RoomTutorial/RoomTutorial.gd" id="1_gg83j"]
 [ext_resource type="PackedScene" uid="uid://s264e74phclm" path="res://scenes/playingfield/CircleField.tscn" id="1_ro01m"]
 [ext_resource type="FontFile" uid="uid://bn71j2rajnbrn" path="res://fonts/bump-it-up.ttf" id="6_go8x2"]
+[ext_resource type="Texture2D" uid="uid://7ed2eanqanvm" path="res://scenes/ui/ColoredPanelTexture.svg" id="6_gvhbc"]
 [ext_resource type="PackedScene" uid="uid://csx6yjkvpfqcy" path="res://scenes/background/BackGroundDeSterrennacht/BackGroundDeSterrennacht.tscn" id="18_qqoh6"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_73grf"]
+texture = ExtResource("6_gvhbc")
+modulate_color = Color(0, 0.784314, 0.784314, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_j61w8"]
+texture = ExtResource("6_gvhbc")
+modulate_color = Color(0.705882, 0.784314, 1, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_fnvuw"]
+texture = ExtResource("6_gvhbc")
+modulate_color = Color(0.592157, 0, 0.196078, 1)
 
 [node name="RoomTutorial" type="Node2D" node_paths=PackedStringArray("Player_node", "tutorialtext", "explaintext")]
 script = ExtResource("1_gg83j")
@@ -49,3 +62,15 @@ theme_override_fonts/font = ExtResource("6_go8x2")
 theme_override_font_sizes/font_size = 22
 text = "hello"
 uppercase = true
+
+[node name="SkipButton" type="Button" parent="."]
+offset_left = 380.0
+offset_top = -308.0
+offset_right = 560.0
+offset_bottom = -228.0
+theme_override_styles/normal = SubResource("StyleBoxTexture_73grf")
+theme_override_styles/hover = SubResource("StyleBoxTexture_j61w8")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_fnvuw")
+text = "SKIP"
+
+[connection signal="pressed" from="SkipButton" to="." method="tutorial_end"]
