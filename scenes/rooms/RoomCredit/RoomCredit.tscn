@@ -1,7 +1,8 @@
-[gd_scene load_steps=19 format=3 uid="uid://c0s4jvu7qncps"]
+[gd_scene load_steps=22 format=3 uid="uid://c0s4jvu7qncps"]
 
 [ext_resource type="Script" path="res://scenes/rooms/RoomCredit/RoomCredit.gd" id="1_axwsh"]
 [ext_resource type="Texture2D" uid="uid://cpd50aakmwjtm" path="res://images/creditroom/CreditRoom.svg" id="2_f4n2x"]
+[ext_resource type="Texture2D" uid="uid://cbocwwvi31ch0" path="res://images/creditroom/mask.svg" id="2_om6e3"]
 [ext_resource type="Texture2D" uid="uid://mxfswu8da8vp" path="res://images/player/sprite_player_landed.png" id="3_4ytvs"]
 [ext_resource type="Texture2D" uid="uid://cevkho0emy0yl" path="res://images/logo/sprite_cat_and_dog.png" id="4_hae08"]
 [ext_resource type="Texture2D" uid="uid://7ed2eanqanvm" path="res://scenes/ui/ColoredPanelTexture.svg" id="5_11on3"]
@@ -12,6 +13,11 @@
 [ext_resource type="Script" path="res://addons/resonate/sound_manager/sound_bank.gd" id="10_cl5iy"]
 [ext_resource type="Script" path="res://addons/resonate/sound_manager/sound_event_resource.gd" id="11_dvn8g"]
 [ext_resource type="AudioStream" uid="uid://crh63lch80r4l" path="res://audio/sfx/select.wav" id="12_a5dof"]
+[ext_resource type="PackedScene" uid="uid://s264e74phclm" path="res://scenes/playingfield/CircleField.tscn" id="13_atkka"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_waanr"]
+line_spacing = 10.0
+font_size = 24
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_g6swl"]
 texture = ExtResource("5_11on3")
@@ -49,9 +55,11 @@ streams = Array[AudioStream]([ExtResource("12_a5dof")])
 [node name="RoomCredit" type="Control" node_paths=PackedStringArray("role_label", "name_label", "logo_text")]
 layout_mode = 3
 anchors_preset = 0
+offset_top = -2.0
+offset_bottom = -2.0
 script = ExtResource("1_axwsh")
-role_label = NodePath("CanvasLayer/RoleLabel")
-name_label = NodePath("CanvasLayer/NameLabel")
+role_label = NodePath("CanvasLayer/Circle/Mask/TextBox/VBox/NameLabel")
+name_label = NodePath("CanvasLayer/Circle/Mask/TextBox/VBox/RoleLabel")
 logo_text = NodePath("CanvasLayer/LogoText")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
@@ -61,49 +69,81 @@ position = Vector2(574.143, 329)
 scale = Vector2(0.867851, 0.702477)
 texture = ExtResource("2_f4n2x")
 
+[node name="Circle" type="Control" parent="CanvasLayer"]
+unique_name_in_owner = true
+modulate = Color(1, 1, 1, 0.0980392)
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Mask" type="TextureRect" parent="CanvasLayer/Circle"]
+clip_children = 1
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -256.0
+offset_top = -256.0
+offset_right = 256.0
+offset_bottom = 256.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_om6e3")
+
+[node name="TextBox" type="CenterContainer" parent="CanvasLayer/Circle/Mask"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 512.0
+offset_bottom = 512.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBox" type="VBoxContainer" parent="CanvasLayer/Circle/Mask/TextBox"]
+layout_mode = 2
+
+[node name="NameLabel" type="Label" parent="CanvasLayer/Circle/Mask/TextBox/VBox"]
+custom_minimum_size = Vector2(411, 82.235)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "asdf"
+horizontal_alignment = 1
+
+[node name="RoleLabel" type="Label" parent="CanvasLayer/Circle/Mask/TextBox/VBox"]
+custom_minimum_size = Vector2(401, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "asdf"
+label_settings = SubResource("LabelSettings_waanr")
+horizontal_alignment = 1
+
+[node name="CircleField" parent="CanvasLayer/Circle" instance=ExtResource("13_atkka")]
+position = Vector2(576, 324)
+
 [node name="LogoText" type="Label" parent="CanvasLayer"]
 anchors_preset = -1
 anchor_left = 0.611
 anchor_top = 0.988
 anchor_right = 0.611
 anchor_bottom = 0.988
-offset_left = -370.372
-offset_top = -32.224
-offset_right = 114.628
-offset_bottom = 7.776
+offset_left = -479.872
+offset_top = 37.776
+offset_right = 5.12799
+offset_bottom = 77.776
 grow_horizontal = 2
 grow_vertical = 0
-scale = Vector2(1.53467, 1.53467)
+scale = Vector2(1.5, 1.5)
 size_flags_horizontal = 3
 text = "Slay The Circle"
 horizontal_alignment = 1
 vertical_alignment = 1
-
-[node name="NameLabel" type="Label" parent="CanvasLayer"]
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -64.0
-offset_top = -40.0
-offset_right = 64.0
-grow_horizontal = 2
-grow_vertical = 0
-size_flags_horizontal = 3
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="RoleLabel" type="Label" parent="CanvasLayer"]
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -64.0
-offset_right = 64.0
-offset_bottom = 40.0
-grow_horizontal = 2
-size_flags_horizontal = 3
-horizontal_alignment = 1
 
 [node name="CharacterImage" type="Sprite2D" parent="CanvasLayer"]
 position = Vector2(88, 560)

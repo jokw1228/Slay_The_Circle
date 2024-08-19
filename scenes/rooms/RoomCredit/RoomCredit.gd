@@ -3,18 +3,18 @@ extends Control
 var RoomMenu_room = "res://scenes/rooms/RoomMenu/RoomMenu.tscn"
 
 @export var credits: Array = [
-	["Team", "Slay The Circle(STC)"],
-	["Korea University", "CAT&DOG"],
-	["Jo Kangwoo", "Team Leader\n\nPlanning\n\nPM\n\nProgrammer\n\nGraphic Designer"],
-	["Lee Jinwoong", "Programmer\n\nLevel Manager"],
-	["Kang Geunho", "Programmer\n\nLevel Designer"],
-	["Park jooyoung", "Programmer\n\nGraphic Designer"],
-	["Jeong Seonghyeon", "Programmer\n\nGraphic Designer"],
-	["Kim Kiyong", "Programmer\n\nLevel Manager"],
-	["Kim Jinhyun", "Programmer\n\nLevel Designer"],
-	["Bae Sekang", "Programmer\n\nLevel Designer"],
-	["Hong Seokhee", "Programmer\n\nLevel Manager"],
-	["Park Jaeyong", "Programmer\n\nSound Designer"],
+	["Team", "Slay The Circle\n(STC)"],
+	["Korea Univ.", "CAT&DOG"],
+	["Jo Kangwoo", "Team Leader\nPM\nProgrammer\nGraphic Designer"],
+	["Lee Jinwoong", "Programmer\nLevel Manager"],
+	["Kang Geunho", "Programmer\nLevel Designer"],
+	["Park jooyoung", "Programmer\nGraphic Designer"],
+	["J. Seonghyeon", "Programmer\nGraphic Designer\n\nToo long name.."],
+	["Kim Kiyong", "Programmer\nLevel Manager"],
+	["Kim Jinhyun", "Programmer\nLevel Designer"],
+	["Bae Sekang", "Programmer\nLevel Designer"],
+	["Hong Seokhee", "Programmer\nLevel Manager"],
+	["Park Jaeyong", "Programmer\nSound Designer"],
 ]
 
 @export var role_label: Label
@@ -27,28 +27,20 @@ var RoomMenu_room = "res://scenes/rooms/RoomMenu/RoomMenu.tscn"
 @export var interval_time: float = 0.2
 @export var wait_time: float = display_duration * 0.5
 
-@export var role_label_start_position: Vector2 = Vector2(400, 704)
-@export var name_label_start_position: Vector2 = Vector2(500, 704 + name_offset)
+@export var role_label_start_position: Vector2 = Vector2(0, 512)
 @export var logo_text_start_position: Vector2 = Vector2(200, 704)
 
-@export var role_label_mid_position: Vector2 = Vector2(400, 288)
-@export var name_label_mid_position: Vector2 = Vector2(500, 288 + name_offset)
+@export var role_label_mid_position: Vector2 = Vector2(0, 0)
 @export var logo_text_mid_position: Vector2 = Vector2(200, 288)
 
-@export var role_label_end_position: Vector2 = Vector2(400, -128)
-@export var name_label_end_position: Vector2 = Vector2(500, -128 + name_offset)
+@export var role_label_end_position: Vector2 = Vector2(0, -512)
 @export var logo_text_end_position: Vector2 = Vector2(200, -128)
 
 var current_index = -1
 
 func _ready():
-	role_label.position = role_label_start_position
-	name_label.position = name_label_start_position
-	logo_text.position = logo_text_start_position
-
-	name_label.set_scale(Vector2(0.6, 0.6))
-	role_label.set_scale(Vector2(1.0, 1.0))
-	logo_text.set_scale(Vector2(1.5, 1.5))
+	PlayingFieldInterface.set_theme_color(Color.WHITE)
+	PlayingFieldInterface.set_theme_bright(0)
 
 	await Utils.timer(0.5)
 	start_credit_roll()
@@ -58,7 +50,7 @@ func _ready():
 
 func start_credit_roll():
 	if current_index == -1:
-		logo_text.text = "Slay The Circle"
+		logo_text.position = logo_text_start_position
 		var logo_mid_tween: Tween = get_tree().create_tween()
 		logo_mid_tween.set_ease(Tween.EASE_IN_OUT)
 		logo_mid_tween.set_trans(Tween.TRANS_SINE)
@@ -92,66 +84,44 @@ func start_credit_roll():
 			role_mid_tween.set_ease(Tween.EASE_IN_OUT)
 			role_mid_tween.set_trans(Tween.TRANS_SINE)
 			role_mid_tween.tween_property(
-				role_label,
+				%TextBox,
 				"position",
 				role_label_mid_position,
 				display_duration
 			)
 
-			var name_mid_tween: Tween = get_tree().create_tween()
-			name_mid_tween.set_ease(Tween.EASE_IN_OUT)
-			name_mid_tween.set_trans(Tween.TRANS_SINE)
-			name_mid_tween.tween_property(
-				name_label,
-				"position",
-				name_label_mid_position,
-				display_duration
-			)
 			await Utils.timer(display_duration + wait_time)
 
 			var role_end_tween: Tween = get_tree().create_tween()
 			role_end_tween.set_ease(Tween.EASE_IN_OUT)
 			role_end_tween.set_trans(Tween.TRANS_SINE)
 			role_end_tween.tween_property(
-				role_label,
+				%TextBox,
 				"position",
 				role_label_end_position,
 				display_duration
 			)
 
-			var name_end_tween: Tween = get_tree().create_tween()
-			name_end_tween.set_ease(Tween.EASE_IN_OUT)
-			name_end_tween.set_trans(Tween.TRANS_SINE)
-			name_end_tween.tween_property(
-				name_label,
-				"position",
-				name_label_end_position,
-				display_duration
-			)
 			await Utils.timer(display_duration)
 			on_role_tween_finished()
 			on_name_tween_finished()
 		else:
+			Utils.tween().set_ease(Tween.EASE_IN_OUT).tween_property(%Circle, "modulate", Color(1, 1, 1, 0.1), 3)
 			await Utils.timer(3.0)
 			current_index = -1
 			start_credit_roll()
 
 func on_logo_finished():
 	current_index += 1
+	Utils.tween().set_ease(Tween.EASE_IN_OUT).tween_property(%Circle, "modulate", Color.WHITE, 2)
 	start_credit_roll()
 
 func on_role_tween_finished():
 	current_index += 1
 
 func on_name_tween_finished():
-	if current_index < credits.size():
-		role_label.visible = false
-		name_label.visible = false
-		role_label.position = role_label_start_position
-		name_label.position = name_label_start_position
-		role_label.visible = true
-		name_label.visible = true
-		start_credit_roll()
+	%TextBox.position = role_label_start_position
+	start_credit_roll()
 
 
 func _on_to_credit_pressed():
