@@ -122,7 +122,6 @@ func set_playing_time(time_to_set: float):
 		playing_time = time_to_set
 
 func set_player_position(position_to_set: Vector2):
-	await !Player_node.is_moving
 	Player_node.position = position_to_set
 	Player_node.PlayerSprite2D_node.rotation = Player_node.PlayerSprite2D_node.global_position.angle()
 	Player_node.is_playing = true

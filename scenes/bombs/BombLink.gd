@@ -150,7 +150,6 @@ func update_drawings():
 		and bomb2_last_position == bomb2.global_position\
 		and last_bright == PlayingFieldInterface.get_theme_bright()\
 		and last_color == PlayingFieldInterface.get_theme_color():
-			# print("%d bomblink redraw skipped" % Engine.get_frames_drawn())
 			return
 	
 	bomb1_last_position = bomb1.global_position

@@ -27,7 +27,7 @@ func rotation_reset():
 	await get_tree().create_timer(1.3).timeout
 	rotation = fmod(rotation, (2.0*PI))
 	var player_position = PlayingFieldInterface.get_player_position()
-	PlayingFieldInterface.set_player_position(player_position.rotated(-1*get_rotation()))
+	PlayingFieldInterface.set_player_position(player_position.rotated(-1*rotation))
 	rotation = 0.0
 	rotation_direction = 1
 
