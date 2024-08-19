@@ -46,7 +46,7 @@ func pattern_shuffle_and_draw():
 		stage_phase += 1
 		choose_level_up_pattern()
 	else:
-		pattern_hazard_at_player_pos()
+		choose_random_pattern()
 
 func choose_random_pattern():
 	var popped: Dictionary = pattern_queue.heap_extract_min()
