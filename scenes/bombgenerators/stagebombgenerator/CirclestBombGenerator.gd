@@ -393,7 +393,7 @@ func pattern_survive_random_slay_end():
 # 잠재적 수정사항 : 판정을 좀 더 관대하게 하는 건 어떨까요
 # circler 정도로 난이도 하락 예상됩니다
 
-const pattern_rotate_timing_playing_time = 2
+const pattern_rotate_timing_playing_time = 2.0
 
 var pattern_rotate_timing_center: Node2D
 
@@ -402,59 +402,40 @@ func pattern_rotate_timing():
 	
 	pattern_start_time = PlayingFieldInterface.get_playing_time()
 	
+	const warning_time = 0.2
+	const bomb_time = 1.8
+	
 	var player_angle: float = PlayingFieldInterface.get_player_position().angle()
 	
-	var bomb = create_normal_bomb(Vector2(0,0), 0.2, 1.8)
+	var bomb = create_normal_bomb(Vector2(0, 0), warning_time, bomb_time)
 	bomb.connect("player_body_entered",Callable(self,"pattern_rotate_timing_end"))
 	
 	pattern_rotate_timing_center = Node2D.new()
 	
 	pattern_rotate_timing_center.rotate(player_angle)
 	var tween_rotation: Tween = get_tree().create_tween()
-	tween_rotation.tween_property(pattern_rotate_timing_center, "rotation", pattern_rotate_timing_center.rotation + 2*PI, 2.0)
+	tween_rotation.tween_property(pattern_rotate_timing_center, "rotation", pattern_rotate_timing_center.rotation + 2*PI, warning_time + bomb_time)
 	
-	const bomb_radius = 64.0
-	const hazard_offset = bomb_radius + 32
-	pattern_rotate_timing_center.add_child( HazardBomb.create(Vector2(0, hazard_offset), 0.2, 1.8) )
-	pattern_rotate_timing_center.add_child( HazardBomb.create(Vector2(0, -hazard_offset), 0.2, 1.8) )
+	const bomb_diameter = 64.0
+	const hazard_offset = bomb_diameter + 32
+	
+	if stage_phase < 4:
+		pattern_rotate_timing_center.add_child( HazardBomb.create(Vector2(bomb_diameter/2.0, hazard_offset), warning_time, bomb_time) )
+		pattern_rotate_timing_center.add_child( HazardBomb.create(Vector2(bomb_diameter/2.0, -hazard_offset), warning_time, bomb_time) )
+		pattern_rotate_timing_center.add_child( HazardBomb.create(Vector2(-bomb_diameter/2.0, hazard_offset), warning_time, bomb_time) )
+		pattern_rotate_timing_center.add_child( HazardBomb.create(Vector2(-bomb_diameter/2.0, -hazard_offset), warning_time, bomb_time) )
 	
 	# HYPER MODE
-	if stage_phase >= 4:
-		pattern_rotate_timing_center.add_child( HazardBomb.create(Vector2(bomb_radius, hazard_offset), 0.2, 1.8) )
-		pattern_rotate_timing_center.add_child( HazardBomb.create(Vector2(bomb_radius, -hazard_offset), 0.2, 1.8) )
-		pattern_rotate_timing_center.add_child( HazardBomb.create(Vector2(-bomb_radius, hazard_offset), 0.2, 1.8) )
-		pattern_rotate_timing_center.add_child( HazardBomb.create(Vector2(-bomb_radius, -hazard_offset), 0.2, 1.8) )
+	elif stage_phase >= 4:
+		pattern_rotate_timing_center.add_child( HazardBomb.create(Vector2(0, hazard_offset), warning_time, bomb_time) )
+		pattern_rotate_timing_center.add_child( HazardBomb.create(Vector2(0, -hazard_offset), warning_time, bomb_time) )
+		pattern_rotate_timing_center.add_child( HazardBomb.create(Vector2(bomb_diameter, hazard_offset), warning_time, bomb_time) )
+		pattern_rotate_timing_center.add_child( HazardBomb.create(Vector2(bomb_diameter, -hazard_offset), warning_time, bomb_time) )
+		pattern_rotate_timing_center.add_child( HazardBomb.create(Vector2(-bomb_diameter, hazard_offset), warning_time, bomb_time) )
+		pattern_rotate_timing_center.add_child( HazardBomb.create(Vector2(-bomb_diameter, -hazard_offset), warning_time, bomb_time) )
 	
 	add_child(pattern_rotate_timing_center)
-	
-	'''
-	pattern_rotate_timing_bomb.clear()
-	const p6sp = 85
-	var pattern_rotate_timing_position = [Vector2(p6sp, p6sp-10), Vector2(p6sp, 0), Vector2(p6sp, -p6sp+10), Vector2(-p6sp, p6sp-10), Vector2(-p6sp, 0), Vector2(-p6sp, -p6sp+10)]
-	
-	var player_position: Vector2 = PlayingFieldInterface.get_player_position()
-	var player_angle: float = player_position.angle()
-	
-	var bomb = create_normal_bomb(Vector2(0,0), 0.2, 1.8)
-	pattern_rotate_timing_random = randi_range(0,1)
-	if pattern_rotate_timing_random == 0:
-		pattern_rotate_timing_random = -1
-	for i in range(6):
-		pattern_rotate_timing_bomb.append(create_hazard_bomb(Vector2(0, 0), 0.2, 1.8))
-		pattern_rotate_timing_bomb[i].position = pattern_rotate_timing_position[i].rotated(player_angle)
-	
-	var center: Node2D = Node2D.new()
-	add_child(center)
-	
-	await Utils.timer(0.21)
-	for i in range(6):
-		pattern_rotate_timing_bomb[i].reparent(center)
-	
-	var tween_rotation: Tween = get_tree().create_tween()
-	tween_rotation.tween_property(center, "rotation", pattern_rotate_timing_random * (2*PI), 1.79)
-	
-	bomb.connect("player_body_entered",Callable(self,"pattern_rotate_timing_end"))
-'''
+
 func pattern_rotate_timing_end():
 	await PlayingFieldInterface.player_grounded
 	pattern_rotate_timing_center.queue_free()
