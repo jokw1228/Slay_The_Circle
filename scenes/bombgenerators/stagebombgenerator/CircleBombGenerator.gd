@@ -82,9 +82,12 @@ func choose_level_up_pattern():
 		var start_offset: float = pattern_queue.queue[0]["pattern_value"]
 		pattern_queue.min_heap_insert( { "pattern_key" = "pattern_numeric_inversion", "pattern_value" = randf_range(-0.1, 0.0) + start_offset } )
 		pattern_level_up_phase_3()
-	elif stage_phase >= 4:
+	elif stage_phase == 4:
 		# no pattern addition
-		pattern_level_up_phase_4() # infinitely repeated
+		pattern_level_up_phase_4()
+	elif stage_phase >= 5:
+		# no pattern addition
+		pattern_level_up_phase_5() # infinitely repeated
 
 
 
@@ -805,20 +808,23 @@ func pattern_colosseum_end():
 
 # this was pattern_manyrotation
 
-const pattern_numeric_inversion_playing_time = 1.5
+const pattern_numeric_inversion_playing_time = 2.0
 
 func pattern_numeric_inversion():
 	PlayingFieldInterface.set_theme_color(Color.DARK_TURQUOISE)
 	
 	pattern_start_time = PlayingFieldInterface.get_playing_time()
 	
+	const warning_time = 0.25
+	const bomb_time = 1.75
+	
 	const DIST: float = 96
 	
 	var player_normalized: Vector2 = PlayingFieldInterface.get_player_position().normalized()
 	
-	create_numeric_bomb(DIST * sqrt(3) * player_normalized.rotated(deg_to_rad(60)), 0.25, 1.25, 1)
-	var bomb2: NumericBomb = create_numeric_bomb(DIST * player_normalized.rotated(deg_to_rad(120)), 0.25, 1.25, 2)
-	var bomb3: RotationInversionBomb = create_rotationinversion_bomb(DIST * player_normalized.rotated(deg_to_rad(240)), 0.25, 1.25)
+	create_numeric_bomb(DIST * sqrt(3) * player_normalized.rotated(deg_to_rad(60)), warning_time, bomb_time, 1)
+	var bomb2: NumericBomb = create_numeric_bomb(DIST * player_normalized.rotated(deg_to_rad(120)), warning_time, bomb_time, 2)
+	var bomb3: RotationInversionBomb = create_rotationinversion_bomb(DIST * player_normalized.rotated(deg_to_rad(240)), warning_time, bomb_time)
 	var link: BombLink = create_bomb_link(bomb2, bomb3)
 	
 	link.connect("both_bombs_removed", Callable(self, "pattern_numeric_inversion_end"))

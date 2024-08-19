@@ -84,8 +84,12 @@ func choose_level_up_pattern():
 		pattern_queue.min_heap_insert( { "pattern_key" = "pattern_timing", "pattern_value" = randf_range(-0.1, 0.0) + start_offset } )
 		pattern_queue.min_heap_insert( { "pattern_key" = "pattern_trafficlight", "pattern_value" = randf_range(-0.1, 0.0) + start_offset } )
 		pattern_level_up_phase_3()
-	elif stage_phase >= 4:
-		pattern_level_up_phase_4() # infinitely repeated
+	elif stage_phase == 4:
+		# no pattern addition
+		pattern_level_up_phase_4()
+	elif stage_phase >= 5:
+		# no pattern addition
+		pattern_level_up_phase_5() # infinitely repeated
 
 
 
@@ -451,8 +455,8 @@ func pattern_hide_in_hazard():
 	
 	pattern_start_time = PlayingFieldInterface.get_playing_time()
 	
-	const hazard_warning_time = 0.5
-	const hazard_bomb_time = 1.0
+	const hazard_warning_time = 1.0
+	const hazard_bomb_time = 0.5
 	const bomb_time = 3 * (hazard_bomb_time + hazard_warning_time)
 	
 	const CIRCLE_FIELD_RADIUS = 256
@@ -513,7 +517,7 @@ func pattern_hide_in_hazard_end():
 # pattern_wall_timing start
 # made by Jaeyong
 
-const pattern_wall_timing_playing_time = 3
+const pattern_wall_timing_playing_time = 3.0
 var pattern_wall_timing_bomb_count: int
 var pattern_wall_timing_pos_nor: Vector2
 var pattern_wall_timing_angle: float
@@ -521,42 +525,49 @@ const pattern_wall_timing_bomb_dist = 136
 
 func pattern_wall_timing():
 	PlayingFieldInterface.set_theme_color(Color.WEB_PURPLE)
+	
 	pattern_start_time = PlayingFieldInterface.get_playing_time()
+	
+	const warning_time = 0.25
+	const bomb_time = 2.75
 	
 	pattern_wall_timing_bomb_count = 4
 	pattern_wall_timing_pos_nor = PlayingFieldInterface.get_player_position().normalized()
 	pattern_wall_timing_angle = pattern_wall_timing_pos_nor.angle()
 
-	var bomb1 = create_normal_bomb(pattern_wall_timing_auto_rotate(PI /4), 0.25, 2.75)
+	var bomb1 = create_normal_bomb(pattern_wall_timing_auto_rotate(PI /4), warning_time, bomb_time)
 	bomb1.connect("player_body_entered", Callable(self, "pattern_wall_timing_end"))
-	var bomb2 = create_normal_bomb(pattern_wall_timing_auto_rotate(3 * PI / 2 + PI/4), 0.25, 2.75)
+	var bomb2 = create_normal_bomb(pattern_wall_timing_auto_rotate(3 * PI / 2 + PI/4), warning_time, bomb_time)
 	bomb2.connect("player_body_entered", Callable(self, "pattern_wall_timing_end"))
 	create_bomb_link(bomb1, bomb2)
 		
-	var bomb3 = create_normal_bomb(pattern_wall_timing_auto_rotate(PI + PI/4), 0.25, 2.75)
+	var bomb3 = create_normal_bomb(pattern_wall_timing_auto_rotate(PI + PI/4), warning_time, bomb_time)
 	bomb3.connect("player_body_entered", Callable(self, "pattern_wall_timing_end"))
-	var bomb4 = create_normal_bomb(pattern_wall_timing_auto_rotate(PI/2 + PI/4), 0.25, 2.75)
+	var bomb4 = create_normal_bomb(pattern_wall_timing_auto_rotate(PI/2 + PI/4), warning_time, bomb_time)
 	bomb4.connect("player_body_entered", Callable(self, "pattern_wall_timing_end"))
 	create_bomb_link(bomb3, bomb4)
 	
-	create_hazard_bomb(Vector2.ZERO, 0.5, 0.5)
-	for i in [1,2,3]:
-		create_hazard_bomb(pattern_wall_timing_pos_nor.rotated(PI/2) * (256) * i/4, 0.5, 0.5)
-		create_hazard_bomb(pattern_wall_timing_pos_nor.rotated(PI/2) * (256) * -i/4, 0.5, 0.5)
+	const hazard_warning_time = 0.75
+	const hazard_bomb_time = 0.25
 	
-	await get_tree().create_timer(1.0).timeout
+	create_hazard_bomb(Vector2.ZERO, hazard_warning_time, hazard_bomb_time)
+	for i: float in [1,2,3]:
+		create_hazard_bomb(pattern_wall_timing_pos_nor.rotated(PI/2) * (256) * i/4, hazard_warning_time, hazard_bomb_time)
+		create_hazard_bomb(pattern_wall_timing_pos_nor.rotated(PI/2) * (256) * -i/4, hazard_warning_time, hazard_bomb_time)
 	
-	create_hazard_bomb(Vector2.ZERO, 0.5, 0.5)
-	for i in [1,2,3]:
-		create_hazard_bomb(pattern_wall_timing_pos_nor.rotated(PI/2) * (256) * i/4, 0.5, 0.5)
-		create_hazard_bomb(pattern_wall_timing_pos_nor.rotated(PI/2) * (256) * -i/4, 0.5, 0.5)
+	await get_tree().create_timer(hazard_warning_time + hazard_bomb_time).timeout
 	
-	await get_tree().create_timer(1.0).timeout
+	create_hazard_bomb(Vector2.ZERO, hazard_warning_time, 0.5)
+	for i: float in [1,2,3]:
+		create_hazard_bomb(pattern_wall_timing_pos_nor.rotated(PI/2) * (256) * i/4, hazard_warning_time, hazard_bomb_time)
+		create_hazard_bomb(pattern_wall_timing_pos_nor.rotated(PI/2) * (256) * -i/4, hazard_warning_time, hazard_bomb_time)
 	
-	create_hazard_bomb(Vector2.ZERO, 0.5, 0.5)
-	for i in [1,2,3]:
-		create_hazard_bomb(pattern_wall_timing_pos_nor.rotated(PI/2) * (256) * i/4, 0.5, 0.5)
-		create_hazard_bomb(pattern_wall_timing_pos_nor.rotated(PI/2) * (256) * -i/4, 0.5, 0.5)
+	await get_tree().create_timer(hazard_warning_time + hazard_bomb_time).timeout
+	
+	create_hazard_bomb(Vector2.ZERO, hazard_warning_time, 0.5)
+	for i: float in [1,2,3]:
+		create_hazard_bomb(pattern_wall_timing_pos_nor.rotated(PI/2) * (256) * i/4, hazard_warning_time, hazard_bomb_time)
+		create_hazard_bomb(pattern_wall_timing_pos_nor.rotated(PI/2) * (256) * -i/4, hazard_warning_time, hazard_bomb_time)
 
 func pattern_wall_timing_end():
 	pattern_wall_timing_bomb_count -= 1

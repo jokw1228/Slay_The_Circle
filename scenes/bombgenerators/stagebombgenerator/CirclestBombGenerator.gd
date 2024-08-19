@@ -80,8 +80,12 @@ func choose_level_up_pattern():
 		pattern_queue.min_heap_insert( { "pattern_key" = "pattern_shuffle_game", "pattern_value" = randf_range(-0.1, 0.0) + start_offset } )
 		pattern_queue.min_heap_insert( { "pattern_key" = "pattern_darksight", "pattern_value" = randf_range(-0.1, 0.0) + start_offset } )
 		pattern_level_up_phase_3()
-	elif stage_phase >= 4:
-		pattern_level_up_phase_4() # infinitely repeated
+	elif stage_phase == 4:
+		# no pattern addition
+		pattern_level_up_phase_4()
+	elif stage_phase >= 5:
+		# no pattern addition
+		pattern_level_up_phase_5() # infinitely repeated
 
 
 
