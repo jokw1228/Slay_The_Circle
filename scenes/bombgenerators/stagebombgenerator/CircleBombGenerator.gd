@@ -348,15 +348,15 @@ func pattern_star():
 	const distance = 208.0
 	var bomb_position: Vector2 = PlayingFieldInterface.get_player_position().normalized() * distance
 	
-	create_numeric_bomb(bomb_position, warning_time, bomb_time, 1)
-	create_numeric_bomb(bomb_position.rotated(PI*4/5), warning_time, bomb_time, 2)
-	create_numeric_bomb(bomb_position.rotated(PI*8/5), warning_time, bomb_time, 3)
-	create_numeric_bomb(bomb_position.rotated(PI*2/5), warning_time, bomb_time, 4)
-	var bomb_end: NumericBomb = create_numeric_bomb(bomb_position.rotated(PI*6/5), warning_time, bomb_time, 5)
-	
 	# HYPER MODE
 	if stage_phase >= 4:
-		bomb_end = create_numeric_bomb(Vector2.ZERO, warning_time, bomb_time, 6)
+		bomb_position = bomb_position.rotated(PI*1/5)
+	
+	create_numeric_bomb(bomb_position, warning_time, bomb_time, 1)
+	create_numeric_bomb(bomb_position.rotated(PI*2/5), warning_time, bomb_time, 4)
+	create_numeric_bomb(bomb_position.rotated(PI*4/5), warning_time, bomb_time, 2)
+	var bomb_end: NumericBomb = create_numeric_bomb(bomb_position.rotated(PI*6/5), warning_time, bomb_time, 5)
+	create_numeric_bomb(bomb_position.rotated(PI*8/5), warning_time, bomb_time, 3)
 	
 	bomb_end.connect("no_lower_value_bomb_exists",Callable(self,"pattern_star_end"))
 

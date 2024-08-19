@@ -641,7 +641,7 @@ func pattern_fruitninja():
 				for rigidbody in rigidbodies:
 					rigidbody.queue_free()
 				
-				PlayingFieldInterface.add_playing_time(timer.time_left)
+				PlayingFieldInterface.set_playing_time(PlayingFieldInterface.get_playing_time() + timer.time_left)
 				pattern_shuffle_and_draw()
 			)
 		await Utils.timer(0.7)
