@@ -27,7 +27,7 @@ func pattern_shuffle_and_draw(): # override
 func set_hyper_pattern_queue():
 	pattern_queue.min_heap_insert( { "pattern_key" = "pattern_moving_link", "pattern_value" = randf_range(-0.1, 0.0) } )
 	pattern_queue.min_heap_insert( { "pattern_key" = "pattern_survive_random_slay", "pattern_value" = randf_range(-0.1, 0.0) } )
-	pattern_queue.min_heap_insert( { "pattern_key" = "pattern_rotate_timing", "pattern_value" = randf_range(-0.1, -0.1) } )
+	pattern_queue.min_heap_insert( { "pattern_key" = "pattern_rotate_timing", "pattern_value" = randf_range(-0.1, 0.0) } )
 	pattern_queue.min_heap_insert( { "pattern_key" = "pattern_trickery", "pattern_value" = randf_range(-0.1, 0.0) } )
 	
 	pattern_queue.min_heap_insert( { "pattern_key" = "pattern_cat_wheel", "pattern_value" = randf_range(-0.1, 0.0) } )

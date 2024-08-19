@@ -27,7 +27,7 @@ func pattern_shuffle_and_draw(): # override
 func set_hyper_pattern_queue():
 	pattern_queue.min_heap_insert( { "pattern_key" = "pattern_numeric_center_then_link", "pattern_value" = randf_range(-0.1, 0.0) } )
 	pattern_queue.min_heap_insert( { "pattern_key" = "pattern_numeric_triangle_with_link", "pattern_value" = randf_range(-0.1, 0.0) } )
-	pattern_queue.min_heap_insert( { "pattern_key" = "pattern_star", "pattern_value" = randf_range(-0.1, -0.1) } )
+	pattern_queue.min_heap_insert( { "pattern_key" = "pattern_star", "pattern_value" = randf_range(-0.1, 0.0) } )
 	pattern_queue.min_heap_insert( { "pattern_key" = "pattern_random_link", "pattern_value" = randf_range(-0.1, 0.0) } )
 	pattern_queue.min_heap_insert( { "pattern_key" = "pattern_diamond", "pattern_value" = randf_range(-0.1, 0.0) } )
 
