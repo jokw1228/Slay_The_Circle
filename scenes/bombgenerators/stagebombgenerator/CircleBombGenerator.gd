@@ -36,7 +36,7 @@ func set_pattern_weight():
 		"pattern_diamond_with_hazard" = 3.0,
 		"pattern_colosseum" = 3.0,
 		
-		"pattern_numeric_inversion" = 0.5
+		"pattern_numeric_inversion" = 1.5
 	}
 
 func pattern_shuffle_and_draw():
@@ -256,7 +256,8 @@ func pattern_numeric_center_then_link():
 	var bomb2: NumericBomb = create_numeric_bomb(player_position * 0.5, warning_time, bomb_time, 3)
 	var link: BombLink = create_bomb_link(bomb1, bomb2)
 	
-	if stage_phase >= 5:
+	# HYPER MODE
+	if stage_phase >= 4:
 		create_hazard_bomb(player_position.rotated(PI / 2.0) * 208.0 / 240.0, warning_time, bomb_time)
 		create_hazard_bomb(player_position.rotated(PI / -2.0) * 208.0 / 240.0, warning_time, bomb_time)
 	
