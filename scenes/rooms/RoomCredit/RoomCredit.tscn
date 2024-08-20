@@ -115,6 +115,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 text = "asdf"
 horizontal_alignment = 1
+uppercase = true
 
 [node name="RoleLabel" type="Label" parent="CanvasLayer/Circle/Mask/TextBox/VBox"]
 custom_minimum_size = Vector2(401, 0)
@@ -123,6 +124,7 @@ size_flags_horizontal = 3
 text = "asdf"
 label_settings = SubResource("LabelSettings_waanr")
 horizontal_alignment = 1
+uppercase = true
 
 [node name="CircleField" parent="CanvasLayer/Circle" instance=ExtResource("13_atkka")]
 position = Vector2(576, 324)
@@ -141,9 +143,10 @@ grow_horizontal = 2
 grow_vertical = 0
 scale = Vector2(1.5, 1.5)
 size_flags_horizontal = 3
-text = "Slay The Circle"
+text = "SLAY THE CIRCLE"
 horizontal_alignment = 1
 vertical_alignment = 1
+uppercase = true
 
 [node name="CharacterImage" type="Sprite2D" parent="CanvasLayer"]
 position = Vector2(88, 560)
