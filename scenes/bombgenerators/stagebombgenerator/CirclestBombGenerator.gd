@@ -610,11 +610,11 @@ func pattern_fruitninja():
 	
 	for i in range(5):
 		add_child(rigidbodies[i])
-		rigidbodies[i].gravity_scale = 1.5
-		rigidbodies[i].linear_velocity = Vector2(direction[i] * 600, -900 + randf_range(-200, 100))
-		rigidbodies[i].position = Vector2(-direction[i] * 400, 281)
+		rigidbodies[i].gravity_scale = 1
+		rigidbodies[i].linear_velocity = Vector2(direction[i] * 400, -800 + randf_range(-150, 150))
+		rigidbodies[i].position = Vector2(-direction[i] * 350, 281)
 
-		var bomb = create_normal_bomb(rigidbodies[i].global_position, 0, 1.2)
+		var bomb = create_normal_bomb(rigidbodies[i].global_position, 0, 1.75)
 		Utils.attach_node(rigidbodies[i], bomb)
 
 		if i == 4: # last bomb
@@ -682,7 +682,7 @@ func pattern_hazard_wave_acceleration(num: int,rigidbody: Array[RigidBody2D], ac
 
 func pattern_windmill():
 	PlayingFieldInterface.set_theme_color(Color.HOT_PINK)
-	const DIST: float = 70
+	const DIST: float = 96
 
 	var rotator: Node2D = Node2D.new()
 	add_child(rotator)
