@@ -179,6 +179,14 @@ theme_override_styles/pressed = SubResource("StyleBoxTexture_yinoi")
 text = "MENU
 "
 
+[node name="ToShuffleGame" type="Button" parent="CanvasLayer"]
+modulate = Color(1, 1, 1, 0)
+offset_left = 191.0
+offset_top = 505.0
+offset_right = 386.0
+offset_bottom = 668.0
+rotation = 1.87972
+
 [node name="MusicBank" type="Node" parent="."]
 script = ExtResource("5_84rmu")
 label = "bgm_RC"
@@ -192,3 +200,4 @@ bus = "SFX"
 events = Array[ExtResource("11_dvn8g")]([SubResource("Resource_ou5o0")])
 
 [connection signal="pressed" from="CanvasLayer/ToCredit" to="." method="_on_to_credit_pressed"]
+[connection signal="pressed" from="CanvasLayer/ToShuffleGame" to="." method="_on_to_shuffle_game_pressed"]

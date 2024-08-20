@@ -1,0 +1,44 @@
+[gd_scene load_steps=9 format=3 uid="uid://cswpst0i5dnem"]
+
+[ext_resource type="Script" path="res://scenes/rooms/RoomCredit/RoomShuffleGame.gd" id="1_v8ae0"]
+[ext_resource type="PackedScene" uid="uid://bhe55ocau21ot" path="res://scenes/playingfield/player/Player.tscn" id="2_l2d86"]
+[ext_resource type="PackedScene" uid="uid://s264e74phclm" path="res://scenes/playingfield/CircleField.tscn" id="3_omxvi"]
+[ext_resource type="PackedScene" uid="uid://csx6yjkvpfqcy" path="res://scenes/background/BackGroundDeSterrennacht/BackGroundDeSterrennacht.tscn" id="4_mib7x"]
+[ext_resource type="Texture2D" uid="uid://7ed2eanqanvm" path="res://scenes/ui/ColoredPanelTexture.svg" id="5_k670s"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_8u5pg"]
+texture = ExtResource("5_k670s")
+modulate_color = Color(0, 0.784314, 0.784314, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_2cent"]
+texture = ExtResource("5_k670s")
+modulate_color = Color(0.705882, 0.784314, 1, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_0f3sd"]
+texture = ExtResource("5_k670s")
+modulate_color = Color(0.592157, 0, 0.196078, 1)
+
+[node name="RoomShuffleGame" type="Node2D" node_paths=PackedStringArray("Player_node", "circlefield")]
+script = ExtResource("1_v8ae0")
+Player_node = NodePath("Player")
+circlefield = NodePath("CircleField")
+
+[node name="BackGroundDeSterrennacht" parent="." instance=ExtResource("4_mib7x")]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="Player" parent="." instance=ExtResource("2_l2d86")]
+
+[node name="CircleField" parent="." instance=ExtResource("3_omxvi")]
+
+[node name="ExitButton" type="Button" parent="."]
+offset_left = 380.0
+offset_top = -308.0
+offset_right = 560.0
+offset_bottom = -228.0
+theme_override_styles/normal = SubResource("StyleBoxTexture_8u5pg")
+theme_override_styles/hover = SubResource("StyleBoxTexture_2cent")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_0f3sd")
+text = "EXIT"
+
+[connection signal="pressed" from="ExitButton" to="." method="_on_exit_button_pressed"]
