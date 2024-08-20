@@ -14,11 +14,10 @@ func _ready():
 	PlayingFieldInterface.set_theme_color(Color.ORANGE_RED)
 	PlayingFieldInterface.set_theme_bright(0)
 	
-	#pattern_queue = PatternPriorityQueue.create()
-	#set_pattern_weight()
+	pattern_queue = PatternPriorityQueue.create()
+	set_pattern_weight()
 	await get_tree().create_timer(1.5).timeout # game start time offset
-	#pattern_shuffle_and_draw()
-	pattern_darksight()
+	pattern_shuffle_and_draw()
 
 func set_pattern_weight():
 	pattern_weight = {
