@@ -33,7 +33,7 @@ func min_heapify(index: int):
 		if queue[l]["pattern_value"] < queue[index]["pattern_value"]:
 			smallest_index = l
 	if r < queue.size():
-		if queue[r]["pattern_value"] < queue[index]["pattern_value"]:
+		if queue[r]["pattern_value"] < queue[smallest_index]["pattern_value"]:
 			smallest_index = r
 	if smallest_index != index:
 		var tmp: Dictionary = queue[index]
