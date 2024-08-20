@@ -1,4 +1,2 @@
 # Normalize EOL for all files that Git considers text files.
 * text=auto eol=lf
-.apk filter=lfs diff=lfs merge=lfs -text
-Builds/Slay[[:space:]]The[[:space:]]Circle.apk filter=lfs diff=lfs merge=lfs -text
