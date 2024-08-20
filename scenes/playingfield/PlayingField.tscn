@@ -14,10 +14,10 @@
 [ext_resource type="AudioStream" uid="uid://bv6256uxbdrbw" path="res://audio/sfx/Start.wav" id="11_eka1x"]
 [ext_resource type="Script" path="res://addons/resonate/music_manager/music_track_resource.gd" id="11_itom1"]
 [ext_resource type="Script" path="res://addons/resonate/music_manager/music_stem_resource.gd" id="12_nuc5t"]
-[ext_resource type="AudioStream" uid="uid://87ar0gay8klk" path="res://audio/bgm/STC_on_game_ver2.wav" id="14_5lwlu"]
-[ext_resource type="AudioStream" uid="uid://ccmijyfmn8w65" path="res://audio/bgm/STC_dead_ver2.wav" id="15_v5tlw"]
-[ext_resource type="AudioStream" uid="uid://64nye0bu6q3v" path="res://audio/bgm/STC_on_game_2.wav" id="16_y0ta0"]
-[ext_resource type="AudioStream" uid="uid://bgrku43kn5rq3" path="res://audio/bgm/STC_dead_2.wav" id="17_qirxu"]
+[ext_resource type="AudioStream" uid="uid://ogjnon7d152g" path="res://audio/bgm/STC_on_game_1.mp3" id="15_0a4gk"]
+[ext_resource type="AudioStream" uid="uid://bof4fc107hws5" path="res://audio/bgm/STC_dead_1.mp3" id="16_w7c3k"]
+[ext_resource type="AudioStream" uid="uid://bnuullpflq2hg" path="res://audio/bgm/STC_on_game_2.mp3" id="17_8x1so"]
+[ext_resource type="AudioStream" uid="uid://r5wtftbewe6v" path="res://audio/bgm/STC_dead_2.mp3" id="18_4j1xl"]
 
 [sub_resource type="Resource" id="Resource_x54bq"]
 script = ExtResource("8_g3bnd")
@@ -40,14 +40,14 @@ script = ExtResource("12_nuc5t")
 name = "on_game"
 enabled = true
 volume = 0.0
-stream = ExtResource("14_5lwlu")
+stream = ExtResource("15_0a4gk")
 
 [sub_resource type="Resource" id="Resource_fw2jh"]
 script = ExtResource("12_nuc5t")
 name = "dead"
 enabled = true
 volume = 0.0
-stream = ExtResource("15_v5tlw")
+stream = ExtResource("16_w7c3k")
 
 [sub_resource type="Resource" id="Resource_jkvr2"]
 script = ExtResource("11_itom1")
@@ -60,14 +60,14 @@ script = ExtResource("12_nuc5t")
 name = "on_game"
 enabled = true
 volume = 0.0
-stream = ExtResource("16_y0ta0")
+stream = ExtResource("17_8x1so")
 
 [sub_resource type="Resource" id="Resource_danuc"]
 script = ExtResource("12_nuc5t")
 name = "dead"
 enabled = true
 volume = 0.0
-stream = ExtResource("17_qirxu")
+stream = ExtResource("18_4j1xl")
 
 [sub_resource type="Resource" id="Resource_6h14x"]
 script = ExtResource("11_itom1")
@@ -80,14 +80,14 @@ script = ExtResource("12_nuc5t")
 name = "on_game"
 enabled = true
 volume = 0.0
-stream = ExtResource("16_y0ta0")
+stream = ExtResource("17_8x1so")
 
 [sub_resource type="Resource" id="Resource_hceku"]
 script = ExtResource("12_nuc5t")
 name = "dead"
 enabled = true
 volume = 0.0
-stream = ExtResource("17_qirxu")
+stream = ExtResource("18_4j1xl")
 
 [sub_resource type="Resource" id="Resource_8k8v3"]
 script = ExtResource("11_itom1")
@@ -129,9 +129,9 @@ tracks = Array[ExtResource("11_itom1")]([SubResource("Resource_jkvr2"), SubResou
 
 [connection signal="game_over" from="." to="BackGroundEffect" method="game_over_reset"]
 [connection signal="game_over" from="." to="PlayingFieldCamera" method="rotation_stop"]
-[connection signal="game_over" from="." to="PlayingFieldCamera" method="gameover_position_transition"]
 [connection signal="game_over" from="." to="PlayingFieldCamera" method="rotation_reset"]
 [connection signal="game_over" from="." to="PlayingFieldCamera" method="zoom_transition"]
+[connection signal="game_over" from="." to="PlayingFieldCamera" method="gameover_position_transition"]
 [connection signal="game_over" from="." to="PlayingFieldCamera" method="_on_playing_field_game_over"]
 [connection signal="game_over" from="." to="CircleField" method="create_game_over_effect"]
 [connection signal="game_over" from="." to="CircleField" method="stop_reverb_effect"]
