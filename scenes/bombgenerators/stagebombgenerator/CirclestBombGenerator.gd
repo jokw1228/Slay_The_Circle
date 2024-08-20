@@ -516,22 +516,24 @@ func pattern_trickery_end():
 func pattern_cat_wheel():
 	PlayingFieldInterface.set_theme_color(Color.RED)
 	
-	var player_position: Vector2 = PlayingFieldInterface.get_player_position()
-	var angle_start: float = player_position.angle() * -1
-	
-	const CIRCLE_FIELD_RADIUS = 256
-	const bomb_radius = CIRCLE_FIELD_RADIUS - 32
-	
 	var center: Node2D = Node2D.new()
 	add_child(center)
 	
 	const number_of_hazard_bombs = 20
+	
 	const warning_time = 0.5
-	const bomb_time = 3.0
+	const bomb_time = 2.5
+	
 	var ccw: float = 1 if randi() % 2 else -1
-	for i in range(number_of_hazard_bombs):
-		if i >= 5 and i <= number_of_hazard_bombs:
-			var inst: HazardBomb = HazardBomb.create(Vector2(bomb_radius * cos(angle_start + i * (ccw * (2*PI) / number_of_hazard_bombs)), bomb_radius * -sin(angle_start + i * (ccw * (2*PI) / number_of_hazard_bombs))), warning_time, bomb_time)
+	
+	const CIRCLE_FIELD_RADIUS = 256
+	const bomb_radius = 32
+	
+	var bomb_position: Vector2 = (CIRCLE_FIELD_RADIUS - bomb_radius) * PlayingFieldInterface.get_player_position().normalized()
+	for i: float in range(number_of_hazard_bombs):
+		if i >= 0 and i <= number_of_hazard_bombs - 6:
+			var inst: HazardBomb = HazardBomb.create(bomb_position.rotated(ccw * i * 2*PI / number_of_hazard_bombs), warning_time, bomb_time)
+			#var inst: HazardBomb = HazardBomb.create(Vector2(bomb_radius * cos(angle_start + i * (ccw * (2*PI) / number_of_hazard_bombs)), bomb_radius * -sin(angle_start + i * (ccw * (2*PI) / number_of_hazard_bombs))), warning_time, bomb_time)
 			center.add_child(inst)
 	
 	var tween_rotation: Tween = get_tree().create_tween()
