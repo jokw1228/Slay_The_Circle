@@ -448,12 +448,13 @@ func pattern_scattered_hazards_end():
 
 const pattern_hide_in_hazard_playing_time = 5.0
 # 3 * (hazard_bomb_time + hazard_warning_time) + hazard_warning_time
-var bomb_count = 0
+var pattern_hide_in_hazard_is_playing: bool
 
 func pattern_hide_in_hazard():
 	PlayingFieldInterface.set_theme_color(Color.DARK_VIOLET)
 	
 	pattern_start_time = PlayingFieldInterface.get_playing_time()
+	pattern_hide_in_hazard_is_playing = true
 	
 	const hazard_warning_time = 1.0
 	const hazard_bomb_time = 0.5
@@ -499,12 +500,15 @@ func pattern_hide_in_hazard():
 	bomb_position = bomb_position.rotated(bomb_position_rotation_amount)
 	var hazard_position: Vector2 = hazard_position_length * bomb_position.normalized().rotated(PI/6 * ccw)
 	for i: int in range(3):
+		if pattern_hide_in_hazard_is_playing == false:
+			break
 		for j: int in range(3):
 			create_hazard_bomb(hazard_position, hazard_warning_time, hazard_bomb_time)
 			hazard_position = hazard_position.rotated(2*PI/3)
 		await get_tree().create_timer(hazard_warning_time + hazard_bomb_time).timeout
 
 func pattern_hide_in_hazard_end():
+	pattern_hide_in_hazard_is_playing = false
 	get_tree().call_group("group_hazard_bomb", "early_eliminate")
 	await PlayingFieldInterface.player_grounded
 	PlayingFieldInterface.set_playing_time(pattern_start_time + pattern_hide_in_hazard_playing_time / Engine.time_scale)
