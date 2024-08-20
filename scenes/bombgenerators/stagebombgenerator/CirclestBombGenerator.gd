@@ -650,17 +650,18 @@ func pattern_hazard_wave():
 	PlayingFieldInterface.set_theme_color(Color.RED)
 	
 	var random: float = randf_range(0,2)
-	var spawn: int = 1 if random >= 1 else -1
+	var spawn_x: int = 1 if PlayingFieldInterface.get_player_position().x <= 0 else -1
+	var spawn_y: int = 1 if PlayingFieldInterface.get_player_position().y >= 0 else -1
 	
 	var rigidbody: Array[RigidBody2D] = [RigidBody2D.new(), RigidBody2D.new(), RigidBody2D.new(), RigidBody2D.new(), RigidBody2D.new(),RigidBody2D.new(), RigidBody2D.new(), RigidBody2D.new(), RigidBody2D.new()]
 
 	for i in (9):
 		add_child(rigidbody[i])
 		rigidbody[i].gravity_scale = 0
-		Utils.attach_node(rigidbody[i], create_hazard_bomb(Vector2(spawn * 400,-256 + (64 * i)),0,1.25))
-		rigidbody[i].position = Vector2(spawn * 400,-256 + (64 * i))
-		rigidbody[i].linear_velocity = Vector2(spawn * 700,0)
-		pattern_hazard_wave_acceleration(i,rigidbody,-2 * spawn)
+		Utils.attach_node(rigidbody[i], create_hazard_bomb(Vector2(spawn_x * 300,(-256 + (64 * i)) * spawn_y),0,1.25))
+		rigidbody[i].position = Vector2(spawn_x * 300,(-256 + (64 * i)) * spawn_y)
+		#rigidbody[i].linear_velocity = Vector2(spawn * 700,0)
+		pattern_hazard_wave_acceleration(i,rigidbody,-2 * spawn_x)
 		await get_tree().create_timer(0.15).timeout
 		
 	await Utils.timer(1.25)
