@@ -4,8 +4,6 @@ class_name BackGroundEffect
 @export var font: Font
 @export var BackGroudEffectDrawer_Scene: PackedScene
 
-var speed_up_times: int = 0
-var rotation_up_times: int = 0
 
 func text_effect(text: String, circle_index: int, arc_index: int, theme_color: Color = Color(1,1,1,1)):
 	const radius_offset = 320
@@ -33,18 +31,14 @@ func text_effect(text: String, circle_index: int, arc_index: int, theme_color: C
 	remove_child(center)
 	
 func speed_up(theme_color:Color):
-	text_effect("GAME SPEED UP!",1,2,theme_color)
-	speed_up_times += 1
-	text_effect(("LEVEL:"+str(speed_up_times)),1,4,theme_color)
+	text_effect("GAME SPEED UP!",1,1,theme_color)
 	
 func rotation_up(theme_color:Color):
 	text_effect("ROTATION SPEED UP!",2,3,theme_color)
-	rotation_up_times += 1
-	text_effect(("LEVEL:"+str(rotation_up_times)),2,1,theme_color)
 	
 func rotation_inversion(theme_color:Color):
 	text_effect("ROTATION INVESRION!",3,1,theme_color)
 		
 func game_over_reset():
-	speed_up_times = 0
-	rotation_up_times = 0
+	text_effect("GAME OVER!", 1, 1, Color.RED)
+	text_effect("GAME OVER!", 1, 3, Color.RED)
