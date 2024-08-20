@@ -724,7 +724,7 @@ func pattern_timing_return():
 	create_hazard_bomb(player_position.rotated(2*PI/3) * 0.7, 0.5, 1.45)
 	create_hazard_bomb(player_position.rotated(-2*PI/3) * 0.7, 0.5, 1.45)
 	
-	var bomb : NormalBomb = create_normal_bomb(Vector2(0, 0), 0.5, 1.6)
+	var bomb : NormalBomb = create_normal_bomb(Vector2(0, 0), 0.5, 1.8)
 	create_hazard_bomb(Vector2(0, 0), 0.5, 1.35)
 	
 	await get_tree().create_timer(1).timeout
