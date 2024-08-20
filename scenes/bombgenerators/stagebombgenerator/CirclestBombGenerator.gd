@@ -34,7 +34,6 @@ func set_pattern_weight():
 		"pattern_windmill" = 2.0,
 		"pattern_timing_return" = 3.0,
 		
-		"pattern_shuffle_game" = 4.0,
 		"pattern_darksight" = 4.0
 	}
 
@@ -77,7 +76,6 @@ func choose_level_up_pattern():
 		pattern_level_up_phase_2()
 	elif stage_phase == 3:
 		var start_offset: float = pattern_queue.queue[0]["pattern_value"]
-		pattern_queue.min_heap_insert( { "pattern_key" = "pattern_shuffle_game", "pattern_value" = randf_range(-0.1, 0.0) + start_offset } )
 		pattern_queue.min_heap_insert( { "pattern_key" = "pattern_darksight", "pattern_value" = randf_range(-0.1, 0.0) + start_offset } )
 		pattern_level_up_phase_3()
 	elif stage_phase == 4:

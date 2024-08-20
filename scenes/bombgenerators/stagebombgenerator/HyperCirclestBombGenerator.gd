@@ -38,5 +38,4 @@ func set_hyper_pattern_queue():
 	pattern_queue.min_heap_insert( { "pattern_key" = "pattern_windmill", "pattern_value" = randf_range(-0.1, 0.0) } )
 	pattern_queue.min_heap_insert( { "pattern_key" = "pattern_timing_return", "pattern_value" = randf_range(-0.1, 0.0) } )
 	
-	pattern_queue.min_heap_insert( { "pattern_key" = "pattern_shuffle_game", "pattern_value" = randf_range(-0.1, 0.0) } )
 	pattern_queue.min_heap_insert( { "pattern_key" = "pattern_darksight", "pattern_value" = randf_range(-0.1, 0.0) } )
