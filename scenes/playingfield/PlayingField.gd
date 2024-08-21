@@ -21,7 +21,7 @@ var BombGenerator_node: Node2D
 
 func _ready():
 	PlayingFieldInterface.set_PlayingField_node(self)
-	start_PlayingField()
+	ready_PlayingField()
 
 func _process(delta):
 	if playing == true:
@@ -70,8 +70,6 @@ func start_PlayingField():
 	#스타트 목소리..
 	SoundManager.play("sfx_PF","start")
 
-
-
 func stop_PlayingField(bomb_position: Vector2):
 	if playing == true:
 		playing = false
@@ -87,11 +85,14 @@ func stop_PlayingField(bomb_position: Vector2):
 		MusicManager.enable_stem("dead",0.5)
 		MusicManager.disable_stem("on_game",0.5)
 		
-		# Create a StartBomb
 		await get_tree().create_timer(1.8).timeout
-		emit_signal("game_ready")
-		await get_tree().create_timer(0.55).timeout
-		add_child(StartBomb.create(Vector2.ZERO, Callable(self, "start_PlayingField")) )
+		ready_PlayingField()
+
+func ready_PlayingField():
+	# Create a StartBomb
+	emit_signal("game_ready")
+	await get_tree().create_timer(0.55).timeout
+	add_child(StartBomb.create(Vector2.ZERO, Callable(self, "start_PlayingField")) )
 
 # Logic for BombLink
 func _on_player_grounded():
