@@ -22,6 +22,8 @@ const stage_index_maximum = 6
 var option_activated: bool = false
 
 func _ready():
+	if OS.get_name() == "iOS":
+		%ExitGame.hide()
 	PlayingFieldInterface.set_theme_color(Color.BLACK)
 	# BombGenerator는 런타임에 생성되므로 get_node()를 통해 가져온다.
 	%MenuBombGenerator.room_menu = self
