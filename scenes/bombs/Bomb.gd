@@ -12,6 +12,7 @@ func _on_body_entered(body):
 
 func slayed(): # bomb slayed effect
 	get_tree().current_scene.add_child( BombSlayedEffect.create(global_position, slayed_direction) )
+	Input.vibrate_handheld(100)
 	#get_tree().current_scene.add_child( SlayParticle.create(global_position) )
 
 func exploded(): # bomb explosion effect
