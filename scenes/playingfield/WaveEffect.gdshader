@@ -5,7 +5,6 @@ uniform vec2 center;
 uniform float force;
 uniform float size;
 uniform float thickness;
-uniform float offset;
 
 void fragment() {
 	float ratio = SCREEN_PIXEL_SIZE.x / SCREEN_PIXEL_SIZE.y;
@@ -16,9 +15,6 @@ void fragment() {
 	
 	vec2 disp = normalize(scaledUV - center) * force * mask;
 	vec4 color = texture(SCREEN_TEXTURE, SCREEN_UV - disp);
-	//color.r = texture(SCREEN_TEXTURE,vec2(SCREEN_UV.x + offset, SCREEN_UV.y) - disp).r;
-	//color.g = texture(SCREEN_TEXTURE,SCREEN_UV - disp).g;
-	//color.b = texture(SCREEN_TEXTURE,vec2(SCREEN_UV.x - offset, SCREEN_UV.y) - disp).b;
 	
 	COLOR = color;
 }

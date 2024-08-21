@@ -1,15 +1,9 @@
 extends Camera2D
 class_name PlayingFieldCamera
 
-#@export var GlitchEffect_node: Node2D
-#@onready var playing_field_camera: Camera2D = $PlayingFieldCamera
-
 var rotation_amount: float = 0
 var rotation_direction: float = 1.0
 var bomb_position: Vector2 = Vector2(0, 0)
-
-#func _ready():
-	#GlitchEffect_node.visible = false
 
 func _process(delta):
 	rotation += rotation_amount * rotation_direction * delta / Engine.time_scale
@@ -50,8 +44,6 @@ func set_bomb_position(x: Vector2):
 	bomb_position = x
 
 func gameover_position_transition():
-	#GlitchEffect_node.visible = true
-	#GlitchEffect_node.rotation = self.rotation
 	var time_for_trans: float = 0.3
 	position_transition(bomb_position, time_for_trans)
 	await get_tree().create_timer(time_for_trans).timeout
@@ -59,4 +51,3 @@ func gameover_position_transition():
 	await get_tree().create_timer(0.7).timeout
 	var tween = get_tree().create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_EXPO)
 	tween.tween_property(self,"position",Vector2(0,0),0.25)
-	#GlitchEffect_node.visible = false

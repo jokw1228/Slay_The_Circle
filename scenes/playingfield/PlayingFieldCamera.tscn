@@ -1,27 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://cn7ttflmrmpth"]
+[gd_scene load_steps=2 format=3 uid="uid://cn7ttflmrmpth"]
 
 [ext_resource type="Script" path="res://scenes/playingfield/PlayingFieldCamera.gd" id="1_7d4w7"]
-[ext_resource type="Shader" path="res://scenes/playingfield/glitch-effect.gdshader" id="3_71uu8"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_vbtli"]
-shader = ExtResource("3_71uu8")
-shader_parameter/shake_power = 0.01
-shader_parameter/shake_rate = 1.0
-shader_parameter/shake_speed = 7.0
-shader_parameter/shake_block_size = 30.5
-shader_parameter/shake_color_rate = 0.01
 
 [node name="PlayingFieldCamera" type="Camera2D"]
 ignore_rotation = false
 script = ExtResource("1_7d4w7")
-
-[node name="GlitchEffect" type="Node2D" parent="."]
-visible = false
-
-[node name="ColorRect" type="ColorRect" parent="GlitchEffect"]
-visible = false
-material = SubResource("ShaderMaterial_vbtli")
-offset_left = -124.0
-offset_top = -90.0
-offset_right = 126.0
-offset_bottom = 91.0
