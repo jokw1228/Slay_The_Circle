@@ -11,7 +11,6 @@ var click_queue: Array[Vector2]
 var movement_queue: Array[Vector2]
 var is_moving: bool = false
 var current_position: Vector2 = Vector2.ZERO
-var is_playing: bool = true
 
 const CIRCLE_FIELD_RADIUS = 256
 const player_radius = 16
@@ -32,8 +31,7 @@ func _unhandled_input(event):
 		and PlayingFieldInterface.is_player_input_enabled\
 		# store mouse input coordinates in queue
 		# store up to 4
-		and click_queue.size() < 4\
-		and is_playing:
+		and click_queue.size() < 4:
 		click_queue.push_back(get_global_mouse_position())
 
 func _click_queue_proccessing():
