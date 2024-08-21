@@ -313,7 +313,7 @@ var pattern_survive_random_slay_bombs: Array[Node2D]
 signal pattern_survive_random_slay_end_signal
 
 var pattern_survive_random_slay_direction: Array = [0, 0, 0]
-const pattern_survive_random_slay_playing_time = 4.2
+const pattern_survive_random_slay_playing_time = 4.6
 
 func pattern_survive_random_slay():
 	PlayingFieldInterface.set_theme_color(Color.RED)
@@ -327,11 +327,11 @@ func pattern_survive_random_slay():
 	var player_angle: float = player_position.angle()
 	var rotation_value = player_angle + 7*PI/8
 	for i in range(3):
-		pattern_survive_random_slay_hazard.append(create_hazard_bomb(Vector2(224*cos(rotation_value), 224*sin(rotation_value)), 0.1, 4.1))
+		pattern_survive_random_slay_hazard.append(create_hazard_bomb(Vector2(224*cos(rotation_value), 224*sin(rotation_value)), 0.5, 4.1))
 		rotation_value += PI/8
 		
 	pattern_survive_random_slay_bomb0()
-	await Utils.timer(0.2)
+	await Utils.timer(0.6)
 	
 	var pattern_survive_random_slay_centernode: Node2D = Node2D.new()
 	add_child(pattern_survive_random_slay_centernode)

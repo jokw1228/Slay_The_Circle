@@ -1,6 +1,7 @@
 extends Control
 
 var RoomMenu_room = "res://scenes/rooms/RoomMenu/RoomMenu.tscn"
+var RoomShuffleGame_room = "res://scenes/rooms/RoomCredit/RoomShuffleGame.tscn"
 
 @export var credits: Array = [
 	["Team", "Slay The Circle\n(STC)"],
@@ -123,8 +124,10 @@ func on_name_tween_finished():
 	%TextBox.position = role_label_start_position
 	start_credit_roll()
 
-
 func _on_to_credit_pressed():
 	SoundManager.play("sfx_RC","select")
 	get_tree().change_scene_to_file(RoomMenu_room)
 
+func _on_to_shuffle_game_pressed():
+	SoundManager.play("sfx_RC","select")
+	get_tree().change_scene_to_file(RoomShuffleGame_room)
