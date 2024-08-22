@@ -55,7 +55,7 @@ func _movement_queue_proccessing():
 		current_position = position_to_go # 이동 중에는 가야 하는 위치 저장하기
 		
 		# actual movement
-		const speed = 2048.0
+		const speed = 4096.0
 		velocity = (position_to_go - position).normalized() * speed
 		shooted.emit(velocity) # shooted signal emit
 		var d: Vector2 = position_to_go - position
