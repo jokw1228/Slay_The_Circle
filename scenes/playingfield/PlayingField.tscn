@@ -18,8 +18,8 @@
 [ext_resource type="AudioStream" uid="uid://bof4fc107hws5" path="res://audio/bgm/STC_dead_1.mp3" id="16_w7c3k"]
 [ext_resource type="AudioStream" uid="uid://bnuullpflq2hg" path="res://audio/bgm/STC_on_game_2.mp3" id="17_8x1so"]
 [ext_resource type="AudioStream" uid="uid://r5wtftbewe6v" path="res://audio/bgm/STC_dead_2.mp3" id="18_4j1xl"]
-[ext_resource type="AudioStream" uid="uid://duu0tbrhtitru" path="res://audio/bgm/STC_on_game_3_T.mp3" id="19_1bung"]
-[ext_resource type="AudioStream" uid="uid://dcws8fks4seoy" path="res://audio/bgm/STC_dead_3_T.mp3" id="20_w8vv1"]
+[ext_resource type="AudioStream" uid="uid://bpfar32jm7j2h" path="res://audio/bgm/STC_on_game_3.mp3" id="19_dh2u7"]
+[ext_resource type="AudioStream" uid="uid://cl6wgcjwwnc80" path="res://audio/bgm/STC_dead_3.mp3" id="20_f33p8"]
 
 [sub_resource type="Resource" id="Resource_x54bq"]
 script = ExtResource("8_g3bnd")
@@ -82,14 +82,14 @@ script = ExtResource("12_nuc5t")
 name = "on_game"
 enabled = true
 volume = 0.0
-stream = ExtResource("19_1bung")
+stream = ExtResource("19_dh2u7")
 
 [sub_resource type="Resource" id="Resource_hceku"]
 script = ExtResource("12_nuc5t")
 name = "dead"
 enabled = true
 volume = 0.0
-stream = ExtResource("20_w8vv1")
+stream = ExtResource("20_f33p8")
 
 [sub_resource type="Resource" id="Resource_8k8v3"]
 script = ExtResource("11_itom1")
@@ -130,11 +130,11 @@ bus = "BGM"
 tracks = Array[ExtResource("11_itom1")]([SubResource("Resource_jkvr2"), SubResource("Resource_6h14x"), SubResource("Resource_8k8v3")])
 
 [connection signal="game_over" from="." to="BackGroundEffect" method="game_over_reset"]
+[connection signal="game_over" from="." to="PlayingFieldCamera" method="_on_playing_field_game_over"]
 [connection signal="game_over" from="." to="PlayingFieldCamera" method="rotation_stop"]
+[connection signal="game_over" from="." to="PlayingFieldCamera" method="rotation_reset"]
 [connection signal="game_over" from="." to="PlayingFieldCamera" method="gameover_position_transition"]
 [connection signal="game_over" from="." to="PlayingFieldCamera" method="zoom_transition"]
-[connection signal="game_over" from="." to="PlayingFieldCamera" method="rotation_reset"]
-[connection signal="game_over" from="." to="PlayingFieldCamera" method="_on_playing_field_game_over"]
 [connection signal="game_over" from="." to="CircleField" method="stop_reverb_effect"]
 [connection signal="game_over" from="." to="CircleField" method="create_game_over_effect"]
 [connection signal="game_over" from="." to="PlayingFieldUI" method="close_Playing_and_open_Stopped"]
