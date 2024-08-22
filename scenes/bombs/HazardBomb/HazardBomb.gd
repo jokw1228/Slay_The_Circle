@@ -5,12 +5,15 @@ class_name HazardBomb
 @export var BombTimer_node: BombTimer
 @export var WarningTimer_node: WarningTimer
 
+var is_time_zero: bool = false
+
 static func create(position_to_set: Vector2, warning_time_to_set: float, bomb_time_to_set: float) -> HazardBomb:
 	return HazardBomb_creator.create(position_to_set, warning_time_to_set, bomb_time_to_set)
 
 func _on_warning_timer_warning_timeout():
-	modulate.a = 1.0
-	CollisionShape2D_node.disabled = false
+	if !is_time_zero:
+		modulate.a = 1.0
+		CollisionShape2D_node.disabled = false
 
 func exploded(): # (override) hazard bomb explosion effect
 	var inst: BombExplodedEffect = BombExplodedEffect.create(global_position)

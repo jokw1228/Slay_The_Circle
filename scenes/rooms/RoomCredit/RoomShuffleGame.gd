@@ -30,7 +30,6 @@ var pattern_shuffle_game_speed = [0,0,0,0]
 var pattern_shuffle_game_speed_increasing: float
 
 func pattern_shuffle_game():
-	print("pattern start")
 	var bomb_time = 0
 	var calculation = 3.3
 	for i in range(8):
@@ -69,7 +68,8 @@ func pattern_shuffle_game():
 		
 	await Utils.timer(0.8)
 	pattern_shuffle_game_bombs[real_bomb_position].position = pattern_shuffle_game_const_position[real_bomb_position]
-	pattern_shuffle_game_real_bomb.queue_free()
+	if is_instance_valid(pattern_shuffle_game_real_bomb):
+		pattern_shuffle_game_real_bomb.queue_free()
 	
 	for i in range(8): 
 		var rand_result = randi_range(0,4)
@@ -127,7 +127,6 @@ func pattern_shuffle_game_process(delta):
 
 func fail():
 	if fail_waiting == false:
-		print("fail")
 		fail_signal.emit()
 		fail_waiting = true
 		var tween_fail = get_tree().create_tween()
