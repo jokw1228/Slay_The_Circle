@@ -8,9 +8,11 @@ var fail_waiting = false
 signal fail_signal
 
 func _ready():
+	MusicManager.stop(0)
+	MusicManager.play("bgm_RS","main_slow",0,1)
 	await Utils.timer(1.0)
 	await pattern_shuffle_game()
-	MusicManager.play("bgm_RS","main_slow",0,1)
+
 
 func _process(delta):
 	pattern_shuffle_game_process(delta)
