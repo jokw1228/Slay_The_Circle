@@ -10,6 +10,7 @@ signal fail_signal
 func _ready():
 	await Utils.timer(1.0)
 	await pattern_shuffle_game()
+	MusicManager.play("bgm_RS","main_slow",0,1)
 
 func _process(delta):
 	pattern_shuffle_game_process(delta)
@@ -143,4 +144,5 @@ func clear():
 var RoomMenu_room = "res://scenes/rooms/RoomMenu/RoomMenu.tscn"
 
 func _on_exit_button_pressed():
+	SoundManager.play("sfx_RS","select")
 	get_tree().change_scene_to_file(RoomMenu_room)

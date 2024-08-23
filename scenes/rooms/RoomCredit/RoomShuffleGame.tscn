@@ -1,10 +1,17 @@
-[gd_scene load_steps=9 format=3 uid="uid://cswpst0i5dnem"]
+[gd_scene load_steps=19 format=3 uid="uid://cswpst0i5dnem"]
 
 [ext_resource type="Script" path="res://scenes/rooms/RoomCredit/RoomShuffleGame.gd" id="1_v8ae0"]
 [ext_resource type="PackedScene" uid="uid://bhe55ocau21ot" path="res://scenes/playingfield/player/Player.tscn" id="2_l2d86"]
 [ext_resource type="PackedScene" uid="uid://s264e74phclm" path="res://scenes/playingfield/CircleField.tscn" id="3_omxvi"]
 [ext_resource type="PackedScene" uid="uid://csx6yjkvpfqcy" path="res://scenes/background/BackGroundDeSterrennacht/BackGroundDeSterrennacht.tscn" id="4_mib7x"]
 [ext_resource type="Texture2D" uid="uid://7ed2eanqanvm" path="res://scenes/ui/ColoredPanelTexture.svg" id="5_k670s"]
+[ext_resource type="Script" path="res://addons/resonate/music_manager/music_bank.gd" id="6_kx28f"]
+[ext_resource type="Script" path="res://addons/resonate/music_manager/music_track_resource.gd" id="7_b1d51"]
+[ext_resource type="Script" path="res://addons/resonate/music_manager/music_stem_resource.gd" id="8_x1b4j"]
+[ext_resource type="AudioStream" uid="uid://c3v8s1j06a2nn" path="res://audio/bgm/slow_bgm.wav" id="9_xfe54"]
+[ext_resource type="Script" path="res://addons/resonate/sound_manager/sound_bank.gd" id="10_qk2vo"]
+[ext_resource type="Script" path="res://addons/resonate/sound_manager/sound_event_resource.gd" id="11_11noj"]
+[ext_resource type="AudioStream" uid="uid://crh63lch80r4l" path="res://audio/sfx/select.wav" id="12_1f1qe"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_8u5pg"]
 texture = ExtResource("5_k670s")
@@ -17,6 +24,27 @@ modulate_color = Color(0.705882, 0.784314, 1, 1)
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_0f3sd"]
 texture = ExtResource("5_k670s")
 modulate_color = Color(0.592157, 0, 0.196078, 1)
+
+[sub_resource type="Resource" id="Resource_vrvfi"]
+script = ExtResource("8_x1b4j")
+name = "copmlete"
+enabled = true
+volume = 0.0
+stream = ExtResource("9_xfe54")
+
+[sub_resource type="Resource" id="Resource_fu53d"]
+script = ExtResource("7_b1d51")
+name = "main_slow"
+bus = ""
+stems = Array[ExtResource("8_x1b4j")]([SubResource("Resource_vrvfi")])
+
+[sub_resource type="Resource" id="Resource_knc3p"]
+script = ExtResource("11_11noj")
+name = "select"
+bus = ""
+volume = 0.0
+pitch = 1.0
+streams = Array[AudioStream]([ExtResource("12_1f1qe")])
 
 [node name="RoomShuffleGame" type="Node2D" node_paths=PackedStringArray("Player_node", "circlefield")]
 script = ExtResource("1_v8ae0")
@@ -40,5 +68,17 @@ theme_override_styles/normal = SubResource("StyleBoxTexture_8u5pg")
 theme_override_styles/hover = SubResource("StyleBoxTexture_2cent")
 theme_override_styles/pressed = SubResource("StyleBoxTexture_0f3sd")
 text = "EXIT"
+
+[node name="MusicBank" type="Node" parent="."]
+script = ExtResource("6_kx28f")
+label = "bgm_RS"
+bus = "BGM"
+tracks = Array[ExtResource("7_b1d51")]([SubResource("Resource_fu53d")])
+
+[node name="SoundBank" type="Node" parent="."]
+script = ExtResource("10_qk2vo")
+label = "sfx_RS"
+bus = "SFX"
+events = Array[ExtResource("11_11noj")]([SubResource("Resource_knc3p")])
 
 [connection signal="pressed" from="ExitButton" to="." method="_on_exit_button_pressed"]
