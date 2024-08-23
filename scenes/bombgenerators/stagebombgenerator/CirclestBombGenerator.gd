@@ -553,6 +553,7 @@ func pattern_rain():
 	PlayingFieldInterface.set_theme_color(Color.HOT_PINK)
  
 	pattern_rain_spawn_drop()
+	await Utils.timer(0.5)
 	pattern_rain_spawn_bomb()
 
 	await Utils.timer(5.5)
@@ -572,7 +573,7 @@ func pattern_rain_drop():
 	const DIST: float = 300
 	const RANGE: float = 70
 
-	var bomb: HazardBomb = create_hazard_bomb(DIST * Vector2.UP.rotated(deg_to_rad(randf_range(-RANGE, RANGE))), 1, 2)
+	var bomb: HazardBomb = create_hazard_bomb(DIST * Vector2.UP.rotated(deg_to_rad(randf_range(-RANGE, RANGE))), 1.5, 2)
 	await Utils.timer(1)
 	Utils.tween(Tween.TRANS_EXPO, Tween.EASE_IN).tween_property(bomb, "global_position", Vector2(bomb.global_position.x, 500), 2)
  
