@@ -38,7 +38,7 @@ func _click_queue_proccessing():
 	if not click_queue.is_empty() and movement_queue.is_empty() and not is_moving:
 		var popped_position: Vector2 = click_queue.pop_front()
 		
-		const click_available_offset = 96
+		const click_available_offset = 64
 		if popped_position.length() > CIRCLE_FIELD_RADIUS - click_available_offset:
 			movement_queue.push_back( (CIRCLE_FIELD_RADIUS - player_radius) * popped_position.normalized() )
 		else:
