@@ -22,13 +22,14 @@ const stage_index_maximum = 6
 var option_activated: bool = false
 
 func _ready():
-	if OS.get_name() == "iOS":
-		%ExitGame.hide()
+	#if OS.get_name() == "iOS":
+	#%ExitGame.hide()
 	PlayingFieldInterface.set_theme_color(Color.BLACK)
 	# BombGenerator는 런타임에 생성되므로 get_node()를 통해 가져온다.
 	%MenuBombGenerator.room_menu = self
 	
-	MusicManager.play("bgm_RM","main_fast",0,1)
+	MusicManager.play("bgm_RM","main_fast",0,true)
+	
 	
 	var tween_camera_zoom_out: Tween = Utils.tween()
 	tween_camera_zoom_out.set_ease(Tween.EASE_IN)
@@ -118,6 +119,7 @@ func select_stage(difficulty: int):
 	Utils.slide_in(%Info, 400, Vector2.LEFT, 0.4)
 	
 	if %Start.visible == false: # 시작 버튼 없을 경우 (처음 스테이지 선택한 경우)
+		$UIContainerSkewed/Start/Button.disabled = false
 		%Start.visible = true
 		Utils.slide_in(%Start, 400, Vector2.LEFT, 0.4)
 
@@ -160,6 +162,7 @@ func _on_option_button_pressed():
 	PlayingFieldInterface.disable_player_input()
 	%Option.visible = true
 	option_activated = true
+	$UIContainerSkewed/Start/Button.disabled = true
 	Utils.slide_in(%Option, 800, Vector2.LEFT, 0.6)
 	SoundManager.play("sfx_menu","select")
 	
@@ -167,6 +170,7 @@ func _on_option_button_pressed():
 func _on_option_quit_pressed():
 	PlayingFieldInterface.enable_player_input()
 	option_activated = false
+	$UIContainerSkewed/Start/Button.disabled = false
 	Utils.slide_out(%Option, 800, Vector2.RIGHT, 0.6)
 	SoundManager.play("sfx_menu","select")
 

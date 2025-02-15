@@ -39,17 +39,7 @@ border_width_right = 1
 border_width_bottom = 1
 border_color = Color(1, 1, 1, 1)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_c0a27"]
-bg_color = Color(1, 0.713726, 0.00392157, 1)
-border_width_left = 3
-border_width_top = 3
-border_width_right = 3
-border_width_bottom = 3
-border_color = Color(1, 1, 1, 1)
-corner_radius_top_left = 3
-corner_radius_top_right = 3
-corner_radius_bottom_right = 3
-corner_radius_bottom_left = 3
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_umss3"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_r7nac"]
 bg_color = Color(1, 0.779, 0.22, 1)
@@ -75,7 +65,17 @@ corner_radius_top_right = 3
 corner_radius_bottom_right = 3
 corner_radius_bottom_left = 3
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_umss3"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_c0a27"]
+bg_color = Color(1, 0.713726, 0.00392157, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
 
 [sub_resource type="Resource" id="Resource_c47sr"]
 script = ExtResource("3_7gwtw")
@@ -148,10 +148,10 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_colors/font_color = Color(1, 0.713726, 0.00392157, 1)
 theme_override_colors/icon_normal_color = Color(1, 0.713726, 0.00392157, 1)
-theme_override_styles/normal = SubResource("StyleBoxFlat_c0a27")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_umss3")
 theme_override_styles/hover = SubResource("StyleBoxFlat_r7nac")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_xj3eo")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_umss3")
+theme_override_styles/normal = SubResource("StyleBoxFlat_c0a27")
 
 [node name="Value" type="Label" parent="."]
 layout_mode = 1

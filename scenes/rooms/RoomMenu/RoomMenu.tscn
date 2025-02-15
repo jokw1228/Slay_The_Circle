@@ -26,7 +26,7 @@
 [ext_resource type="Script" path="res://addons/resonate/music_manager/music_stem_resource.gd" id="24_h5epd"]
 [ext_resource type="AudioStream" uid="uid://dl56qa7pijbom" path="res://audio/bgm/fast_bgm.wav" id="25_r03bj"]
 [ext_resource type="Texture2D" uid="uid://7ed2eanqanvm" path="res://scenes/ui/ColoredPanelTexture.svg" id="26_8kqfa"]
-[ext_resource type="Texture2D" uid="uid://cv60tqgqvgob" path="res://images/option.png" id="26_bsu3u"]
+[ext_resource type="Texture2D" uid="uid://b2fb0v1ka4sjh" path="res://images/optionsicon_new_2.png" id="27_n6mcr"]
 [ext_resource type="Texture2D" uid="uid://c1nrj01k70rva" path="res://images/X.png" id="28_5yy81"]
 [ext_resource type="Script" path="res://scenes/rooms/RoomMenu/BgmSlider.gd" id="28_agem7"]
 [ext_resource type="Script" path="res://scenes/rooms/RoomMenu/SfxSlider.gd" id="29_p7uuc"]
@@ -71,21 +71,21 @@ name = "main_fast"
 bus = ""
 stems = Array[ExtResource("24_h5epd")]([SubResource("Resource_gy52r")])
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_u61x5"]
-texture = ExtResource("26_8kqfa")
-modulate_color = Color(0, 0.784314, 0.784314, 1)
-
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_v04t5"]
 texture = ExtResource("26_8kqfa")
-modulate_color = Color(0.705882, 0.784314, 1, 1)
+modulate_color = Color(1, 1, 1, 0.235294)
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_3chji"]
 texture = ExtResource("26_8kqfa")
 modulate_color = Color(0.592157, 0, 0.196078, 1)
 
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_u61x5"]
+texture = ExtResource("26_8kqfa")
+modulate_color = Color(0, 0, 0, 0.211765)
+
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_7nfj6"]
 texture = ExtResource("26_8kqfa")
-modulate_color = Color(0.392157, 0.392157, 0.392157, 1)
+modulate_color = Color(0.203922, 0.203922, 0.203922, 0.976471)
 
 [sub_resource type="Theme" id="Theme_c8pqb"]
 
@@ -342,6 +342,8 @@ bus = "BGM"
 tracks = Array[ExtResource("23_v74bq")]([SubResource("Resource_lcarn")])
 
 [node name="UIContainerUnskewed" type="CanvasLayer" parent="."]
+scale = Vector2(1, 1.0198)
+transform = Transform2D(1, 0, -0.2, 1, 0, 0)
 
 [node name="OptionButton" type="Button" parent="UIContainerUnskewed"]
 unique_name_in_owner = true
@@ -350,24 +352,25 @@ anchor_left = 1.0
 anchor_right = 1.0
 offset_left = -130.0
 offset_top = 20.0
-offset_right = -50.0
+offset_right = -46.0
 offset_bottom = 100.0
 grow_horizontal = 0
-theme_override_styles/normal = SubResource("StyleBoxTexture_u61x5")
 theme_override_styles/hover = SubResource("StyleBoxTexture_v04t5")
 theme_override_styles/pressed = SubResource("StyleBoxTexture_3chji")
+theme_override_styles/normal = SubResource("StyleBoxTexture_u61x5")
 
 [node name="TextureRect" type="TextureRect" parent="UIContainerUnskewed/OptionButton"]
 layout_mode = 0
-offset_left = 15.0
-offset_top = 15.0
-offset_right = 65.0
-offset_bottom = 65.0
-texture = ExtResource("26_bsu3u")
+offset_left = 24.2
+offset_top = 21.0
+offset_right = 59.2
+offset_bottom = 57.0
+texture = ExtResource("27_n6mcr")
 expand_mode = 1
 
 [node name="Option" type="Control" parent="UIContainerUnskewed"]
 unique_name_in_owner = true
+visible = false
 layout_mode = 3
 anchors_preset = 1
 anchor_left = 1.0
@@ -382,7 +385,9 @@ anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
 offset_left = -550.0
-offset_bottom = 700.0
+offset_top = 27.0
+offset_right = 178.0
+offset_bottom = 618.0
 grow_horizontal = 0
 theme_override_styles/panel = SubResource("StyleBoxTexture_7nfj6")
 
@@ -400,16 +405,14 @@ layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -130.0
+offset_left = -270.25
 offset_top = 20.0
-offset_right = -50.0
+offset_right = -190.25
 offset_bottom = 100.0
 grow_horizontal = 0
-theme_override_styles/normal = SubResource("StyleBoxTexture_u61x5")
 theme_override_styles/hover = SubResource("StyleBoxTexture_v04t5")
 theme_override_styles/pressed = SubResource("StyleBoxTexture_3chji")
-text = "
-"
+theme_override_styles/normal = SubResource("StyleBoxTexture_u61x5")
 
 [node name="TextureRect" type="TextureRect" parent="UIContainerUnskewed/Option/Panel/OptionQuit"]
 layout_mode = 0
@@ -423,57 +426,48 @@ expand_mode = 1
 
 [node name="ToCredit" type="Button" parent="UIContainerUnskewed/Option/Panel"]
 layout_mode = 1
-anchors_preset = 3
-anchor_left = 1.0
+anchors_preset = 2
 anchor_top = 1.0
-anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -230.0
-offset_top = -261.0
-offset_right = -30.0
-offset_bottom = -181.0
-grow_horizontal = 0
+offset_left = 316.25
+offset_top = -209.0
+offset_right = 516.25
+offset_bottom = -129.0
 grow_vertical = 0
-theme_override_styles/normal = SubResource("StyleBoxTexture_u61x5")
 theme_override_styles/hover = SubResource("StyleBoxTexture_v04t5")
 theme_override_styles/pressed = SubResource("StyleBoxTexture_3chji")
+theme_override_styles/normal = SubResource("StyleBoxTexture_u61x5")
 text = "CREDIT
 "
 
 [node name="ToTutorial" type="Button" parent="UIContainerUnskewed/Option/Panel"]
 layout_mode = 1
-anchors_preset = 3
-anchor_left = 1.0
+anchors_preset = 2
 anchor_top = 1.0
-anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -520.0
-offset_top = -261.0
-offset_right = -260.0
-offset_bottom = -181.0
-grow_horizontal = 0
+offset_left = 30.5
+offset_top = -208.0
+offset_right = 290.5
+offset_bottom = -128.0
 grow_vertical = 0
-theme_override_styles/normal = SubResource("StyleBoxTexture_u61x5")
 theme_override_styles/hover = SubResource("StyleBoxTexture_v04t5")
 theme_override_styles/pressed = SubResource("StyleBoxTexture_3chji")
+theme_override_styles/normal = SubResource("StyleBoxTexture_u61x5")
 text = "TUTORIAL"
 
 [node name="ExitGame" type="Button" parent="UIContainerUnskewed/Option/Panel"]
 layout_mode = 1
-anchors_preset = 3
-anchor_left = 1.0
+anchors_preset = 2
 anchor_top = 1.0
-anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -520.0
-offset_top = -151.0
-offset_right = -30.0
-offset_bottom = -71.0
-grow_horizontal = 0
+offset_left = 28.75
+offset_top = -103.0
+offset_right = 518.75
+offset_bottom = -23.0
 grow_vertical = 0
-theme_override_styles/normal = SubResource("StyleBoxTexture_3chji")
 theme_override_styles/hover = SubResource("StyleBoxTexture_qpa6l")
 theme_override_styles/pressed = SubResource("StyleBoxTexture_3chji")
+theme_override_styles/normal = SubResource("StyleBoxTexture_3chji")
 text = "EXIT GAME"
 
 [node name="VBoxContainer" type="VBoxContainer" parent="UIContainerUnskewed/Option/Panel"]
